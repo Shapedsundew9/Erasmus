@@ -15,11 +15,16 @@ codon_library = [
     # The output codon (has to be element 0)
     codon(lambda x: np.array(x).flatten(), 'output', isUnary=True),
 
+    # Constant definitions
+    codon(None, 'int', isConstant=True),
+    codon(None, 'float', isConstant=True),
+    codon(None, 'bool', isConstant=True),
+
     # Basic arithmetic
-    codon(lambda x, y: x + y, 'add'),
-    codon(lambda x, y: x - y, 'subtract'),
-    codon(lambda x, y: x * y, 'multipy'),
-    codon(lambda x, y: x / y, 'divide'),
+    codon(lambda x, y: x + y, 'add', isBinary=True),
+    codon(lambda x, y: x - y, 'subtract', isBinary=True),
+    codon(lambda x, y: x * y, 'multipy', isBinary=True),
+    codon(lambda x, y: x / y, 'divide', isBinary=True),
 
     # Unary arithmetic
     codon(lambda x: np.sqrt(x), 'square root', isUnary=True),
@@ -27,12 +32,12 @@ codon_library = [
     codon(lambda x: -x, 'negate', isUnary=True),
 
     # Basic conditional
-    codon(lambda x, y: x < y, 'less than'),
-    codon(lambda x, y: np.isclose(x, y), 'is close too'),
+    codon(lambda x, y: x < y, 'less than', isBinary=True),
+    codon(lambda x, y: np.isclose(x, y), 'is close too', isBinary=True),
 
     # Basic logical
-    codon(lambda x, y: x and y, 'and'),
-    codon(lambda x, y: x or y, 'or'),
+    codon(lambda x, y: x and y, 'and', isBinary=True),
+    codon(lambda x, y: x or y, 'or', isBinary=True),
 
     # Unary logical
     codon(lambda x: not x, 'not', isUnary=True),
@@ -41,7 +46,7 @@ codon_library = [
     codon(lambda x, y1, y2: y1 if x else y2, 'if then else', isTernary=True),
 
     # Addressing
-    codon(lambda x, y: x[np.int(y)], 'index', isAddressing=True),
+    codon(lambda x, y: x[np.int(y)], 'index', isBinary=True, isAddressing=True),
     codon(lambda x, y1, y2: x[np.int(y1):np.int(y2)], 'range index', isTernary=True, isAddressing=True),
-    codon(lambda x, y: np.concatenate((x, y)), 'range index', isAddressing=True)
+    codon(lambda x, y: np.concatenate((x, y)), 'range index', isBinary=True, isAddressing=True)
 ]

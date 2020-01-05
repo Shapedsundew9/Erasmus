@@ -11,15 +11,25 @@ Copyright (c) 2019 Your Company
 class codon():
 
 
-    def __init__(self, func, name, desc=None, isUnary=False, isTernary=False, isBranch=False, isAddressing=False):
+    def __init__(self, func, name, desc=None, isConstant=False, isUnary=False, isBinary=False,
+                    isTernary=False, isBranch=False, isAddressing=False):
         self.func = func
+        self.name = name
         self.desc = desc
+        self.isConstant = isConstant
         self.isUnary = isUnary
+        self.isBinary = isBinary
+        self.isTernary = isTernary
         self.isBranch = isBranch
         self.isIndex = isAddressing
-        self.isTernary = isTernary
+        assert(isConstant or isUnary or isBinary or isTernary,
+            "Invalid codon construction: Must specify the number of parameters.")
 
+        
 
     def exec(self, input):
-        return self.func(input[0]) if not self.isUnary or self.isBranch else self.func(input[0], input[1])
-
+        if self.isConstant: return self.func()
+        if self.isUnary: return self.func(input[0])
+        if self.isBinary: return self.func(input[0], input[1])
+        if self.isTernary: return self.func(input[0], input[1], input[2])
+        assert(False, "Invalid codon definition: Number of parameters not specified.")

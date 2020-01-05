@@ -9,18 +9,17 @@ Copyright (c) 2019 Your Company
 
 
 import numpy as np
+from genetic_code import genetic_code
 from geonomic_library import geonomic_library
 from copy import deepcopy
 
-
+# A gene is a recursive structure of other genes and ultimately codons.
+# A gene is defined by an array of
 class gene():
 
     # The default gene only has an input codon and an output codon
     def __init__(self):
-        self._input_refs = [None, None]
-        self._geonomic_refs = np.array([0, 0], np.unit32)
-        self._size = len(self._geonomic_refs)
-
+        self._code = genetic_code()
 
     # The input of the gene is a 1-dimensional np.array(dtype=np.float32)
     def exec(self, in_data):
