@@ -8,17 +8,12 @@ Copyright (c) 2019 Your Company
 '''
 
 import numpy as np
-from codon import codon
+from .codon import codon
 
 
 codon_library = [
-    # The output codon (has to be element 0)
-    codon(lambda x: np.array(x).flatten(), 'output', isUnary=True),
-
-    # Constant definitions
-    codon(None, 'int', isConstant=True),
-    codon(None, 'float', isConstant=True),
-    codon(None, 'bool', isConstant=True),
+    # Constant definition
+    codon(None, 'constant', isConstant=True),
 
     # Basic arithmetic
     codon(lambda x, y: x + y, 'add', isBinary=True),
@@ -48,5 +43,5 @@ codon_library = [
     # Addressing
     codon(lambda x, y: x[np.int(y)], 'index', isBinary=True, isAddressing=True),
     codon(lambda x, y1, y2: x[np.int(y1):np.int(y2)], 'range index', isTernary=True, isAddressing=True),
-    codon(lambda x, y: np.concatenate((x, y)), 'range index', isBinary=True, isAddressing=True)
+    codon(lambda x, y: np.concatenate((x, y)), 'concatenate', isBinary=True, isAddressing=True)
 ]
