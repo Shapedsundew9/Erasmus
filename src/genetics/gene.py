@@ -8,39 +8,27 @@ Copyright (c) 2019 Your Company
 '''
 
 
-import numpy as np
-from genetic_code import genetic_code
-from geonomic_library import geonomic_library
-from copy import deepcopy
+from .genetic_code import genetic_code
+from .genomic_library import genomic_library
+from .codon_library import codon_library
 
-# A gene is a recursive structure of other genes and ultimately codons.
-# A gene is defined by an array of
-class gene():
+
+# A gene is a recursive structure of other genes
+class agent():
 
     # The default gene only has an input codon and an output codon
     def __init__(self):
         self._code = genetic_code()
-
-    # The input of the gene is a 1-dimensional np.array(dtype=np.float32)
-    def exec(self, in_data):
-        if in_data.shape[0] < self._size: raise Exception('Gene interface', 'Too few input parameters')
-        outputs = [None] * self._size
-        outputs[0] = in_data  
-
-        for g in range(1, self._size):
-            if outputs[g] is None: self._exec_gene(g, outputs)
-        
-        return outputs[-1]
+        self._library = genomic_library()
 
 
-    def _exec_gene(self, g, outputs):
-        inputs = []
-        for r in self._input_refs:
-            if outputs[r[0]] is None: self._exec_gene(r[0], outputs)
-            inputs.append(outputs[r[0]])
-        outputs[g] = geonomic_library[self._geonomic_refs[g]](np.array(inputs).flatten())
+    def exec(self, d):
+        for i, g in enumerate(self._code[:-1], 1):
+            output = codon_library[g.get_idx()].exec(d) if g.is_codon() else self._library[g.get_idx()].exec(d)
+            g.set_output(output)
+            d = self._code.get_inputs(i)
+        return d
 
 
-    def replicate(self, mutate=True):
-        if not mutate: return deepcopy(self)
-
+    def reproduction(self, partner=None):
+..to be continued

@@ -11,7 +11,7 @@ Copyright (c) 2020 Your Company
 from numpy import array, int32, uint32, float32, concatenate
 from numpy.random import randint
 
-
+# TODO: Get rid of self.data and make explcit members
 class genetic_code_entry():
 
     def __init__(self, iput=None, codon=False, idx=0, oput=0):
@@ -32,6 +32,22 @@ class genetic_code_entry():
 
     def set_codon(self, c=True):
         self.data[3] = c
+
+
+    def get_input(self):
+        return self.data[0]
+
+
+    def get_idx(self):
+        return self.data[1]
+
+
+    def get_output(self):
+        return self.data[2]
+
+
+    def is_codon(self):
+        return self.data[3]
 
 
     def append_input(self, iput):

@@ -11,6 +11,7 @@ from hashlib import sha512
 from zlib import compress, decompress
 from pickle import dumps, loads
 from base64 import b64encode, b64decode
+from numpy import array
 from numpy.random import randint
 from .genetic_code_entry import genetic_code_entry as entry
 
@@ -20,7 +21,7 @@ from .genetic_code_entry import genetic_code_entry as entry
 # _entries = [ input_entry, entry0, entry1, entry2, ... entryN, output_entry]
 class genetic_code():
 
-    def __init__(self, name='Empty', codon_idx=None, ancestor=None):
+    def __init__(self, name=None, codon_idx=None, ancestor=None):
         # TODO: Optimisation idea: _entries is a list of lists which is very inefficient.
         # Much less RAM can be used by arranging the components into numpy arrays
         # at the cost of construction time CPU.
@@ -56,9 +57,14 @@ class genetic_code():
         self.ancestor = self.id()
         self._entries.insert(-1, entry)
 
+
     def insert(self, pos, entry):
         self.ancestor = self.id()
         self._entries.insert(pos + 1, entry)
+
+
+    def get_inputs(self, idx):
+        return array([self._entries[i[0]].get_output()[i[1]] for i in self._entries[i].get_input()])
 
 
     def random_index(self):

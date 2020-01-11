@@ -68,5 +68,11 @@ class genomic_library_store():
         return dbcur.fetchall()
 
 
+    def get_by_idx(self, idx):
+        dbcur = self._db.cursor()
+        dbcur.execute('SELECT * FROM {0} WHERE idx IS ?'.format(TABLE_NAME), (idx,))
+        return dbcur.fetchall()[0]
+
+
 
 

@@ -26,6 +26,10 @@ class genomic_library():
             for i, c in enumerate(codon_library): self.add_code(genetic_code(codon_idx=(c, i)))
 
 
+    def __getitem__(self, key):
+        return self._store.get_by_idx(key)
+
+
     def __len__(self):
         return len(self._store)
 
@@ -35,8 +39,8 @@ class genomic_library():
         self.add_entry(new_entry)
 
 
-    def get_code(self, id):
-        entry = self.get_entry(id)
+    def get_code(self, eid):
+        entry = self.get_entry(eid)
         code = genetic_code(entry.name, entry.ancestor)
         code.zdeserialise(entry.data)
         return code
@@ -46,8 +50,8 @@ class genomic_library():
         self._store.add(new_entry)
 
 
-    def get_entry(self, id):
-        return self._store.get(id)
+    def get_entry(self, eid):
+        return self._store.get(eid)
 
 
 
