@@ -21,6 +21,9 @@ TABLE_COLUMNS = '(data TEXT NOT NULL, id TEXT NOT NULL PRIMARY KEY,ancestor TEXT
 class genomic_library_store():
 
     _db = None
+    name = None
+    _entry_count = None
+    is_empty = None
 
 
     def __init__(self, name=TABLE_NAME):

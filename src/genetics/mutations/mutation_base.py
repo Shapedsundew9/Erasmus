@@ -28,5 +28,5 @@ class mutation_base():
 
 
     # Must return a new code object
-    def mutate(self, code):
+    def mutate(self, code, partners=None):
         raise NotImplementedError()

@@ -8,7 +8,7 @@ Copyright (c) 2020 Your Company
 '''
 
 from copy import deepcopy
-from mutation_base import mutation_base
+from .mutation_base import mutation_base
 
 
 class mutation_trg000(mutation_base):
@@ -17,6 +17,6 @@ class mutation_trg000(mutation_base):
         super().__init__('replicate', weight)
 
 
-    def mutate(self, code):
+    def mutate(self, code, partners=None):
         return deepcopy(code)
         

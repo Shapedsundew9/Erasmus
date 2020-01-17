@@ -8,17 +8,23 @@ Copyright (c) 2020 Your Company
 '''
 
 
+from numpy.random import randint
 from .genomic_library_entry import genomic_library_entry as entry
 from .genomic_library_store import genomic_library_store as store
 from .codon_library import codon_library
 from .genetic_code import genetic_code
 
 
+# TODO: Add statistics to code entries.
 class genomic_library():
 
+    name = None
+    _store = None
+
     def __init__(self, name='genomic_library'):
-        self.name = name
-        self._store = store(name)
+        if self.name is None:
+            self.name = name
+            self._store = store(name)
 
         # In the event the store does not exist an empty one will be created
         # It is then populated with the genes containing just one codon
@@ -53,5 +59,8 @@ class genomic_library():
     def get_entry(self, eid):
         return self._store.get(eid)
 
+
+    def random_code(self):
+        return randint(self.__len__())
 
 
