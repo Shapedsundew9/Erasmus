@@ -19,8 +19,8 @@ from .mutations import mutation_rig000, mutation_trg000
 class agent():
 
     _mutation_list = (
-        mutation_rig000.mutation_rig000(),
-        mutation_trg000.mutation_trg000()
+        mutation_rig000(),
+        mutation_trg000()
     )
     _mutation_distribution = array([m.weight for m in _mutation_list])
     glib = genomic_library()
@@ -51,7 +51,7 @@ class agent():
 
     def reproduce(self, partners=None, attempts=100):
         draw = choice(len(self._mutation_list), p=self._mutation_distribution)
-        for i in range(attempts):
+        for _ in range(attempts):
             offspring = agent(self._mutation_list[draw].mutate(self._code, partners))
             if offspring.is_alive(): return offspring
         return None

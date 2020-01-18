@@ -19,6 +19,7 @@ class mutation_rig000(mutation_base):
 
     def __init__(self, weight=1.0):
         super().__init__('replicate', weight)
+        self.code = 'rig000'
 
 
     def mutate(self, code, partners=None):

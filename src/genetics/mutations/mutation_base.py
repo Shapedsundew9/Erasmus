@@ -25,6 +25,7 @@ class mutation_base():
     def __init__(self, name, weight=1.0):
         self.name = name
         self.weight = weight
+        self.code = None
 
 
     # Must return a new code object
