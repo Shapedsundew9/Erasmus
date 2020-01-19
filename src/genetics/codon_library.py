@@ -7,42 +7,44 @@ Author: Shaped Sundew
 Copyright (c) 2019 Your Company
 '''
 
-from numpy import sqrt, reciprocal, isclose, int32, concatenate
+from numpy import sqrt, reciprocal, isclose
 from .codon import codon
 
 
-# TODO: Add a store codon
+def _store(x, y, z):
+    x[y] = z
+
+
 codon_library = [
     # Constant definition
-    codon(None, 'constant', isConstant=True),
+    codon(None, 'constant'),
 
     # Basic arithmetic
-    codon(lambda x, y: x + y, 'add', isBinary=True),
-    codon(lambda x, y: x - y, 'subtract', isBinary=True),
-    codon(lambda x, y: x * y, 'multipy', isBinary=True),
-    codon(lambda x, y: x / y, 'divide', isBinary=True),
+    codon(lambda x, y: x + y, 'add'),
+    codon(lambda x, y: x - y, 'subtract'),
+    codon(lambda x, y: x * y, 'multipy'),
+    codon(lambda x, y: x / y, 'divide'),
 
     # Unary arithmetic
-    codon(lambda x: sqrt(x), 'square root', isUnary=True),
-    codon(lambda x: reciprocal(x), 'reciprical', isUnary=True),
-    codon(lambda x: -x, 'negate', isUnary=True),
+    codon(lambda x: sqrt(x), 'square root'),
+    codon(lambda x: reciprocal(x), 'reciprical'),
+    codon(lambda x: -x, 'negate'),
 
     # Basic conditional
-    codon(lambda x, y: x < y, 'less than', isBinary=True),
-    codon(lambda x, y: isclose(x, y), 'is close too', isBinary=True),
+    codon(lambda x, y: x < y, 'less than'),
+    codon(lambda x, y: isclose(x, y), 'is close too'),
 
     # Basic logical
-    codon(lambda x, y: x and y, 'and', isBinary=True),
-    codon(lambda x, y: x or y, 'or', isBinary=True),
+    codon(lambda x, y: x and y, 'and'),
+    codon(lambda x, y: x or y, 'or'),
 
     # Unary logical
-    codon(lambda x: not x, 'not', isUnary=True),
+    codon(lambda x: not x, 'not'),
 
     # Branch
-    codon(lambda x, y1, y2: y1 if x else y2, 'if then else', isTernary=True),
+    codon(lambda x, y1, y2: y1 if x else y2, 'if then else'),
 
     # Addressing
-    codon(lambda x, y: x[int32(y)], 'index', isBinary=True, isAddressing=True),
-    codon(lambda x, y1, y2: x[int32(y1):int32(y2)], 'range index', isTernary=True, isAddressing=True),
-    codon(lambda x, y: concatenate((x, y)), 'concatenate', isBinary=True, isAddressing=True)
+    codon(lambda x, y: x[y], 'read', isMemory=True),
+    codon(_store, 'write', isMemory=True)
 ]

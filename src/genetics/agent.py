@@ -13,6 +13,7 @@ from .genetic_code import genetic_code
 from .genomic_library import genomic_library
 from .codon_library import codon_library
 from .mutations import mutation_rig000, mutation_trg000
+from .memory import memory
 
 
 # An agent is a recursive structure of genetic_codes
@@ -31,14 +32,11 @@ class agent():
         if code is None and random_code:
             self._code = self.glib.random_code()
         elif code is None: self._code = genetic_code()
+        self._memory = memory()
 
 
     def exec(self, d=None):
-        for i, g in enumerate(self._code[:-1], 1):
-            output = codon_library[g.get_idx()].exec(d) if g.is_codon() else self.glib[g.get_idx()].exec(d)
-            g.set_output(output)
-            d = self._code.get_inputs(i)
-        return d
+        return self._code.exec(d, self._memory)
 
 
     def is_alive(self):

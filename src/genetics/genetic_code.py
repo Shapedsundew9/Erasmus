@@ -14,12 +14,18 @@ from base64 import b64encode, b64decode
 from numpy import array
 from numpy.random import randint
 from .genetic_code_entry import genetic_code_entry as entry
+from .codon_library import codon_library
+from .genomic_library import genomic_library
 
 
 # The genetic code is a list of gene/codon references & the connectivity
 # entry = [inputs, reference to gene/codon, outputs]
 # _entries = [ input_entry, entry0, entry1, entry2, ... entryN, output_entry]
 class genetic_code():
+
+
+    glib = genomic_library()
+
 
     def __init__(self, name=None, codon_idx=None, ancestor=None):
         # TODO: Optimisation idea: _entries is a list of lists which is very inefficient.
@@ -39,6 +45,15 @@ class genetic_code():
 
     def __len__(self):
         return len(self._entries) - 2
+
+
+    def exec(self, d=None, m=None):
+        for i, g in enumerate(self._entries[:-1], 1):
+            output = codon_library[g.get_idx()].exec(d, m) if g.is_codon() else self.glib[g.get_idx()].exec(d, m)
+            g.set_output(output)
+            d = self.get_inputs(i)
+        return d
+
 
 
     def id(self):
