@@ -26,6 +26,7 @@ class agent():
     _mutation_distribution = array([m.weight for m in _mutation_list])
     glib = genomic_library()
 
+
     # The default gene only has an input codon and an output codon
     def __init__(self, code=None, random_code=False):
         # TODO: Add a weight based random code option
@@ -35,7 +36,7 @@ class agent():
         self._memory = memory()
 
 
-    def exec(self, d=None):
+    def exec(self, d):
         return self._code.exec(d, self._memory)
 
 
