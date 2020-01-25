@@ -7,9 +7,9 @@ Author: Shaped Sundew
 Copyright (c) 2020 Your Company
 '''
 
-from genetics.agent import agent
 from numpy import zeros, float32
-from cull_policies import cull_r000
+from .genetics.agent import agent
+from .cull_policies import cull_r000
 
 
 class population():

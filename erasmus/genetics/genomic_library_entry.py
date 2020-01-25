@@ -8,13 +8,16 @@ Copyright (c) 2020 Your Company
 '''
 
 
+from .codon import codon
+
+
 class genomic_library_entry():
 
     def __init__(self, data, eid, ancestor, name, meta_data=None, created=None, index=None):
         self.data = data
-        self.id = eid
         self.ancestor = ancestor
         self.name = name
         self.meta_data = meta_data
         self.created = created
         self.index = index
+

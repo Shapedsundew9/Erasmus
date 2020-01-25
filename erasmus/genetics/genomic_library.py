@@ -29,7 +29,7 @@ class genomic_library():
         # In the event the store does not exist an empty one will be created
         # It is then populated with the genes containing just one codon
         if self._store.is_empty:
-            for i, c in enumerate(codon_library): self.add_code(genetic_code(codon_idx=(c, i)))
+            for i, c in enumerate(codon_library): self.add_entry(genetic_code(codon_idx=(c, i)).make_library_entry())
 
 
     def __getitem__(self, key):
@@ -38,18 +38,6 @@ class genomic_library():
 
     def __len__(self):
         return len(self._store)
-
-
-    def add_code(self, code, meta_data=None):
-        new_entry = entry(code.zserialise(), code.id(), code.ancestor, code.name, meta_data)
-        self.add_entry(new_entry)
-
-
-    def get_code(self, eid):
-        entry = self.get_entry(eid)
-        code = genetic_code(entry.name, entry.ancestor)
-        code.zdeserialise(entry.data)
-        return code
 
     
     def add_entry(self, new_entry):
@@ -62,5 +50,3 @@ class genomic_library():
 
     def random_code(self):
         return randint(self.__len__())
-
-
