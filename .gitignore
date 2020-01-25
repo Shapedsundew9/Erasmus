@@ -94,4 +94,4 @@ ENV/
 .vscode
 
 # Erasmus enerated assets
-.db
+*.db
