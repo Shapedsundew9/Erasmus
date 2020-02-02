@@ -20,8 +20,11 @@ class genetic_code_entry():
     _logger = getLogger(__name__)
 
 
-    def __init__(self, iput=[], idx=0, oput=[]):
-        self.data = [iput, idx, oput, idx < len(codon_library)]
+    def __init__(self, iput=[], idx=0, oput=[], genetic_code=None):
+        if genetic_code is None:
+            self.data = [iput, idx, oput, idx < len(codon_library)]
+        else:
+            self.data = [genetic_code.entries[0], 
         genetic_code_entry._logger.debug("Created genetic code entry %s", str(self.data))
 
 

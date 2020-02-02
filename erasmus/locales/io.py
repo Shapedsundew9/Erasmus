@@ -23,7 +23,7 @@ def scalar_identity():
 def scalar_identity_fitness(agent, enviroment, target):
     inputs, target = enviroment()
     output = agent.exec(inputs)
-    if output is None: return 0.0
+    if output is None or not output.shape[0]: return 0.0
     fitness = prod(target.shape) / prod(output.shape)
     if fitness > 1.0: fitness = 1.0 / fitness
     if not isclose(fitness, 1.0): return fitness

@@ -17,6 +17,6 @@ _ = genomic_library(name='test_library', temp=True)
     
 def test_scalar():
     fitness_function = partial(scalar_identity_fitness, enviroment=scalar_identity, target=array([2.0], dtype=float32))
-    p = population(fitness_function)
+    p = population(fitness_function, 1, 1)
     p.next_generation()
-    p.agents[0]._gene.genetic_code.draw()
+    #p.agents[0]._gene.genetic_code.draw()

@@ -58,4 +58,4 @@ class genomic_library():
 
 
     def random_code(self):
-        return randint(self.__len__())
+        return self.get_entry(randint(self.__len__()))

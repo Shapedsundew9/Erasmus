@@ -30,8 +30,8 @@ _OUTPUT_ENTRY = -1
 class genetic_code():
 
 
-    def __init__(self, name=None, ancestor=None, codon_idx=None, constant=None):
-        # TODO: Optimisation idea: entries is a list of lists which is very inefficient.
+    def __init__(self, name=None, ancestor=None, codon_idx=None, constant=None, idx=None):
+        # TODO: Optimisation idea: entries is a list of entry's which is very inefficient.
         # Much less RAM can be used by arranging the components into numpy arrays
         # at the cost of construction time CPU.
 
@@ -39,6 +39,7 @@ class genetic_code():
         self.entries = [entry(idx=0), entry(idx=1)]
         self.name = name
         self.ancestor = ancestor
+        self.idx = idx
         if not codon_idx is None: self._initialise_with_codon(*codon_idx, constant)
 
 
@@ -89,18 +90,22 @@ class genetic_code():
         return b64encode(compress(dumps(self.entries), 9))
 
 
-    def zdeserialise(self, obj):
+    def zdeserialise(self, obj, idx):
         self.entries = loads(decompress(b64decode(obj)))
+        self.idx = idx
+        return self
 
 
     def append(self, entry):
         self.ancestor = self.id()
         self.entries.insert(-1, entry)
+        return self
 
 
     def insert(self, pos, entry):
         self.ancestor = self.id()
         self.entries.insert(pos + 1, entry)
+        return self
 
 
     def make_library_entry(self, meta_data=None):

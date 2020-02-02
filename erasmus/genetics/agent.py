@@ -36,6 +36,7 @@ class agent():
     # The default gene only has an input codon and an output codon
     def __init__(self, base_gene=None, random=False):
         # TODO: Add a weight based random code option
+        print("base_gene: ", base_gene)
         self._gene = gene(random=random) if base_gene is None else base_gene
         self._memory = memory()
 
@@ -66,7 +67,7 @@ class agent():
         agent._logger.debug("Agent reproduction starting:")
         for a in range(attempts):
             draw = choice(len(self._mutation_list), p=self._mutation_distribution)
-            offspring = agent(self._mutation_list[draw].mutate(self._gene.genetic_code, partners))
+            offspring = agent(gene(self._mutation_list[draw].mutate(self._gene.genetic_code, partners)))
             if not offspring is None and offspring.is_alive():
                 agent._logger.debug("Agent reproduced in %d attempts.", a + 1)
                 return offspring

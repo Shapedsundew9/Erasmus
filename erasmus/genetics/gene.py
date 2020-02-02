@@ -25,9 +25,10 @@ class gene():
     _glib = genomic_library()
 
 
-    def __init__(self, index=None, random=False):
-        if not index is None:
-            self.genetic_code = self._cache(index)
+    # seed is a genetic_code or an index to one
+    def __init__(self, seed=None, random=False):
+        if not seed is None:
+            self.genetic_code = seed if isinstance(seed, genetic_code) else self._cache(seed)
         else:
             self.genetic_code = self._glib.random_code() if random else genetic_code()
 
