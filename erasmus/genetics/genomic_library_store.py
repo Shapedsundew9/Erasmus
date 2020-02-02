@@ -11,6 +11,8 @@ Copyright (c) 2020 Your Company
 import sqlite3
 import time
 from slugify import slugify
+from os.path import exists
+from os import remove
 
 
 TABLE_NAME = 'genomic_library'
@@ -26,10 +28,13 @@ class genomic_library_store():
     is_empty = None
 
 
-    def __init__(self, name=TABLE_NAME):
+    def __init__(self, name=TABLE_NAME, recreate=False, temp=False):
         if self._db is None: 
             self.name = name
-            db_uri = 'file:' + slugify(name) + '.db?mode=rwc'
+            filename = slugify(name) + '.db'
+            if recreate and exists(filename): remove(filename)
+            mode = 'memory' if temp else 'rwc'
+            db_uri = 'file:' + filename + '?mode=' + mode
             self._db = sqlite3.connect(db_uri, uri=True)
             if self._is_empty(): 
                 dbcur = self._db.cursor() 
@@ -73,6 +78,7 @@ class genomic_library_store():
 
     def get_by_idx(self, idx):
         dbcur = self._db.cursor()
+        print(idx, type(idx))
         dbcur.execute('SELECT * FROM {0} WHERE idx IS ?'.format(TABLE_NAME), (idx,))
         return dbcur.fetchall()[0]
 

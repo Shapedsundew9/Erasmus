@@ -8,8 +8,7 @@ Copyright (c) 2020 Your Company
 '''
 
 from numpy.random import randint
-from numpy import array, iinfo, int32
-
+from numpy import array, iinfo, int32, prod, isclose, absolute, sqrt
 _MIN_SCALAR = iinfo(int32).min
 _MAX_SCALAR = iinfo(int32).max
 _MIN_VECTOR = 1
@@ -17,8 +16,20 @@ _MAX_VECTOR = 128
 
 
 def scalar_identity():
-    i = array([randint(2**30)])
+    i = array([randint(_MIN_SCALAR, _MAX_SCALAR)])
     return (i, i)
+
+
+def scalar_identity_fitness(agent, enviroment, target):
+    inputs, target = enviroment()
+    output = agent.exec(inputs)
+    if output is None: return 0.0
+    fitness = prod(target.shape) / prod(output.shape)
+    if fitness > 1.0: fitness = 1.0 / fitness
+    if not isclose(fitness, 1.0): return fitness
+    fitness = sqrt(absolute(target - output))
+    if not isclose(fitness, 0.0): return 1.0 + 1.0 / fitness
+    return 2.0
 
 
 def _D_identity(num=1):

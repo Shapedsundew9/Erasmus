@@ -7,47 +7,69 @@ Author: Shaped Sundew
 Copyright (c) 2020 Your Company
 '''
 
-
+from .codon_library import codon_library
 from numpy import array, int32, uint32, float32, concatenate
 from numpy.random import randint
+from logging import getLogger
+
 
 # TODO: Get rid of self.data and make explcit members
 class genetic_code_entry():
 
-    def __init__(self, iput=None, codon=False, idx=0, oput=0):
-        self.data = [iput, idx, oput, codon]
+
+    _logger = getLogger(__name__)
+
+
+    def __init__(self, iput=[], idx=0, oput=[]):
+        self.data = [iput, idx, oput, idx < len(codon_library)]
+        genetic_code_entry._logger.debug("Created genetic code entry %s", str(self.data))
 
 
     def set_input(self, iput):
-        self.data[0] = None if iput is None else array(iput, dtype=uint32)
+        self.data[0] = [] if iput is None else array(iput, dtype=uint32)
+        genetic_code_entry._logger.debug("Set genetic code entry input to %s", str(self.data[0]))
 
 
     def set_idx(self, idx):
         self.data[1] = uint32(idx)
+        self.data[3] = idx < len(codon_library)
+        genetic_code_entry._logger.debug("Set genetic code entry idx to %s & codon to %s", str(self.data[1]), self.data[3])
 
 
     def set_output(self, oput):
-        self.data[2] = None if oput is None else array(oput, dtype=float32)
-
-
-    def set_codon(self, c=True):
-        self.data[3] = c
+        self.data[2] = [] if oput is None else array(oput, dtype=float32)
+        genetic_code_entry._logger.debug("Set genetic code entry output to %s", str(self.data[2]))
 
 
     def get_input(self):
+        genetic_code_entry._logger.debug("Genetic code entry input is %s ", str(self.data[0]))
         return self.data[0]
 
 
     def get_idx(self):
+        genetic_code_entry._logger.debug("Genetic code entry idx is %d ", self.data[1])
         return self.data[1]
 
 
     def get_output(self):
+        genetic_code_entry._logger.debug("Genetic code entry input is %s ", str(self.data[2]))
         return self.data[2]
+
+
+    def get_name(self):
+        return codon_library[self.data[3]].name if self.is_codon() else 'code ' + str(self.data[3])
 
 
     def is_codon(self):
         return self.data[3]
+
+
+    def is_input(self):
+        return self.data[1] == 0
+
+
+    def is_output(self):
+        return self.data[1] == 1
 
 
     def append_input(self, iput):

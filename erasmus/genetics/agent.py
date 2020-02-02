@@ -8,23 +8,28 @@ Copyright (c) 2019 Your Company
 '''
 
 from numpy.random import choice
-from numpy import array
+from numpy import array, sum
 from .genetic_code import genetic_code
 from .genomic_library import genomic_library
 from .codon_library import codon_library
 from .mutations import mutation_rig000, mutation_trg000
 from .memory import memory
 from .gene import gene
+from logging import getLogger
+from sys import exc_info
 
 
 # An agent is a recursive structure of genetic_codes wrapped up in a gene
 class agent():
 
+
+    _logger = getLogger(__name__)
     _mutation_list = (
         mutation_rig000(),
         mutation_trg000()
     )
-    _mutation_distribution = array([m.weight for m in _mutation_list])
+    _mutation_weights = array([m.weight for m in _mutation_list])
+    _mutation_distribution = _mutation_weights / sum(_mutation_weights)
     glib = genomic_library()
 
 
@@ -40,9 +45,11 @@ class agent():
 
 
     def is_alive(self):
+        self.exec()
         try:
             self.exec()
         except:
+            agent._logger.debug("Agent still born with %s", exc_info()[0])
             return False
         return True
 
@@ -56,8 +63,12 @@ class agent():
 
 
     def reproduce(self, partners=None, attempts=100):
-        draw = choice(len(self._mutation_list), p=self._mutation_distribution)
-        for _ in range(attempts):
+        agent._logger.debug("Agent reproduction starting:")
+        for a in range(attempts):
+            draw = choice(len(self._mutation_list), p=self._mutation_distribution)
             offspring = agent(self._mutation_list[draw].mutate(self._gene.genetic_code, partners))
-            if offspring.is_alive(): return offspring
+            if not offspring is None and offspring.is_alive():
+                agent._logger.debug("Agent reproduced in %d attempts.", a + 1)
+                return offspring
+        agent._logger.debug("Agent failed to reproduce in %d attempts.", attempts)        
         return None

@@ -17,6 +17,11 @@ from inspect import signature
 from .genetic_code_entry import genetic_code_entry as entry
 from .genomic_library_entry import genomic_library_entry
 from .codon_library import codon_library
+from graph_tool.all import Graph, sfdp_layout, graph_draw
+
+
+_INPUT_ENTRY = 0
+_OUTPUT_ENTRY = -1
 
 
 # The genetic code is a list of gene/codon references & the connectivity
@@ -25,16 +30,16 @@ from .codon_library import codon_library
 class genetic_code():
 
 
-    def __init__(self, name=None, ancestor=None, codon_idx=None):
+    def __init__(self, name=None, ancestor=None, codon_idx=None, constant=None):
         # TODO: Optimisation idea: entries is a list of lists which is very inefficient.
         # Much less RAM can be used by arranging the components into numpy arrays
         # at the cost of construction time CPU.
 
         # self.entries = [input_entry, output_entry]
-        self.entries = [entry(), entry()]
+        self.entries = [entry(idx=0), entry(idx=1)]
         self.name = name
         self.ancestor = ancestor
-        if not codon_idx is None: self._initialise_with_codon(*codon_idx)
+        if not codon_idx is None: self._initialise_with_codon(*codon_idx, constant)
 
 
     def __getitem__(self, key):
@@ -45,31 +50,35 @@ class genetic_code():
         return len(self.entries) - 2
 
 
-    def _initialise_with_codon(self, c, i):
+    def _initialise_with_codon(self, c, i, constant):
         self.name = c.name
         if not callable(c.func):
-            self._initialise_with_constant(i)
+            self._initialise_with_constant(i, constant)
         else:
             num_param = len(signature(c.func).parameters)
             if num_param == 2: self._initialise_with_binary(i)
             if num_param == 1: self._initialise_with_unary(i)
             if num_param == 3: self._initialise_with_ternary(i)
+            self.entries[_OUTPUT_ENTRY].set_input([len(self.entries) - 2, 0])        
 
 
-    def _initialise_with_constant(self, i):
-        pass
+    def _initialise_with_constant(self, i, constant):
+        self.append(entry([constant], i, [constant]))
 
 
     def _initialise_with_unary(self, i):
-        self.append(entry([[0, 0]], True, i, [0]))
+        self.entries[_INPUT_ENTRY].set_input([1])        
+        self.append(entry([[0, 0]], i, [0]))
 
 
     def _initialise_with_binary(self, i):
-        self.append(entry([[0, 0], [0, 1]], True, i, [0]))
+        self.entries[_INPUT_ENTRY].set_input([2])        
+        self.append(entry([[0, 0], [0, 1]], i, [0]))
 
 
     def _initialise_with_ternary(self, i):
-        self.append(entry([[0, 0], [0, 1], [0, 2]], True, i, [0]))
+        self.entries[_INPUT_ENTRY].set_input([3])        
+        self.append(entry([[0, 0], [0, 1], [0, 2]], i, [0]))
 
 
     def id(self):
@@ -99,6 +108,37 @@ class genetic_code():
 
 
     def random_index(self):
-        return randint(len(self))
+        return 0 if not len(self) else randint(len(self))
 
-    
+
+    def _add_vertex(self, graph, name, is_func):
+        v = graph.add_vertex()
+        graph.vertex_properties.name = name
+        graph.vertex_properties.type = is_func
+        return v
+        
+
+    def draw(self, filename="genetic_code.png"):
+        g = Graph()
+        g.vertex_properties['name'] = g.new_vertex_property("string")
+        g.vertex_properties['type'] = g.new_vertex_property("bool")
+        entries_v_list = []
+        for e in self.entries:
+            entry_v = []
+            if e.is_input():
+                entry_v.append([self._add_vertex(g, 'i' + str(i), False) for i in range(e.get_input()[0])])
+                entry_v.append(self._add_vertex(g, 'input', True))
+                for v in entry_v[0]: g.add_edge(v, entry_v[1])
+                entry_v.append([self._add_vertex(g, 'o' + str(i), False) for i in range(e.get_input()[0])])
+                for v in entry_v[-1]: g.add_edge(entry_v[1], v)
+            else:
+                entry_v.append([])
+                entry_v.append(self._add_vertex(g, e.get_name(), True))
+                for i in e.get_input(): g.add_edge(entries_v_list[i[0]][2][i[1]], entry_v[-1])
+                entry_v.append([self._add_vertex(g, 'o' + str(i), False) for i in range(e.get_output())])
+                for v in entry_v[-1]: g.add_edge(entry_v[1], v)
+            entries_v_list.append(entry_v)
+            graph_draw(g, sfdp_layout(g), output_size=(1000, 1000), vertex_color=[1,1,1,0],
+                    vertex_fill_color=g.vertex_properties['type'], vertex_size=1, edge_pen_width=1.2, output=filename)
+
+

@@ -27,21 +27,22 @@ class gene():
 
     def __init__(self, index=None, random=False):
         if not index is None:
-            self._glib[index]
+            self.genetic_code = self._cache(index)
         else:
             self.genetic_code = self._glib.random_code() if random else genetic_code()
 
 
     def exec(self, d=None, m=None):
         for i, g in enumerate(self.genetic_code.entries[:-1], 1):
-            output = codon_library[g.get_idx()].exec(d, m) if g.is_codon() else self._cache(g.get_idx()).exec(d, m)
+            output = codon_library[g.get_idx()].exec(d, m) if g.is_codon() else gene(g.get_idx()).exec(d, m)
             g.set_output(output)
             d = self.get_inputs(i)
         return d
 
 
     def get_inputs(self, idx):
-        return array([self.genetic_code.entries[i[0]].get_output()[i[1]] for i in self.genetic_code.entries[i].get_input()])
+        inputs = self.genetic_code.entries[idx].get_input()
+        if not inputs is None: return array([self.genetic_code.entries[i[0]].get_output()[i[1]] for i in inputs])
 
 
     def add_code_to_library(self, meta_data=None):
@@ -50,4 +51,5 @@ class gene():
 
     @lru_cache(maxsize=1000)
     def _cache(self, index):
-        return gene(self._glib[index])
+        return genetic_code(self._glib[index])
+

@@ -7,6 +7,10 @@ Author: Shaped Sundew
 Copyright (c) 2020 Your Company
 '''
 
+
+from logging import getLogger
+
+
 # Base class for all mutations
 # Derived classes have the following naming convention (regex):
 #   mutation_[rti][ridm][cgi][0-9]{3}
@@ -22,12 +26,16 @@ Copyright (c) 2020 Your Company
 # 
 class mutation_base():
 
+
+    _logger = getLogger(__name__)
+
+    
     def __init__(self, name, weight=1.0):
         self.name = name
         self.weight = weight
         self.code = None
 
 
-    # Must return a new code object
+    # Must return a new code object or None
     def mutate(self, code, partners=None):
         raise NotImplementedError()

@@ -11,13 +11,14 @@ from copy import deepcopy
 from .mutation_base import mutation_base
 
 
+# Do nothing
 class mutation_trg000(mutation_base):
 
-    def __init__(self, weight=1.0):
+    def __init__(self, weight=0.01):
         super().__init__('replicate', weight)
         self.code = 'trg000'
         
 
     def mutate(self, code, partners=None):
-        return deepcopy(code)
+        return None
         

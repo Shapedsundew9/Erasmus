@@ -7,7 +7,7 @@ Author: Shaped Sundew
 Copyright (c) 2019 Your Company
 '''
 
-from numpy import sqrt, reciprocal, isclose
+from numpy import sqrt, reciprocal, isclose, array
 from .codon import codon
 
 
@@ -15,7 +15,12 @@ def _store(x, y, z):
     x[y] = z
 
 
+# There must be an 'input' and 'output' codon at positions 0 & 1 respectively.
 codon_library = [
+    # Input & output
+    codon(lambda x: x, 'input'),
+    codon(None, 'output'),
+
     # Constant definition
     codon(None, 'constant'),
 

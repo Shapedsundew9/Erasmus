@@ -13,9 +13,10 @@ from .mutation_base import mutation_base
 from copy import deepcopy
 
 
+# Insert a random genetic_code from the genomic library
 class mutation_rig000(mutation_base):
 
-    glib = genomic_library()
+    _glib = genomic_library()
 
     def __init__(self, weight=1.0):
         super().__init__('replicate', weight)
@@ -23,7 +24,10 @@ class mutation_rig000(mutation_base):
 
 
     def mutate(self, code, partners=None):
-        return deepcopy(code).insert(code.random_index(), self.glib.random_code())
+        index = code.random_index()
+        random_code = self._glib.random_code() 
+        mutation_base._logger.debug("%s inserted genetic code %d in position %d", self.code, random_code, index)
+        return deepcopy(code).insert(index, random_code)
 
 
         
