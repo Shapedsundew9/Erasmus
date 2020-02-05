@@ -13,6 +13,7 @@ from pickle import dumps, loads
 from base64 import b64encode, b64decode
 from numpy import array
 from numpy.random import randint
+from random import choices
 from inspect import signature
 from .genetic_code_entry import genetic_code_entry as entry
 from .genomic_library_entry import genomic_library_entry
@@ -30,18 +31,23 @@ _OUTPUT_ENTRY = -1
 class genetic_code():
 
 
-    def __init__(self, name=None, ancestor=None, codon_idx=None, constant=None, idx=None):
+    def __init__(self, name=None, ancestor=None, codon_idx=None, constant=None, idx=None, library_entry=None):
         # TODO: Optimisation idea: entries is a list of entry's which is very inefficient.
         # Much less RAM can be used by arranging the components into numpy arrays
         # at the cost of construction time CPU.
 
-        # self.entries = [input_entry, output_entry]
-        self.entries = [entry(idx=0), entry(idx=1)]
-        self.name = name
-        self.ancestor = ancestor
-        self.idx = idx
-        if not codon_idx is None: self._initialise_with_codon(*codon_idx, constant)
-
+        if library_entry == None:
+            # self.entries = [input_entry, output_entry]
+            self.entries = [entry(idx=0), entry(idx=1)]
+            self.name = name
+            self.ancestor = ancestor
+            self.idx = idx
+            if not codon_idx is None: self._initialise_with_codon(*codon_idx, constant)
+        else:
+            self.entries = self.zdeserialise(library_entry.data, library_entry.idx)
+            self.name = library_entry.name
+            self.ancestor = library_entry.ancestor
+ 
 
     def __getitem__(self, key):
         return self.entries[key]
@@ -49,6 +55,12 @@ class genetic_code():
 
     def __len__(self):
         return len(self.entries) - 2
+
+
+    def __str__(self):
+        ret_val = "Name: %s, Ancestor: %s, Library Index: %d\n".format((self.name, self.ancestor, self.idx))
+        for e in self.entries: ret_val += str(e) + "\n"
+        return ret_val
 
 
     def _initialise_with_codon(self, c, i, constant):
@@ -96,16 +108,34 @@ class genetic_code():
         return self
 
 
-    def append(self, entry):
-        self.ancestor = self.id()
-        self.entries.insert(-1, entry)
+    def append(self, code):
+        self.entries.insert(-1, code)
         return self
 
 
-    def insert(self, pos, entry):
-        self.ancestor = self.id()
-        self.entries.insert(pos + 1, entry)
+    def input_size(self)
+        return self.entries[0].get_input()[0]
+
+
+    def output_size(self)
+        return self.entries[-1].get_output()[0]
+
+
+    def insert(self, pos, code):
+        input_options = [o for o in e.get_outputs() for e in self.entries[:pos + 1]]
+        output_options = [i for i in self.entries[e].get_inputs() for e in self.entries[pos + 1:]]
+        inputs = choices(input_options, k=code.input_size())
+        outputs = choices(output_options, k=code.output_size())
+        new_entry = entry(inputs, code.idx, outputs)
+        self.entries.insert(pos + 1, new_entry)
+        self._new_self()
         return self
+
+
+    def _new_self(self):
+        self.ancestor = self.idx
+        self.name = None
+        self.idx = None        
 
 
     def make_library_entry(self, meta_data=None):

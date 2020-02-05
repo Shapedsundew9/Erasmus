@@ -24,8 +24,12 @@ class genetic_code_entry():
         if genetic_code is None:
             self.data = [iput, idx, oput, idx < len(codon_library)]
         else:
-            self.data = [genetic_code.entries[0], 
+            self.data = [genetic_code.entries[0]]
         genetic_code_entry._logger.debug("Created genetic code entry %s", str(self.data))
+
+
+    def __str__(self):
+            return str(self.data)
 
 
     def set_input(self, iput):

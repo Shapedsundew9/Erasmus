@@ -57,5 +57,5 @@ class genomic_library():
         return genomic_library._store.get(eid)
 
 
-    def random_code(self):
+    def random_entry(self):
         return self.get_entry(randint(self.__len__()))

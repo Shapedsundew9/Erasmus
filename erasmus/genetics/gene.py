@@ -30,7 +30,7 @@ class gene():
         if not seed is None:
             self.genetic_code = seed if isinstance(seed, genetic_code) else self._cache(seed)
         else:
-            self.genetic_code = self._glib.random_code() if random else genetic_code()
+            self.genetic_code = genetic_code(library_entry=self._glib.random_entry()) if random else genetic_code()
 
 
     def exec(self, d=None, m=None):
@@ -52,5 +52,5 @@ class gene():
 
     @lru_cache(maxsize=1000)
     def _cache(self, index):
-        return genetic_code(self._glib[index])
+        return genetic_code(library_entry=self._glib[index])
 

@@ -10,6 +10,7 @@ Copyright (c) 2020 Your Company
 
 from ..genomic_library import genomic_library
 from .mutation_base import mutation_base
+from ..genetic_code import genetic_code
 from copy import deepcopy
 
 
@@ -25,7 +26,7 @@ class mutation_rig000(mutation_base):
 
     def mutate(self, code, partners=None):
         index = code.random_index()
-        random_code = self._glib.random_code() 
+        random_code = genetic_code(library_entry=self._glib.random_entry()) 
         mutation_base._logger.debug("%s inserted genetic code %d in position %d", self.code, random_code, index)
         return deepcopy(code).insert(index, random_code)
 
