@@ -13,14 +13,14 @@ from .codon import codon
 
 class genomic_library_entry():
 
-    def __init__(self, data, eid, ancestor, name, meta_data=None, created=None, index=None):
+    def __init__(self, data, eid, ancestor, name, meta_data=None, created=None, idx=None):
         self.data = data
         self.id = eid
         self.ancestor = ancestor
         self.name = name
         self.meta_data = meta_data
         self.created = created
-        self.index = index
+        self.idx = idx
 
     def __str__(self):
         return str(self.__dict__)

@@ -64,10 +64,12 @@ class genomic_library_store():
         entry.index = self._entry_count
         self._entry_count += 1
         dbcur = self._db.cursor()
+        print(entry.data, entry.id, entry.ancestor, entry.name, entry.meta_data, entry.created, entry.index)
         dbcur.execute('INSERT INTO {0} VALUES (?,?,?,?,?,?,?)'.format(TABLE_NAME),
             (entry.data, entry.id, entry.ancestor, entry.name, entry.meta_data, entry.created, entry.index))
         self._db.commit()
         dbcur.close()
+        return entry.index
 
 
     def get(self, eid):

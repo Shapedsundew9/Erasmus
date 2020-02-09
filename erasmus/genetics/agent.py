@@ -34,10 +34,9 @@ class agent():
 
 
     # The default gene only has an input codon and an output codon
-    def __init__(self, base_gene=None, random=False):
+    def __init__(self, base_gene=None):
         # TODO: Add a weight based random code option
-        print("base_gene: ", base_gene)
-        self._gene = gene(random=random) if base_gene is None else base_gene
+        self._gene = gene() if base_gene is None else base_gene
         self._memory = memory()
 
 

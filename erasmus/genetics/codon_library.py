@@ -18,7 +18,7 @@ def _store(x, y, z):
 # There must be an 'input' and 'output' codon at positions 0 & 1 respectively.
 codon_library = [
     # Input & output
-    codon(lambda x: x, 'input'),
+    codon(None, 'input'),
     codon(None, 'output'),
 
     # Constant definition
