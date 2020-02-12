@@ -27,6 +27,12 @@ class ref():
 
 class inputs(list):
 
+    def __init__(self, *args, s=None):
+        if s is None:
+            super().__init__(*args)
+        else:
+            super().__init__([ref()] * s)
+
     def __str__(self):
         ref_str = ''
         for r in self: ref_str += str(r) 
@@ -34,6 +40,12 @@ class inputs(list):
 
 
 class outputs(list):
+
+    def __init__(self, *args, s=None):
+        if s is None:
+            super().__init__(*args)
+        else:
+            super().__init__([float32(0)] * s)
 
     def __str__(self):
         val_str = ''
@@ -64,6 +76,14 @@ class genetic_code_entry():
 
     def __str__(self):
             return str(self.input) + ':' + str(self.idx) + ':' + str(self.output) + ':' + str(self.is_codon)
+
+
+    def num_inputs(self):
+        return len(self.input)
+
+
+    def num_outputs(self):
+        return len(self.output)
 
 
     def is_input_entry(self):

@@ -15,8 +15,9 @@ from numpy import array
 from numpy.random import randint
 from random import choices
 from inspect import signature
+from copy import copy
 from .genetic_code_entry import genetic_code_entry as entry
-from .genetic_code_entry import ref
+from .genetic_code_entry import ref, inputs, outputs
 from .codon_library import codon_library
 
 
@@ -74,6 +75,14 @@ class genetic_code():
             self.append(entry([ref()] * len(signature(c.func).parameters), i, [0]))
 
 
+    def clone(self):
+        new_me = copy(self)
+        new_me.ancestor = self.idx
+        new_me.idx = None
+        new_me.name = None
+        return new_me
+
+
     def num_inputs(self):
         return len(self.entries[0].input)
 
@@ -101,28 +110,20 @@ class genetic_code():
         return self
 
 
-    # Need to write out insertion examples to figure out algorithm
-    def insert(self, pos, code):
-        c_inum = code.num_inputs()
-        c_onum = code.num_outputs()
-        inum = self.num_inputs()
-        onum = self.num_outputs()
-        if inum < c_inum: self.entries[0].input.extend([ref()] * (c_inum - inum))
-        if onum < c_onum: self.entries[-1].input.extend([ref()] * (c_onum - onum))
-        input_options = [o for e in self.entries[:pos + 1] for o in e.output]
-        output_options = [i for e in self.entries[pos + 1:] for i in e.input]
-        inputs = choices(input_options, k=c_inum)
-        outputs = choices(output_options, k=c_onum)
-        new_entry = entry(inputs, code.idx, outputs)
-        self.entries.insert(pos + 1, new_entry)
-        self._new_self()
-        return self
+    def extend_inputs(self, num):
+        self.entries[0].input.extend([ref()] * num)
+
+    
+    def extend_outputs(self, num):
+        self.entries[-1].input.extend([ref()] * num)
 
 
-    def _new_self(self):
-        self.ancestor = self.idx
-        self.name = None
-        self.idx = None        
+    def insert_entry(self, new_entry, pos):
+        self.entries.insert(pos, new_entry)
+
+
+    def make_entry(self):
+        return entry(genetic_code=self)
 
 
     def random_index(self):

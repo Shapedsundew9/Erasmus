@@ -14,7 +14,9 @@ from ..genetic_code import genetic_code
 from copy import deepcopy
 
 
-# Insert a random genetic_code from the genomic library
+# Insert a random genetic_code from the genomic library at a random position
+# Append new code inputs to inputs
+# Append new code outputs to outputs
 class mutation_rig000(mutation_base):
 
     _glib = genomic_library()
@@ -25,10 +27,27 @@ class mutation_rig000(mutation_base):
 
 
     def mutate(self, code, partners=None):
+        # Create a clone and determine code to insert & position.
         index = code.random_index()
-        random_code = genetic_code(library_entry=self._glib.random_entry())
-        mutation_base._logger.debug("%s inserted genetic code %d in position %d", self.code, random_code, index)
-        return deepcopy(code).insert(index, random_code)
+        new_entry = genetic_code(library_entry=self._glib.random_entry()).make_entry()
+        ni = code.num_inputs()
+        new_code = code.clone()
+
+        # Extend the inputs and outputs of the mutated code
+        new_code.extend_inputs(new_entry.num_inputs())
+        rco = new_entry.num_outputs()
+        new_code.extend_outputs(rco)
+
+        # Define the new entries input references and the mutated codes extended inputs
+        for pos, ref in enumerate(new_entry.input): ref.pos = pos + ni
+        new_code.insert_entry(new_entry, index)
+
+        # Define the mutated codes extended output entry input references
+        for pos, ref in enumerate(new_code.entries[-1].input[-rco:]): ref.row, ref.pos = index, pos
+        mutation_base._logger.debug("%s inserted genetic code %d in position %d", self.code, new_entry.idx, index)
+
+        # B'zinga
+        return new_code
 
 
         
