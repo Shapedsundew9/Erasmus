@@ -7,32 +7,43 @@ Author: Shaped Sundew
 Copyright (c) 2019 Your Company
 '''
 
-from numpy import sqrt, reciprocal, isclose, array
+from numpy import sqrt, reciprocal, isclose, array, float32, uint32
 from .codon import codon
 
 
 def _store(x, y, z):
-    x[y] = z
+    return x.set(y, z)
 
 
-# There must be an 'input' and 'output' codon at positions 0 & 1 respectively.
+# WARNING: Once a genomic library is created codons CANNOT BE REMOVED
+# TODO: In theory they can be added but the code does not yet support this.
 codon_library = [
+    ############################################################
+    # Special codons
+    ############################################################
+
     # Input & output
-    codon(None, 'input'),
-    codon(None, 'output'),
+    # There must be an 'input' and 'output' codon at positions 0 & 1 respectively.
+    codon(None, 'input', isIO=True),
+    codon(None, 'output', isIO=True),
 
     # Constant definition
-    codon(None, 'constant'),
+    # Constants have special treatment for storing in the genomic library
+    codon(None, 'constant', isConstant=True),
 
+    ############################################################
+
+
+    # These codons have no special treatment
     # Basic arithmetic
     codon(lambda x, y: x + y, 'add'),
     codon(lambda x, y: x - y, 'subtract'),
     codon(lambda x, y: x * y, 'multipy'),
-    codon(lambda x, y: x / y, 'divide'),
+    codon(lambda x, y: float32(0.0) if y == float32(0.0) else x / y, 'divide'),
 
     # Unary arithmetic
-    codon(lambda x: sqrt(x), 'square root'),
-    codon(lambda x: reciprocal(x), 'reciprical'),
+    codon(lambda x: float32(0.0) if x < 0 else sqrt(x), 'square root'),
+    codon(lambda x: float32(0.0) if x == float32(0.0) else reciprocal(x), 'reciprical'),
     codon(lambda x: -x, 'negate'),
 
     # Basic conditional
@@ -40,16 +51,16 @@ codon_library = [
     codon(lambda x, y: isclose(x, y), 'is close too'),
 
     # Basic logical
-    codon(lambda x, y: x and y, 'and'),
-    codon(lambda x, y: x or y, 'or'),
+    codon(lambda x, y: bool(x) and bool(y), 'and'),
+    codon(lambda x, y: bool(x) or bool(y), 'or'),
 
     # Unary logical
-    codon(lambda x: not x, 'not'),
+    codon(lambda x: not bool(x), 'not'),
 
     # Branch
     codon(lambda x, y1, y2: y1 if x else y2, 'if then else'),
 
     # Addressing
-    codon(lambda x, y: x[y], 'read', isMemory=True),
+    codon(lambda x, y: x[uint32(y)], 'read', isMemory=True),
     codon(_store, 'write', isMemory=True)
 ]

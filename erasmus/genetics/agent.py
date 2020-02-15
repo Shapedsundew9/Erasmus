@@ -12,7 +12,7 @@ from numpy import array, sum
 from .genetic_code import genetic_code
 from .genomic_library import genomic_library
 from .codon_library import codon_library
-from .mutations import mutation_rig000, mutation_trg000
+from .mutations import mutation_rig000, mutation_trg000, mutation_rmi000
 from .memory import memory
 from .gene import gene
 from logging import getLogger
@@ -26,7 +26,8 @@ class agent():
     _logger = getLogger(__name__)
     _mutation_list = (
         mutation_rig000(),
-        mutation_trg000()
+        mutation_trg000(),
+        mutation_rmi000()
     )
     _mutation_weights = array([m.weight for m in _mutation_list])
     _mutation_distribution = _mutation_weights / sum(_mutation_weights)
@@ -40,12 +41,11 @@ class agent():
         self._memory = memory()
 
 
-    def exec(self, d=None):
+    def exec(self, d=array([])):
         return self._gene.exec(d, self._memory)
 
 
     def is_alive(self):
-        self.exec()
         try:
             self.exec()
         except:

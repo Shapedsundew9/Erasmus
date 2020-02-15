@@ -34,23 +34,25 @@ class population():
 
 
     def next_generation(self, attempts=100):
-        population._logger.info("Breeding generation %d", self.generation + 1)
-        for a in self.agents:
+        population._logger.info("Breeding generation %d from population of %d", self.generation + 1, len(self.agents))
+        # self.agents gets modified in the loop
+        for i in range(len(self.agents)):
+            a = self.agents[i]
             offspring = a.reproduce()
             if not offspring is None:
                 if len(self.agents) >= self._size_limit:
                     self._replace_agents(self.cull_list(), [offspring])
                 else:    
                     self._add_agent(offspring)
-        self.generation += 1
         self.best_fitness = self.fitness_score.max()
+        population._logger.info("Generation %d population is %d with a best fitness of %0.2f", self.generation + 1, len(self.agents), self.best_fitness)
+        self.generation += 1
 
 
     def evolve_until(self, min_fitness=1.0, generation_limit=1000):
         while self.best_fitness < min_fitness and generation_limit:
             self.next_generation()
             generation_limit -= 1
-            population._logger.info("Best fitness in generation %d is %f", self.generation, self.best_fitness)
 
 
     def set_size_limit(self, size_limit):

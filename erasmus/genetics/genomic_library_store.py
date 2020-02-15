@@ -64,7 +64,7 @@ class genomic_library_store():
         entry.index = self._entry_count
         self._entry_count += 1
         dbcur = self._db.cursor()
-        print(entry.data, entry.id, entry.ancestor, entry.name, entry.meta_data, entry.created, entry.index)
+        #print(entry.data, entry.id, entry.ancestor, entry.name, entry.meta_data, entry.created, entry.index)
         dbcur.execute('INSERT INTO {0} VALUES (?,?,?,?,?,?,?)'.format(TABLE_NAME),
             (entry.data, entry.id, entry.ancestor, entry.name, entry.meta_data, entry.created, entry.index))
         self._db.commit()
@@ -80,8 +80,7 @@ class genomic_library_store():
 
     def get_by_idx(self, idx):
         dbcur = self._db.cursor()
-        print(idx, type(idx))
-        dbcur.execute('SELECT * FROM {0} WHERE idx IS ?'.format(TABLE_NAME), (idx,))
+        dbcur.execute('SELECT * FROM {0} WHERE idx IS ?'.format(TABLE_NAME), (int(idx),))
         return dbcur.fetchall()[0]
 
 

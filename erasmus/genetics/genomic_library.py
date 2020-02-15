@@ -64,4 +64,5 @@ class genomic_library():
 
 
     def random_entry(self):
-        return self[randint(self.__len__())]
+        # Never select the input or output codon
+        return self[randint(self.__len__() - 2) + 2]

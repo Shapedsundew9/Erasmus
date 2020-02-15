@@ -31,12 +31,12 @@ class inputs(list):
         if s is None:
             super().__init__(*args)
         else:
-            super().__init__([ref()] * s)
+            super().__init__([ref() for _ in range(s)])
 
     def __str__(self):
-        ref_str = ''
+        ref_str = '('
         for r in self: ref_str += str(r) 
-        return str(len(self)) + ',' + ref_str
+        return str(len(self)) + ',' + ref_str + ')'
 
 
 class outputs(list):
@@ -48,9 +48,9 @@ class outputs(list):
             super().__init__([float32(0)] * s)
 
     def __str__(self):
-        val_str = ''
-        for v in self: val_str += str(v) + ' '
-        return str(len(self)) + ',' + val_str
+        val_str = '['
+        for v in self: val_str += str(v) + ', '
+        return str(len(self)) + ',' + val_str + ']'
 
 
 # TODO: Get rid of self.data and make explcit members
@@ -60,22 +60,27 @@ class genetic_code_entry():
     _logger = getLogger(__name__)
 
 
-    def __init__(self, iput=inputs(), idx=0, is_codon=False, oput=outputs(), genetic_code=None):
+    def __init__(self, iput=None, idx=0, is_codon=False, oput=None, genetic_code=None):
         if genetic_code is None:
+            if iput is None: iput = inputs()
+            if oput is None: oput = outputs()
             self.input = iput if isinstance(iput, inputs) else inputs(iput)
             self.idx = uint32(idx)
             self.output = oput if isinstance(oput, outputs) else outputs(oput)
             self.is_codon = is_codon
+            self.name = codon_library[self.idx].name if is_codon else None
         else:
             self.input = genetic_code.entries[0].input
             self.idx = uint32(genetic_code.idx)
             self.output = genetic_code.entries[-1].output
-            self.is_codon = False
+            self.is_codon = len(genetic_code.entries) == 1
+            self.name = genetic_code.name
+
         genetic_code_entry._logger.debug("Created genetic code entry %s", str(self))
 
 
     def __str__(self):
-            return str(self.input) + ':' + str(self.idx) + ':' + str(self.output) + ':' + str(self.is_codon)
+            return str(self.input) + ':' + str(self.idx) + ':' + self.name + ':' + str(self.output) + ':' + str(self.is_codon)
 
 
     def num_inputs(self):
@@ -92,6 +97,11 @@ class genetic_code_entry():
 
     def is_output_entry(self):
         return self.idx == 1
+
+
+    def set_output(self, o):
+        assert(o.shape[0] == len(self.output))
+        self.output = outputs(o)
 
 
 

@@ -10,7 +10,7 @@ Copyright (c) 2019 Your Company
 
 from inspect import signature
 from logging import getLogger
-from numpy import append, zeros, int32
+from numpy import append, zeros, int32, array, float32
 
 
 class codon():
@@ -19,18 +19,18 @@ class codon():
     _logger = getLogger(__name__)
 
 
-    def __init__(self, func, name, desc=None, isMemory=False):
+    def __init__(self, func, name, desc=None, isMemory=False, isConstant=False, isIO=False):
         self.func = func
         self.name = name
         self.desc = desc
         self.isMemory = isMemory
+        self.isConstant = isConstant
+        self.isIO = isIO
         
 
-    def exec(self, d, m):
+    def exec(self, d, m, output=None):
         codon._logger.debug("Executing %s codon with parameters %s", self.name, str(d))
-        if not callable(self.func): return self.func
-        num_params = len(signature(self.func).parameters)
-        if d is None: d = zeros((num_params), dtype=int32)
-        if d.shape[0] < num_params: d = append(d, [0] * (num_params - d.shape[0]))
-        if self.isMemory: return self.func(m, *d[0:num_params - 1])
-        return self.func(*d[0:num_params])
+        if self.isConstant: return array(output)
+        if self.isIO: return d
+        if self.isMemory: return self.func(m, *d)
+        return array([self.func(*d)], dtype=float32)
