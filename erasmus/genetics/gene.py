@@ -45,3 +45,7 @@ class gene():
             g.set_output(output)
             if i < len(self.genetic_code.entries): d = self.genetic_code.get_inputs(i)
         return d
+
+
+    def add_code_to_library(self, meta_data=None):
+        return gene._glib.add_code(self.genetic_code, meta_data)

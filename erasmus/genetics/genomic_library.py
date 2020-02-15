@@ -40,23 +40,22 @@ class genomic_library():
 
 
     def __getitem__(self, key):
-        genomic_library._logger.debug("Accessing %s index %d", genomic_library.name, key)
         return entry(*genomic_library._store.get_by_idx(key))
 
 
     def __len__(self):
-        genomic_library._logger.debug("Accessing %s", self.name)
         return len(genomic_library._store)
 
 
     def add_code(self, code, meta_data=None):
-        code.idx = self.add_entry(entry(code.zserialise(), code.id(), code.ancestor, code.name, meta_data))
+        added, code.idx = self.add_entry(entry(code.zserialise(), code.id(), code.ancestor, code.name, meta_data))
+        return added 
         
 
     def add_entry(self, new_entry):
         genomic_library._logger.debug("Adding %s entry to %s", new_entry, genomic_library.name)
-        new_entry.index = self._store.add(new_entry)
-        return new_entry.index
+        added, new_entry.index = self._store.add(new_entry)
+        return added, new_entry.index
 
 
     def get_entry(self, cid):

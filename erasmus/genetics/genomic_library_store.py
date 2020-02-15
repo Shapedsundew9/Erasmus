@@ -45,43 +45,39 @@ class genomic_library_store():
 
 
     def __len__(self):
-        dbcur = self._db.cursor()
-        retval = dbcur.execute("""SELECT COUNT(*) FROM {0}""".format(TABLE_NAME)).fetchone()[0]
-        dbcur.close()
-        return retval
+        return self._db.cursor().execute("""SELECT COUNT(*) FROM {0}""".format(TABLE_NAME)).fetchone()[0]
 
 
     def _is_empty(self):
         dbcur = self._db.cursor()
         dbcur.execute("""SELECT name FROM sqlite_master WHERE type='table' AND name='{0}'""".format(TABLE_NAME))
-        result = dbcur.fetchone() is None
-        dbcur.close()
-        return result
+        return dbcur.fetchone() is None
 
 
     def add(self, entry):
         entry.created = time.time()
         entry.index = self._entry_count
-        self._entry_count += 1
         dbcur = self._db.cursor()
-        #print(entry.data, entry.id, entry.ancestor, entry.name, entry.meta_data, entry.created, entry.index)
-        dbcur.execute('INSERT INTO {0} VALUES (?,?,?,?,?,?,?)'.format(TABLE_NAME),
-            (entry.data, entry.id, entry.ancestor, entry.name, entry.meta_data, entry.created, entry.index))
-        self._db.commit()
-        dbcur.close()
-        return entry.index
+        does_not_exist = dbcur.execute('SELECT * FROM {0} WHERE id LIKE ?'.format(TABLE_NAME), (entry.id,)).fetchone() is None
+        if does_not_exist:
+            self._entry_count += 1
+            dbcur.execute('INSERT INTO {0} VALUES (?,?,?,?,?,?,?)'.format(TABLE_NAME),
+                (entry.data, entry.id, entry.ancestor, entry.name, entry.meta_data, entry.created, entry.index))
+            self._db.commit()
+        return does_not_exist, entry.index
 
 
     def get(self, eid):
         dbcur = self._db.cursor()
         dbcur.execute('SELECT * FROM {0} WHERE id LIKE ?'.format(TABLE_NAME), (eid,))
-        return dbcur.fetchall()
+        return dbcur.fetchone()
 
 
     def get_by_idx(self, idx):
         dbcur = self._db.cursor()
+        print(idx)
         dbcur.execute('SELECT * FROM {0} WHERE idx IS ?'.format(TABLE_NAME), (int(idx),))
-        return dbcur.fetchall()[0]
+        return dbcur.fetchone()
 
 
 

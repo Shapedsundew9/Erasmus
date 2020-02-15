@@ -11,13 +11,15 @@ from numpy import zeros, float32, append
 from .genetics.agent import agent
 from .cull_policies import cull_r000
 from logging import getLogger
+from .genetics.genomic_library import genomic_library
 
 
 class population():
 
 
     _logger = getLogger(__name__)
- 
+    _glib = genomic_library()
+
 
     def __init__(self, fitness_function, initial_size=100, size_limit=1000, cull_policy=None):
         self.agents = [agent() for _ in range(initial_size)]
@@ -33,7 +35,7 @@ class population():
         return len(self.agents)
 
 
-    def next_generation(self, attempts=100):
+    def next_generation(self, attempts=100, min_fitness=None):
         population._logger.info("Breeding generation %d from population of %d", self.generation + 1, len(self.agents))
         # self.agents gets modified in the loop
         for i in range(len(self.agents)):
@@ -44,15 +46,25 @@ class population():
                     self._replace_agents(self.cull_list(), [offspring])
                 else:    
                     self._add_agent(offspring)
-        self.best_fitness = self.fitness_score.max()
-        population._logger.info("Generation %d population is %d with a best fitness of %0.2f", self.generation + 1, len(self.agents), self.best_fitness)
-        self.generation += 1
+            self.best_fitness = self.fitness_score.max()
 
+            # Early stopping
+            if not min_fitness is None and self.best_fitness >= min_fitness: break
+        self.generation += 1
+        population._logger.info("Generation %d population is %d with a best fitness of %0.2f", self.generation, len(self.agents), self.best_fitness)
+        self.add_population_to_library()
+ 
 
     def evolve_until(self, min_fitness=1.0, generation_limit=1000):
         while self.best_fitness < min_fitness and generation_limit:
             self.next_generation()
             generation_limit -= 1
+
+
+    def add_population_to_library(self):
+        added = 0
+        for a in self.agents: added += a.add_code_to_library()
+        population._logger.info("Added %d genetic_codes to library. Library now %d codes.", added, len(self._glib))
 
 
     def set_size_limit(self, size_limit):

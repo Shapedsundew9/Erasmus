@@ -80,7 +80,7 @@ class genetic_code_entry():
 
 
     def __str__(self):
-            return str(self.input) + ':' + str(self.idx) + ':' + self.name + ':' + str(self.output) + ':' + str(self.is_codon)
+        return str(self.input) + ':' + str(self.idx) + ':' + str(self.name) + ':' + str(self.output) + ':' + str(self.is_codon)
 
 
     def num_inputs(self):

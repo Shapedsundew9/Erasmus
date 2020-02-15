@@ -55,7 +55,7 @@ class agent():
 
 
     def add_code_to_library(self, meta_data=None):
-        self._gene.add_code_to_library(meta_data)
+        return self._gene.add_code_to_library(meta_data)
 
 
     def get_code(self, eid):
