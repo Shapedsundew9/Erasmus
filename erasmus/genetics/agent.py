@@ -17,6 +17,7 @@ from .memory import memory
 from .gene import gene
 from logging import getLogger
 from sys import exc_info
+from time import time
 
 
 # An agent is a recursive structure of genetic_codes wrapped up in a gene
@@ -64,11 +65,16 @@ class agent():
 
     def reproduce(self, partners=None, attempts=100):
         agent._logger.debug("Agent reproduction starting:")
+        start = time()
+
+        # TODO: Test is_alive in fitness function - wastes too much time here.
         for a in range(attempts):
             draw = choice(len(self._mutation_list), p=self._mutation_distribution)
             offspring = agent(gene(self._mutation_list[draw].mutate(self._gene.genetic_code, partners)))
             if not offspring is None and offspring.is_alive():
-                agent._logger.debug("Agent reproduced in %d attempts.", a + 1)
+                stop = time()
+                agent._logger.debug("Agent reproduced in %d attempts in %0.4fs.", a + 1, stop - start)
                 return offspring
-        agent._logger.debug("Agent failed to reproduce in %d attempts.", attempts)        
+        stop = time()
+        agent._logger.debug("Agent failed to reproduce in %d attempts in %0.4fs.", attempts, stop - start)        
         return None

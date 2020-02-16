@@ -29,7 +29,7 @@ class codon():
         
 
     def exec(self, d, m, output=None):
-        codon._logger.debug("Executing %s codon with parameters %s", self.name, str(d))
+        #codon._logger.debug("Executing %s codon with parameters %s", self.name, str(d))
         if self.isConstant: return array(output)
         if self.isIO: return d
         if self.isMemory: return self.func(m, *d)

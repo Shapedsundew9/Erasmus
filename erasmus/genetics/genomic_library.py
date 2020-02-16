@@ -65,3 +65,6 @@ class genomic_library():
     def random_entry(self):
         # Never select the input or output codon
         return self[randint(self.__len__() - 2) + 2]
+
+
+    #def get_flattened_entry(self, cid):

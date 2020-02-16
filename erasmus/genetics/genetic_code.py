@@ -145,3 +145,9 @@ class genetic_code():
         row = randint(len(self))
         return row if row > 1 else 1 
 
+'''
+    def code_graph(self):
+        self.graph = Graph()
+        for i, g in enumerate(self.genetic_code.entries, 1):
+
+'''

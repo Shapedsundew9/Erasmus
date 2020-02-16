@@ -14,6 +14,7 @@ from .genomic_library import genomic_library
 from .genomic_library_entry import genomic_library_entry
 from numpy import array, zeros, float32
 from logging import getLogger
+#from graph_tool.all import Graph
 
 
 # gene() is a wrapper to a genetic_code that makes it executable.
@@ -29,8 +30,8 @@ class gene():
     # seed is a genetic_code or an index to one
     def __init__(self, gc=None):
             if isinstance(gc, genomic_library_entry): gc = genetic_code(library_entry=gc) 
-            self.genetic_code = genetic_code() if gc is None else gc 
-
+            self.genetic_code = genetic_code() if gc is None else gc
+ 
 
     def exec(self, d=array([]), m=None):
         for i, g in enumerate(self.genetic_code.entries, 1):
@@ -49,3 +50,4 @@ class gene():
 
     def add_code_to_library(self, meta_data=None):
         return gene._glib.add_code(self.genetic_code, meta_data)
+

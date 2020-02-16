@@ -12,6 +12,7 @@ from .genetics.agent import agent
 from .cull_policies import cull_r000
 from logging import getLogger
 from .genetics.genomic_library import genomic_library
+from time import time
 
 
 class population():
@@ -38,6 +39,7 @@ class population():
     def next_generation(self, attempts=100, min_fitness=None):
         population._logger.info("Breeding generation %d from population of %d", self.generation + 1, len(self.agents))
         # self.agents gets modified in the loop
+        start = time()
         for i in range(len(self.agents)):
             a = self.agents[i]
             offspring = a.reproduce()
@@ -51,7 +53,9 @@ class population():
             # Early stopping
             if not min_fitness is None and self.best_fitness >= min_fitness: break
         self.generation += 1
-        population._logger.info("Generation %d population is %d with a best fitness of %0.2f", self.generation, len(self.agents), self.best_fitness)
+        stop = time()
+        population._logger.info("Generation %d population is %d with a best fitness of %0.4f in %0.4fs",
+            self.generation, len(self.agents), self.best_fitness, stop - start)
         self.add_population_to_library()
  
 
