@@ -8,9 +8,6 @@ Copyright (c) 2020 Your Company
 '''
 
 
-from .codon import codon
-
-
 class genomic_library_entry():
 
     def __init__(self, data, eid, ancestor, name, meta_data=None, created=None, idx=None):

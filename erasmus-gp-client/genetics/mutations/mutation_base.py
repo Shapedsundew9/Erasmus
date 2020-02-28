@@ -36,6 +36,31 @@ class mutation_base():
         self.code = None
 
 
+    # Insert new_entry into code at index
+    def _insert(self, new_code, new_entry, index):
+        mutation_base._logger.debug("New entry: %s", new_entry)
+        ni = new_code.num_inputs()
+        mutation_base._logger.debug("Cloned code:\n%s", new_code)
+
+        # Extend the inputs and outputs of the mutated code
+        new_code.extend_inputs(new_entry.num_inputs())
+        rco = new_entry.num_outputs()
+        new_code.extend_outputs(rco)
+        mutation_base._logger.debug("Extended IO code:\n%s", new_code)
+
+        # Define the new entries input references and the mutated codes extended inputs
+        for pos, ref in enumerate(new_entry.input): ref.pos = pos + ni
+        new_code.insert_entry(new_entry, index)
+        mutation_base._logger.debug("Inserted new entry:\n%s", new_code)
+
+        # Define the mutated codes extended output entry input references
+        for pos, ref in enumerate(new_code.entries[-1].input[-rco:]): ref.row, ref.pos = index, pos
+        mutation_base._logger.debug("%s inserted genetic code %d in position %d", self.code, new_entry.idx, index)
+        mutation_base._logger.debug("Final mutated code:\n%s", new_code)
+
+        return new_code
+
+
     # Must return a new code object or None
     def mutate(self, code, partners=None):
         raise NotImplementedError()

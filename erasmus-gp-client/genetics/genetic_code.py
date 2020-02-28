@@ -19,6 +19,7 @@ from copy import copy
 from .genetic_code_entry import genetic_code_entry as entry
 from .genetic_code_entry import ref, inputs, outputs
 from .codon_library import codon_library
+from .genomic_library import genomic_library
 
 
 _INPUT_ENTRY = 0
@@ -31,11 +32,19 @@ _OUTPUT_ENTRY = -1
 class genetic_code():
 
 
+    _glib = genomic_library()
+
+
     def __init__(self, name=None, ancestor=None, codon_idx=None, constant=None, idx=None, library_entry=None):
+        # In the event the store does not exist an empty one will be created
+        # It is then populated with the genes containing just one codon
+        if not genetic_code._glib is None and genetic_code._glib._store.is_empty:
+            genetic_code._logger.debug("Populating genomic library with codons.")
+            for i, c in enumerate(codon_library): genetic_code._glib.add_code(genetic_code(codon_idx=(c, i)))
+            
         # TODO: Optimisation idea: entries is a list of entry's which is very inefficient.
         # Much less RAM can be used by arranging the components into numpy arrays
         # at the cost of construction time CPU.
-
         if library_entry == None:
             self.name = name
             self.ancestor = ancestor
@@ -145,9 +154,10 @@ class genetic_code():
         row = randint(len(self))
         return row if row > 1 else 1 
 
+
 '''
     def code_graph(self):
         self.graph = Graph()
         for i, g in enumerate(self.genetic_code.entries, 1):
-
 '''
+

@@ -10,7 +10,6 @@ Copyright (c) 2019 Your Company
 from numpy.random import choice
 from numpy import array, sum
 from .genetic_code import genetic_code
-from .genomic_library import genomic_library
 from .codon_library import codon_library
 from .mutations import mutation_rig000, mutation_trg000, mutation_rmi000
 from .memory import memory
@@ -32,7 +31,6 @@ class agent():
     )
     _mutation_weights = array([m.weight for m in _mutation_list])
     _mutation_distribution = _mutation_weights / sum(_mutation_weights)
-    glib = genomic_library()
 
 
     # The default gene only has an input codon and an output codon
