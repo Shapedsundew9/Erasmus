@@ -34,7 +34,7 @@ class mutation_rmi000(mutation_base):
     def mutate(self, code, partners=None):
         a = ref(row=randint(1, len(code.entries)))
         if not len(code.entries[a.row].input): return code
-        new_code = deepcopy(code)
+        new_code = code.clone()
         a.pos = randint(len(code.entries[a.row].input))
         new_code.entries[a.row].input[a.pos] = choice([ref(i, p) for i, e in enumerate(code.entries[:a.row]) for p in range(len(e.output))])
         return new_code

@@ -32,9 +32,6 @@ _OUTPUT_ENTRY = -1
 class genetic_code():
 
 
-    _glib = genomic_library()
-
-
     def __init__(self, name=None, ancestor=None, codon_idx=None, constant=None, idx=None, library_entry=None):
         # In the event the store does not exist an empty one will be created
         # It is then populated with the genes containing just one codon

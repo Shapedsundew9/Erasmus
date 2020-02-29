@@ -7,9 +7,9 @@ Author: Shaped Sundew
 Copyright (c) 2020 Your Company
 '''
 
-from copy import deepcopy
 from .mutation_base import mutation_base
 from .mutation_rig000 import mutation_rig000
+from ..genetic_code import genetic_code
 
 
 # Duplicate the exiting code
@@ -25,5 +25,7 @@ class mutation_trg000(mutation_base):
        
 
     def mutate(self, code, partners=None):
-        return self._insert(code.mono_code(), code.make_entry(), 1)
+        new_code = genetic_code(ancestor=code.idx)
+        new_entry = code.make_entry()
+        return self._insert(self._insert(new_code, new_entry, 1), new_entry, 1)
         

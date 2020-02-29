@@ -39,6 +39,7 @@ class genomic_library():
         return added 
         
 
+    # TODO: Verify ancestor details including timestamp is earlier 
     def add_entry(self, new_entry):
         added, new_entry.index = self._store.add(new_entry)
         return added, new_entry.index

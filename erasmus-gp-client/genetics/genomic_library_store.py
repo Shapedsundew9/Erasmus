@@ -8,25 +8,31 @@ Copyright (c) 2020 Your Company
 '''
 
 
-from psycopg2 import connect, DatabaseError
 from time import time
-from slugify import slugify
-from os.path import exists
-from os import remove
+from ..database import connection
 from .config import get_config
 from logging import getLogger
 
 
 CONFIG_SECTION = "local_genomic_library"
-TABLE_NAME = "genetic_codes"
+TABLE_NAME = "genomic_library"
 TABLE_COLUMNS = '''(
-    data TEXT NOT NULL,
-    id TEXT NOT NULL PRIMARY KEY,
+    graph TEXT NOT NULL,
+    signature TEXT PRIMARY KEY,
+    generation BIGINT NOT NULL,
+    references BIGINT NOT NULL,
+    multi_ancestor BOOL NOT NULL,
+    max_depth INTEGER NOT NULL,
+    num_codes INTEGER NOT NULL,
+    raw_num_codons INTEGER NOT NULL,
+    opt_num_codons INTEGER,
+    num_inputs INTEGER NOT NULL,
+    num_outputs INTEGER NOT NULL,
     ancestor TEXT,
-    name TEXT,
+    classification TEXT,
+    creator TEXT NOT NULL,
+    created TIMESTAMP NOT NULL,
     meta_data TEXT,
-    created REAL NOT NULL,
-    idx INTEGER NOT NULL UNIQUE
 )'''
 
 
@@ -41,24 +47,7 @@ class genomic_library_store():
     def __init__(self):
         if genomic_library_store._db is None:
             db, rc, user, pwd, host, port = get_config(CONFIG_SECTION, ('dbname', 'recreate', 'user', 'password', 'host', 'port'))
-            conn = connect(host=host, port=port, user=user, password=pwd)
-            genomic_library_store._logger.info("Connected to postgresql.")
-            if not conn is None:
-                conn.autocommit = True
-                cur = conn.cursor()
-                cur.execute("SELECT datname FROM pg_database;")
-                list_database = cur.fetchall()
-                if not db in list_database or (db in list_database and rc):
-                    msg = "%s database does not exist." if not rc else "Dropping %s database."
-                    genomic_library_store._logger.info(msg, db)
-                    cur.execute("DROP DATABASE IF EXISTS " + db)
-                    cur.execute("CREATE DATABASE " + db)
-                    genomic_library_store._logger.info("Created %s database.", db)
-                cur.execute("SELECT EXISTS(SELECT * from information_schema.tables WHERE table_name=%s)", (TABLE_NAME,))
-                if not cur.fetchone()[0]:
-                    cur.execute("CREATE TABLE {0} {1}".format(TABLE_NAME, TABLE_COLUMNS))
-                    genomic_library_store._logger.info("Created %s table.", TABLE_NAME)
-            genomic_library_store._db = conn
+            genomic_library_store._db = connection(genomic_library_store._logger, TABLE_NAME, TABLE_COLUMNS, db, rc, user, pwd, host, port)
             genomic_library_store._entry_count = self.__len__()
             genomic_library_store._logger.info("%s table has %d entries.", TABLE_NAME, genomic_library_store._entry_count)
             genomic_library_store.is_empty = genomic_library_store._entry_count == 0
