@@ -1,11 +1,5 @@
-..
-.. Filename: /home/shapedsundew9/Projects/Erasmus/docs/genomic_library.rst
-.. Path: /home/shapedsundew9/Projects/Erasmus/docs
-.. Created Date: Saturday, February 29th 2020, 5:04:21 pm
-.. sectionauthor:: Shapedsundew9
-.. 
-.. Copyright (c) 2020 Your Company
-..
+.. _glossary:
+
 ********
 Glossary
 ********
@@ -14,4 +8,4 @@ Glossary
    :widths: 20, 20, 50
 
     "Codosphere","N/A","Every Erasmus client or server every where."
-    
+    "Reserved","N/A","Reserved values are for use by the Erasmus application and may not be used for any other purpose. The implementation and even the existance of a reserved value cannot be relied upon."

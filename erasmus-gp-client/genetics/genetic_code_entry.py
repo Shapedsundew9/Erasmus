@@ -60,7 +60,7 @@ class genetic_code_entry():
     _logger = getLogger(__name__)
 
 
-    def __init__(self, iput=None, idx=0, is_codon=False, oput=None, genetic_code=None):
+    def __init__(self, iput=None, signature=None, is_codon=False, oput=None, genetic_code=None):
         if genetic_code is None:
             if iput is None: iput = inputs()
             if oput is None: oput = outputs()

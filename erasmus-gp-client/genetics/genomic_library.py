@@ -14,7 +14,13 @@ from .genomic_library_store import genomic_library_store as store
 from logging import getLogger
 
 
-# TODO: Add statistics to code entries.
+# The genomic_library is responsible for:
+#   1. Persisting entries
+#   2. Converting entries from application format to storage format
+#   3. Converting entries from storage format to application format
+#   4. Populating calculable entry fields
+#   4. Validating entries to be added to the store
+#   5. Retrieving entries based on criteria
 class genomic_library():
 
 
@@ -26,30 +32,21 @@ class genomic_library():
         if genomic_library._store is None: genomic_library._store = store()
 
 
-    def __getitem__(self, key):
-        return entry(*genomic_library._store.get_by_idx(key))
+    def __getitem__(self, signature):
+        return self._application_format(genomic_library._store[signature])
+
+
+    def __setitem__(self, signature, entry):
+        storage_format_entry = self._storage_format(entry)
+        if not storage_format_entry is None: genomic_library._store[signature] = storage_format_entry
+        return 
 
 
     def __len__(self):
         return len(genomic_library._store)
 
 
-    def add_code(self, code, meta_data=None):
-        added, code.idx = self.add_entry(entry(code.zserialise(), code.id(), code.ancestor, code.name, meta_data))
-        return added 
-        
-
-    # TODO: Verify ancestor details including timestamp is earlier 
-    def add_entry(self, new_entry):
-        added, new_entry.index = self._store.add(new_entry)
-        return added, new_entry.index
-
-
-    def get_entry(self, cid):
-        return entry(*genomic_library._store.get(cid))
-
-
-    def random_entry(self):
+    def get_random_entry(self):
         # Never select the input or output codon
         return self[randint(self.__len__() - 2) + 2]
 
