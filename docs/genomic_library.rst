@@ -1,7 +1,16 @@
 
 Genomic Library
 ***************
-Below is the definition of a genetic code entry in the genomic library table.
+
+The genomic library has a layered access model for the best performance.
+
+There are two views of the genomic library data. The storage format as persisted in the database and the application format as viewed through the genomic library API.
+
+Storage Format
+==============
+
+The storage format of the genomic library tries to reduce the space requirements whilst maintaining the ability to do all but corner case queries quickly.
+Typically complex fields are stored compressed as byte strings. Below is the definition of a genetic code entry in the genomic library database table.
 
 .. csv-table:: Genomic Library Table Definition
    :header: "Field", "Type", "Restrictions", "Description"
@@ -19,7 +28,7 @@ Below is the definition of a genetic code entry in the genomic library table.
     "opt_num_codons","INTEGER","","The number of verticies in the codon vertex graph after optimisation."
     "num_inputs","INTEGER","NOT NULL IMMUTABLE","The number of inputs to the code. I0 in the `Graph Field Format`_"
     "num_outputs","INTEGER","NOT NULL IMMUTABLE","The number of outputs from the code. IN in the `Graph Field Format`_"
-    "classification","BIGINT","NOT NULL","A binary encoded classification. See `Class Field Format`_."
+    "classification","BIGINT","NOT NULL","A binary encoded classification. See `Classification Field Format`_."
     "creator","BYTEA","NOT NULL IMMUTABLE","A binary `SHA256 <https://en.wikipedia.org/wiki/SHA-2>`_ hash identifying the creator." 
     "created","TIMESTAMP","NOT NULL IMMUTABLE","The date and time of the codes creation."
     "meta_data","BYTEA","NOT NULL","Other data associated with this code as a binary compressed JSON. See `Meta_data Field Format`_"
@@ -86,4 +95,9 @@ The value of the *parents* key is a list of lists. Each sub-list consists of the
 in the order oldest generation (lowest generation value) first. The sub-lists are independent lists of parents. Parents are
 independent when they bear an offspring with the same signature as the offspring of a different set of parents i.e. by
 chance (or evolutionary pressures) that a genetically the same offspring has been created. A genetic code always has at least
-one parent unless is is a codon. Signatures are stored as hexadecimal strings. 
+one parent unless is is a codon. Signatures are stored as hexadecimal strings.
+
+Application Format
+==================
+
+In the application format the compression and complex data structure of the storage format is abstracted. 
