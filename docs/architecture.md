@@ -6,7 +6,7 @@ Erasmus GP has an infinitely scalable extended star network topology i.e. tree a
 1. Biomes
 2. Microbiomes
 
-![Top Level Architecture](docs/Erasmus-Top-Level-Architecture.png)
+![Top Level Architecture](Erasmus-Top-Level-Architecture.png)
 
 ## Biomes
 
@@ -31,7 +31,7 @@ At the heart of the Erasmus network is a root Biome that provides all the same s
 Microbiomes are the leaf nodes where all the work is done. Microbiomes use a local genomic library to store the genetic data, periodically
 synchronising it with its parent biome.
 
-![Architecture](docs/Erasmus-Architecture.png)
+![Architecture](Erasmus-Architecture.png)
 
 The role of the microbiome is to:
 
