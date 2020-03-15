@@ -1,12 +1,12 @@
-Erasmus GP
-**********
+# Erasmus GP
+
 
 Erasmus GP (Genetic Programming) is a scalable system to evolve computer programs.
 
-**Erasmus GP is currently being built. It is not in a functioning state at the moment.**
+:warning: **Erasmus GP is currently being built. It is not in a functioning state at the moment.**
 
-Why
-===
+## Why
+
 
 Before getting in to the 'what' and 'how' the 'why' is needed for context. Erasmus GP has been built on a whim. It has been built because I
 have an interest in AI, evolution and intelligence and have been in the SW industry so long I do not get to write code anymore. The architecture
@@ -15,29 +15,29 @@ are doing better. The flexibility in the problem or solution space, or lack ther
 in the domain and my naivity of previous work. If you are reading this then maybe I have done something worthing looking at oryou are a like minded
 soul. I am not closed to new directions or contributions please feel free to feedback, comment or constructively criticise.
 
-What
-====
+## What
+
 
 In theory there is little bound to what can be evolved the limiting factor is compute resource. In its first version Erasmus GP will be
 targeted at simple classification and regression problems. The sort of stuff that is easily solved by classicial algorithms and, more recently,
 artificial neural networks. If it manages that then lets see where we go from there.
 
-How
-===
+## How
 
 The lack of non-trivial results in any evolutionary domain has largely been put down to the compute resources needed. Even the primordial sludge
 which could only be incorporated by the most loose definition of the word 'life' took a long time and an unimaginable
 number of parallel reactions to form. For an interesting disection
 on where it is all going wrong see Roman Yampolskiy's article 
-`What Evolutionary Algorithms Can and Can't Do. <https://medium.com/@romanyam/what-evolutionary-algorithms-can-and-cant-do-bd8d3c86e435>`_
+[What Evolutionary Algorithms Can and Can't Do.](https://medium.com/@romanyam/what-evolutionary-algorithms-can-and-cant-do-bd8d3c86e435)
  
 How will Erasmus GP break through this barrier and take evolutionary algorithms, specifically genetic programming, out of the primevil
-backwaters? To answer that we need to go back to the `evolution of life <https://en.wikipedia.org/wiki/Timeline_of_the_evolutionary_history_of_life>`_
-analogy (and it is an analogy - I do not expect that one day `HAL 9000 <https://en.wikipedia.org/wiki/HAL_9000>`_ will pop out of Erasmus GP
-v `42 <https://en.wikipedia.org/wiki/42_%28number%29#Popular_culture>`_ .
+backwaters? To answer that we need to go back to the [evolution of life](https://en.wikipedia.org/wiki/Timeline_of_the_evolutionary_history_of_life)
+analogy (and it is an analogy - I do not expect that one day [HAL 9000](https://en.wikipedia.org/wiki/HAL_9000) will pop out of Erasmus GP
+v[42](https://en.wikipedia.org/wiki/42_%28number%29#Popular_culture>).
 Though maybe sometimes, after a few beers, I might dream that - with notibly less murder). After the sludge phase things got moving,
 relatively speaking, as building block built on building block and the 
-`maximum complexity <https://en.wikipedia.org/wiki/Evolution_of_biological_complexity>`_ [#]_ of life accelerated [#]_. It took about 2 billion years to 
+[maximum complexity](https://en.wikipedia.org/wiki/Evolution_of_biological_complexity)<sup>1</sup> of life accelerated<sup>2</sup>.
+It took about 2 billion years to 
 get from single celled organisms to multicellular organisms, another billion to get to the beginning of animal evolution (we are still close to
 sludge at this stage), 500 millions years on and it is the start of the Triassic and dinosaurs, 250 million more and here I am typing this.
 In my unenlightened opinion the key is common ancestory (analogous to transfer learning in the world of artificial neural networks) building blocks
@@ -51,35 +51,19 @@ mechanims.
 
 Erasmus GP wraps this all up with 4 features:
 
-#. A common genomic library: Every instance uses and contributes to the same gene pool [#]_.
-#. A classification system for genes identifying the evolutionary mechanisms it is most suited too.
-#. A common library for evolutionary mechanisms.
-#. An infinitely scalable architecture.
+1. A common genomic library: Every instance uses and contributes to the same gene pool<sup>3</sup>.
+2. A classification system for genes identifying the evolutionary mechanisms it is most suited too.
+3. A common library for evolutionary mechanisms.
+4. An infinitely scalable architecture.
 
 This all sounds very grand but the plan is to start (very) simply and see where we go.
 
-Architecture
-============
+## Index
 
-Erasmus GP has a n infinitely scalable extended star network topology. It consists of two principle elements:
+* [Architecture](docs/architecture.md)
+* [Genomic Library](docs/genomic_library.md)
+* [Glossary](docs/Glossary.md)
 
-1. Biomes
-2. Microbiomes
-
-.. image:: Erasmus-Top-Level-Architecture.png
-
-Biomes
-------
-
-In the simplest terms a biome is the superset of the gene pools in the microbiomes and biomes beneath it. A biome can support
-many (TBD 10's, 100's, 1000's) of (micro)biomes beneath it with the ultimate limiting factor being disk space to store the genetic
-data. Biomes can also be layered infinitely deep which allows for infinite scalability.   
-
-Microbiomes
------------
-
-Microbiomes are where all the work is done. 
-
-.. [#] A more comprehensive discussion on complexity `<https://academic.oup.com/bioscience/article/59/4/333/346877>`_
-.. [#] I have no reference to support using the term 'accelerated'. That is my opinion.
-.. [#] Well, to the extent that it is practical. Genetic isolation is a thing in the bigger picture (e.g. `Madagascar <https://en.wikipedia.org/wiki/Madagascar>`_)
+1. A more comprehensive discussion on complexity https://academic.oup.com/bioscience/article/59/4/333/346877
+2. I have no reference to support using the term 'accelerated'. That is my opinion.
+3. Well, to the extent that it is practical. Genetic isolation is a thing in the bigger picture(e.g. [Madagascar](https://en.wikipedia.org/wiki/Madagascar)
