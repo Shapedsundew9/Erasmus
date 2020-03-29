@@ -43,9 +43,10 @@ Typically complex fields are stored compressed as byte strings. Below is the def
 
 Field | Type | Restrictions | Description
 ----- | ---- | ------------ | -----------
-graph | BYTEA | NOT NULL, IMMUTABLE | The definition of the code as a graph of other codes as a binary compressed array. See [Graph Field Format](###-graph-See field-format)signature | BYTEA | PRIMARY KEY, IMMUTABLE | A binary [SHA256](https://en.wikipedia.org/wiki/SHA-2) of the graph field. The signature of a code is assumed to be unique in the codosphere.
-gca | BYTEA | IMMUTABLE | The signature of Genetic Code A or NULL if this genetic code is a codon. See [Genetic code](##-genetic-code).
-gcb | BYTEA | IMMUTABLE | The signature of Genetic Code B or NULL if this genetic code is a codon. See [Genetic code](##-genetic-code).
+graph | BYTEA | NOT NULL, IMMUTABLE | The definition of the code as a graph of other codes as a binary compressed array. See [Graph Field Format](###-graph-See field-format)
+signature | BYTEA | PRIMARY KEY, IMMUTABLE | A binary [SHA256](https://en.wikipedia.org/wiki/SHA-2) of the graph field. The signature of a code is assumed to be unique in the codosphere.
+GCA | BYTEA | IMMUTABLE | The signature of Genetic Code A or NULL if this genetic code is a codon. See [Genetic code](##-genetic-code).
+GCB | BYTEA | IMMUTABLE | The signature of Genetic Code B or NULL if this genetic code is a codon. See [Genetic code](##-genetic-code).
 generation | BIGINT | NOT NULL | The number of generations of genetic code evolved to create this code. A codon is generation always generation 1. This value may change if the creator changes.
 references | BIGINT | NOT NULL | The number of times this code is referenced in other codes. If this code is referenced by code A once and no other then the reference count is 1. If genetic code X is then referenced by genetic code Y this code is referenced by both X & Y (through X) and the count is 2. This value will change over time.
 code_depth | INTEGER | NOT NULL, IMMUTABLE | The depth of the code vertex graph.
@@ -77,7 +78,7 @@ JSON structure defining the connections between the inputs, GCA, GCB and the out
 
    /* Third, and final, is a list of reference inputs into the outputs. Each reference has the same */
    /* format as above but 'source' may now also be 2 = outputs of GCB. e.g. */
-   [[2, 0], [0, 2], [1, 1], [1, 2], [1,3]]
+   [[2, 0], [0, 2], [1, 1], [1, 2], [1, 3]]
 ]
 ```
 
@@ -106,7 +107,7 @@ all string keys starting with an underscore '_' are reserved:
 
 Key | Description
 --- | -----------
-extended_classification | A dictionary for additional classifications of the genetic code.
+extended_class | A dictionary for additional classifications of the genetic code.
 parents | A list of lists of parent signatures. See [Parents Key Value](####-parents-key-value).
 function | A dictionary defining executable versions of the genetic code function. See [Function Key Value](####-Function-Key-Value).
 

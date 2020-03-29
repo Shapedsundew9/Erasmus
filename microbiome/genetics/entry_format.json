@@ -2,18 +2,10 @@
     "graph": {
         "type": "dict",
         "required": true,
-        "allowed": ["A", "B", "O"],
+        "allowed": ["A", "B", "C", "O"],
         "check_with": "valid_graph",
         "schema": {
             "A": {
-                "type": "list",
-                "required": true,
-                "schema": {
-                    "type": "integer",
-                    "min": 0
-                }
-            },
-            "B": {
                 "type": "list",
                 "required": true,
                 "schema": {
@@ -22,15 +14,38 @@
                     "maxlength": 2,
                     "items": [
                         {
-                            "type": "integer",
-                            "min": 0,
-                            "max": 1
+                            "type": "string",
+                            "allowed": ["I", "C"]
                         },
                         {
                             "type": "integer",
                             "min": 0
                         }
                     ]
+                }
+            },
+            "B": {
+                "type": "list",
+                "schema": {
+                    "type": "list",
+                    "minlength": 2,
+                    "maxlength": 2,
+                    "items": [
+                        {
+                            "type": "string",
+                            "allowed": ["I", "C", "A"]
+                        },
+                        {
+                            "type": "integer",
+                            "min": 0
+                        }
+                    ]
+                }
+            },
+            "C": {
+                "type": "list",
+                "schema": {
+                    "type": "float"
                 }
             },
             "O": {
@@ -42,9 +57,8 @@
                     "maxlength": 2,
                     "items": [
                         {
-                            "type": "integer",
-                            "min": 0,
-                            "max": 2
+                            "type": "string",
+                            "allowed": ["I", "C", "A", "B"]
                         },
                         {
                             "type": "integer",
@@ -99,7 +113,7 @@
     },
     "opt_num_codons": {
         "type": "integer",
-        "min": 1,
+        "min": 0,
         "default": 0
     },
     "num_inputs": {
@@ -114,7 +128,6 @@
     },
     "classification": {
         "type": "dict",
-        "required": true,
         "schema": {
             "extended": {
                 "type": "boolean",
@@ -131,6 +144,10 @@
             "logical": {
                 "type": "boolean",
                 "default": false                
+            },
+            "flow": {
+                "type": "boolean",
+                "default": false                
             }
         }
     },
@@ -138,8 +155,7 @@
         "type": "string",
         "minlength": 64,
         "maxlength": 64,
-        "regex": "[0-9a-f]{64}",
-        "check_with": "valid_creator"
+        "regex": "[0-9a-f]{64}"
     },
     "created": {
         "type": "string",
@@ -152,6 +168,9 @@
     "meta_data": {
         "type": "dict",
         "schema": {
+            "name": {
+                "type": "string"
+            },
             "extended_class": {
                 "type": "dict"
             },
@@ -183,16 +202,12 @@
                     "valuesrules": {
                         "type": "dict",
                         "schema": {
-                            "info": {
-                                "type": "String",
-                                "required": true
-                            },
                             "inline": {
-                                "type": "String",
+                                "type": "string",
                                 "required": true
                             },
                             "callable": {
-                                "type": "String",
+                                "type": "string",
                                 "required": true
                             }
                         }

@@ -16,16 +16,16 @@ from os.path import isfile
 config = None
 _logger = getLogger(__name__)
 _schema = {
-    'local_genomic_library': {
-        'type': dict,
-        'schema': {
-            'dbname': {'type': 'string', 'default': 'default'},
-            'recreate': {'type': 'boolean', 'default': False},
-            'temp': {'type': 'boolean', 'default': False},
-            'host': {'type': 'string', 'default': 'localhost'},
-            'username': {'type': 'string', 'default': 'postgres'},
-            'password': {'type': 'string', 'default': 'postgres'},
-            'port': {'type': 'integer', 'default': 5432, 'min': 1024, 'max': 65535}
+   "local_genomic_library": {
+        "type": "dict",
+        "schema": {
+            "dbname": {"type": "string", "default": "default"},
+            "recreate": {"type": "boolean", "default": False},
+            "temp": {"type": "boolean", "default": False},
+            "host": {"type": "string", "default": "localhost"},
+            "username": {"type": "string", "default": "postgres"},
+            "password": {"type": "string", "default": "postgres"},
+            "port": {"type": "integer", "default": 5432, "min": 1024, "max": 65535}
         }
     }
 }
