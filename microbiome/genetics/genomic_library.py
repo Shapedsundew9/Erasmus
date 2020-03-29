@@ -9,9 +9,10 @@ Copyright (c) 2020 Your Company
 
 
 from numpy.random import randint
-from .genomic_library_entry import genomic_library_entry as entry
 from .genomic_library_store import genomic_library_store as store
 from logging import getLogger
+from .validation import create_validator
+from pprint import pprint
 
 
 # The genomic_library is responsible for:
@@ -25,6 +26,7 @@ class genomic_library():
 
 
     _store = None
+    _validator, _schema = create_validator()
     _logger = getLogger(__name__)
 
 
@@ -32,14 +34,45 @@ class genomic_library():
         if genomic_library._store is None: genomic_library._store = store()
 
 
+    # Return an application formatted entry from the store
     def __getitem__(self, signature):
         return self._application_format(genomic_library._store[signature])
 
 
-    def __setitem__(self, signature, entry):
-        storage_format_entry = self._storage_format(entry)
-        if not storage_format_entry is None: genomic_library._store[signature] = storage_format_entry
-        return 
+    # Return an application formatted entry from the store
+    def get_gc(self, signature):
+        return self[signature]
+
+
+    # Store a new application formatted entry. Return true if the entry is added.
+    def set_gc(self, entry):
+        if self.validate(entry):
+            if self._calculate_fields(entry):
+                return genomic_library._store.store(self._storage_format(entry))
+        return False
+
+
+    # Validates an application format entry and populates fields that do not
+    # require store lookups to calculate.
+    def validate(self, entry):
+        if not genomic_library._validator(entry):
+            err_txt = genomic_library._validator.errors
+            genomic_library._logger.warn("Entry is not valid:\n%s\n%s",pprint.pformat(err_txt), pprint.pformat(entry))
+            return False
+        return True
+
+
+    def _calculate_fields(entry):
+        gca = genomic_library._store.get_limited(entry['GCA'])
+        gcb = genomic_library._store.get_limited(entry['GCB'])
+        if gca is None or gcb is None: return False
+        entry['code_depth'] = max((gca['code_depth'], gcb['code_depth'])) + 1
+        entry['num_codes'] = gca['num_codes'] + gcb['num_codes']
+        entry['raw_num_codons'] = gca['raw_num_codons'] + gcb['raw_num_codons']
+        entry['generation'] = max((gca['generation'], gcb['generation'])) + 1
+        for         
+
+
 
 
     def __len__(self):

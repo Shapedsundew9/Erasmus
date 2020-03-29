@@ -95,6 +95,10 @@
         "min": 0,
         "default": 0
     },
+    "generation": {
+        "type": "integer",
+        "min": 0
+    },
     "code_depth": {
         "type": "integer",
         "min": 1
