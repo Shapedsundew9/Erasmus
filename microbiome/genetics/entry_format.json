@@ -1,14 +1,214 @@
 {
-    "local_genomic_library": {
+    "graph": {
+        "type": "dict",
+        "required": true,
+        "allowed": ["A", "B", "O"],
+        "check_with": "valid_graph",
+        "schema": {
+            "A": {
+                "type": "list",
+                "required": true,
+                "schema": {
+                    "type": "integer",
+                    "min": 0
+                }
+            },
+            "B": {
+                "type": "list",
+                "required": true,
+                "schema": {
+                    "type": "list",
+                    "minlength": 2,
+                    "maxlength": 2,
+                    "items": [
+                        {
+                            "type": "integer",
+                            "min": 0,
+                            "max": 1
+                        },
+                        {
+                            "type": "integer",
+                            "min": 0
+                        }
+                    ]
+                }
+            },
+            "O": {
+                "type": "list",
+                "required": true,
+                "schema": {
+                    "type": "list",
+                    "minlength": 2,
+                    "maxlength": 2,
+                    "items": [
+                        {
+                            "type": "integer",
+                            "min": 0,
+                            "max": 2
+                        },
+                        {
+                            "type": "integer",
+                            "min": 0
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    "signature": {
+        "type": "string",
+        "minlength": 64,
+        "maxlength": 64,
+        "regex": "[0-9a-f]{64}",
+        "default_setter": "set_signature"
+    },        
+    "GCA": {
+        "type": "string",
+        "required": true,
+        "minlength": 64,
+        "maxlength": 64,
+        "regex": "[0-9a-f]{64}"
+    },
+    "GCB": {
+        "type": "string",
+        "required": true,
+        "minlength": 64,
+        "maxlength": 64,
+        "regex": "[0-9a-f]{64}"
+    },
+    "references": {
+        "type": "integer",
+        "min": 0,
+        "default": 0
+    },
+    "code_depth": {
+        "type": "integer",
+        "min": 1
+    },
+    "codon_depth": {
+        "type": "integer",
+        "min": 1
+    },
+    "num_codes": {
+        "type": "integer",
+        "min": 1
+    },
+    "raw_num_codons": {
+        "type": "integer",
+        "min": 1
+    },
+    "opt_num_codons": {
+        "type": "integer",
+        "min": 1,
+        "default": 0
+    },
+    "num_inputs": {
+        "type": "integer",
+        "min": 0,
+        "default_setter": "set_num_inputs"
+    },
+    "num_outputs": {
+        "type": "integer",
+        "min": 1,
+        "default_setter": "set_num_outputs"
+    },
+    "classification": {
+        "type": "dict",
+        "required": true,
+        "schema": {
+            "extended": {
+                "type": "boolean",
+                "default": false
+            },
+            "codon": {
+                "type": "boolean",
+                "default": false                
+            },
+            "mathematical": {
+                "type": "boolean",
+                "default": false                
+            },
+            "logical": {
+                "type": "boolean",
+                "default": false                
+            }
+        }
+    },
+    "creator": {
+        "type": "string",
+        "minlength": 64,
+        "maxlength": 64,
+        "regex": "[0-9a-f]{64}",
+        "check_with": "valid_creator"
+    },
+    "created": {
+        "type": "string",
+        "minlength": 27,
+        "maxlength": 27,
+        "regex": "20[2-9][0-9]-(1[0-2]|0[1-9])-([0-2][0-9]|3[01])T[0-2][0-9](:[0-5][0-9]){2}\\.[0-9]{6}Z",
+        "check_with": "valid_created",
+        "default_setter": "set_created"
+    },
+    "meta_data": {
         "type": "dict",
         "schema": {
-            "dbname": {"type": "string", "default": "default"},
-            "recreate": {"type": "boolean", "default": false},
-            "temp": {"type": "boolean", "default": false},
-            "host": {"type": "string", "default": "localhost"},
-            "username": {"type": "string", "default": "postgres"},
-            "password": {"type": "string", "default": "postgres"},
-            "port": {"type": "integer", "default": 5432, "min": 1024, "max": 65535}
+            "extended_class": {
+                "type": "dict"
+            },
+            "parents": {
+                "type": "list",
+                "schema": {
+                    "type": "list",
+                    "required": true,
+                    "minlength": 1,
+                    "schema": {
+                        "type": "string",
+                        "minlength": 64,
+                        "maxlength": 64,
+                        "regex": "[0-9a-f]{64}"
+                    }
+                }
+            },
+            "function": {
+                "type": "dict",
+                "keysrules": {
+                    "type": "string"
+                },
+                "valuesrules": {
+                    "type": "dict",
+                    "keysrules": {
+                        "type": "string",
+                        "regex": "[0-9]*"
+                    },
+                    "valuesrules": {
+                        "type": "dict",
+                        "schema": {
+                            "info": {
+                                "type": "String",
+                                "required": true
+                            },
+                            "inline": {
+                                "type": "String",
+                                "required": true
+                            },
+                            "callable": {
+                                "type": "String",
+                                "required": true
+                            }
+                        }
+                    },
+                    "schema": {
+                        "0": {
+                            "required": true
+                        }
+                    }
+                },
+                "schema": {
+                    "python3": {
+                        "required": true
+                    }
+                }
+            }
         }
     }
 }
