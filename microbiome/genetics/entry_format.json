@@ -130,16 +130,21 @@
         "min": 1,
         "default_setter": "set_num_outputs"
     },
-    "classification": {
+    "alpha_class": {
+        "type": "integer",
+        "default": -1,
+        "check_with": "valid_alpha_class"
+    },
+    "beta_class": {
+        "type": "integer",
+        "default": -1
+    },
+    "properties": {
         "type": "dict",
         "schema": {
             "extended": {
                 "type": "boolean",
                 "default": false
-            },
-            "codon": {
-                "type": "boolean",
-                "default": false                
             },
             "mathematical": {
                 "type": "boolean",
@@ -171,6 +176,7 @@
     },
     "meta_data": {
         "type": "dict",
+        "required": true,
         "schema": {
             "name": {
                 "type": "string"

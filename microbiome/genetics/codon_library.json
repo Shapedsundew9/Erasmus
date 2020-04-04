@@ -7,9 +7,11 @@
        "GCA": "0000000000000000000000000000000000000000000000000000000000000000",
        "GCB": "0000000000000000000000000000000000000000000000000000000000000000",
        "generation": 0,
-       "classification": {
-            "codon": true,
-            "mathematical": true
+       "alpha_class": 0,
+       "beta_class": 0,
+       "opt_num_codons": 1,
+       "properties": {
+           "mathematical": true
        },
        "meta_data": {
            "name": "add",
@@ -31,8 +33,10 @@
         "GCA": "0000000000000000000000000000000000000000000000000000000000000000",
         "GCB": "0000000000000000000000000000000000000000000000000000000000000000",
         "generation": 0,
-        "classification": {
-            "codon": true,
+        "alpha_class": 0,
+        "beta_class": 0,
+        "opt_num_codons": 1,
+        "properties": {
             "mathematical": true
         },
         "meta_data": {
@@ -55,8 +59,10 @@
         "GCA": "0000000000000000000000000000000000000000000000000000000000000000",
         "GCB": "0000000000000000000000000000000000000000000000000000000000000000",
         "generation": 0,
-        "classification": {
-            "codon": true,
+        "alpha_class": 0,
+        "beta_class": 0,
+        "opt_num_codons": 1,
+        "properties": {
             "mathematical": true
         },
         "meta_data": {
@@ -79,8 +85,10 @@
         "GCA": "0000000000000000000000000000000000000000000000000000000000000000",
         "GCB": "0000000000000000000000000000000000000000000000000000000000000000",
         "generation": 0,
-        "classification": {
-            "codon": true,
+        "alpha_class": 0,
+        "beta_class": 0,
+        "opt_num_codons": 1,
+        "properties": {
             "mathematical": true
         },
         "meta_data": {
@@ -103,8 +111,10 @@
         "GCA": "0000000000000000000000000000000000000000000000000000000000000000",
         "GCB": "0000000000000000000000000000000000000000000000000000000000000000",
         "generation": 0,
-        "classification": {
-            "codon": true,
+        "alpha_class": 0,
+        "beta_class": 0,
+        "opt_num_codons": 1,
+        "properties": {
             "mathematical": true
         },
         "meta_data": {
@@ -127,8 +137,10 @@
         "GCA": "0000000000000000000000000000000000000000000000000000000000000000",
         "GCB": "0000000000000000000000000000000000000000000000000000000000000000",
         "generation": 0,
-        "classification": {
-            "codon": true,
+        "alpha_class": 0,
+        "beta_class": 0,
+        "opt_num_codons": 1,
+        "properties": {
             "logical": true
         },
         "meta_data": {
@@ -151,8 +163,10 @@
         "GCA": "0000000000000000000000000000000000000000000000000000000000000000",
         "GCB": "0000000000000000000000000000000000000000000000000000000000000000",
         "generation": 0,
-        "classification": {
-            "codon": true,
+        "alpha_class": 0,
+        "beta_class": 0,
+        "opt_num_codons": 1,
+        "properties": {
             "logical": true
         },
         "meta_data": {
@@ -175,8 +189,10 @@
         "GCA": "0000000000000000000000000000000000000000000000000000000000000000",
         "GCB": "0000000000000000000000000000000000000000000000000000000000000000",
         "generation": 0,
-        "classification": {
-            "codon": true,
+        "alpha_class": 0,
+        "beta_class": 0,
+        "opt_num_codons": 1,
+        "properties": {
             "logical": true
         },
         "meta_data": {
@@ -199,8 +215,10 @@
         "GCA": "0000000000000000000000000000000000000000000000000000000000000000",
         "GCB": "0000000000000000000000000000000000000000000000000000000000000000",
         "generation": 0,
-        "classification": {
-            "codon": true,
+        "alpha_class": 0,
+        "beta_class": 0,
+        "opt_num_codons": 1,
+        "properties": {
             "logical": true
         },
         "meta_data": {
@@ -223,8 +241,10 @@
         "GCA": "0000000000000000000000000000000000000000000000000000000000000000",
         "GCB": "0000000000000000000000000000000000000000000000000000000000000000",
         "generation": 0,
-        "classification": {
-            "codon": true,
+        "alpha_class": 0,
+        "beta_class": 0,
+        "opt_num_codons": 1,
+        "properties": {
             "logical": true
         },
         "meta_data": {
@@ -247,8 +267,10 @@
         "GCA": "0000000000000000000000000000000000000000000000000000000000000000",
         "GCB": "0000000000000000000000000000000000000000000000000000000000000000",
         "generation": 0,
-        "classification": {
-            "codon": true,
+        "alpha_class": 0,
+        "beta_class": 0,
+        "opt_num_codons": 1,
+        "properties": {
             "logical": true
         },
         "meta_data": {
@@ -271,8 +293,10 @@
         "GCA": "0000000000000000000000000000000000000000000000000000000000000000",
         "GCB": "0000000000000000000000000000000000000000000000000000000000000000",
         "generation": 0,
-        "classification": {
-            "codon": true,
+        "alpha_class": 0,
+        "beta_class": 0,
+        "opt_num_codons": 1,
+        "properties": {
             "logical": true
         },
         "meta_data": {
@@ -295,8 +319,10 @@
         "GCA": "0000000000000000000000000000000000000000000000000000000000000000",
         "GCB": "0000000000000000000000000000000000000000000000000000000000000000",
         "generation": 0,
-        "classification": {
-            "codon": true,
+        "alpha_class": 0,
+        "beta_class": 0,
+        "opt_num_codons": 1,
+        "properties": {
             "logical": true,
             "flow": true
         },

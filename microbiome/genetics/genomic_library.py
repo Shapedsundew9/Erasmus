@@ -26,7 +26,7 @@ class genomic_library():
 
 
     _store = None
-    _validator, _schema = create_validator()
+    _validator = create_validator()
     _logger = getLogger(__name__)
 
 
@@ -40,12 +40,12 @@ class genomic_library():
 
 
     # Return an application formatted entry from the store
-    def get_gc(self, signature):
+    def load_gc(self, signature):
         return self[signature]
 
 
     # Store a new application formatted entry. Return true if the entry is added.
-    def set_gc(self, entry):
+    def store_gc(self, entry):
         if self.validate(entry):
             if self._calculate_fields(entry):
                 return genomic_library._store.store(self._storage_format(entry))
@@ -63,25 +63,23 @@ class genomic_library():
 
 
     def _calculate_fields(entry):
+        # TODO: Need to update gca & gcb if necessary.
         gca = genomic_library._store.get_limited(entry['GCA'])
+        if gca is None: genomic_library._logger.warn("GCA %s does not exist.",entry['GCA'])
         gcb = genomic_library._store.get_limited(entry['GCB'])
+        if gcb is None: genomic_library._logger.warn("GCB %s does not exist.",entry['GCB'])
         if gca is None or gcb is None: return False
         entry['code_depth'] = max((gca['code_depth'], gcb['code_depth'])) + 1
         entry['num_codes'] = gca['num_codes'] + gcb['num_codes']
         entry['raw_num_codons'] = gca['raw_num_codons'] + gcb['raw_num_codons']
         entry['generation'] = max((gca['generation'], gcb['generation'])) + 1
-        for         
-
-
+        for key in genomic_library._validator.schema['classification']['schema'].keys:
+            entry['classification'][key] = gca['classification'][key] or gcb['classification'][key]
+        return True
 
 
     def __len__(self):
         return len(genomic_library._store)
-
-
-    def get_random_entry(self):
-        # Never select the input or output codon
-        return self[randint(self.__len__() - 2) + 2]
 
 
 # Instance of the genomic_library
