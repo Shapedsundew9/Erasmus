@@ -8,11 +8,24 @@ Copyright (c) 2020 Your Company
 '''
 
 
+from zlib import compress, decompress
+from pickle import dumps, loads
 from numpy.random import randint
 from .genomic_library_store import genomic_library_store as store
 from logging import getLogger
-from .validation import create_validator
+from .entry_validator import entry_validator
 from pprint import pprint
+from copy import deepcopy
+
+
+_COMPRESSED_FIELDS = ("graph", "meta_data")
+_SHA256_FIELDS = ("signature", "GCA", "GCB", "creator")
+_PROPERTY_MASKS = (
+                    ("extended",     1 <<  0),
+                    ("mathematical", 1 <<  8),
+                    ("logical",      1 <<  9),
+                    ("flow",         1 << 10)
+)
 
 
 # The genomic_library is responsible for:
@@ -26,7 +39,7 @@ class genomic_library():
 
 
     _store = None
-    _validator = create_validator()
+    _validator = entry_validator()
     _logger = getLogger(__name__)
 
 
@@ -62,7 +75,7 @@ class genomic_library():
         return True
 
 
-    def _calculate_fields(entry):
+    def _calculate_fields(self, entry):
         # TODO: Need to update gca & gcb if necessary.
         gca = genomic_library._store.get_limited(entry['GCA'])
         if gca is None: genomic_library._logger.warn("GCA %s does not exist.",entry['GCA'])
@@ -76,6 +89,27 @@ class genomic_library():
         for key in genomic_library._validator.schema['classification']['schema'].keys:
             entry['classification'][key] = gca['classification'][key] or gcb['classification'][key]
         return True
+
+
+    def _application_format(self, store_entry):
+        # A lot of fields require no change of format
+        entry = deepcopy(store_entry)
+        for compressed_field in _COMPRESSED_FIELDS: entry[compressed_field] = loads(decompress(store_entry[compressed_field]))
+        for sha256_field in _SHA256_FIELDS: entry[sha256_field] = store_entry[sha256_field].hex()
+        entry['properties'] = {}
+        for property_key, property_mask in _PROPERTY_MASKS: entry['properties'][property_key] = bool(store_entry['properties'] & property_mask)
+        return entry
+
+
+    def _storage_format(self, application_entry):
+        # A lot of fields require no change of format
+        entry = deepcopy(application_entry)
+        for compressed_field in _COMPRESSED_FIELDS: entry[compressed_field] = compress(dumps(application_entry[compressed_field]), 9)
+        for sha256_field in _SHA256_FIELDS: entry[sha256_field] = bytes.fromhex(application_entry[sha256_field])
+        entry['properties'] = 0x0000000000000000
+        for property_key, property_mask in _PROPERTY_MASKS:
+            if property_key in application_entry['properties'] and application_entry['properties'][property_key]: entry['properties'] |= property_mask
+        return entry
 
 
     def __len__(self):

@@ -1,1 +1,4 @@
 include LICENSE
+include microbiome/genetics/codon_library.json
+include microbiome/genetics/entry_format.json
+

@@ -26,5 +26,6 @@ setup(
     author_email='16618209+Shapedsundew9@users.noreply.github.com',
     url='https://github.com/Shapedsundew9/Erasmus',
     license=license,
-    packages=find_packages(exclude=('tests', 'docs'))
+    packages=find_packages(exclude=('tests', 'docs')),
+    include_package_data=True
 )
