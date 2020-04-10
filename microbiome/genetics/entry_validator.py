@@ -16,20 +16,12 @@ from hashlib import sha256
 
 
 _NULL_GC = "0" * 64
-_ENTRY_VALIDATION_SCHEMA = load(open(join(dirname(__file__), "entry_format.json"), "r"))
+ENTRY_VALIDATION_SCHEMA = load(open(join(dirname(__file__), "entry_format.json"), "r"))
 
 
 class entry_validator(Validator):
 
     _loaded = False
-
-    # Hack to allow recursive object creation
-    def __init__(self, *args, **kwargs):
-        if entry_validator._loaded:
-            super().__init__(args, kwargs)
-        else:
-            super().__init__(_ENTRY_VALIDATION_SCHEMA)
-            entry_validator._loaded = True
 
 
     # TODO: Make errors ValidationError types for full disclosure
@@ -86,6 +78,7 @@ class entry_validator(Validator):
             if "GCA" in self.document and self.document['GCA'] != _NULL_GC: self._error(field, "If alpha_class == 0, GCA must == " + _NULL_GC)
             if "GCB" in self.document and self.document['GCB'] != _NULL_GC: self._error(field, "If alpha_class == 0, GCB must == " + _NULL_GC)
             if "num_codes" in self.document and self.document['num_codes'] != 1: self._error(field, "If alpha_class == 0, num_codes must == 1.")
+            if "num_unique_codes" in self.document and self.document['num_unique_codes'] != 1: self._error(field, "If alpha_class == 0, num_unique_codes must == 1.")
             if "raw_num_codons" in self.document and self.document['raw_num_codons'] != 1: self._error(field, "If alpha_class == 0, raw_num_codons must == 1.")
             if "opt_num_codons" in self.document and self.document['opt_num_codons'] != 1: self._error(field, "If alpha_class == 0, opt_num_codons must == 1.")
             if "meta_data" in self.document and "parents" in self.document['meta_data']: self._error(field, "If alpha_class == 0 then there are no parents.")

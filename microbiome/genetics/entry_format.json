@@ -1,5 +1,18 @@
 {
     "graph": {
+        "meta": {
+            "database": {
+                "type": "BYTEA",
+                "null": false,
+                "properties": null
+            },
+            "definition": {
+                "worker": true,
+                "local_library": false,
+                "remote_library": false,
+                "immutable": true
+            }
+        },
         "type": "dict",
         "required": true,
         "allowed": ["A", "B", "C", "O"],
@@ -70,6 +83,19 @@
         }
     },
     "signature": {
+        "meta": {
+            "database": {
+                "type": "BYTEA",
+                "null": false,
+                "properties": "PRIMARY KEY"
+            },
+            "definition": {
+                "worker": true,
+                "local_library": true,
+                "remote_library": false,
+                "immutable": true
+            }
+        },
         "type": "string",
         "minlength": 64,
         "maxlength": 64,
@@ -77,6 +103,19 @@
         "default_setter": "set_signature"
     },        
     "GCA": {
+        "meta": {
+            "database": {
+                "type": "BYTEA",
+                "null": false,
+                "properties": null
+            },
+            "definition": {
+                "worker": true,
+                "local_library": false,
+                "remote_library": false,
+                "immutable": true
+            }
+        },
         "type": "string",
         "required": true,
         "minlength": 64,
@@ -84,6 +123,19 @@
         "regex": "[0-9a-f]{64}"
     },
     "GCB": {
+        "meta": {
+            "database": {
+                "type": "BYTEA",
+                "null": false,
+                "properties": null
+            },
+            "definition": {
+                "worker": true,
+                "local_library": false,
+                "remote_library": false,
+                "immutable": true
+            }
+        },
         "type": "string",
         "required": true,
         "minlength": 64,
@@ -91,55 +143,228 @@
         "regex": "[0-9a-f]{64}"
     },
     "references": {
+        "meta": {
+            "database": {
+                "type": "BIGINT",
+                "null": false,
+                "properties": null
+            },
+            "definition": {
+                "worker": true,
+                "local_library": false,
+                "remote_library": false,
+                "immutable": false
+            }
+        },
         "type": "integer",
         "min": 0,
         "default": 0
     },
     "generation": {
+        "meta": {
+            "database": {
+                "type": "BIGINT",
+                "null": false,
+                "properties": null
+            },
+            "definition": {
+                "worker": true,
+                "local_library": false,
+                "remote_library": false,
+                "immutable": false
+            }
+        },
         "type": "integer",
         "min": 0
     },
     "code_depth": {
+        "meta": {
+            "database": {
+                "type": "INTEGER",
+                "null": false,
+                "properties": null
+            },
+            "definition": {
+                "worker": true,
+                "local_library": false,
+                "remote_library": false,
+                "immutable": true
+            }
+        },
         "type": "integer",
         "min": 1
     },
     "codon_depth": {
+        "meta": {
+            "database": {
+                "type": "INTEGER",
+                "null": false,
+                "properties": null
+            },
+            "definition": {
+                "worker": true,
+                "local_library": false,
+                "remote_library": false,
+                "immutable": true
+            }
+        },
         "type": "integer",
         "min": 1
     },
     "num_codes": {
+        "meta": {
+            "database": {
+                "type": "INTEGER",
+                "null": false,
+                "properties": null
+            },
+            "definition": {
+                "worker": true,
+                "local_library": false,
+                "remote_library": false,
+                "immutable": true
+            }
+        },
+        "type": "integer",
+        "min": 1
+    },
+    "num_unique_codes": {
+        "meta": {
+            "database": {
+                "type": "INTEGER",
+                "null": false,
+                "properties": null
+            },
+            "definition": {
+                "worker": true,
+                "local_library": false,
+                "remote_library": false,
+                "immutable": true
+            }
+        },
         "type": "integer",
         "min": 1
     },
     "raw_num_codons": {
+        "meta": {
+            "database": {
+                "type": "INTEGER",
+                "null": false,
+                "properties": null
+            },
+            "definition": {
+                "worker": true,
+                "local_library": false,
+                "remote_library": false,
+                "immutable": true
+            }
+        },
         "type": "integer",
         "min": 1
     },
     "opt_num_codons": {
+        "meta": {
+            "database": {
+                "type": "INTEGER",
+                "null": false,
+                "properties": null
+            },
+            "definition": {
+                "worker": true,
+                "local_library": false,
+                "remote_library": false,
+                "immutable": false
+            }
+        },
         "type": "integer",
         "min": 0,
         "default": 0
     },
     "num_inputs": {
+        "meta": {
+            "database": {
+                "type": "INTEGER",
+                "null": false,
+                "properties": null
+            },
+            "definition": {
+                "worker": true,
+                "local_library": false,
+                "remote_library": false,
+                "immutable": true
+            }
+        },
         "type": "integer",
         "min": 0,
         "default_setter": "set_num_inputs"
     },
     "num_outputs": {
+        "meta": {
+            "database": {
+                "type": "INTEGER",
+                "null": false,
+                "properties": null
+            },
+            "definition": {
+                "worker": true,
+                "local_library": false,
+                "remote_library": false,
+                "immutable": true
+            }
+        },
         "type": "integer",
         "min": 1,
         "default_setter": "set_num_outputs"
     },
     "alpha_class": {
+        "meta": {
+            "database": {
+                "type": "BIGINT",
+                "null": false,
+                "properties": null
+            },
+            "definition": {
+                "worker": true,
+                "local_library": false,
+                "remote_library": false,
+                "immutable": false
+            }
+        },
         "type": "integer",
         "default": -1,
         "check_with": "valid_alpha_class"
     },
     "beta_class": {
+        "meta": {
+            "database": {
+                "type": "BIGINT",
+                "null": false,
+                "properties": null
+            },
+            "definition": {
+                "worker": true,
+                "local_library": false,
+                "remote_library": false,
+                "immutable": false
+            }
+        },
         "type": "integer",
         "default": -1
     },
     "properties": {
+        "meta": {
+            "database": {
+                "type": "BIGINT",
+                "null": false,
+                "properties": null
+            },
+            "definition": {
+                "worker": true,
+                "local_library": false,
+                "remote_library": false,
+                "immutable": false
+            }
+        },
         "type": "dict",
         "schema": {
             "extended": {
@@ -154,19 +379,45 @@
                 "type": "boolean",
                 "default": false                
             },
-            "flow": {
+            "conditional": {
                 "type": "boolean",
                 "default": false                
             }
         }
     },
     "creator": {
+        "meta": {
+            "database": {
+                "type": "BYTEA",
+                "null": false,
+                "properties": null
+            },
+            "definition": {
+                "worker": true,
+                "local_library": false,
+                "remote_library": false,
+                "immutable": false
+            }
+        },
         "type": "string",
         "minlength": 64,
         "maxlength": 64,
         "regex": "[0-9a-f]{64}"
     },
     "created": {
+        "meta": {
+            "database": {
+                "type": "TIMESTAMP",
+                "null": false,
+                "properties": null
+            },
+            "definition": {
+                "worker": true,
+                "local_library": false,
+                "remote_library": false,
+                "immutable": true
+            }
+        },
         "type": "string",
         "minlength": 27,
         "maxlength": 27,
@@ -175,6 +426,19 @@
         "default_setter": "set_created"
     },
     "meta_data": {
+        "meta": {
+            "database": {
+                "type": "BYTEA",
+                "null": false,
+                "properties": null
+            },
+            "definition": {
+                "worker": true,
+                "local_library": false,
+                "remote_library": false,
+                "immutable": false
+            }
+        },
         "type": "dict",
         "required": true,
         "schema": {

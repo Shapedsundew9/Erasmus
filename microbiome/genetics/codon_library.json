@@ -324,7 +324,7 @@
         "opt_num_codons": 1,
         "properties": {
             "logical": true,
-            "flow": true
+            "conditional": true
         },
         "meta_data": {
             "name": "if-then-else",

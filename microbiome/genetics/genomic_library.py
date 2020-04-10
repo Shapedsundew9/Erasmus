@@ -24,7 +24,7 @@ _PROPERTY_MASKS = (
                     ("extended",     1 <<  0),
                     ("mathematical", 1 <<  8),
                     ("logical",      1 <<  9),
-                    ("flow",         1 << 10)
+                    ("conditional",  1 << 10)
 )
 
 
@@ -104,8 +104,7 @@ class genomic_library():
     def _storage_format(self, application_entry):
         # A lot of fields require no change of format
         entry = deepcopy(application_entry)
-        for compressed_field in _COMPRESSED_FIELDS: entry[compressed_field] = compress(dumps(application_entry[compressed_field]), 9)
-        for sha256_field in _SHA256_FIELDS: entry[sha256_field] = bytes.fromhex(application_entry[sha256_field])
+        for compressed_field in _COMPRESSED_FIELDS: entry[compressed_field] = compress(dumps(application_entry[compressed_field]), 9).hex()
         entry['properties'] = 0x0000000000000000
         for property_key, property_mask in _PROPERTY_MASKS:
             if property_key in application_entry['properties'] and application_entry['properties'][property_key]: entry['properties'] |= property_mask
