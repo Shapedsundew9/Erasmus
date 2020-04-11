@@ -13,7 +13,7 @@ from .genetics.entry_validator import ENTRY_VALIDATION_SCHEMA
 
 
 def connection(logger, table, db, rc, user, pwd, host, port):
-    conn = connect(host=host, port=port, user=user, password=pwd)
+    conn = connect(host=host, port=port, user=user, password=pwd, dbname='postgres')
     if not conn is None:
         logger.info("Connected to postgresql.")
         conn.autocommit = True
@@ -34,10 +34,13 @@ def connection(logger, table, db, rc, user, pwd, host, port):
             columns = "("
             for k ,v in ENTRY_VALIDATION_SCHEMA.items():
                 c = v['meta']['database']
-                null = " " if c['null'] else " NOT NULL "
-                columns += k + " " + c['type'] + null + c['properties'] + ", "
+                null = "" if c['null'] else " NOT NULL"
+                properties = ", " if c['properties'] is None else " " + c['properties'] + ", "
+                columns += k + " " + c['type'] + null + properties
             cur.execute("CREATE TABLE {0} {1}".format(table, columns[:-2] + ")"))
             logger.info("Created %s table with %s columns.", table, columns)
     else:
         logger.error("Could not connect to database %s, user = %s, password = %s, host = %s, port = %d", db, user, pwd, host, port)
     return conn
+
+

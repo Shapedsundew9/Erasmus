@@ -75,8 +75,8 @@ class entry_validator(Validator):
             if "generation" in self.document and self.document['generation']: self._error(field, "If alpha_class == 0, generation must == 0.")
             if "codon_depth" in self.document and self.document['codon_depth'] != 1: self._error(field, "If alpha_class == 0, codon_depth must == 1.")
             if "code_depth" in self.document and self.document['code_depth'] != 1: self._error(field, "If alpha_class == 0, code_depth must == 1.")
-            if "GCA" in self.document and self.document['GCA'] != _NULL_GC: self._error(field, "If alpha_class == 0, GCA must == " + _NULL_GC)
-            if "GCB" in self.document and self.document['GCB'] != _NULL_GC: self._error(field, "If alpha_class == 0, GCB must == " + _NULL_GC)
+            if "gca" in self.document and self.document['gca'] != _NULL_GC: self._error(field, "If alpha_class == 0, gca must == " + _NULL_GC)
+            if "gcb" in self.document and self.document['gcb'] != _NULL_GC: self._error(field, "If alpha_class == 0, gcb must == " + _NULL_GC)
             if "num_codes" in self.document and self.document['num_codes'] != 1: self._error(field, "If alpha_class == 0, num_codes must == 1.")
             if "num_unique_codes" in self.document and self.document['num_unique_codes'] != 1: self._error(field, "If alpha_class == 0, num_unique_codes must == 1.")
             if "raw_num_codons" in self.document and self.document['raw_num_codons'] != 1: self._error(field, "If alpha_class == 0, raw_num_codons must == 1.")
@@ -90,7 +90,7 @@ class entry_validator(Validator):
             # Valid non-codon
             if "beta_class" in self.document and not self.document['beta_class']:  self._error(field, "If alpha_class != 0, beta_class must != 0.")
             if "generation" in self.document and not self.document['generation']: self._error(field, "If alpha_class != 0, generation must != 0.")
-            if "GCA" in self.document and self.document['GCA'] == _NULL_GC: self._error(field, "If alpha_class != 0, GCA must != " + _NULL_GC)
+            if "gca" in self.document and self.document['gca'] == _NULL_GC: self._error(field, "If alpha_class != 0, gca must != " + _NULL_GC)
             if "meta_data" in self.document and not "parents" in self.document['meta_data']: self._error(field, "If alpha_class != 0 then there mus be at least one parent.")
 
 
@@ -109,12 +109,12 @@ class entry_validator(Validator):
 
         # The signature for a codon GC is slightly different
         string = str(document["graph"]["A"]) + str(document["graph"]["O"])
-        string += document["GCA"] + document["GCB"]
+        string += document["gca"] + document["gcb"]
         if "B" in document["graph"]: string += str(document["graph"]["B"])
         if "C" in document["graph"]: string += str(document["graph"]["C"])
 
         # If it is a codon glue on the mandatory definition
-        if document["GCA"] == _NULL_GC:
+        if document["gca"] == _NULL_GC:
             string += document["meta_data"]["function"]["python3"]["0"]["inline"]
             string += document["meta_data"]["function"]["python3"]["0"]["callable"]
 

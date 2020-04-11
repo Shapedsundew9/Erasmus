@@ -13,13 +13,13 @@ from pickle import dumps, loads
 from numpy.random import randint
 from .genomic_library_store import genomic_library_store as store
 from logging import getLogger
-from .entry_validator import entry_validator
-from pprint import pprint
+from .entry_validator import entry_validator, ENTRY_VALIDATION_SCHEMA
+from pprint import pprint, pformat
 from copy import deepcopy
 
 
 _COMPRESSED_FIELDS = ("graph", "meta_data")
-_SHA256_FIELDS = ("signature", "GCA", "GCB", "creator")
+_SHA256_FIELDS = ("signature", "gca", "gcb", "creator")
 _PROPERTY_MASKS = (
                     ("extended",     1 <<  0),
                     ("mathematical", 1 <<  8),
@@ -39,13 +39,18 @@ class genomic_library():
 
 
     _store = None
-    _validator = entry_validator()
+    _validator = entry_validator(ENTRY_VALIDATION_SCHEMA)
     _logger = getLogger(__name__)
 
 
     def __init__(self):
         if genomic_library._store is None: genomic_library._store = store()
+        if not len(genomic_library._store): genomic_library._store.store(self.__entry_zero(), settime=False)
 
+
+    def __entry_zero(self):
+        return {k: v['meta']['entry_zero'] for k, v in ENTRY_VALIDATION_SCHEMA.items()}
+          
 
     # Return an application formatted entry from the store
     def __getitem__(self, signature):
@@ -57,12 +62,14 @@ class genomic_library():
         return self[signature]
 
 
-    # Store a new application formatted entry. Return true if the entry is added.
+    # Store a new application formatted entry.
     def store_gc(self, entry):
         if self.validate(entry):
-            if self._calculate_fields(entry):
-                return genomic_library._store.store(self._storage_format(entry))
-        return False
+            new_entry = genomic_library._validator.normalized(entry)
+            if self._calculate_fields(new_entry):
+                genomic_library._store.store(self._storage_format(new_entry))
+                return new_entry
+        return None
 
 
     # Validates an application format entry and populates fields that do not
@@ -70,17 +77,17 @@ class genomic_library():
     def validate(self, entry):
         if not genomic_library._validator(entry):
             err_txt = genomic_library._validator.errors
-            genomic_library._logger.warn("Entry is not valid:\n%s\n%s",pprint.pformat(err_txt), pprint.pformat(entry))
+            genomic_library._logger.warning("Entry is not valid:\n%s\n%s", pformat(err_txt), pformat(entry))
             return False
         return True
 
 
     def _calculate_fields(self, entry):
         # TODO: Need to update gca & gcb if necessary.
-        gca = genomic_library._store.get_limited(entry['GCA'])
-        if gca is None: genomic_library._logger.warn("GCA %s does not exist.",entry['GCA'])
-        gcb = genomic_library._store.get_limited(entry['GCB'])
-        if gcb is None: genomic_library._logger.warn("GCB %s does not exist.",entry['GCB'])
+        gca = genomic_library._store[entry['gca']]
+        if gca is None: genomic_library._logger.warning("gca %s does not exist.",entry['gca'])
+        gcb = genomic_library._store[entry['gcb']]
+        if gcb is None: genomic_library._logger.warning("gcb %s does not exist.",entry['gcb'])
         if gca is None or gcb is None: return False
         entry['code_depth'] = max((gca['code_depth'], gcb['code_depth'])) + 1
         entry['num_codes'] = gca['num_codes'] + gcb['num_codes']
@@ -113,7 +120,3 @@ class genomic_library():
 
     def __len__(self):
         return len(genomic_library._store)
-
-
-# Instance of the genomic_library
-glib = genomic_library()
