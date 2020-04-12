@@ -12,7 +12,8 @@
                 "remote_library": false,
                 "immutable": true
             },
-            "entry_zero": "0"
+            "compressed": true,
+            "sha256": false
         },
         "type": "dict",
         "required": true,
@@ -96,7 +97,8 @@
                 "remote_library": false,
                 "immutable": true
             },
-            "entry_zero": "0000000000000000000000000000000000000000000000000000000000000000"
+            "compressed": false,
+            "sha256": true
         },
         "type": "string",
         "minlength": 64,
@@ -117,13 +119,15 @@
                 "remote_library": false,
                 "immutable": true
             },
-            "entry_zero": "0000000000000000000000000000000000000000000000000000000000000000"
+            "compressed": false,
+            "sha256": true
         },
         "type": "string",
         "required": true,
         "minlength": 64,
         "maxlength": 64,
-        "regex": "[0-9a-f]{64}"
+        "regex": "[0-9a-f]{64}",
+        "default": "0000000000000000000000000000000000000000000000000000000000000000"
     },
     "gcb": {
         "meta": {
@@ -138,13 +142,15 @@
                 "remote_library": false,
                 "immutable": true
             },
-            "entry_zero": "0000000000000000000000000000000000000000000000000000000000000000"
+            "compressed": false,
+            "sha256": true
         },
         "type": "string",
         "required": true,
         "minlength": 64,
         "maxlength": 64,
-        "regex": "[0-9a-f]{64}"
+        "regex": "[0-9a-f]{64}",
+        "default": "0000000000000000000000000000000000000000000000000000000000000000"
     },
     "reference_count": {
         "meta": {
@@ -159,7 +165,8 @@
                 "remote_library": false,
                 "immutable": false
             },
-            "entry_zero": 0
+            "compressed": false,
+            "sha256": false
         },
         "type": "integer",
         "min": 0,
@@ -178,10 +185,12 @@
                 "remote_library": false,
                 "immutable": false
             },
-            "entry_zero": 0
+            "compressed": false,
+            "sha256": false
         },
         "type": "integer",
-        "min": 0
+        "min": 0,
+        "default": 0
     },
     "code_depth": {
         "meta": {
@@ -196,10 +205,12 @@
                 "remote_library": false,
                 "immutable": true
             },
-            "entry_zero": 0
+            "compressed": false,
+            "sha256": false
         },
         "type": "integer",
-        "min": 1
+        "min": 1,
+        "default": 1
     },
     "codon_depth": {
         "meta": {
@@ -214,10 +225,12 @@
                 "remote_library": false,
                 "immutable": true
             },
-            "entry_zero": 0
+            "compressed": false,
+            "sha256": false
         },
         "type": "integer",
-        "min": 1
+        "min": 1,
+        "default": 1
     },
     "num_codes": {
         "meta": {
@@ -232,10 +245,12 @@
                 "remote_library": false,
                 "immutable": true
             },
-            "entry_zero": 0
+            "compressed": false,
+            "sha256": false
         },
         "type": "integer",
-        "min": 1
+        "min": 1,
+        "default": 1
     },
     "num_unique_codes": {
         "meta": {
@@ -250,10 +265,12 @@
                 "remote_library": false,
                 "immutable": true
             },
-            "entry_zero": 0
+            "compressed": false,
+            "sha256": false
         },
         "type": "integer",
-        "min": 1
+        "min": 1,
+        "default": 1
     },
     "raw_num_codons": {
         "meta": {
@@ -268,10 +285,12 @@
                 "remote_library": false,
                 "immutable": true
             },
-            "entry_zero": 0
+            "compressed": false,
+            "sha256": false
         },
         "type": "integer",
-        "min": 1
+        "min": 1,
+        "default": 1
     },
     "opt_num_codons": {
         "meta": {
@@ -286,7 +305,8 @@
                 "remote_library": false,
                 "immutable": false
             },
-            "entry_zero": 0
+            "compressed": false,
+            "sha256": false
         },
         "type": "integer",
         "min": 0,
@@ -305,7 +325,8 @@
                 "remote_library": false,
                 "immutable": true
             },
-            "entry_zero": 0
+            "compressed": false,
+            "sha256": false
         },
         "type": "integer",
         "min": 0,
@@ -324,7 +345,8 @@
                 "remote_library": false,
                 "immutable": true
             },
-            "entry_zero": 0
+            "compressed": false,
+            "sha256": false
         },
         "type": "integer",
         "min": 1,
@@ -343,7 +365,8 @@
                 "remote_library": false,
                 "immutable": false
             },
-            "entry_zero": 0
+            "compressed": false,
+            "sha256": false
         },
         "type": "integer",
         "default": -1,
@@ -362,7 +385,8 @@
                 "remote_library": false,
                 "immutable": false
             },
-            "entry_zero": 0
+            "compressed": false,
+            "sha256": false
         },
         "type": "integer",
         "default": -1
@@ -380,7 +404,14 @@
                 "remote_library": false,
                 "immutable": false
             },
-            "entry_zero": 0
+            "compressed": false,
+            "sha256": false,
+            "codec": {
+                "extended": 0,
+                "mathematical": 8,
+                "logical": 9,
+                "conditional": 10
+            }
         },
         "type": "dict",
         "schema": {
@@ -400,7 +431,8 @@
                 "type": "boolean",
                 "default": false                
             }
-        }
+        },
+        "default": {}
     },
     "creator": {
         "meta": {
@@ -415,12 +447,14 @@
                 "remote_library": false,
                 "immutable": false
             },
-            "entry_zero": "0000000000000000000000000000000000000000000000000000000000000000"
+            "compressed": false,
+            "sha256": true
         },
         "type": "string",
         "minlength": 64,
         "maxlength": 64,
-        "regex": "[0-9a-f]{64}"
+        "regex": "[0-9a-f]{64}",
+        "default": "0000000000000000000000000000000000000000000000000000000000000000"
     },
     "created": {
         "meta": {
@@ -435,7 +469,8 @@
                 "remote_library": false,
                 "immutable": true
             },
-            "entry_zero": 0.0
+            "compressed": false,
+            "sha256": false
         },
         "type": "string",
         "minlength": 27,
@@ -457,7 +492,8 @@
                 "remote_library": false,
                 "immutable": false
             },
-            "entry_zero": "0"
+            "compressed": true,
+            "sha256": false
         },
         "type": "dict",
         "required": true,
@@ -518,7 +554,8 @@
                     }
                 }
             }
-        }
+        },
+        "default": {}
     }
 }
 

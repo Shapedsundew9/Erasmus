@@ -18,16 +18,6 @@ from pprint import pprint, pformat
 from copy import deepcopy
 
 
-_COMPRESSED_FIELDS = ("graph", "meta_data")
-_SHA256_FIELDS = ("signature", "gca", "gcb", "creator")
-_PROPERTY_MASKS = (
-                    ("extended",     1 <<  0),
-                    ("mathematical", 1 <<  8),
-                    ("logical",      1 <<  9),
-                    ("conditional",  1 << 10)
-)
-
-
 # The genomic_library is responsible for:
 #   1. Persisting entries
 #   2. Converting entries from application format to storage format
@@ -45,12 +35,25 @@ class genomic_library():
 
     def __init__(self):
         if genomic_library._store is None: genomic_library._store = store()
-        if not len(genomic_library._store): genomic_library._store.store(self.__entry_zero(), settime=False)
+        if not len(genomic_library._store): self.__entry_zero()
 
 
     def __entry_zero(self):
-        return {k: v['meta']['entry_zero'] for k, v in ENTRY_VALIDATION_SCHEMA.items()}
-          
+        entry = {}
+        for k, v in ENTRY_VALIDATION_SCHEMA.items():
+            if v['meta']['database']['type'] == "BYTEA":
+                value = b'\x00' * (v['minlength'] // 2) if "minlength" in v else b'\x00'
+            elif v['meta']['database']['type'] == "INTEGER" or v['meta']['database']['type'] == "BIGINT":
+                value = 0
+            elif v['meta']['database']['type'] == "TIMESTAMP":
+                value = "2000-01-01T00:00:00.000001Z" 
+            elif v['meta']['database']['type'] == "REAL":
+                value = 0.0
+            else:
+                value = "entry_zero"
+            entry[k] = value
+        genomic_library._store.store(entry, settime=False)
+
 
     # Return an application formatted entry from the store
     def __getitem__(self, signature):
@@ -93,29 +96,42 @@ class genomic_library():
         entry['num_codes'] = gca['num_codes'] + gcb['num_codes']
         entry['raw_num_codons'] = gca['raw_num_codons'] + gcb['raw_num_codons']
         entry['generation'] = max((gca['generation'], gcb['generation'])) + 1
-        for key in genomic_library._validator.schema['classification']['schema'].keys:
-            entry['classification'][key] = gca['classification'][key] or gcb['classification'][key]
+        entry['properties'] = self.__properties_application_format(gca['properties'] | gcb['properties'])
         return True
 
 
     def _application_format(self, store_entry):
         # A lot of fields require no change of format
         entry = deepcopy(store_entry)
-        for compressed_field in _COMPRESSED_FIELDS: entry[compressed_field] = loads(decompress(store_entry[compressed_field]))
-        for sha256_field in _SHA256_FIELDS: entry[sha256_field] = store_entry[sha256_field].hex()
-        entry['properties'] = {}
-        for property_key, property_mask in _PROPERTY_MASKS: entry['properties'][property_key] = bool(store_entry['properties'] & property_mask)
+        for k, v in ENTRY_VALIDATION_SCHEMA.items():
+            if v['meta']['compressed']: entry[k] = loads(decompress(store_entry[k]))
+            if v['meta']['sha256']: entry[k] = store_entry[k].hex() 
+        entry['properties'] = self.__properties_application_format(store_entry['properties'])
         return entry
 
 
     def _storage_format(self, application_entry):
         # A lot of fields require no change of format
         entry = deepcopy(application_entry)
-        for compressed_field in _COMPRESSED_FIELDS: entry[compressed_field] = compress(dumps(application_entry[compressed_field]), 9).hex()
-        entry['properties'] = 0x0000000000000000
-        for property_key, property_mask in _PROPERTY_MASKS:
-            if property_key in application_entry['properties'] and application_entry['properties'][property_key]: entry['properties'] |= property_mask
+        for k, v in ENTRY_VALIDATION_SCHEMA.items():
+            if v['meta']['compressed']: entry[k] = compress(dumps(application_entry[k]), 9)
+            if v['meta']['sha256']: entry[k] = bytearray.fromhex(application_entry[k]) 
+        entry['properties'] = self.__properties_storage_format(application_entry['properties'])
         return entry
+
+
+    def __properties_application_format(self, storage_properties):
+        properties = {}
+        for k, v in ENTRY_VALIDATION_SCHEMA['properties']['meta']['codec'].items():
+            properties[k] = bool(storage_properties & 1 << v)
+        return properties
+
+
+    def __properties_storage_format(self, application_properties):
+        properties = 0x0000000000000000
+        for k, v in ENTRY_VALIDATION_SCHEMA['properties']['meta']['codec'].items():
+            if k in application_properties and application_properties[k]: properties |= 1 << v
+        return properties
 
 
     def __len__(self):

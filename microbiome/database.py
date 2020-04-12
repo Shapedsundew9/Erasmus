@@ -18,7 +18,7 @@ def connection(logger, table, db, rc, user, pwd, host, port):
         logger.info("Connected to postgresql.")
         conn.autocommit = True
         cur = conn.cursor()
-        cur.execute("SELECT datname FROM pg_database;")
+        cur.execute("SELECT datname FROM pg_database")
         list_database = cur.fetchall()
         if not db in list_database or (db in list_database and rc):
             msg = "%s database does not exist." if not rc else "Dropping %s database."
@@ -38,7 +38,11 @@ def connection(logger, table, db, rc, user, pwd, host, port):
                 properties = ", " if c['properties'] is None else " " + c['properties'] + ", "
                 columns += k + " " + c['type'] + null + properties
             cur.execute("CREATE TABLE {0} {1}".format(table, columns[:-2] + ")"))
+            cur.close()
+            conn.commit()
             logger.info("Created %s table with %s columns.", table, columns)
+        else:
+            cur.close()
     else:
         logger.error("Could not connect to database %s, user = %s, password = %s, host = %s, port = %d", db, user, pwd, host, port)
     return conn

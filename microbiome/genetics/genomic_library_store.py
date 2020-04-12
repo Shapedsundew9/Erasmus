@@ -8,7 +8,7 @@ Copyright (c) 2020 Your Company
 '''
 
 
-from time import time
+from datetime import datetime
 from ..database import connection
 from .config import get_config
 from logging import getLogger
@@ -40,12 +40,23 @@ class genomic_library_store():
 
     _db_library = None
     _logger = getLogger(__name__)
+    _columns = None
+    _columns_str = ""
+    _format = ""
 
 
     def __init__(self):
         if genomic_library_store._db_library is None:
             db, rc, user, pwd, host, port = get_config(_CONFIG_SECTION, ('dbname', 'recreate', 'username', 'password', 'host', 'port'))
             genomic_library_store._db_library = connection(genomic_library_store._logger, _LIBRARY_TABLE, db, rc, user, pwd, host, port)
+            dbcur = genomic_library_store._db_library.cursor()
+            dbcur.execute("SELECT column_name, data_type FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '{0}'".format(_LIBRARY_TABLE))
+            genomic_library_store._columns = [c[0] for c in dbcur.fetchall()]
+            dbcur.close()
+            for c in genomic_library_store._columns: genomic_library_store._format += "%s, "
+            genomic_library_store._format = genomic_library_store._format[:-2]
+            for c in genomic_library_store._columns: genomic_library_store._columns_str += c + ", "
+            genomic_library_store._columns_str = genomic_library_store._columns_str[:-2]
             genomic_library_store._logger.info("%s table has %d entries.", _LIBRARY_TABLE, len(self))
 
 
@@ -53,15 +64,29 @@ class genomic_library_store():
         # TODO: There must be a faster way
         dbcur = genomic_library_store._db_library.cursor()
         dbcur.execute("SELECT COUNT(*) FROM {0}".format(_LIBRARY_TABLE))
-        return dbcur.fetchone()[0]
+        retval = dbcur.fetchone()[0]
+        dbcur.close()
+        return retval
+
 
 
     # signature is a hex string with no prefix
     # TODO: Also support a byte array
     def __getitem__(self, signature):
         dbcur = genomic_library_store._db_library.cursor()
-        dbcur.execute("SELECT * FROM {0} WHERE signature = %s".format(_LIBRARY_TABLE), ("\\x" + signature,))
-        return dbcur.fetchone()
+        dbcur.execute("SELECT {0} FROM {1} WHERE signature = %s".format(genomic_library_store._columns_str, _LIBRARY_TABLE), ("\\x" + signature,))
+        data = dbcur.fetchone()
+        dbcur.close()
+        if not data is None:
+            retval = {}
+            for k, v in zip(genomic_library_store._columns, data):
+                if isinstance(v, memoryview):
+                    v = bytes(v)
+                elif isinstance(v, datetime):
+                    v = v.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
+                retval[k] = v
+            return retval
+        return None
 
 
     def get_signatures(self, query_str, query_param=[]):
@@ -71,7 +96,9 @@ class genomic_library_store():
         except (Exception, DatabaseError) as ex:
             genomic_library_store._logger.error("Failed to get signatures for query %s, %s: %s", query_str, query_param, ex)
             return None
-        return dbcur.fetchall()
+        retval = dbcur.fetchall()
+        dbcur.close()
+        return retval
 
 
     def get_entries(self, query_str, query_param=[]):
@@ -81,22 +108,21 @@ class genomic_library_store():
         except (Exception, DatabaseError) as ex:
             genomic_library_store._logger.error("Failed to get entries for query %s, %s: %s", query_str, query_param, ex)
             return None
-        return dbcur.fetchall()
+        retval = dbcur.fetchall()
+        dbcur.close()
+        return retval
 
 
-    def store(self, entry, settime=True):
-        if settime: entry['created'] = time()
-        does_not_exist = self[entry['signature']] is None
+    def store(self, entry, settime=False):
+        if settime: entry['created'] = datetime.now().strftime("%Y-%m-%dT%H:%M:%S.%fZ")
+        does_not_exist = self[entry['signature'].hex()] is None
         if does_not_exist:
-            cols, fmts, vals = "", "", []
-            for k, v in entry.items():
-                cols += k + ", "
-                fmts += "%s, "
-                vals.append(v)
+            vals = [entry[k] for k in genomic_library_store._columns]
             try:
-                print("INSERT INTO {0}({1}) VALUES ({2})".format(_LIBRARY_TABLE, cols[:-2], fmts[:-2]))
-                print(vals)
-                genomic_library_store._db_library.cursor().execute("INSERT INTO {0}({1}) VALUES ({2})".format(_LIBRARY_TABLE, cols[:-2], fmts[:-2]), vals)
+                cur = genomic_library_store._db_library.cursor()
+                cur.execute("INSERT INTO {0}({1}) VALUES ({2})".format(_LIBRARY_TABLE, genomic_library_store._columns_str, genomic_library_store._format), vals)
+                cur.close()
+                genomic_library_store._db_library.commit()
             except (Exception, DatabaseError) as ex:
                 genomic_library_store._logger.error("Failed to store entry %s: %s", entry['signature'], ex)
                 return False
