@@ -1,3 +1,12 @@
+'''
+Filename: /home/shapedsundew9/Projects/Erasmus/tests/test_entry_validator.py
+Path: /home/shapedsundew9/Projects/Erasmus/tests
+Created Date: Sunday, March 29th 2020, 2:03:22 pm
+Author: Shapedsundew9
+
+Copyright (c) 2020 Your Company
+'''
+
 from os.path import isfile
 from json import load
 from microbiome.genetics.entry_validator import entry_validator, ENTRY_VALIDATION_SCHEMA
@@ -13,3 +22,7 @@ def test_codon_library():
     validator = entry_validator(ENTRY_VALIDATION_SCHEMA)
     for codon in codon_library: assert validator(codon), codon["meta_data"]["name"] + ":" + str(validator.errors)
     for codon in codon_library: validator.normalized(codon)
+
+
+# TODO: Add some non-codon test cases
+# TODO: Add some negative tests

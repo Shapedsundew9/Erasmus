@@ -89,19 +89,7 @@ class genomic_library_store():
         return None
 
 
-    def get_signatures(self, query_str, query_param=[]):
-        dbcur = genomic_library_store._db_library.cursor()
-        try:
-            dbcur.execute("SELECT signature FROM {0} WHERE {1}".format(_LIBRARY_TABLE, query_str), query_param)
-        except (Exception, DatabaseError) as ex:
-            genomic_library_store._logger.error("Failed to get signatures for query %s, %s: %s", query_str, query_param, ex)
-            return None
-        retval = dbcur.fetchall()
-        dbcur.close()
-        return retval
-
-
-    def get_entries(self, query_str, query_param=[]):
+    def load(self, query, fields="*"):
         dbcur = genomic_library_store._db_library.cursor()
         try:
             dbcur.execute("SELECT * FROM {0} WHERE {1}".format(_LIBRARY_TABLE, query_str), query_param)

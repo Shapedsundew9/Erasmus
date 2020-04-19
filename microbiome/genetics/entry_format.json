@@ -13,7 +13,8 @@
                 "immutable": true
             },
             "compressed": true,
-            "sha256": false
+            "sha256": false,
+            "description": "Defines the sub-codes of the genetic code and how they are connected together."
         },
         "type": "dict",
         "required": true,
@@ -98,7 +99,8 @@
                 "immutable": true
             },
             "compressed": false,
-            "sha256": true
+            "sha256": true,
+            "description": "Unique identifier for this genetic code."
         },
         "type": "string",
         "minlength": 64,
@@ -120,7 +122,8 @@
                 "immutable": true
             },
             "compressed": false,
-            "sha256": true
+            "sha256": true,
+            "description": "The signature of Genetic Code A or the 'zero entry' if this genetic code is a codon. Its connectivity to the Inputs, Constants, genetic code B and outputs are defined in the 'graph'."
         },
         "type": "string",
         "required": true,
@@ -143,7 +146,8 @@
                 "immutable": true
             },
             "compressed": false,
-            "sha256": true
+            "sha256": true,
+            "description": "The signature of Genetic Code B or the 'zero entry' if it is not connected to anything. Connectivity to the Inputs, Constants, genetic code A and outputs are defined in the 'graph'."
         },
         "type": "string",
         "required": true,
@@ -166,7 +170,8 @@
                 "immutable": false
             },
             "compressed": false,
-            "sha256": false
+            "sha256": false,
+            "description": "The number of times this code is referenced in other codes. If this code is referenced by code A once and no other then the reference count is 1. If genetic code X is then referenced by genetic code Y this code is referenced by both X & Y (through X) and the count is 2."
         },
         "type": "integer",
         "min": 0,
@@ -186,7 +191,8 @@
                 "immutable": false
             },
             "compressed": false,
-            "sha256": false
+            "sha256": false,
+            "description": "The number of generations of genetic code evolved to create this code. A codon is generation always generation 1. This value may change if the creator changes."
         },
         "type": "integer",
         "min": 0,
@@ -206,7 +212,8 @@
                 "immutable": true
             },
             "compressed": false,
-            "sha256": false
+            "sha256": false,
+            "description": "The depth of the code vertex graph." 
         },
         "type": "integer",
         "min": 1,
@@ -226,7 +233,8 @@
                 "immutable": true
             },
             "compressed": false,
-            "sha256": false
+            "sha256": false,
+            "description": "The depth of the graph after expansion to codon vertices."
         },
         "type": "integer",
         "min": 1,
@@ -246,7 +254,8 @@
                 "immutable": true
             },
             "compressed": false,
-            "sha256": false
+            "sha256": false,
+            "description": "The number of vertices in the code vertex graph."
         },
         "type": "integer",
         "min": 1,
@@ -266,7 +275,8 @@
                 "immutable": true
             },
             "compressed": false,
-            "sha256": false
+            "sha256": false,
+            "description": "The number of unique codes in the code vertex graph."
         },
         "type": "integer",
         "min": 1,
@@ -286,7 +296,8 @@
                 "immutable": true
             },
             "compressed": false,
-            "sha256": false
+            "sha256": false,
+            "description": "The number of verticies in the codon vertex graph."
         },
         "type": "integer",
         "min": 1,
@@ -306,7 +317,8 @@
                 "immutable": false
             },
             "compressed": false,
-            "sha256": false
+            "sha256": false,
+            "description": "The number of verticies in the codon vertex graph after optimisation. As optimisations improve this value may change."
         },
         "type": "integer",
         "min": 0,
@@ -326,7 +338,8 @@
                 "immutable": true
             },
             "compressed": false,
-            "sha256": false
+            "sha256": false,
+            "description": "The number of inputs to the code."
         },
         "type": "integer",
         "min": 0,
@@ -346,7 +359,8 @@
                 "immutable": true
             },
             "compressed": false,
-            "sha256": false
+            "sha256": false,
+            "description": "The number of outputs to the code."
         },
         "type": "integer",
         "min": 1,
@@ -366,7 +380,8 @@
                 "immutable": false
             },
             "compressed": false,
-            "sha256": false
+            "sha256": false,
+            "description": "The classification of the genetic code."
         },
         "type": "integer",
         "default": -1,
@@ -386,7 +401,8 @@
                 "immutable": false
             },
             "compressed": false,
-            "sha256": false
+            "sha256": false,
+            "description": "The classification of the genetic code."
         },
         "type": "integer",
         "default": -1
@@ -406,6 +422,7 @@
             },
             "compressed": false,
             "sha256": false,
+            "description": "The properties for the genetic code.",
             "codec": {
                 "extended": 0,
                 "mathematical": 8,
@@ -448,7 +465,8 @@
                 "immutable": false
             },
             "compressed": false,
-            "sha256": true
+            "sha256": true,
+            "description": "The UUID identifying the creator. If the genetic code has been created in another microbiome at an earlier time then this field will be updated."
         },
         "type": "string",
         "minlength": 64,
@@ -470,7 +488,8 @@
                 "immutable": true
             },
             "compressed": false,
-            "sha256": false
+            "sha256": false,
+            "description": "The date and time of the codes creation. If the genetic code has been created in another microbiome at an earlier time then this field will be updated."
         },
         "type": "string",
         "minlength": 27,
@@ -493,7 +512,8 @@
                 "immutable": false
             },
             "compressed": true,
-            "sha256": false
+            "sha256": false,
+            "description": "Other data associated with this genetic code."
         },
         "type": "dict",
         "required": true,

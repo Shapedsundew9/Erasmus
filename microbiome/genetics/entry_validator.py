@@ -19,6 +19,7 @@ _NULL_GC = "0" * 64
 ENTRY_VALIDATION_SCHEMA = load(open(join(dirname(__file__), "entry_format.json"), "r"))
 
 
+#TODO: Add and entry format JSON validator for the meta data
 class entry_validator(Validator):
 
     _loaded = False
