@@ -37,7 +37,12 @@ def __query_params(entry_schema):
 
 
 def __create_query_schema():
-    return {k: __query_params(v) for k, v in filter(lambda kv: not kv[1]['meta']['compressed'], load(open(join(dirname(__file__), "entry_format.json"), "r")).items())}
+    query_schema = {k: __query_params(v) for k, v in filter(lambda kv: not kv[1]['meta']['compressed'], load(open(join(dirname(__file__), "entry_format.json"), "r")).items())}
+    query_schema['limit']: {
+        'type': integer,
+        'minimum': 1
+    }
+    return query_schema
 
 
 # The query validation schema is derived from the entry validation schema.
