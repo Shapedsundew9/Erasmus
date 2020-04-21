@@ -62,7 +62,7 @@ class genomic_library():
 
 
     # Return a list of application formatted entries from the store that meet the query
-    def load(self, query, fields="*"):
+    def load(self, query, fields=["*"]):
         valid, errors = query_validator(query)
         if not valid:
             genomic_library.__logger.warning("Query is not valid:\n%s\n%s", pformat(errors), pformat(query))

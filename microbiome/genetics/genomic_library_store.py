@@ -17,14 +17,7 @@ from psycopg2 import DatabaseError
 
 _CONFIG_SECTION = "local_genomic_library"
 _LIBRARY_TABLE = "genomic_library"
-_DB_TYPE_MAP = {
-    "integer": {"fmt": "%d", "zero": 0},
-    "bigint":  {"fmt": "%d", "zero": 0},
-    "bytea":  {"fmt": "'\\x%s'", "zero": "0"},
-    "character varying": {"fmt": "%s", "zero": "0"},
-    "timestamp without time zone": {"fmt": "to_timestamp(%f)", "zero": 0.0},
-    "real": {"fmt": "%f", "zero": 0.0}
-}
+
 
 # The genomic_library_store is responsible for
 #   1. Estabilishing a connection to the database

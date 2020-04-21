@@ -57,6 +57,6 @@ def save_config(config_file_path='config.yaml'):
         dump(config, file_ptr)
 
 
-def get_config(section = None, param_list=[]):
+def get_config(section):
     if section is None: return config
-    return (config[section][param] for param in param_list)
+    return config[section]
