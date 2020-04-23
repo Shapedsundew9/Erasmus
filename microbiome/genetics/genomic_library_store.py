@@ -9,14 +9,15 @@ Copyright (c) 2020 Your Company
 
 
 from datetime import datetime
-from ..database import connection
+from ..database import connection, create_table, row_count, load
 from .config import get_config
 from logging import getLogger
 from psycopg2 import DatabaseError
+from .entry_validator import ENTRY_VALIDATION_SCHEMA as SCHEMA
 
 
-_CONFIG_SECTION = "local_genomic_library"
-_LIBRARY_TABLE = "genomic_library"
+__CONFIG_SECTION = "local_genomic_library"
+__LIBRARY_TABLE = "genomic_library"
 
 
 # The genomic_library_store is responsible for
@@ -31,81 +32,53 @@ _LIBRARY_TABLE = "genomic_library"
 class genomic_library_store():
 
 
-    _db_library = None
-    _logger = getLogger(__name__)
-    _columns = None
-    _columns_str = ""
-    _format = ""
+    __db_library = None
+    __logger = getLogger(__name__)
+    __columns = None
+    __columns_str = ""
+    __format_str = ""
 
 
     def __init__(self):
-        if genomic_library_store._db_library is None:
-            db, rc, user, pwd, host, port = get_config(_CONFIG_SECTION, ('dbname', 'recreate', 'username', 'password', 'host', 'port'))
-            genomic_library_store._db_library = connection(genomic_library_store._logger, _LIBRARY_TABLE, db, rc, user, pwd, host, port)
-            dbcur = genomic_library_store._db_library.cursor()
-            dbcur.execute("SELECT column_name, data_type FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '{0}'".format(_LIBRARY_TABLE))
-            genomic_library_store._columns = [c[0] for c in dbcur.fetchall()]
-            dbcur.close()
-            for c in genomic_library_store._columns: genomic_library_store._format += "%s, "
-            genomic_library_store._format = genomic_library_store._format[:-2]
-            for c in genomic_library_store._columns: genomic_library_store._columns_str += c + ", "
-            genomic_library_store._columns_str = genomic_library_store._columns_str[:-2]
-            genomic_library_store._logger.info("%s table has %d entries.", _LIBRARY_TABLE, len(self))
-
+        if genomic_library_store.__db_library is None:
+            config = get_config(__CONFIG_SECTION)
+            ('dbname', 'recreate', 'username', 'password', 'host', 'port')
+            genomic_library_store.__db_library = connection(genomic_library_store.__logger, config['dbname'], 
+                config['recreate'], config['username'], config['password'], config['host'], config['port'])
+            self.__db_args = (genomic_library_store.__logger, genomic_library_store.__db_library, __LIBRARY_TABLE)
+            c, cs, fs = create_table(*self.__db_args, {k: v['meta']['database'] for k, v in SCHEMA.items()})
+            genomic_library_store.__columns = c
+            genomic_library_store.__columns_str = cs
+            genomic_library_store.__format_str_str = fs
+            genomic_library_store.__logger.info("%s table has %d entries.", __LIBRARY_TABLE, len(self))
+            
 
     def __len__(self):
-        # TODO: There must be a faster way
-        dbcur = genomic_library_store._db_library.cursor()
-        dbcur.execute("SELECT COUNT(*) FROM {0}".format(_LIBRARY_TABLE))
-        retval = dbcur.fetchone()[0]
-        dbcur.close()
-        return retval
-
+        return row_count(*self.__db_args)
 
 
     # signature is a hex string with no prefix
     # TODO: Also support a byte array
     def __getitem__(self, signature):
-        dbcur = genomic_library_store._db_library.cursor()
-        dbcur.execute("SELECT {0} FROM {1} WHERE signature = %s".format(genomic_library_store._columns_str, _LIBRARY_TABLE), ("\\x" + signature,))
-        data = dbcur.fetchone()
-        dbcur.close()
-        if not data is None:
-            retval = {}
-            for k, v in zip(genomic_library_store._columns, data):
-                if isinstance(v, memoryview):
-                    v = bytes(v)
-                elif isinstance(v, datetime):
-                    v = v.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
-                retval[k] = v
-            return retval
-        return None
+        return load(*self.__db_args, {"signature": signature}, genomic_library_store.__columns_str, genomic_library_store.__columns)
 
 
-    def load(self, query, fields="*"):
-        dbcur = genomic_library_store._db_library.cursor()
-        try:
-            dbcur.execute("SELECT * FROM {0} WHERE {1}".format(_LIBRARY_TABLE, query_str), query_param)
-        except (Exception, DatabaseError) as ex:
-            genomic_library_store._logger.error("Failed to get entries for query %s, %s: %s", query_str, query_param, ex)
-            return None
-        retval = dbcur.fetchall()
-        dbcur.close()
-        return retval
+    def load(self, query, fields=genomic_library_store.__columns_str):
+        return load(*self.__db_args, query, fields, genomic_library_store.__columns)
 
 
     def store(self, entry, settime=False):
         if settime: entry['created'] = datetime.now().strftime("%Y-%m-%dT%H:%M:%S.%fZ")
         does_not_exist = self[entry['signature'].hex()] is None
         if does_not_exist:
-            vals = [entry[k] for k in genomic_library_store._columns]
+            vals = [entry[k] for k in genomic_library_store.__columns]
             try:
-                cur = genomic_library_store._db_library.cursor()
-                cur.execute("INSERT INTO {0}({1}) VALUES ({2})".format(_LIBRARY_TABLE, genomic_library_store._columns_str, genomic_library_store._format), vals)
+                cur = genomic_library_store.__db_library.cursor()
+                cur.execute("INSERT INTO {0}({1}) VALUES ({2})".format(_LIBRARY_TABLE, genomic_library_store.__columns_str, genomic_library_store.__format_str), vals)
                 cur.close()
-                genomic_library_store._db_library.commit()
+                genomic_library_store.__db_library.commit()
             except (Exception, DatabaseError) as ex:
-                genomic_library_store._logger.error("Failed to store entry %s: %s", entry['signature'], ex)
+                genomic_library_store.__logger.error("Failed to store entry %s: %s", entry['signature'], ex)
                 return False
             return True
         return False

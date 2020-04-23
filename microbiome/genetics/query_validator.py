@@ -39,8 +39,12 @@ def __query_params(entry_schema):
 def __create_query_schema():
     query_schema = {k: __query_params(v) for k, v in filter(lambda kv: not kv[1]['meta']['compressed'], load(open(join(dirname(__file__), "entry_format.json"), "r")).items())}
     query_schema['limit']: {
-        'type': integer,
+        'type': 'integer',
         'minimum': 1
+    }
+    query_schema['random']: {
+        'type': 'boolean',
+        'default': False
     }
     return query_schema
 
