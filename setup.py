@@ -7,7 +7,6 @@ Author: Shaped Sundew
 Copyright (c) 2020 Your Company
 '''
 
-from 
 from setuptools import setup, find_packages
 
 

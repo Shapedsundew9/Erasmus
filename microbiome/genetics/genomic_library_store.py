@@ -9,10 +9,9 @@ Copyright (c) 2020 Your Company
 
 
 from datetime import datetime
-from ..database import connection, create_table, row_count, load
+from ..database import connection, create_table, row_count, load, store
 from .config import get_config
 from logging import getLogger
-from psycopg2 import DatabaseError
 from .entry_validator import ENTRY_VALIDATION_SCHEMA as SCHEMA
 
 
@@ -35,21 +34,15 @@ class genomic_library_store():
     __db_library = None
     __logger = getLogger(__name__)
     __columns = None
-    __columns_str = ""
-    __format_str = ""
 
 
     def __init__(self):
         if genomic_library_store.__db_library is None:
             config = get_config(__CONFIG_SECTION)
-            ('dbname', 'recreate', 'username', 'password', 'host', 'port')
             genomic_library_store.__db_library = connection(genomic_library_store.__logger, config['dbname'], 
                 config['recreate'], config['username'], config['password'], config['host'], config['port'])
             self.__db_args = (genomic_library_store.__logger, genomic_library_store.__db_library, __LIBRARY_TABLE)
-            c, cs, fs = create_table(*self.__db_args, {k: v['meta']['database'] for k, v in SCHEMA.items()})
-            genomic_library_store.__columns = c
-            genomic_library_store.__columns_str = cs
-            genomic_library_store.__format_str_str = fs
+            genomic_library_store.__columns = create_table(*self.__db_args, {k: v['meta']['database'] for k, v in SCHEMA.items()})
             genomic_library_store.__logger.info("%s table has %d entries.", __LIBRARY_TABLE, len(self))
             
 
@@ -60,27 +53,16 @@ class genomic_library_store():
     # signature is a hex string with no prefix
     # TODO: Also support a byte array
     def __getitem__(self, signature):
-        return load(*self.__db_args, {"signature": signature}, genomic_library_store.__columns_str, genomic_library_store.__columns)
+        return load(*self.__db_args, {"signature": signature}, genomic_library_store.__columns ,genomic_library_store.__columns)
 
 
-    def load(self, query, fields=genomic_library_store.__columns_str):
+    def load(self, query, fields=genomic_library_store.__columns):
         return load(*self.__db_args, query, fields, genomic_library_store.__columns)
 
 
     def store(self, entry, settime=False):
         if settime: entry['created'] = datetime.now().strftime("%Y-%m-%dT%H:%M:%S.%fZ")
         does_not_exist = self[entry['signature'].hex()] is None
-        if does_not_exist:
-            vals = [entry[k] for k in genomic_library_store.__columns]
-            try:
-                cur = genomic_library_store.__db_library.cursor()
-                cur.execute("INSERT INTO {0}({1}) VALUES ({2})".format(_LIBRARY_TABLE, genomic_library_store.__columns_str, genomic_library_store.__format_str), vals)
-                cur.close()
-                genomic_library_store.__db_library.commit()
-            except (Exception, DatabaseError) as ex:
-                genomic_library_store.__logger.error("Failed to store entry %s: %s", entry['signature'], ex)
-                return False
-            return True
-        return False
+        if does_not_exist: store(*self.__db_args, entry)
             
             
