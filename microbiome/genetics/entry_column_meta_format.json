@@ -1,0 +1,55 @@
+{
+    "database": {
+        "type": "dict",
+        "required": true,
+        "schema": {
+            "type": {
+                "type": "string",
+                "allowed": ["BYTEA", "BIGINT", "INTEGER", "TIMESTAMP", "CHAR"],
+                "required": true
+            },
+            "null": {
+                "type": "boolean",
+                "default": false
+            },
+            "properties": {
+                "type": "string",
+                "default": ""
+            }
+        }
+    },
+    "definition": {
+        "type": "dict",
+        "required": true,
+        "schema": {
+            "location":{
+                "type": "list",
+                "required": true,
+                "allowed": ["WORKER", "MICROBIOME", "BIOME"],
+                "minlength": 1,
+                "maxlength": 3
+            },
+            "immutable": {
+                "type": "boolean",
+                "default": true,
+                "check_with": "valid_immutable"
+            }
+        }
+    },
+    "compressed": {
+        "type": "boolean",
+        "required": true,
+        "default": false,
+        "check_with": "valid_compressed"
+    },
+    "sha256": {
+        "type": "boolean",
+        "required": false,
+        "default": false,
+        "check_with": "valid_sha256"
+    },
+    "description": {
+        "type": "string",
+        "maxlength": 1024              
+    }
+}

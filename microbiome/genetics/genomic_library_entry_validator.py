@@ -11,18 +11,15 @@ from cerberus import Validator
 from datetime import datetime
 from os.path import dirname, join
 from json import load
-from datetime import datetime
 from hashlib import sha256
 
 
 NULL_GC = "0" * 64
-ENTRY_VALIDATION_SCHEMA = load(open(join(dirname(__file__), "entry_format.json"), "r"))
+ENTRY_VALIDATION_SCHEMA = load(open(join(dirname(__file__), "genomic_library_entry_format.json"), "r"))
 
 
 #TODO: Add and entry format JSON validator for the meta data
-class entry_validator(Validator):
-
-    _loaded = False
+class genomic_library_entry_validator(Validator):
 
 
     # TODO: Make errors ValidationError types for full disclosure

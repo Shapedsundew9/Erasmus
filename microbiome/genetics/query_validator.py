@@ -9,62 +9,97 @@ Copyright (c) 2020 Your Company
 
 
 from os.path import dirname, join
-from json import load, dump
+from json import load, dump, loads
 from cerberus import Validator
+from .entry_column_meta_validator import entry_column_meta_validator
 
 
-def __query_params(entry_schema):
-    param_schema = {
-        'type': [entry_schema['type'], 'list'],
-        'schema': {
-            'type': entry_schema['type'],
+class query_validator():
+
+
+    __QUERY_BASE_SCHEMA = {
+        'limit': {
+            'type': 'integer',
+            'min': 1
+        },
+        'random': {
+            'type': 'boolean',
+            'default': False
         }
     }
-    if entry_schema['type'] == "integer" or entry_schema['type'] == "float" or entry_schema['meta']['database']['type'] == "TIMESTAMP":
-        param_schema['schema']['type'] = [param_schema['schema']['type'], "dict"]
-        param_schema['schema']['schema'] = {
-            "min": {
-                'type': entry_schema['type'],
-                'required': True
-            },
-            "max": {
-                'type': entry_schema['type'],
-                'required': True
 
+
+    def __init__(self, table_schema, table_name):
+        self.__table_name = table_name
+        validation_schema = {k: self.__query_params(v) for k, v in filter(lambda kv: not kv[1]['meta']['compressed'], table_schema.items())}
+        validation_schema.update(query_validator.__QUERY_BASE_SCHEMA)
+        self.__validator = Validator(validation_schema)
+        self.errors = None
+
+
+    def __query_params(self, entry_schema):
+        if entry_schema['type'] == "integer" or entry_schema['type'] == "float" or entry_schema['meta']['database']['type'] == "TIMESTAMP":
+            param_schema = {
+                'oneof': [
+                    {
+                        'type': 'list',
+                        'schema': {
+                            'type': entry_schema['type']
+                        }
+                    },
+                    {
+                        'type': entry_schema['type']
+                    },
+                    {
+                        'type': 'dict',
+                        'schema': {
+                            'min': {
+                                'type': entry_schema['type'],
+                                'required': True
+                            },
+                            'max': {
+                                'type': entry_schema['type'],
+                                'required': True
+                            }
+                        }
+                    }
+                ]
             }
-        }
-    return param_schema
+        else:
+            param_schema = {
+                'oneof': [
+                    {
+                        'type': 'list',
+                        'schema': {
+                            'type': entry_schema['type']
+                        }
+                    },
+                    {
+                        'type': entry_schema['type']
+                    }
+                ]
+            }
+        return param_schema
 
 
-def __create_query_schema():
-    query_schema = {k: __query_params(v) for k, v in filter(lambda kv: not kv[1]['meta']['compressed'], load(open(join(dirname(__file__), "entry_format.json"), "r")).items())}
-    query_schema['limit']: {
-        'type': 'integer',
-        'minimum': 1
-    }
-    query_schema['random']: {
-        'type': 'boolean',
-        'default': False
-    }
-    return query_schema
+    # Cerberus does not support validation of a top level list
+    # https://github.com/pyeve/cerberus/issues/220
+    def validate(self, query):
+        if isinstance(query, list):
+            for q in query:
+                if not self.__validator(q):
+                    self.errors = self.__validator.errors
+                    return False 
+            return True
+        retval = self.__validator(query)
+        self.errors = self.__validator.errors
+        return retval
 
 
-# The query validation schema is derived from the entry validation schema.
-QUERY_VALIDATION_SCHEMA = __create_query_schema()
-__query_validator = Validator(QUERY_VALIDATION_SCHEMA)
+    # This function is used in generating the package documentation
+    def create_query_format_json(self):
+        json_obj = loads(str(self.__validator.schema).replace("'", '"').replace(" True", " true"). replace(" False", " false"))
+        with open(join(dirname(__file__), self.__table_name + "_query_format.json"), "w") as file_ptr:
+            dump(json_obj, file_ptr, indent=4, sort_keys=True)
 
 
-# This function is used in generating the package documentation
-def create_query_format_json():
-    with open(join(dirname(__file__), "query_format.json"), "w") as file_ptr:
-        dump(QUERY_VALIDATION_SCHEMA, file_ptr, indent=4, sort_keys=True)
-
-
-# Cerberus does not support validation of a top level list
-# https://github.com/pyeve/cerberus/issues/220
-def query_validator(query):
-    if isinstance(query, list):
-        for q in query:
-            if not __query_validator(q): return False, __query_validator.errors 
-        return True, __query_validator.errors
-    return __query_validator(query), __query_validator.errors

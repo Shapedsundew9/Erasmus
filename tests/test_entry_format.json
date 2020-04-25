@@ -1,0 +1,74 @@
+{
+    "name": {
+        "type": "string",
+        "meta": {
+            "database": {
+                "type": "CHAR"
+            },
+            "definition": {
+                "location": ["WORKER"],
+                "immutable": true
+            },
+            "compressed": false,
+            "description": "Name test field"
+        }
+    },
+    "age": {
+        "type": "integer",
+        "meta": {
+            "database": {
+                "type": "INTEGER"
+            },
+            "definition": {
+                "location": ["WORKER"],
+                "immutable": true
+            },
+            "compressed": false
+        }
+    },
+    "occupation": {
+        "type": "string",
+        "meta": {
+            "database": {
+                "type": "BYTEA"
+            },
+            "definition": {
+                "location": ["WORKER"],
+                "immutable": true
+            },
+            "compressed": true
+        }
+    },
+    "id": {
+        "type": "string",
+        "minlength": 64,
+        "maxlength": 64,
+        "regex": "[0-9a-f]{64}",
+        "meta": {
+            "database": {
+                "type": "BYTEA"
+            },
+            "definition": {
+                "location": ["WORKER"],
+                "immutable": true
+            },
+            "compressed": false
+        }
+    },
+    "created": {
+        "meta": {
+            "database": {
+                "type": "TIMESTAMP"
+            },
+            "definition": {
+                "location": ["WORKER"],
+                "immutable": true
+            },
+            "description": "Creation date"
+        },
+        "type": "string",
+        "minlength": 27,
+        "maxlength": 27,
+        "regex": "20[2-9][0-9]-(1[0-2]|0[1-9])-([0-2][0-9]|3[01])T[0-2][0-9](:[0-5][0-9]){2}\\.[0-9]{6}Z"
+    }
+}

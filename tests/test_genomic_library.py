@@ -48,3 +48,22 @@ def test_library_codons(temp_db):
     for app_codon in app_codons: assert app_codon == gl[app_codon['signature']]
 
 
+from os.path import isfile
+from json import load
+from microbiome.genetics.entry_validator import entry_validator, ENTRY_VALIDATION_SCHEMA
+
+
+CODON_LIBRARY_FILE = "./microbiome/genetics/codon_library.json"
+
+
+# Validate the codon library
+def test_codon_library():
+    if not isfile(CODON_LIBRARY_FILE): assert False, "Cannot find {}".format(CODON_LIBRARY_FILE)
+    with open(CODON_LIBRARY_FILE, "r") as file_ptr: codon_library = load(file_ptr)
+    validator = entry_validator(ENTRY_VALIDATION_SCHEMA)
+    for codon in codon_library: assert validator(codon), codon["meta_data"]["name"] + ":" + str(validator.errors)
+    for codon in codon_library: validator.normalized(codon)
+
+
+# TODO: Add some non-codon test cases
+# TODO: Add some negative tests

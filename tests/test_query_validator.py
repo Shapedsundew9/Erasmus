@@ -7,22 +7,28 @@ Author: Shapedsundew9
 Copyright (c) 2020 Your Company
 '''
 
-
-from os.path import isfile
+import pytest
+from os.path import join, dirname
 from json import load
-from cerberus import Validator
-from microbiome.genetics.query_validator import create_query_format_json
+from microbiome.genetics.query_validator import query_validator
+from microbiome.genetics.entry_column_meta_validator import entry_column_meta_validator
 
 
-QUERY_FORMAT_FILE = "./microbiome/genetics/query_format.json"
+queries = load(open(join(dirname(__file__), "test_entry_queries.json"), "r"))
+schema = load(open(join(dirname(__file__), "test_entry_format.json"), "r"))
+for k, v in schema.items(): v['meta'] = entry_column_meta_validator.normalized(v['meta'])
 
 
-def test_valid_validator():
-    create_query_format_json()
-    if not isfile(QUERY_FORMAT_FILE): assert False, "Cannot find {}".format(QUERY_FORMAT_FILE)
-    with open(QUERY_FORMAT_FILE, "r") as file_ptr: query_schema = load(file_ptr)
-    Validator(query_schema)
-    
+def test_query_validator_init():
+    validator = query_validator(schema, "test")
+    validator.create_query_format_json()
 
-# TODO: Add some query tests
-# TODO: Add some negative tests
+
+@pytest.mark.parametrize("query", queries)
+def test_query_validation(query):
+    validator = query_validator(schema, "test")
+    assert validator.validate(query), str(validator.errors)
+
+
+
+

@@ -1,0 +1,8 @@
+{
+    "test_table": {
+        "dbname": "test_library",
+        "recreate": true,
+        "username": "erasmus",
+        "password": "erasmus"
+        }
+}
