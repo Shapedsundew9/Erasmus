@@ -38,5 +38,18 @@ class __entry_column_meta_validator(Validator):
             self._error(field, "A SHA256 field cannot be compressed.")
 
 
+    def _check_with_valid_codec(self, field, value):
+        if value and "database" in self.document and "type" in self.document["database"]:
+            if self.document["database"]["type"] in ("INTEGER", "BIGINT"):
+                self._error(field, "A field must be of an integer type to have a codec.")
+            size = 32 if self.document["database"]["type"] == "INTEGER" else 64
+            for k, v in value:
+                if v >= size: self._error(field, "Bit index must be within the size of the type (< %d)", size)
+            if len(list(value.values())) != len(set(value.values())):
+                self._error(field, "Bit indices cannot be duplicated in a codec.")
+            if self.document['sha256']: self._error(field, "A codec cannot be an SHA256.")
+            if self.document['compressed']: self._error(field, "A codec cannot be compressed.")
+
+
 entry_column_meta_validator = __entry_column_meta_validator(__ENTRY_COLUMN_META_SCHEMA)
 entry_column_meta_validator.allow_unknown = True

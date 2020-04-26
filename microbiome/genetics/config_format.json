@@ -1,35 +1,39 @@
 {
-    "local_genomic_library": {
+    "data_stores": {
         "type": "dict",
-        "schema": {
-            "dbname": {
-                "type": "string",
-                "default": "default"
-            },
-            "recreate": {
-                "type": "boolean",
-                "default": false
-            },
-            "temp": {
-                "type": "boolean",
-                "default": false
-            },
-            "host": {
-                "type": "string",
-                "default": "localhost"
-            },
-            "username": {
-                "type": "string",
-                "default": "postgres"
-            },
-            "password": {
-                "type": "string",
-                "default": "postgres"
-            },
-            "port": {
-                "type": "integer",
-                "default": 5432,
-                "min": 1024, "max": 65535
+        "required": true,
+        "valuesrules": {
+            "type": "dict",
+            "schema": {
+                "dbname": {
+                    "type": "string",
+                    "default": "default"
+                },
+                "recreate": {
+                    "type": "boolean",
+                    "default": false
+                },
+                "temp": {
+                    "type": "boolean",
+                    "default": false
+                },
+                "host": {
+                    "type": "string",
+                    "default": "localhost"
+                },
+                "username": {
+                    "type": "string",
+                    "default": "postgres"
+                },
+                "password": {
+                    "type": "string",
+                    "default": "postgres"
+                },
+                "port": {
+                    "type": "integer",
+                    "default": 5432,
+                    "min": 1024, "max": 65535
+                }
             }
         }
     }

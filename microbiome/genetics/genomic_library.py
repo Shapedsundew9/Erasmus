@@ -11,13 +11,16 @@ Copyright (c) 2020 Your Company
 from zlib import compress, decompress
 from pickle import dumps, loads
 from numpy.random import randint
-from .genomic_library_store import genomic_library_store as store
+from .database_table import database_table
 from logging import getLogger
-from .entry_validator import entry_validator, ENTRY_VALIDATION_SCHEMA
+from .genomic_library_entry_validator import genomic_library_entry_validator, ENTRY_VALIDATION_SCHEMA
 from .query_validator import query_validator
 from pprint import pprint, pformat
 from copy import deepcopy
+from .config import get_config
 
+
+__TABLE_NAME = "genomic_library"
 
 # The genomic_library is responsible for:
 #   1. Persisting entries
@@ -30,12 +33,15 @@ class genomic_library():
 
 
     __store = None
-    __entry_validator = entry_validator(ENTRY_VALIDATION_SCHEMA)
+    __query_validator = query_validator(ENTRY_VALIDATION_SCHEMA, __TABLE_NAME)
+    __entry_validator = genomic_library_entry_validator(ENTRY_VALIDATION_SCHEMA)
     __logger = getLogger(__name__)
 
 
     def __init__(self):
-        if genomic_library.__store is None: genomic_library.__store = store()
+        if genomic_library.__store is None:
+            genomic_library.__store = database_table(genomic_library.__logger, __TABLE_NAME,
+                get_config(["data_stores", __TABLE_NAME]), ENTRY_VALIDATION_SCHEMA)
         if not len(genomic_library.__store): self.__entry_zero()
 
 
@@ -53,23 +59,23 @@ class genomic_library():
             else:
                 value = "entry_zero"
             entry[k] = value
-        genomic_library.__store.store(entry, settime=False)
+        genomic_library.__store.store(entry)
 
 
     # Return an application formatted entry from the store
     def __getitem__(self, signature):
-        return self.__application_format(genomic_library.__store[signature])
+        value = genomic_library.__store.load([{"signature": signature}])
+        return None if value is None else value[0]
 
 
     # Return a list of application formatted entries from the store that meet the query
-    def load(self, query, fields=["*"]):
-        valid, errors = query_validator(query)
+    def load(self, query, fields=None):
+        valid, errors = genomic_library.__query_validator.validate(query)
         if not valid:
             genomic_library.__logger.warning("Query is not valid:\n%s\n%s", pformat(errors), pformat(query))
             return []
-        entries = genomic_library.__store.load(fields, query)
-        for i in range(len(entries)): entries[i] = self.__application_format(entries[i])
-        return entries
+        genomic_library.__query_validator.normalized(query)
+        return genomic_library.__store.load(fields, query)
 
 
     # Store a new application formatted entry.
@@ -77,7 +83,7 @@ class genomic_library():
         if self.validate(entry):
             new_entry = genomic_library.__entry_validator.normalized(entry)
             if self.__calculate_fields(new_entry):
-                genomic_library.__store.store(self.__storage_format(new_entry))
+                genomic_library.__store.store(new_entry)
                 return new_entry
         return None
 
@@ -94,37 +100,19 @@ class genomic_library():
 
     def __calculate_fields(self, entry):
         # TODO: Need to update gca & gcb if necessary.
-        gca = genomic_library.__store[entry['gca']]
+        gca = self[entry['gca']]
         if gca is None: genomic_library.__logger.warning("gca %s does not exist.",entry['gca'])
-        gcb = genomic_library.__store[entry['gcb']]
+        gcb = self[entry['gcb']]
         if gcb is None: genomic_library.__logger.warning("gcb %s does not exist.",entry['gcb'])
         if gca is None or gcb is None: return False
         entry['code_depth'] = max((gca['code_depth'], gcb['code_depth'])) + 1
         entry['num_codes'] = gca['num_codes'] + gcb['num_codes']
         entry['raw_num_codons'] = gca['raw_num_codons'] + gcb['raw_num_codons']
         entry['generation'] = max((gca['generation'], gcb['generation'])) + 1
-        entry['properties'] = self.__properties_application_format(gca['properties'] | gcb['properties'])
+        entry['properties'] = gca['properties']
+        for k, v in gcb['properties']:
+            if k in entry['properties']: entry['properties'][k] = entry['properties'][k] or v
         return True
-
-
-    # Must be able to process entries that only contain a subset of fields
-    def __application_format(self, store_entry):
-        entry = deepcopy(store_entry)
-        for k, v in ENTRY_VALIDATION_SCHEMA.items():
-            if v['meta']['compressed']: entry[k] = loads(decompress(store_entry[k]))
-            if v['meta']['sha256']: entry[k] = store_entry[k].hex() 
-        entry['properties'] = self.__properties_application_format(store_entry['properties'])
-        return entry
-
-
-    def __storage_format(self, application_entry):
-        # A lot of fields require no change of format
-        entry = deepcopy(application_entry)
-        for k, v in ENTRY_VALIDATION_SCHEMA.items():
-            if v['meta']['compressed']: entry[k] = compress(dumps(application_entry[k]), 9)
-            if v['meta']['sha256']: entry[k] = bytearray.fromhex(application_entry[k]) 
-        entry['properties'] = self.__properties_storage_format(application_entry['properties'])
-        return entry
 
 
     def __properties_application_format(self, storage_properties):

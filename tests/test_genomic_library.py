@@ -16,14 +16,7 @@ from microbiome.genetics.genomic_library import genomic_library
 
 
 CODON_LIBRARY_FILE = "./microbiome/genetics/codon_library.json"
-test_config = {
-    "local_genomic_library": {
-        "dbname": "test_library",
-        "recreate": True,
-        "username": "erasmus",
-        "password": "erasmus"
-        }
-}
+
 
 
 # Delete the database after the test

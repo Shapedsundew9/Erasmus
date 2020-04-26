@@ -3,7 +3,7 @@
         "type": "string",
         "meta": {
             "database": {
-                "type": "CHAR"
+                "type": "VARCHAR"
             },
             "definition": {
                 "location": ["WORKER"],

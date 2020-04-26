@@ -44,9 +44,11 @@ def set_config(new_config):
 
 def validate_config():
     global config
+    # FIXME: Validation rules need sorting out
     v = Validator(load(open(join(dirname(__file__), "config_format.json"), "r")))
+    v.allow_unknown = True
     if not v.validate(config):
-        _logger.warn("Config validation failed with error(s) %s", str(v.errors))
+        _logger.warning("Config validation failed with error(s) %s", str(v.errors))
         return None
     config = v.normalized(config)
     return config
@@ -59,4 +61,6 @@ def save_config(config_file_path='config.yaml'):
 
 def get_config(section):
     if section is None: return config
-    return config[section]
+    c = config
+    for s in section: c = c[s]
+    return c

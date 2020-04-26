@@ -5,7 +5,7 @@
         "schema": {
             "type": {
                 "type": "string",
-                "allowed": ["BYTEA", "BIGINT", "INTEGER", "TIMESTAMP", "CHAR"],
+                "allowed": ["BYTEA", "BIGINT", "INTEGER", "TIMESTAMP", "VARCHAR"],
                 "required": true
             },
             "null": {
@@ -14,7 +14,8 @@
             },
             "properties": {
                 "type": "string",
-                "default": ""
+                "default": null,
+                "nullable": true
             }
         }
     },
@@ -44,12 +45,21 @@
     },
     "sha256": {
         "type": "boolean",
-        "required": false,
+        "required": true,
         "default": false,
         "check_with": "valid_sha256"
     },
     "description": {
         "type": "string",
         "maxlength": 1024              
+    },
+    "codec": {
+        "type": "dict",
+        "required": false,
+        "check_with": "valid_codec",
+        "valuerules": {
+            "type": "integer",
+            "min": 0
+        }
     }
 }

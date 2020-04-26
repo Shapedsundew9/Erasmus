@@ -96,6 +96,10 @@ class query_validator():
         return retval
 
 
+    def normalized(self, query):
+        return self.__validator.normalized(query)
+
+
     # This function is used in generating the package documentation
     def create_query_format_json(self):
         json_obj = loads(str(self.__validator.schema).replace("'", '"').replace(" True", " true"). replace(" False", " false"))
