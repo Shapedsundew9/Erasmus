@@ -8,19 +8,15 @@ Copyright (c) 2020 Your Company
 '''
 
 
-from zlib import compress, decompress
-from pickle import dumps, loads
-from numpy.random import randint
 from .database_table import database_table
 from logging import getLogger
-from .genomic_library_entry_validator import genomic_library_entry_validator, ENTRY_VALIDATION_SCHEMA
+from .genomic_library_entry_validator import genomic_library_entry_validator
 from .query_validator import query_validator
 from pprint import pprint, pformat
-from copy import deepcopy
 from .config import get_config
+from os.path import dirname, join
+from json import load
 
-
-__TABLE_NAME = "genomic_library"
 
 # The genomic_library is responsible for:
 #   1. Persisting entries
@@ -33,23 +29,37 @@ class genomic_library():
 
 
     __store = None
-    __query_validator = query_validator(ENTRY_VALIDATION_SCHEMA, __TABLE_NAME)
-    __entry_validator = genomic_library_entry_validator(ENTRY_VALIDATION_SCHEMA)
+    __entry_validator = genomic_library_entry_validator
+    __query_validator = query_validator(genomic_library_entry_validator.schema)
     __logger = getLogger(__name__)
 
 
-    def __init__(self):
+    def __init__(self, __table_name="genomic_library"):
         if genomic_library.__store is None:
-            genomic_library.__store = database_table(genomic_library.__logger, __TABLE_NAME,
-                get_config(["data_stores", __TABLE_NAME]), ENTRY_VALIDATION_SCHEMA)
-        if not len(genomic_library.__store): self.__entry_zero()
+            genomic_library.__store = database_table(genomic_library.__logger, __table_name,
+                get_config(["data_stores", __table_name]), genomic_library.__entry_validator.schema)
+            genomic_library.__query_validator.table_name = __table_name
+        if not len(genomic_library.__store): self.__initialise()
 
 
+    def __initialise(self):
+        # TODO: Look for the biome first
+        self.__entry_zero()
+        if not self.store(load(open(join(dirname(__file__), "codon_library.json"), "r"))):
+            genomic_library.__logger.error("Codon library failed validation. Unable to initialised genomic library.")
+            exit(1)
+
+
+    def __len__(self):
+        return len(genomic_library.__store)
+
+
+    # A zero entry is needed for genetic codes that do not have a GCA or GCB
     def __entry_zero(self):
         entry = {}
-        for k, v in ENTRY_VALIDATION_SCHEMA.items():
+        for k, v in genomic_library.__entry_validator.schema.items():
             if v['meta']['database']['type'] == "BYTEA":
-                value = b'\x00' * (v['minlength'] // 2) if "minlength" in v else b'\x00'
+                value = '0' * v['minlength'] if "minlength" in v else '00'
             elif v['meta']['database']['type'] == "INTEGER" or v['meta']['database']['type'] == "BIGINT":
                 value = 0
             elif v['meta']['database']['type'] == "TIMESTAMP":
@@ -58,8 +68,9 @@ class genomic_library():
                 value = 0.0
             else:
                 value = "entry_zero"
+            if 'codec' in v['meta']: value = {}
             entry[k] = value
-        genomic_library.__store.store(entry)
+        genomic_library.__store.store([entry])
 
 
     # Return an application formatted entry from the store
@@ -70,22 +81,25 @@ class genomic_library():
 
     # Return a list of application formatted entries from the store that meet the query
     def load(self, query, fields=None):
-        valid, errors = genomic_library.__query_validator.validate(query)
-        if not valid:
-            genomic_library.__logger.warning("Query is not valid:\n%s\n%s", pformat(errors), pformat(query))
+        if not genomic_library.__query_validator.validate(query):
+            genomic_library.__logger.warning("Query is not valid:\n%s\n%s", pformat(genomic_library.__query_validator.errors), pformat(query))
             return []
-        genomic_library.__query_validator.normalized(query)
-        return genomic_library.__store.load(fields, query)
+        query = genomic_library.__query_validator.normalized(query)
+        return genomic_library.__store.load(query, fields)
 
 
     # Store a new application formatted entry.
-    def store(self, entry):
-        if self.validate(entry):
-            new_entry = genomic_library.__entry_validator.normalized(entry)
-            if self.__calculate_fields(new_entry):
-                genomic_library.__store.store(new_entry)
-                return new_entry
-        return None
+    # TODO: Implement a bulk store.
+    def store(self, entries):
+        if not isinstance(entries, list): entries = list(entries)
+        for i in range(len(entries)): 
+            if self.validate(entries[i]):
+                entries[i] = genomic_library.__entry_validator.normalized(entries[i])
+                if not self.__calculate_fields(entries[i]): return False
+            else:
+                genomic_library.__logger.debug("Entry %s is not valid. No entries will be stored.", entries[i]['signature'])
+                return False
+        return genomic_library.__store.store(entries)
 
 
     # Validates an application format entry and populates fields that do not
@@ -93,7 +107,7 @@ class genomic_library():
     def validate(self, entry):
         if not genomic_library.__entry_validator(entry):
             err_txt = genomic_library.__entry_validator.errors
-            genomic_library.__logger.warning("Entry is not valid:\n%s\n%s", pformat(err_txt), pformat(entry))
+            genomic_library.__logger.debug("Entry is not valid:\n%s\n%s", pformat(err_txt), pformat(entry))
             return False
         return True
 
@@ -110,24 +124,6 @@ class genomic_library():
         entry['raw_num_codons'] = gca['raw_num_codons'] + gcb['raw_num_codons']
         entry['generation'] = max((gca['generation'], gcb['generation'])) + 1
         entry['properties'] = gca['properties']
-        for k, v in gcb['properties']:
+        for k, v in gcb['properties'].items():
             if k in entry['properties']: entry['properties'][k] = entry['properties'][k] or v
         return True
-
-
-    def __properties_application_format(self, storage_properties):
-        properties = {}
-        for k, v in ENTRY_VALIDATION_SCHEMA['properties']['meta']['codec'].items():
-            properties[k] = bool(storage_properties & 1 << v)
-        return properties
-
-
-    def __properties_storage_format(self, application_properties):
-        properties = 0x0000000000000000
-        for k, v in ENTRY_VALIDATION_SCHEMA['properties']['meta']['codec'].items():
-            if k in application_properties and application_properties[k]: properties |= 1 << v
-        return properties
-
-
-    def __len__(self):
-        return len(genomic_library.__store)

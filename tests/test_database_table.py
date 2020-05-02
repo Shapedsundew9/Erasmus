@@ -9,20 +9,19 @@ Copyright (c) 2020 Your Company
 
 
 import pytest
-import logging
 from os.path import join, dirname
 from json import load
 from microbiome.genetics.query_validator import query_validator
 from microbiome.genetics.config import set_config, get_config
 from microbiome.genetics.database_table import database_table
-from logging import getLogger
+from logging import getLogger, basicConfig, DEBUG
 
 
 test_config = load(open(join(dirname(__file__), "test_config.json"), "r"))
 queries = load(open(join(dirname(__file__), "test_entry_queries.json"), "r"))
 results = load(open(join(dirname(__file__), "test_entry_results.json"), "r"))
 schema = load(open(join(dirname(__file__), "test_entry_format.json"), "r"))
-logging.basicConfig(filename='erasmus.log', level=logging.DEBUG)
+basicConfig(filename='erasmus.log', level=DEBUG)
 
 
 @pytest.fixture(scope="module")

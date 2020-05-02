@@ -29,8 +29,8 @@ class query_validator():
     }
 
 
-    def __init__(self, table_schema, table_name):
-        self.__table_name = table_name
+    def __init__(self, table_schema, table_name=""):
+        self.table_name = table_name
         validation_schema = {k: self.__query_params(v) for k, v in filter(lambda kv: not kv[1]['meta']['compressed'], table_schema.items())}
         validation_schema.update(query_validator.__QUERY_BASE_SCHEMA)
         self.__validator = Validator(validation_schema)
@@ -97,13 +97,18 @@ class query_validator():
 
 
     def normalized(self, query):
-        return self.__validator.normalized(query)
+        if isinstance(query, list):
+            if len(query) == 0: query = [{}]
+            for i in range(len(query)): query[i] = self.__validator.normalized(query[i])
+        else:
+            query = self.__validator.normalized(query)
+        return query
 
 
     # This function is used in generating the package documentation
     def create_query_format_json(self):
         json_obj = loads(str(self.__validator.schema).replace("'", '"').replace(" True", " true"). replace(" False", " false"))
-        with open(join(dirname(__file__), self.__table_name + "_query_format.json"), "w") as file_ptr:
+        with open(join(dirname(__file__), self.table_name + "_query_format.json"), "w") as file_ptr:
             dump(json_obj, file_ptr, indent=4, sort_keys=True)
 
 

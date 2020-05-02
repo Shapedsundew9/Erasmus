@@ -1,0 +1,731 @@
+[
+    {
+        "alpha_class": 0,
+        "beta_class": 0,
+        "code_depth": 0,
+        "codon_depth": 0,
+        "created": "2000-01-01T00:00:00.000001Z",
+        "creator": "0000000000000000000000000000000000000000000000000000000000000000",
+        "gca": "0000000000000000000000000000000000000000000000000000000000000000",
+        "gcb": "0000000000000000000000000000000000000000000000000000000000000000",
+        "generation": 0,
+        "graph": "00",
+        "meta_data": "00",
+        "num_codes": 0,
+        "num_inputs": 0,
+        "num_outputs": 0,
+        "num_unique_codes": 0,
+        "opt_num_codons": 0,
+        "properties": {
+            "conditional": false,
+            "extended": false,
+            "logical": false,
+            "mathematical": false
+        },
+        "raw_num_codons": 0,
+        "reference_count": 0,
+        "signature": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    {
+        "alpha_class": 0,
+        "beta_class": 0,
+        "code_depth": 1,
+        "codon_depth": 1,
+        "created": "2020-05-02T16:32:08.995688Z",
+        "creator": "0000000000000000000000000000000000000000000000000000000000000000",
+        "gca": "0000000000000000000000000000000000000000000000000000000000000000",
+        "gcb": "0000000000000000000000000000000000000000000000000000000000000000",
+        "generation": 1,
+        "graph": {
+            "A": [
+                [
+                    "I",
+                    0
+                ],
+                [
+                    "I",
+                    1
+                ]
+            ],
+            "O": [
+                [
+                    "A",
+                    0
+                ]
+            ]
+        },
+        "meta_data": {
+            "function": {
+                "python3": {
+                    "0": {
+                        "callable": "{}(x, y)\n\treturn x + y",
+                        "inline": "{} = {} + {}"
+                    }
+                }
+            },
+            "name": "add"
+        },
+        "num_codes": 0,
+        "num_inputs": 2,
+        "num_outputs": 1,
+        "num_unique_codes": 1,
+        "opt_num_codons": 1,
+        "properties": {
+            "conditional": false,
+            "extended": false,
+            "logical": false,
+            "mathematical": false
+        },
+        "raw_num_codons": 0,
+        "reference_count": 0,
+        "signature": "6117d0fa432394306c1fd3b1927c12385474e77897e63759a9aff8bf8d3aa027"
+    },
+    {
+        "alpha_class": 0,
+        "beta_class": 0,
+        "code_depth": 1,
+        "codon_depth": 1,
+        "created": "2020-05-02T16:32:09.012799Z",
+        "creator": "0000000000000000000000000000000000000000000000000000000000000000",
+        "gca": "0000000000000000000000000000000000000000000000000000000000000000",
+        "gcb": "0000000000000000000000000000000000000000000000000000000000000000",
+        "generation": 1,
+        "graph": {
+            "A": [
+                [
+                    "I",
+                    0
+                ],
+                [
+                    "I",
+                    1
+                ]
+            ],
+            "O": [
+                [
+                    "A",
+                    0
+                ]
+            ]
+        },
+        "meta_data": {
+            "function": {
+                "python3": {
+                    "0": {
+                        "callable": "{}(x, y)\n\treturn x - y",
+                        "inline": "{} = {} - {}"
+                    }
+                }
+            },
+            "name": "subtract"
+        },
+        "num_codes": 0,
+        "num_inputs": 2,
+        "num_outputs": 1,
+        "num_unique_codes": 1,
+        "opt_num_codons": 1,
+        "properties": {
+            "conditional": false,
+            "extended": false,
+            "logical": false,
+            "mathematical": false
+        },
+        "raw_num_codons": 0,
+        "reference_count": 0,
+        "signature": "2018d186c8aca3cb3b75adb87b53b452e4528774f57a986457587306713d543b"
+    },
+    {
+        "alpha_class": 0,
+        "beta_class": 0,
+        "code_depth": 1,
+        "codon_depth": 1,
+        "created": "2020-05-02T16:32:09.030259Z",
+        "creator": "0000000000000000000000000000000000000000000000000000000000000000",
+        "gca": "0000000000000000000000000000000000000000000000000000000000000000",
+        "gcb": "0000000000000000000000000000000000000000000000000000000000000000",
+        "generation": 1,
+        "graph": {
+            "A": [
+                [
+                    "I",
+                    0
+                ],
+                [
+                    "I",
+                    1
+                ]
+            ],
+            "O": [
+                [
+                    "A",
+                    0
+                ]
+            ]
+        },
+        "meta_data": {
+            "function": {
+                "python3": {
+                    "0": {
+                        "callable": "{}(x, y)\n\treturn x * y",
+                        "inline": "{} = {} * {}"
+                    }
+                }
+            },
+            "name": "multiply"
+        },
+        "num_codes": 0,
+        "num_inputs": 2,
+        "num_outputs": 1,
+        "num_unique_codes": 1,
+        "opt_num_codons": 1,
+        "properties": {
+            "conditional": false,
+            "extended": false,
+            "logical": false,
+            "mathematical": false
+        },
+        "raw_num_codons": 0,
+        "reference_count": 0,
+        "signature": "f6403f9e0eef9a2165582a3ba705f96e9d8320ca2483b58de47cce2cc973d350"
+    },
+    {
+        "alpha_class": 0,
+        "beta_class": 0,
+        "code_depth": 1,
+        "codon_depth": 1,
+        "created": "2020-05-02T16:32:09.047571Z",
+        "creator": "0000000000000000000000000000000000000000000000000000000000000000",
+        "gca": "0000000000000000000000000000000000000000000000000000000000000000",
+        "gcb": "0000000000000000000000000000000000000000000000000000000000000000",
+        "generation": 1,
+        "graph": {
+            "A": [
+                [
+                    "I",
+                    0
+                ],
+                [
+                    "I",
+                    1
+                ]
+            ],
+            "O": [
+                [
+                    "A",
+                    0
+                ]
+            ]
+        },
+        "meta_data": {
+            "function": {
+                "python3": {
+                    "0": {
+                        "callable": "{}(x, y)\n\treturn x / y",
+                        "inline": "{} = {} / {}"
+                    }
+                }
+            },
+            "name": "divide"
+        },
+        "num_codes": 0,
+        "num_inputs": 2,
+        "num_outputs": 1,
+        "num_unique_codes": 1,
+        "opt_num_codons": 1,
+        "properties": {
+            "conditional": false,
+            "extended": false,
+            "logical": false,
+            "mathematical": false
+        },
+        "raw_num_codons": 0,
+        "reference_count": 0,
+        "signature": "c01bd4afee12d62574c63052a90e5e5e8b88c23f241ad5e28e75a880cd067b4d"
+    },
+    {
+        "alpha_class": 0,
+        "beta_class": 0,
+        "code_depth": 1,
+        "codon_depth": 1,
+        "created": "2020-05-02T16:32:09.064830Z",
+        "creator": "0000000000000000000000000000000000000000000000000000000000000000",
+        "gca": "0000000000000000000000000000000000000000000000000000000000000000",
+        "gcb": "0000000000000000000000000000000000000000000000000000000000000000",
+        "generation": 1,
+        "graph": {
+            "A": [
+                [
+                    "I",
+                    0
+                ],
+                [
+                    "I",
+                    1
+                ]
+            ],
+            "O": [
+                [
+                    "A",
+                    0
+                ]
+            ]
+        },
+        "meta_data": {
+            "function": {
+                "python3": {
+                    "0": {
+                        "callable": "{}(x)\n\treturn x ** y",
+                        "inline": "{} = {} ** {}"
+                    }
+                }
+            },
+            "name": "power"
+        },
+        "num_codes": 0,
+        "num_inputs": 2,
+        "num_outputs": 1,
+        "num_unique_codes": 1,
+        "opt_num_codons": 1,
+        "properties": {
+            "conditional": false,
+            "extended": false,
+            "logical": false,
+            "mathematical": false
+        },
+        "raw_num_codons": 0,
+        "reference_count": 0,
+        "signature": "436af624556e8df98cf231e09106faddd6ed79b3c51ec869a3a719386fd308c7"
+    },
+    {
+        "alpha_class": 0,
+        "beta_class": 0,
+        "code_depth": 1,
+        "codon_depth": 1,
+        "created": "2020-05-02T16:32:09.082199Z",
+        "creator": "0000000000000000000000000000000000000000000000000000000000000000",
+        "gca": "0000000000000000000000000000000000000000000000000000000000000000",
+        "gcb": "0000000000000000000000000000000000000000000000000000000000000000",
+        "generation": 1,
+        "graph": {
+            "A": [
+                [
+                    "I",
+                    0
+                ],
+                [
+                    "I",
+                    1
+                ]
+            ],
+            "O": [
+                [
+                    "A",
+                    0
+                ]
+            ]
+        },
+        "meta_data": {
+            "function": {
+                "python3": {
+                    "0": {
+                        "callable": "{}(x)\n\treturn x < y",
+                        "inline": "{} = {} < {}"
+                    }
+                }
+            },
+            "name": "less than"
+        },
+        "num_codes": 0,
+        "num_inputs": 2,
+        "num_outputs": 1,
+        "num_unique_codes": 1,
+        "opt_num_codons": 1,
+        "properties": {
+            "conditional": false,
+            "extended": false,
+            "logical": false,
+            "mathematical": false
+        },
+        "raw_num_codons": 0,
+        "reference_count": 0,
+        "signature": "2846251a8ee2acc300bc60ee0b5437ec3653bb189ec9fd3b56a10ca0f71cab5c"
+    },
+    {
+        "alpha_class": 0,
+        "beta_class": 0,
+        "code_depth": 1,
+        "codon_depth": 1,
+        "created": "2020-05-02T16:32:09.100620Z",
+        "creator": "0000000000000000000000000000000000000000000000000000000000000000",
+        "gca": "0000000000000000000000000000000000000000000000000000000000000000",
+        "gcb": "0000000000000000000000000000000000000000000000000000000000000000",
+        "generation": 1,
+        "graph": {
+            "A": [
+                [
+                    "I",
+                    0
+                ],
+                [
+                    "I",
+                    1
+                ]
+            ],
+            "O": [
+                [
+                    "A",
+                    0
+                ]
+            ]
+        },
+        "meta_data": {
+            "function": {
+                "python3": {
+                    "0": {
+                        "callable": "{}(x)\n\treturn x <= y",
+                        "inline": "{} = {} <= {}"
+                    }
+                }
+            },
+            "name": "less than equal too"
+        },
+        "num_codes": 0,
+        "num_inputs": 2,
+        "num_outputs": 1,
+        "num_unique_codes": 1,
+        "opt_num_codons": 1,
+        "properties": {
+            "conditional": false,
+            "extended": false,
+            "logical": false,
+            "mathematical": false
+        },
+        "raw_num_codons": 0,
+        "reference_count": 0,
+        "signature": "119d621a6086e1ef4554cf4542bce2a2c242df74873867e8639c1696324505d6"
+    },
+    {
+        "alpha_class": 0,
+        "beta_class": 0,
+        "code_depth": 1,
+        "codon_depth": 1,
+        "created": "2020-05-02T16:32:09.119159Z",
+        "creator": "0000000000000000000000000000000000000000000000000000000000000000",
+        "gca": "0000000000000000000000000000000000000000000000000000000000000000",
+        "gcb": "0000000000000000000000000000000000000000000000000000000000000000",
+        "generation": 1,
+        "graph": {
+            "A": [
+                [
+                    "I",
+                    0
+                ],
+                [
+                    "I",
+                    1
+                ]
+            ],
+            "O": [
+                [
+                    "A",
+                    0
+                ]
+            ]
+        },
+        "meta_data": {
+            "function": {
+                "python3": {
+                    "0": {
+                        "callable": "{}(x)\n\treturn isclose(x, y)",
+                        "inline": "{} = isclose({}, {})"
+                    }
+                }
+            },
+            "name": "equal too"
+        },
+        "num_codes": 0,
+        "num_inputs": 2,
+        "num_outputs": 1,
+        "num_unique_codes": 1,
+        "opt_num_codons": 1,
+        "properties": {
+            "conditional": false,
+            "extended": false,
+            "logical": false,
+            "mathematical": false
+        },
+        "raw_num_codons": 0,
+        "reference_count": 0,
+        "signature": "1c650c4e29a5b931c7c4baac5852be49dbb22ee24fd9ad0e6e640eaf142d873c"
+    },
+    {
+        "alpha_class": 0,
+        "beta_class": 0,
+        "code_depth": 1,
+        "codon_depth": 1,
+        "created": "2020-05-02T16:32:09.136664Z",
+        "creator": "0000000000000000000000000000000000000000000000000000000000000000",
+        "gca": "0000000000000000000000000000000000000000000000000000000000000000",
+        "gcb": "0000000000000000000000000000000000000000000000000000000000000000",
+        "generation": 1,
+        "graph": {
+            "A": [
+                [
+                    "I",
+                    0
+                ],
+                [
+                    "I",
+                    1
+                ]
+            ],
+            "O": [
+                [
+                    "A",
+                    0
+                ]
+            ]
+        },
+        "meta_data": {
+            "function": {
+                "python3": {
+                    "0": {
+                        "callable": "{}(x)\n\treturn x and y",
+                        "inline": "{} = {} and {}"
+                    }
+                }
+            },
+            "name": "and"
+        },
+        "num_codes": 0,
+        "num_inputs": 2,
+        "num_outputs": 1,
+        "num_unique_codes": 1,
+        "opt_num_codons": 1,
+        "properties": {
+            "conditional": false,
+            "extended": false,
+            "logical": false,
+            "mathematical": false
+        },
+        "raw_num_codons": 0,
+        "reference_count": 0,
+        "signature": "418d0a3a9df22388c2fc645d424c24acdedad7cf6e261da6871b88258f8a93b1"
+    },
+    {
+        "alpha_class": 0,
+        "beta_class": 0,
+        "code_depth": 1,
+        "codon_depth": 1,
+        "created": "2020-05-02T16:32:09.155290Z",
+        "creator": "0000000000000000000000000000000000000000000000000000000000000000",
+        "gca": "0000000000000000000000000000000000000000000000000000000000000000",
+        "gcb": "0000000000000000000000000000000000000000000000000000000000000000",
+        "generation": 1,
+        "graph": {
+            "A": [
+                [
+                    "I",
+                    0
+                ],
+                [
+                    "I",
+                    1
+                ]
+            ],
+            "O": [
+                [
+                    "A",
+                    0
+                ]
+            ]
+        },
+        "meta_data": {
+            "function": {
+                "python3": {
+                    "0": {
+                        "callable": "{}(x)\n\treturn x or y",
+                        "inline": "{} = {} or {}"
+                    }
+                }
+            },
+            "name": "or"
+        },
+        "num_codes": 0,
+        "num_inputs": 2,
+        "num_outputs": 1,
+        "num_unique_codes": 1,
+        "opt_num_codons": 1,
+        "properties": {
+            "conditional": false,
+            "extended": false,
+            "logical": false,
+            "mathematical": false
+        },
+        "raw_num_codons": 0,
+        "reference_count": 0,
+        "signature": "5baf6d085485d8bbe6da8e327cb9504ec071c1d1b9a779b8ff2a74a568f4e079"
+    },
+    {
+        "alpha_class": 0,
+        "beta_class": 0,
+        "code_depth": 1,
+        "codon_depth": 1,
+        "created": "2020-05-02T16:32:09.173508Z",
+        "creator": "0000000000000000000000000000000000000000000000000000000000000000",
+        "gca": "0000000000000000000000000000000000000000000000000000000000000000",
+        "gcb": "0000000000000000000000000000000000000000000000000000000000000000",
+        "generation": 1,
+        "graph": {
+            "A": [
+                [
+                    "I",
+                    0
+                ],
+                [
+                    "I",
+                    1
+                ]
+            ],
+            "O": [
+                [
+                    "A",
+                    0
+                ]
+            ]
+        },
+        "meta_data": {
+            "function": {
+                "python3": {
+                    "0": {
+                        "callable": "{}(x)\n\treturn bool(x) != bool(y)",
+                        "inline": "{} = bool({}) != bool({})"
+                    }
+                }
+            },
+            "name": "exclusive or"
+        },
+        "num_codes": 0,
+        "num_inputs": 2,
+        "num_outputs": 1,
+        "num_unique_codes": 1,
+        "opt_num_codons": 1,
+        "properties": {
+            "conditional": false,
+            "extended": false,
+            "logical": false,
+            "mathematical": false
+        },
+        "raw_num_codons": 0,
+        "reference_count": 0,
+        "signature": "3eb36e68485edf7cf13ef2aafded14c9d1b9dc9eb32b968ec510716ac65ca23e"
+    },
+    {
+        "alpha_class": 0,
+        "beta_class": 0,
+        "code_depth": 1,
+        "codon_depth": 1,
+        "created": "2020-05-02T16:32:09.190690Z",
+        "creator": "0000000000000000000000000000000000000000000000000000000000000000",
+        "gca": "0000000000000000000000000000000000000000000000000000000000000000",
+        "gcb": "0000000000000000000000000000000000000000000000000000000000000000",
+        "generation": 1,
+        "graph": {
+            "A": [
+                [
+                    "I",
+                    0
+                ]
+            ],
+            "O": [
+                [
+                    "A",
+                    0
+                ]
+            ]
+        },
+        "meta_data": {
+            "function": {
+                "python3": {
+                    "0": {
+                        "callable": "{}(x)\n\treturn not x",
+                        "inline": "{} = not {}"
+                    }
+                }
+            },
+            "name": "not"
+        },
+        "num_codes": 0,
+        "num_inputs": 1,
+        "num_outputs": 1,
+        "num_unique_codes": 1,
+        "opt_num_codons": 1,
+        "properties": {
+            "conditional": false,
+            "extended": false,
+            "logical": false,
+            "mathematical": false
+        },
+        "raw_num_codons": 0,
+        "reference_count": 0,
+        "signature": "f99fb658a4de06e7d3b06ebb3efe522cab630cf411d01db66cb94dce9fa6be7f"
+    },
+    {
+        "alpha_class": 0,
+        "beta_class": 0,
+        "code_depth": 1,
+        "codon_depth": 1,
+        "created": "2020-05-02T16:32:09.208287Z",
+        "creator": "0000000000000000000000000000000000000000000000000000000000000000",
+        "gca": "0000000000000000000000000000000000000000000000000000000000000000",
+        "gcb": "0000000000000000000000000000000000000000000000000000000000000000",
+        "generation": 1,
+        "graph": {
+            "A": [
+                [
+                    "I",
+                    0
+                ],
+                [
+                    "I",
+                    1
+                ],
+                [
+                    "I",
+                    2
+                ]
+            ],
+            "O": [
+                [
+                    "A",
+                    0
+                ]
+            ]
+        },
+        "meta_data": {
+            "function": {
+                "python3": {
+                    "0": {
+                        "callable": "{}(x)\n\treturn x if y else z",
+                        "inline": "{} = {} if {} else {}"
+                    }
+                }
+            },
+            "name": "if-then-else"
+        },
+        "num_codes": 0,
+        "num_inputs": 3,
+        "num_outputs": 1,
+        "num_unique_codes": 1,
+        "opt_num_codons": 1,
+        "properties": {
+            "conditional": false,
+            "extended": false,
+            "logical": false,
+            "mathematical": false
+        },
+        "raw_num_codons": 0,
+        "reference_count": 0,
+        "signature": "db7c4f7e214587da9a2476feb9ae94168361ed7e60044bbc1a75a5648759ad38"
+    }
+]

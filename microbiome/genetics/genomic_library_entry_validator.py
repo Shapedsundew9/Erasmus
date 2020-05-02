@@ -12,14 +12,15 @@ from datetime import datetime
 from os.path import dirname, join
 from json import load
 from hashlib import sha256
+from .entry_column_meta_validator import entry_column_meta_validator
 
 
 NULL_GC = "0" * 64
-ENTRY_VALIDATION_SCHEMA = load(open(join(dirname(__file__), "genomic_library_entry_format.json"), "r"))
+__ENTRY_VALIDATION_SCHEMA = load(open(join(dirname(__file__), "genomic_library_entry_format.json"), "r"))
 
 
 #TODO: Add and entry format JSON validator for the meta data
-class genomic_library_entry_validator(Validator):
+class __genomic_library_entry_validator(Validator):
 
 
     # TODO: Make errors ValidationError types for full disclosure
@@ -135,3 +136,7 @@ class genomic_library_entry_validator(Validator):
 
     def _normalize_default_setter_set_created(self, document):
         return datetime.now().strftime("%Y-%m-%dT%H:%M:%S.%fZ")
+
+
+for k, v in __ENTRY_VALIDATION_SCHEMA.items(): v['meta'] = entry_column_meta_validator.normalized(v['meta'])
+genomic_library_entry_validator = __genomic_library_entry_validator(__ENTRY_VALIDATION_SCHEMA)

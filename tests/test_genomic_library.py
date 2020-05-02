@@ -8,55 +8,22 @@ Copyright (c) 2020 Your Company
 '''
 
 import pytest
-from psycopg2 import connect
-from os.path import isfile
-from json import load
+from os.path import join, dirname
+from json import load, dump, dumps
 from microbiome.genetics.config import set_config
 from microbiome.genetics.genomic_library import genomic_library
+from logging import getLogger, basicConfig, DEBUG
 
 
-CODON_LIBRARY_FILE = "./microbiome/genetics/codon_library.json"
+basicConfig(filename='erasmus.log', level=DEBUG)
 
 
-
-# Delete the database after the test
-@pytest.fixture(scope="function")
-def temp_db():
-    config = set_config(test_config)
-    c = config['local_genomic_library']
-    conn = connect(host=c['host'], port=c['port'], user=c['username'], password=c['password'], dbname='postgres')
-    if not conn is None:
-        conn.autocommit = True
-        cur = conn.cursor()
-        cur.execute("DROP DATABASE IF EXISTS " + c['dbname'])
-        conn.close()
-    yield
-
-
-def test_library_codons(temp_db):
-    if not isfile(CODON_LIBRARY_FILE): assert False, "Cannot find {}".format(CODON_LIBRARY_FILE)
-    with open(CODON_LIBRARY_FILE, "r") as file_ptr: codon_library = load(file_ptr)
-    gl = genomic_library()
-    app_codons = [gl.store_gc(codon) for codon in codon_library]
-    for app_codon in app_codons: assert app_codon == gl[app_codon['signature']]
-
-
-from os.path import isfile
-from json import load
-from microbiome.genetics.entry_validator import entry_validator, ENTRY_VALIDATION_SCHEMA
-
-
-CODON_LIBRARY_FILE = "./microbiome/genetics/codon_library.json"
-
-
-# Validate the codon library
-def test_codon_library():
-    if not isfile(CODON_LIBRARY_FILE): assert False, "Cannot find {}".format(CODON_LIBRARY_FILE)
-    with open(CODON_LIBRARY_FILE, "r") as file_ptr: codon_library = load(file_ptr)
-    validator = entry_validator(ENTRY_VALIDATION_SCHEMA)
-    for codon in codon_library: assert validator(codon), codon["meta_data"]["name"] + ":" + str(validator.errors)
-    for codon in codon_library: validator.normalized(codon)
-
-
-# TODO: Add some non-codon test cases
-# TODO: Add some negative tests
+def test_genomic_library():
+    set_config(load(open(join(dirname(__file__), "test_config.json"), "r")))
+    reference = load(open(join(dirname(__file__), "test_codon_library.json"), "r"))
+    for r in reference: r['created'] = None
+    gl = genomic_library("test_genomic_library")
+    result = gl.load([])
+    for r in result: r['created'] = None
+    # with open("test_codon_library.json", "w") as file_ptr: dump(gl.load([]), file_ptr, indent=4, sort_keys=True)
+    assert dumps(result, indent=4, sort_keys=True) == dumps(reference, indent=4,sort_keys=True)

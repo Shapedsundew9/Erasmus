@@ -12,6 +12,10 @@ import pytest
 from os.path import dirname, join
 from json import load
 from microbiome.genetics.entry_column_meta_validator import entry_column_meta_validator
+from logging import getLogger, basicConfig, DEBUG
+
+
+basicConfig(filename='erasmus.log', level=DEBUG)
 
 
 @pytest.mark.parametrize("format_file", [

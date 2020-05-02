@@ -112,7 +112,9 @@ class database_table():
 
     def __query_to_sql(self, query):
         sql_terms = [self.__term_to_sql(term) for term in query.items() if not term[0] in ("limit", "random")] 
-        sql_obj = sql.SQL(" AND ").join(sql_terms)
+        if len(sql_terms) > 1: sql_obj = sql.SQL("WHERE ") + sql.SQL(" AND ").join(sql_terms)
+        elif len(sql_terms) == 1: sql_obj = sql.SQL("WHERE ") + sql_terms[0]
+        else: sql_obj = sql.SQL("")
         if 'limit' in query: sql_obj += sql.SQL(" LIMIT {}").format(sql.Literal(query['limit']))
         return sql_obj
 
@@ -123,20 +125,23 @@ class database_table():
             if self.schema[k]['compressed']: entry[k] = loads(decompress(v))
             elif isinstance(v, memoryview): entry[k] = v.hex()
             elif isinstance(v, datetime): entry[k] = v.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
+            elif 'codec' in self.schema[k]: entry[k] = {b: bool((1 << f) & entry[k]) for b, f in self.schema[k]['codec'].items() }
         return entry
 
 
     def load(self, queries, fields=None):
         if fields is None: fields = self.__columns
         retval = []
+        self.__logger.debug("Query list is %s", str(queries))
         for query in queries:
             dbcur = self.__conn.cursor(name="bill", withhold=True)
             dbcur.itersize = 1000
+            self.__logger.debug("Query is %s", str(query))
             query_sql = self.__query_to_sql(query)
             self.__logger.debug("Query SQL: %s", query_sql.as_string(self.__conn))
             sql_list = [sql.SQL("SELECT ")]
             sql_list.append(sql.SQL(', ').join(map(sql.Identifier, fields)))
-            sql_list.append(sql.SQL(" FROM {} WHERE ").format(sql.Identifier(self.table)))
+            sql_list.append(sql.SQL(" FROM {} ").format(sql.Identifier(self.table)))
             sql_list.append(query_sql)
             dbcur.execute(sql.Composed(sql_list))
             for row in dbcur: retval.append(self.__cast_entry_to_load_type(row))
@@ -148,6 +153,11 @@ class database_table():
     def __cast_term_to_store_type(self, term, value):
         if self.schema[term]['compressed']: value = compress(dumps(value), 9)
         elif self.schema[term]['database']['type'] == "BYTEA": value = bytearray.fromhex(value)
+        elif 'codec' in self.schema[term]:
+            bitfield = 0x0000000000000000
+            for k, v in value.items():
+                if v: val |= 1 << self.schema[term]['codec'][k]
+            value = bitfield
         return value
 
 

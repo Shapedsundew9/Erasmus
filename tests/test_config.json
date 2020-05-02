@@ -1,7 +1,13 @@
 {
     "data_stores": {
         "test_table": {
-            "dbname": "test_library",
+            "dbname": "test_database",
+            "recreate": true,
+            "username": "erasmus",
+            "password": "erasmus"
+        },
+        "test_genomic_library": {
+            "dbname": "test_database",
             "recreate": true,
             "username": "erasmus",
             "password": "erasmus"

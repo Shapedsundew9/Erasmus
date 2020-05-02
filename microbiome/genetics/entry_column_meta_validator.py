@@ -40,10 +40,10 @@ class __entry_column_meta_validator(Validator):
 
     def _check_with_valid_codec(self, field, value):
         if value and "database" in self.document and "type" in self.document["database"]:
-            if self.document["database"]["type"] in ("INTEGER", "BIGINT"):
+            if not self.document["database"]["type"] in ("INTEGER", "BIGINT"):
                 self._error(field, "A field must be of an integer type to have a codec.")
             size = 32 if self.document["database"]["type"] == "INTEGER" else 64
-            for k, v in value:
+            for k, v in value.items():
                 if v >= size: self._error(field, "Bit index must be within the size of the type (< %d)", size)
             if len(list(value.values())) != len(set(value.values())):
                 self._error(field, "Bit indices cannot be duplicated in a codec.")
