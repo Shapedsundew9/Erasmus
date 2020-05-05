@@ -10,13 +10,13 @@ Copyright (c) 2020 Your Company
 
 from .config import get_config
 from .genomic_library import genomic_library
-from .entry_validator import NULL_GC
+from .genomic_library_entry_validator import NULL_GC
 from os.path import join
 
 
 __UNIQUE_CHARS = 16
 __CALLABLE_FILE_HEADER = "# Erasmus GP Gene Pool\n\n\n"
-
+__CODON_ONLY_QUERY = [{'gca': NULL_GC, 'gcb': NULL_GC}]
 
 # The gene_pool organises genetic codes for a worker. Each worker has its own gene pool.
 # The gene pool is responsbile for:
@@ -36,8 +36,8 @@ class gene_pool():
     __gl = genomic_library()
 
 
-    def __init__(self, query, working_directory, worker):
-        self.__callable_path = join(working_directory, "gene_pool_" + worker + ".py")
+    def __init__(self, worker_id, query=__CODON_ONLY_QUERY):
+        self.__callable_path = join(working_directory, "gene_pool_" + worker_id + ".py")
         self.__callable_file_ptr = None
         self.__active_gcs = gene_pool.__gl.load(query)
         self.__gene_pool = set()
