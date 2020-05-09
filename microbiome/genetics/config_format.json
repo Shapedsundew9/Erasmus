@@ -36,5 +36,26 @@
                 }
             }
         }
+    },
+    "workers": {
+        "type": "dict",
+        "required": true,
+        "keysrules": {
+            "regex": "[a-zA-Z-0-9_]{,64}"
+        },
+        "valuesrules": {
+            "type": "dict",
+            "schema": {
+                "initial_query": {
+                    "type": "list",
+                    "nullable": true
+                },
+                "population_limit": {
+                    "type": "integer",
+                    "min": 1,
+                    "max": 2147483647
+                }
+            }
+        }
     }
 }

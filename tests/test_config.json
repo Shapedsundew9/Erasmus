@@ -11,6 +11,18 @@
             "recreate": true,
             "username": "erasmus",
             "password": "erasmus"
+        },
+        "test_worker_register": {
+            "dbname": "test_database",
+            "recreate": true,
+            "username": "erasmus",
+            "password": "erasmus"
         }
-    }
+    },
+    "workers": {
+        "test_worker_1": {
+            "initial_query": null,
+            "population_limit": 100
+        }
+    }   
 }
