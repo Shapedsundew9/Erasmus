@@ -55,6 +55,20 @@
             "compressed": false
         }
     },
+    "idx": {
+        "type": "integer",
+        "min": 0,
+        "meta": {
+            "database": {
+                "type": "SERIAL"
+            },
+            "definition": {
+                "location": ["WORKER"],
+                "immutable": true
+            },
+            "compressed": false
+        }
+    },
     "created": {
         "meta": {
             "database": {

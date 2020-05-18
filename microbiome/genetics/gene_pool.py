@@ -36,8 +36,8 @@ class gene_pool():
     __gl = genomic_library()
 
 
-    def __init__(self, worker_id, query=__CODON_ONLY_QUERY):
-        self.__callable_path = join(working_directory, "gene_pool_" + worker_id + ".py")
+    def __init__(self, population_id, query=__CODON_ONLY_QUERY):
+        self.__callable_path = join("gene_pool_" + population_id + ".py")
         self.__callable_file_ptr = None
         self.__active_gcs = gene_pool.__gl.load(query)
         self.__gene_pool = set()

@@ -12,25 +12,30 @@ from datetime import datetime
 from zlib import compress, decompress
 from pickle import dumps, loads
 from copy import deepcopy
+from os.path import join, dirname
 from .entry_column_meta_validator import entry_column_meta_validator
 
 
 class database_table():
 
+    # Just one connection for all tables.
+    __conn = None
 
-    def __init__(self, logger, table, config, entry_validation_schema):
+
+    def __init__(self, logger, table, config, entry_validation_schema, decimate_history=None):
         self.__logger = logger
         self.table = table
         self.schema = {k: entry_column_meta_validator.normalized(v['meta']) for k, v in entry_validation_schema.items()}
-        self.__conn = self.__connection(config['dbname'], config['username'], config['password'], config['host'], config['port'])
+        if database_table.__conn is None:
+            database_table.__conn = self.__connection(config['dbname'], config['username'], config['password'], config['host'], config['port'])
         if config['recreate']: self.__delete_table()
-        self.__columns = self.__create_table()
+        self.__columns = self.__create_table(decimate_history)
         self.__logger.info("%s table has %d entries.", self.table, len(self))
             
 
     def __len__(self):
         # TODO: There must be a faster way
-        dbcur = self.__conn.cursor()
+        dbcur = database_table.__conn.cursor()
         dbcur.execute(sql.SQL("SELECT COUNT(*) FROM {}").format(sql.Identifier(self.table)))
         retval = dbcur.fetchone()[0]
         dbcur.close()
@@ -50,6 +55,15 @@ class database_table():
             if not (db,) in list_database:
                 cur.execute(sql.SQL("CREATE DATABASE {}").format(sql.Identifier(db)))
                 self.__logger.info("Created %s database.", db)
+            conn.close()
+
+            # Connect to the new database & prep it as a microbiome DB
+            conn = connect(host=host, port=port, user=user, password=pwd, dbname=db)
+            cur = conn.cursor()
+            with open(join(dirname(__file__), "microbiome.sql"), "r") as file:
+                cur.execute(file.read())
+            conn.commit()
+            self.__logger.info("Database %s prep'd for microbiome.", db)
         else:
             self.__logger.error("Could not connect to database %s, user = %s, password = %s, host = %s, port = %d", db, user, pwd, host, port)
         return conn
@@ -57,18 +71,18 @@ class database_table():
 
     # Get the table definition 
     def __table_definition(self):
-        dbcur = self.__conn.cursor()
+        dbcur = database_table.__conn.cursor()
         dbcur.execute("SELECT column_name, data_type FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = %s", (self.table,))
         columns = [c[0] for c in dbcur.fetchall()]
         dbcur.close()
-        self.__conn.commit()
+        database_table.__conn.commit()
         self.__logger.debug("Table %s columns: %s", self.table, columns)
         return columns
 
 
     # Create the table if it does not exist else clear it.
-    def __create_table(self):
-        cur = self.__conn.cursor()
+    def __create_table(self, decimate_history=None):
+        cur = database_table.__conn.cursor()
         cur.execute(sql.SQL("SELECT EXISTS(SELECT * from information_schema.tables WHERE table_name=%s)"), (self.table,))
         if not cur.fetchone()[0]:
             columns = []
@@ -78,20 +92,24 @@ class database_table():
                 if not c['database']['properties'] is None: sql_str += " " + c['database']['properties']
                 columns.append(sql.Identifier(k) + sql.SQL(sql_str))
             sql_str = sql.SQL("CREATE TABLE {} ({})").format(sql.Identifier(self.table), sql.SQL(", ").join(columns))
-            self.__logger.info(sql_str.as_string(self.__conn))
+            if not decimate_history is None:
+                sql_str += sql.SQL("\nSELECT history_decimation_setup({}, {}, {}").format(sql.Literal(self.table),
+                    sql.Literal(decimate_history['phase_size'], sql.Literal(decimate_history['num_phases'])))
+            self.__logger.info(sql_str.as_string(database_table.__conn))
             cur.execute(sql_str)
+
             cur.close()
-            self.__conn.commit()
+            database_table.__conn.commit()
         return self.__table_definition()
 
 
     def __delete_table(self):
-        cur = self.__conn.cursor()
+        cur = database_table.__conn.cursor()
         sql_str = sql.SQL("DROP TABLE IF EXISTS {}").format(sql.Identifier(self.table))
         cur.execute(sql_str)
         cur.close()    
-        self.__conn.commit()
-        self.__logger.info(sql_str.as_string(self.__conn))
+        database_table.__conn.commit()
+        self.__logger.info(sql_str.as_string(database_table.__conn))
 
 
     def __term_to_sql(self, term):
@@ -132,13 +150,13 @@ class database_table():
     def load(self, queries, fields=None):
         if fields is None: fields = self.__columns
         retval = []
-        self.__logger.debug("Query list is %s", str(queries))
+        self.__logger.debug("Query is %s", str(queries))
         for query in queries:
-            dbcur = self.__conn.cursor(name="bill", withhold=True)
+            dbcur = database_table.__conn.cursor(name="bill", withhold=True)
             dbcur.itersize = 1000
             self.__logger.debug("Query is %s", str(query))
             query_sql = self.__query_to_sql(query)
-            self.__logger.debug("Query SQL: %s", query_sql.as_string(self.__conn))
+            self.__logger.debug("Query SQL: %s", query_sql.as_string(database_table.__conn))
             sql_list = [sql.SQL("SELECT ")]
             sql_list.append(sql.SQL(', ').join(map(sql.Identifier, fields)))
             sql_list.append(sql.SQL(" FROM {} ").format(sql.Identifier(self.table)))
@@ -146,7 +164,7 @@ class database_table():
             dbcur.execute(sql.Composed(sql_list))
             for row in dbcur: retval.append(self.__cast_entry_to_load_type(row))
             dbcur.close()
-        self.__conn.commit()
+        database_table.__conn.commit()
         return retval
 
 
@@ -168,25 +186,25 @@ class database_table():
 
 
     def store(self, entries):
-        cur = self.__conn.cursor()
+        cur = database_table.__conn.cursor()
         for e in entries:
             entry = self.__cast_entry_to_store_type(e) 
             fields = sql.SQL(", ").join([sql.Identifier(k) for k in entry.keys()])
             values = sql.SQL(", ").join([sql.Literal(v) for v in entry.values()])
             sql_str = sql.SQL("INSERT INTO {} ({}) VALUES ({})").format(sql.Identifier(self.table), fields, values)
-            self.__logger.debug(sql_str.as_string(self.__conn))
+            self.__logger.debug(sql_str.as_string(database_table.__conn))
             try:
                 cur.execute(sql_str)
             except (Exception, DatabaseError) as ex:
-                self.__logger.error("Failed to store entry in DB: %s: %s", ex, sql_str.as_string(self.__conn))
+                self.__logger.error("Failed to store entry in DB: %s: %s", ex, sql_str.as_string(database_table.__conn))
                 self.__logger.info("All entries rolled back")
-                self.__conn.rollback()
+                database_table.__conn.rollback()
                 return False
         try:
             cur.close()
-            self.__conn.commit()
+            database_table.__conn.commit()
         except (Exception, DatabaseError) as ex:
             self.__logger.error("Failed to store entries in DB: %s", ex)
-            self.__conn.rollback()
+            database_table.__conn.rollback()
             return False
         return True

@@ -5,7 +5,7 @@
         "schema": {
             "type": {
                 "type": "string",
-                "allowed": ["BYTEA", "BIGINT", "INTEGER", "TIMESTAMP", "VARCHAR"],
+                "allowed": ["BYTEA", "BIGINT", "INTEGER", "TIMESTAMP", "VARCHAR", "SERIAL"],
                 "required": true
             },
             "null": {
