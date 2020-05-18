@@ -13,7 +13,7 @@ from os.path import dirname, join
 from json import load
 
 
-__ENTRY_COLUMN_META_SCHEMA = schema = load(open(join(dirname(__file__), "entry_column_meta_format.json"), "r"))
+__ENTRY_COLUMN_META_SCHEMA = schema = load(open(join(dirname(__file__), "formats/entry_column_meta_format.json"), "r"))
 
 
 class __entry_column_meta_validator(Validator):
@@ -43,7 +43,7 @@ class __entry_column_meta_validator(Validator):
             if not self.document["database"]["type"] in ("INTEGER", "BIGINT"):
                 self._error(field, "A field must be of an integer type to have a codec.")
             size = 32 if self.document["database"]["type"] == "INTEGER" else 64
-            for k, v in value.items():
+            for v in value.values():
                 if v >= size: self._error(field, "Bit index must be within the size of the type (< %d)", size)
             if len(list(value.values())) != len(set(value.values())):
                 self._error(field, "Bit indices cannot be duplicated in a codec.")

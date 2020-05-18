@@ -14,28 +14,32 @@ from pickle import dumps, loads
 from copy import deepcopy
 from os.path import join, dirname
 from .entry_column_meta_validator import entry_column_meta_validator
+from .config import get_config
 
 
 class database_table():
 
-    # Just one connection for all tables.
-    __conn = None
+    # Just one connection to each database.
+    __conn = {}
 
 
-    def __init__(self, logger, table, config, entry_validation_schema, decimate_history=None):
+    def __init__(self, logger, table, dbname):
         self.__logger = logger
         self.table = table
-        self.schema = {k: entry_column_meta_validator.normalized(v['meta']) for k, v in entry_validation_schema.items()}
-        if database_table.__conn is None:
-            database_table.__conn = self.__connection(config['dbname'], config['username'], config['password'], config['host'], config['port'])
-        if config['recreate']: self.__delete_table()
-        self.__columns = self.__create_table(decimate_history)
+        self.dbname = dbname
+        config = get_config()
+        self.schema = {k: v['meta'] for k, v in config['databases'][dbname]['tables'][table]['schema'].items()}
+        c = config['databases'][dbname]
+        if self.dbname not in database_table.__conn:
+            database_table.__conn[self.dbname] = self.__connection(self.dbname, c['username'], c['password'], c['host'], c['port'])
+        if c['recreate']: self.__delete_table()
+        self.__columns = self.__create_table(config['databases'][dbname]['tables'][table]['history_decimation'])
         self.__logger.info("%s table has %d entries.", self.table, len(self))
             
 
     def __len__(self):
         # TODO: There must be a faster way
-        dbcur = database_table.__conn.cursor()
+        dbcur = database_table.__conn[self.dbname].cursor()
         dbcur.execute(sql.SQL("SELECT COUNT(*) FROM {}").format(sql.Identifier(self.table)))
         retval = dbcur.fetchone()[0]
         dbcur.close()
@@ -71,18 +75,18 @@ class database_table():
 
     # Get the table definition 
     def __table_definition(self):
-        dbcur = database_table.__conn.cursor()
+        dbcur = database_table.__conn[self.dbname].cursor()
         dbcur.execute("SELECT column_name, data_type FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = %s", (self.table,))
         columns = [c[0] for c in dbcur.fetchall()]
         dbcur.close()
-        database_table.__conn.commit()
+        database_table.__conn[self.dbname].commit()
         self.__logger.debug("Table %s columns: %s", self.table, columns)
         return columns
 
 
     # Create the table if it does not exist else clear it.
-    def __create_table(self, decimate_history=None):
-        cur = database_table.__conn.cursor()
+    def __create_table(self, history_decimation={'enabled': False}):
+        cur = database_table.__conn[self.dbname].cursor()
         cur.execute(sql.SQL("SELECT EXISTS(SELECT * from information_schema.tables WHERE table_name=%s)"), (self.table,))
         if not cur.fetchone()[0]:
             columns = []
@@ -92,24 +96,24 @@ class database_table():
                 if not c['database']['properties'] is None: sql_str += " " + c['database']['properties']
                 columns.append(sql.Identifier(k) + sql.SQL(sql_str))
             sql_str = sql.SQL("CREATE TABLE {} ({})").format(sql.Identifier(self.table), sql.SQL(", ").join(columns))
-            if not decimate_history is None:
-                sql_str += sql.SQL("\nSELECT history_decimation_setup({}, {}, {}").format(sql.Literal(self.table),
-                    sql.Literal(decimate_history['phase_size'], sql.Literal(decimate_history['num_phases'])))
-            self.__logger.info(sql_str.as_string(database_table.__conn))
+            if history_decimation['enabled']:
+                sql_str += sql.SQL("; SELECT history_decimation_setup({}, {}, {})").format(sql.Literal(self.table),
+                    sql.Literal(history_decimation['phase_size']), sql.Literal(history_decimation['num_phases']))
+            self.__logger.info(sql_str.as_string(database_table.__conn[self.dbname]))
             cur.execute(sql_str)
 
             cur.close()
-            database_table.__conn.commit()
+            database_table.__conn[self.dbname].commit()
         return self.__table_definition()
 
 
     def __delete_table(self):
-        cur = database_table.__conn.cursor()
+        cur = database_table.__conn[self.dbname].cursor()
         sql_str = sql.SQL("DROP TABLE IF EXISTS {}").format(sql.Identifier(self.table))
         cur.execute(sql_str)
         cur.close()    
-        database_table.__conn.commit()
-        self.__logger.info(sql_str.as_string(database_table.__conn))
+        database_table.__conn[self.dbname].commit()
+        self.__logger.info(sql_str.as_string(database_table.__conn[self.dbname]))
 
 
     def __term_to_sql(self, term):
@@ -129,11 +133,12 @@ class database_table():
         
 
     def __query_to_sql(self, query):
-        sql_terms = [self.__term_to_sql(term) for term in query.items() if not term[0] in ("limit", "random")] 
+        sql_terms = [self.__term_to_sql(term) for term in query.items() if not term[0] in ("limit", "random", "order by")] 
         if len(sql_terms) > 1: sql_obj = sql.SQL("WHERE ") + sql.SQL(" AND ").join(sql_terms)
         elif len(sql_terms) == 1: sql_obj = sql.SQL("WHERE ") + sql_terms[0]
         else: sql_obj = sql.SQL("")
         if 'limit' in query: sql_obj += sql.SQL(" LIMIT {}").format(sql.Literal(query['limit']))
+        if 'order by' in query: sql_obj += sql.SQL(" ORDER BY {}").format(sql.Identifier(query['order by']))
         return sql_obj
 
 
@@ -150,21 +155,22 @@ class database_table():
     def load(self, queries, fields=None):
         if fields is None: fields = self.__columns
         retval = []
-        self.__logger.debug("Query is %s", str(queries))
+        self.__logger.debug("Queries are %s", str(queries))
         for query in queries:
-            dbcur = database_table.__conn.cursor(name="bill", withhold=True)
+            dbcur = database_table.__conn[self.dbname].cursor(name="bill", withhold=True)
             dbcur.itersize = 1000
             self.__logger.debug("Query is %s", str(query))
             query_sql = self.__query_to_sql(query)
-            self.__logger.debug("Query SQL: %s", query_sql.as_string(database_table.__conn))
             sql_list = [sql.SQL("SELECT ")]
             sql_list.append(sql.SQL(', ').join(map(sql.Identifier, fields)))
             sql_list.append(sql.SQL(" FROM {} ").format(sql.Identifier(self.table)))
             sql_list.append(query_sql)
-            dbcur.execute(sql.Composed(sql_list))
+            sql_str = sql.Composed(sql_list)
+            self.__logger.debug("Query SQL: %s", sql_str.as_string(database_table.__conn[self.dbname]))
+            dbcur.execute(sql_str)
             for row in dbcur: retval.append(self.__cast_entry_to_load_type(row))
             dbcur.close()
-        database_table.__conn.commit()
+        database_table.__conn[self.dbname].commit()
         return retval
 
 
@@ -185,26 +191,28 @@ class database_table():
         return entry
 
 
+    # TODO: This can be slow for a lot of values. Consider a multi-row insert.
     def store(self, entries):
-        cur = database_table.__conn.cursor()
+        cur = database_table.__conn[self.dbname].cursor()
         for e in entries:
             entry = self.__cast_entry_to_store_type(e) 
             fields = sql.SQL(", ").join([sql.Identifier(k) for k in entry.keys()])
             values = sql.SQL(", ").join([sql.Literal(v) for v in entry.values()])
             sql_str = sql.SQL("INSERT INTO {} ({}) VALUES ({})").format(sql.Identifier(self.table), fields, values)
-            self.__logger.debug(sql_str.as_string(database_table.__conn))
+            self.__logger.debug(sql_str.as_string(database_table.__conn[self.dbname]))
             try:
                 cur.execute(sql_str)
             except (Exception, DatabaseError) as ex:
-                self.__logger.error("Failed to store entry in DB: %s: %s", ex, sql_str.as_string(database_table.__conn))
+                self.__logger.error("Failed to store entry in DB: %s: %s", ex, sql_str.as_string(database_table.__conn[self.dbname]))
                 self.__logger.info("All entries rolled back")
-                database_table.__conn.rollback()
+                database_table.__conn[self.dbname].rollback()
                 return False
         try:
             cur.close()
-            database_table.__conn.commit()
+            database_table.__conn[self.dbname].commit()
         except (Exception, DatabaseError) as ex:
             self.__logger.error("Failed to store entries in DB: %s", ex)
-            database_table.__conn.rollback()
+            database_table.__conn[self.dbname].rollback()
             return False
         return True
+

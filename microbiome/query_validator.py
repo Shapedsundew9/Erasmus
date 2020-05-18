@@ -18,6 +18,9 @@ class query_validator():
 
 
     __QUERY_BASE_SCHEMA = {
+        'order by': {
+            'type': 'string'
+        },
         'limit': {
             'type': 'integer',
             'min': 1
@@ -33,6 +36,7 @@ class query_validator():
         self.table_name = table_name
         validation_schema = {k: self.__query_params(v) for k, v in filter(lambda kv: not kv[1]['meta']['compressed'], table_schema.items())}
         validation_schema.update(query_validator.__QUERY_BASE_SCHEMA)
+        validation_schema['order by']['allowed'] = [k for k, v in filter(lambda kv: kv[1]['meta']['database']['type'] != 'BYTEA', table_schema.items())]
         self.__validator = Validator(validation_schema)
         self.errors = None
 

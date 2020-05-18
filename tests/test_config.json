@@ -1,22 +1,30 @@
 {
-    "data_stores": {
-        "test_table": {
-            "dbname": "test_database",
+    "databases": {
+        "test_database": {
             "recreate": true,
             "username": "erasmus",
-            "password": "erasmus"
-        },
-        "test_genomic_library": {
-            "dbname": "test_database",
-            "recreate": true,
-            "username": "erasmus",
-            "password": "erasmus"
-        },
-        "test_worker_register": {
-            "dbname": "test_database",
-            "recreate": true,
-            "username": "erasmus",
-            "password": "erasmus"
+            "password": "erasmus",
+            "tables": {
+                "test_table": {
+                    "format_file_folder": "tests",
+                    "format_file": "test_entry_format.json"
+                },
+                "test_genomic_library": {
+                    "format_file": "genomic_library_entry_format.json"
+                },
+                "test_worker_registry": {
+                    "format_file": "worker_registry_entry_format.json"
+                },
+                "test_history_decimation": {
+                    "format_file_folder": "tests",
+                    "format_file": "test_history_decimation_format.json",
+                    "history_decimation": {
+                        "enabled": true,
+                        "phase_size": 4,
+                        "num_phases": 4
+                    }
+                }
+            }
         }
     },
     "workers": {

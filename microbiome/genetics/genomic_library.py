@@ -8,12 +8,12 @@ Copyright (c) 2020 Your Company
 '''
 
 
-from .database_table import database_table
+from ..database_table import database_table
 from logging import getLogger
 from .genomic_library_entry_validator import genomic_library_entry_validator
-from .query_validator import query_validator
+from ..query_validator import query_validator
 from pprint import pprint, pformat
-from .config import get_config
+from ..config import get_config
 from os.path import dirname, join
 from json import load
 
@@ -29,17 +29,18 @@ class genomic_library():
 
 
     __store = None
-    __entry_validator = genomic_library_entry_validator
-    __query_validator = query_validator(genomic_library_entry_validator.schema)
+    __entry_validator = None
+    __query_validator = None
     __logger = getLogger(__name__)
 
 
-    def __init__(self, __table_name="genomic_library"):
+    def __init__(self, __table_name="genomic_library", __dbname="microbiome"):
         if genomic_library.__store is None:
-            genomic_library.__store = database_table(genomic_library.__logger, __table_name,
-                get_config(["data_stores", __table_name]), genomic_library.__entry_validator.schema)
+            genomic_library.__store = database_table(genomic_library.__logger, __table_name, __dbname)
+            genomic_library.__entry_validator = genomic_library_entry_validator(get_config()['databases'][__dbname]['tables'][__table_name]['schema'])
+            genomic_library.__query_validator = query_validator(genomic_library.__entry_validator.schema)
             genomic_library.__query_validator.table_name = __table_name
-        if not len(genomic_library.__store): self.__initialise()
+            if not len(genomic_library.__store): self.__initialise()
 
 
     def __initialise(self):

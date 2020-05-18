@@ -52,6 +52,7 @@ CREATE OR REPLACE FUNCTION history_decimation_ait()
 				IF __idx < 0 THEN RETURN NULL; END IF;					
 			ELSE
 				EXECUTE 'DELETE FROM ' || TG_ARGV[0] || ' WHERE ' || __table.idx_name || ' = ' || __idx;
+				RETURN NULL;
 			END IF;
 		END LOOP;
     END;
