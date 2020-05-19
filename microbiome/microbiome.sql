@@ -55,6 +55,10 @@ CREATE OR REPLACE FUNCTION history_decimation_ait()
 				RETURN NULL;
 			END IF;
 		END LOOP;
+
+		-- DELETE all rows dropping out the bottom of the last phase
+		EXECUTE 'DELETE FROM ' || TG_ARGV[0] || ' WHERE ' || __table.idx_name || ' = ' || __idx;
+		RETURN NULL;
     END;
     $$;
 
