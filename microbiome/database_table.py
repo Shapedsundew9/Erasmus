@@ -89,19 +89,38 @@ class database_table():
         cur = database_table.__conn[self.dbname].cursor()
         cur.execute(sql.SQL("SELECT EXISTS(SELECT * from information_schema.tables WHERE table_name=%s)"), (self.table,))
         if not cur.fetchone()[0]:
+
+            # Create the column definitions
             columns = []
             for k ,c in self.schema.items():
                 sql_str = " " + c['database']['type']
                 if c['database']['null']: sql_str += " NOT NULL"
                 if not c['database']['properties'] is None: sql_str += " " + c['database']['properties']
                 columns.append(sql.Identifier(k) + sql.SQL(sql_str))
+                if c['database']['cumsum']:
+                    sql_str = sql.Identifier(k + '_cumsum') + sql.SQL(" " + c['database']['type'])
+                    sql_str += sql.SQL(" NOT NULL DEFAULT 0")
+                    columns.append(sql_str)
+
+            # Create the table
             sql_str = sql.SQL("CREATE TABLE {} ({})").format(sql.Identifier(self.table), sql.SQL(", ").join(columns))
-            if history_decimation['enabled']:
-                sql_str += sql.SQL("; SELECT history_decimation_setup({}, {}, {})").format(sql.Literal(self.table),
-                    sql.Literal(history_decimation['phase_size']), sql.Literal(history_decimation['num_phases']))
             self.__logger.info(sql_str.as_string(database_table.__conn[self.dbname]))
             cur.execute(sql_str)
 
+            # If decimation history is enabled create the triggers
+            if history_decimation['enabled']:
+                sql_str = sql.SQL("SELECT history_decimation_setup({}, {}, {})").format(sql.Literal(self.table),
+                    sql.Literal(history_decimation['phase_size']), sql.Literal(history_decimation['num_phases']))
+                self.__logger.info(sql_str.as_string(database_table.__conn[self.dbname]))
+                cur.execute(sql_str)
+
+            # If any of the columns are cumsum then create the triggers
+            for k ,c in self.schema.items():
+                if c['database']['cumsum']:
+                    sql_str = sql.SQL("SELECT cumsum_setup({}, {})").format(sql.Literal(self.table), sql.Literal(k))
+                    self.__logger.info(sql_str.as_string(database_table.__conn[self.dbname]))
+                    cur.execute(sql_str)
+    
             cur.close()
             database_table.__conn[self.dbname].commit()
         return self.__table_definition()
@@ -145,10 +164,11 @@ class database_table():
     def __cast_entry_to_load_type(self, data):
         entry = dict(zip(self.__columns, data))
         for k, v in entry.items():
-            if self.schema[k]['compressed']: entry[k] = loads(decompress(v))
-            elif isinstance(v, memoryview): entry[k] = v.hex()
-            elif isinstance(v, datetime): entry[k] = v.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
-            elif 'codec' in self.schema[k]: entry[k] = {b: bool((1 << f) & entry[k]) for b, f in self.schema[k]['codec'].items() }
+            if k in self.schema:
+                if self.schema[k]['compressed']: entry[k] = loads(decompress(v))
+                elif isinstance(v, memoryview): entry[k] = v.hex()
+                elif isinstance(v, datetime): entry[k] = v.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
+                elif 'codec' in self.schema[k]: entry[k] = {b: bool((1 << f) & entry[k]) for b, f in self.schema[k]['codec'].items() }
         return entry
 
 

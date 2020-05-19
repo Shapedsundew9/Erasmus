@@ -17,7 +17,8 @@
         "type": "integer",
         "meta": {
             "database": {
-                "type": "INTEGER"
+                "type": "INTEGER",
+                "cumsum": true
             },
             "definition": {
                 "location": ["WORKER"],

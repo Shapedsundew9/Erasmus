@@ -126,13 +126,11 @@ CREATE OR REPLACE FUNCTION history_decimation_setup(__table_name TEXT, __phase_s
 	END IF; 
 
 	-- Table must exist
-	-- TODO: Return a useful exception
 	IF NOT EXISTS (SELECT 1 FROM information_schema.tables WHERE table_name = __table_name) THEN
 		RAISE EXCEPTION 'Table "%" does not exist.', __table_name;
 		RETURN FALSE;
 	END IF;
 	
-	-- TODO: Return a useful exception
 	-- Must have at least one serial index. If there are multiple prefer longer sequences
 	-- and if there are multiple of those choose the first in alphabetical order of name
 	SELECT name INTO __idx_name FROM elaborate_data_types(__table_name) WHERE type IN ('smallserial', 'serial', 'bigserial')
@@ -146,9 +144,72 @@ CREATE OR REPLACE FUNCTION history_decimation_setup(__table_name TEXT, __phase_s
 	
 	EXECUTE format ('INSERT INTO history_decimation_table_index ("table_name", "phase_size", "num_phases", "idx_name")
 					VALUES (%L, %L, %L, %L);', __table_name, __phase_size, __num_phases, __idx_name);
-	EXECUTE format ('DROP TRIGGER IF EXISTS %I on %I;', __trigger_function, __table_name);
+	EXECUTE format ('DROP TRIGGER IF EXISTS %I on %I;', __trigger, __table_name);
 	EXECUTE format ('CREATE TRIGGER %I AFTER INSERT ON %I FOR EACH ROW EXECUTE PROCEDURE %I(%L);',
 					__trigger, __table_name, __trigger_function, __table_name);
+	RETURN TRUE;
+END;
+$$;
+
+
+DROP FUNCTION IF EXISTS cumsum_setup(text, text);
+CREATE OR REPLACE FUNCTION cumsum_setup(__table_name TEXT, __column_name TEXT)
+    RETURNS BOOLEAN
+    SET SCHEMA 'public'
+    LANGUAGE plpgsql
+    AS $$
+	DECLARE
+		__cumsum_trigger TEXT := __table_name || '_' || __column_name || '_cumsum_bit';
+		__cumsum_trigger_function TEXT := __table_name || '_' || __column_name || '_cumsum_bit';
+		__last_insert_trigger TEXT := __table_name || '_last_insert_ait';
+		__last_insert_trigger_function TEXT := __table_name || '_last_insert_ait';
+		__last_record RECORD;
+    BEGIN
+
+	-- Table must exist
+	IF NOT EXISTS (SELECT 1 FROM information_schema.tables WHERE table_name = __table_name) THEN
+		RAISE EXCEPTION 'Table "%" does not exist.', __table_name;
+		RETURN FALSE;
+	END IF;
+
+	-- Create a table for the last row inserted, a trigger & trigger function to populate it
+	EXECUTE format ('DROP TABLE IF EXISTS %I_last_insert', __table_name);
+	EXECUTE format ('CREATE TABLE %I_last_insert AS TABLE %I WITH NO DATA', __table_name, __table_name);
+	EXECUTE format ('INSERT INTO %I_last_insert ("%I_cumsum") VALUES (0)', __table_name, __column_name);
+	EXECUTE format ('DROP TRIGGER IF EXISTS %I on %I;', __last_insert_trigger, __table_name);
+	EXECUTE format ('CREATE OR REPLACE FUNCTION %I()
+    				 RETURNS TRIGGER
+    				 SET SCHEMA ''public''
+					 SET client_min_messages = error
+    				 LANGUAGE plpgsql
+    				 AS $body$
+    				 BEGIN
+					 	DELETE FROM %I_last_insert;
+						INSERT INTO %I_last_insert SELECT (NEW).*;
+					 	RETURN NULL;
+    				 END;
+    				 $body$;', __last_insert_trigger_function, __table_name, __table_name);
+	EXECUTE format ('CREATE TRIGGER %I AFTER INSERT ON %I FOR EACH ROW EXECUTE PROCEDURE %I();',
+					__last_insert_trigger, __table_name, __last_insert_trigger_function);
+
+	-- Create a trigger & trigger function to do the cumulative summing
+	EXECUTE format ('DROP TRIGGER IF EXISTS %I on %I;', __cumsum_trigger, __table_name);
+	EXECUTE format ('CREATE OR REPLACE FUNCTION %I()
+    				 RETURNS TRIGGER
+    				 SET SCHEMA ''public''
+					 SET client_min_messages = error
+    				 LANGUAGE plpgsql
+    				 AS $body$
+					 DECLARE
+					 	__last_insert RECORD;
+    				 BEGIN
+					 	SELECT * FROM %I_last_insert LIMIT 1 INTO __last_insert;
+					 	NEW.%I_cumsum := __last_insert.%I_cumsum + NEW.%I;
+					 	RETURN NEW;
+    				 END;
+    				 $body$;', __cumsum_trigger_function, __table_name, __column_name, __column_name, __column_name);
+	EXECUTE format ('CREATE TRIGGER %I BEFORE INSERT ON %I FOR EACH ROW EXECUTE PROCEDURE %I();',
+					__cumsum_trigger, __table_name, __cumsum_trigger_function);
 	RETURN TRUE;
 END;
 $$;

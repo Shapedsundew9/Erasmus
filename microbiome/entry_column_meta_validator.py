@@ -51,5 +51,11 @@ class __entry_column_meta_validator(Validator):
             if self.document['compressed']: self._error(field, "A codec cannot be compressed.")
 
 
+    def _check_with_valid_cumsum(self, field, value):
+        if value:
+            if self.document['type'] in ("VARCHAR", "TIMESTAMP", "SMALLSERIAL", "SERIAL", "BIGSERIAL"):
+                self._error(field, "To have a cumulative sum the type must be NUMERIC but not SERIAL.")
+
+
 entry_column_meta_validator = __entry_column_meta_validator(__ENTRY_COLUMN_META_SCHEMA)
 entry_column_meta_validator.allow_unknown = True
