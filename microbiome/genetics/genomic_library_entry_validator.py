@@ -98,7 +98,7 @@ class genomic_library_entry_validator(Validator):
             self._error(field, "Created date-time is not valid. Unknown error parsing.")
             return
 
-        if date_time_obj > datetime.now():
+        if date_time_obj > datetime.utcnow():
             self._error(field, "Created date-time cannot be in the future.")
 
 
@@ -133,4 +133,4 @@ class genomic_library_entry_validator(Validator):
 
 
     def _normalize_default_setter_set_created(self, document):
-        return datetime.now().strftime("%Y-%m-%dT%H:%M:%S.%fZ")
+        return datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%S.%fZ")

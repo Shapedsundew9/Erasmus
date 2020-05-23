@@ -1,0 +1,225 @@
+{
+    "name": {
+        "type": "string",
+        "minlength": 1,
+        "maxlength": 64,
+        "regex": "[ a-zA-Z-0-9!\\#\\$%\\&'\\*\\+\\-\\.\\^_`\\|\\~:]+",
+        "required": true,
+        "meta": {
+            "database": {
+                "type": "VARCHAR"
+            },
+            "definition": {
+                "location": ["WORKER"],
+                "immutable": true
+            },
+            "compressed": false,
+            "description": "A short name to identify this work."
+        }
+    },
+    "description": {
+        "type": "string",
+        "minlength": 1,
+        "maxlength": 2048,
+        "regex": "[ a-zA-Z-0-9!\\#\\$%\\&'\\*\\+\\-\\.\\^_`\\|\\~:]+",
+        "meta": {
+            "database": {
+                "type": "BYTEA",
+                "nullable": true                
+            },
+            "definition": {
+                "location": ["WORKER"],
+                "immutable": true
+            },
+            "compressed": true,
+            "description": "A more detailed description of this work."
+        }
+    },
+    "initial_query": {
+        "type": "string",
+        "minlength": 4,
+        "check_with": "valid_genomic_library_query",
+        "meta": {
+            "database": {
+                "type": "BYTEA",
+                "nullable": true
+            },
+            "definition": {
+                "location": ["WORKER"],
+                "immutable": true
+            },
+            "compressed": true,
+            "description": "Query to create the initial population. If not defined the query will be derived from the fitness function."
+        }
+    },
+    "population_limit": {
+        "type": "integer",
+        "min": 1,
+        "max": 2147483647,
+        "required": true,
+        "meta": {
+            "database": {
+                "type": "INTEGER"
+            },
+            "definition": {
+                "location": ["WORKER"],
+                "immutable": true
+            },
+            "compressed": false,
+            "description": "Maximum population size."
+        }
+    },
+    "population_count": {
+        "type": "integer",
+        "min": 0,
+        "max": 2147483647,
+        "meta": {
+            "database": {
+                "type": "INTEGER"
+            },
+            "definition": {
+                "location": ["WORKER"],
+                "immutable": true
+            },
+            "compressed": false,
+            "description": "Maximum population size.",
+            "check_with": "valid_population_count"
+        }
+    },
+    "population_list": {
+        "type": "string",
+        "required": true,
+        "meta": {
+            "database": {
+                "type": "BYTEA"
+            },
+            "definition": {
+                "location": ["WORKER"],
+                "immutable": true
+            },
+            "compressed": true,
+            "description": "A list of each individuals signature & fitness in the format {'signature': SHA256, 'fitness': float}.",
+            "check_with": "valid_population_list"
+        }
+    },
+    "population_updated": {
+        "meta": {
+            "database": {
+                "type": "TIMESTAMP"
+            },
+            "definition": {
+                "location": ["WORKER"],
+                "immutable": true
+            },
+            "description": "The time of the last population_list & popluation_count update."
+        },
+        "type": "string",
+        "minlength": 27,
+        "maxlength": 27,
+        "regex": "20[2-9][0-9]-(1[0-2]|0[1-9])-([0-2][0-9]|3[01])T[0-2][0-9](:[0-5][0-9]){2}\\.[0-9]{6}Z",
+        "default_setter": "set_created"
+    },
+    "cull_policy": {
+        "type": "string",
+        "allowed": ["ROULETTE_WHEEL", "STOCASTIC_UNIVERSAL", "RANK", "ELITIST", "TRUNCATION", "TOURNAMENT"],
+        "required": true,
+        "meta": {
+            "database": {
+                "type": "VARCHAR"
+            },
+            "definition": {
+                "location": ["WORKER"],
+                "immutable": true
+            },
+            "compressed": false,
+            "description": "The cull policy to use after each generation. Cull policy parameters are stored in 'cull_parameters'."
+        }
+    },
+    "cull_parameters": {
+        "type": "string",
+        "required": true,
+        "check_with": "valid_cull_parameters",
+        "meta": {
+            "database": {
+                "type": "BYTEA"
+            },
+            "definition": {
+                "location": ["WORKER"],
+                "immutable": true
+            },
+            "compressed": true,
+            "description": "cull_policy parameters."
+        }
+    },
+    "signature": {
+        "meta": {
+            "database": {
+                "type": "BYTEA",
+                "properties": "PRIMARY KEY"
+            },
+            "definition": {
+                "location": ["WORKER"],
+                "immutable": true
+            },
+            "sha256": true,
+            "description": "Unique identifier for this work."
+        },
+        "type": "string",
+        "minlength": 64,
+        "maxlength": 64,
+        "regex": "[0-9a-f]{64}",
+        "default_setter": "set_signature"
+    },        
+    "predecessor": {
+        "meta": {
+            "database": {
+                "type": "BYTEA",
+                "nullable": true
+            },
+            "definition": {
+                "location": ["WORKER"],
+                "immutable": true
+            },
+            "sha256": true,
+            "description": "The signature of the work that this work was derived from."
+        },
+        "type": "string",
+        "minlength": 64,
+        "maxlength": 64,
+        "regex": "[0-9a-f]{64}"
+    },        
+    "created": {
+        "meta": {
+            "database": {
+                "type": "TIMESTAMP"
+            },
+            "definition": {
+                "location": ["WORKER"],
+                "immutable": true
+            },
+            "description": "Time the work was created."
+        },
+        "type": "string",
+        "minlength": 27,
+        "maxlength": 27,
+        "regex": "20[2-9][0-9]-(1[0-2]|0[1-9])-([0-2][0-9]|3[01])T[0-2][0-9](:[0-5][0-9]){2}\\.[0-9]{6}Z",
+        "default_setter": "set_created"
+    },
+    "updated": {
+        "meta": {
+            "database": {
+                "type": "TIMESTAMP"
+            },
+            "definition": {
+                "location": ["WORKER"],
+                "immutable": true
+            },
+            "description": "The last time the work was updated (does not include popluation_list & population_count updates)."
+        },
+        "type": "string",
+        "minlength": 27,
+        "maxlength": 27,
+        "regex": "20[2-9][0-9]-(1[0-2]|0[1-9])-([0-2][0-9]|3[01])T[0-2][0-9](:[0-5][0-9]){2}\\.[0-9]{6}Z",
+        "default_setter": "set_created"
+    }
+}

@@ -34,12 +34,13 @@ class genomic_library():
     __logger = getLogger(__name__)
 
 
-    def __init__(self, __table_name="genomic_library"):
+    def __init__(self):
         if genomic_library.__store is None:
-            genomic_library.__store = database_table(genomic_library.__logger, __table_name)
-            genomic_library.__entry_validator = genomic_library_entry_validator(get_config()['tables'][__table_name]['schema'])
+            table_name = get_config()['genomic_library']['table']
+            genomic_library.__store = database_table(genomic_library.__logger, table_name)
+            genomic_library.__entry_validator = genomic_library_entry_validator(get_config()['tables'][table_name]['schema'])
             genomic_library.__query_validator = query_validator(genomic_library.__entry_validator.schema)
-            genomic_library.__query_validator.table_name = __table_name
+            genomic_library.__query_validator.table_name = table_name
             if not len(genomic_library.__store): self.__initialise()
 
 
@@ -121,8 +122,8 @@ class genomic_library():
         if gcb is None: genomic_library.__logger.warning("gcb %s does not exist.",entry['gcb'])
         if gca is None or gcb is None: return False
         entry['code_depth'] = max((gca['code_depth'], gcb['code_depth'])) + 1
-        entry['num_codes'] = gca['num_codes'] + gcb['num_codes']
-        entry['raw_num_codons'] = gca['raw_num_codons'] + gcb['raw_num_codons']
+        entry['num_codes'] = max((gca['num_codes'] + gcb['num_codes'], 1))
+        entry['raw_num_codons'] = max((gca['raw_num_codons'] + gcb['raw_num_codons'], 1))
         entry['generation'] = max((gca['generation'], gcb['generation'])) + 1
         entry['properties'] = gca['properties']
         for k, v in gcb['properties'].items():

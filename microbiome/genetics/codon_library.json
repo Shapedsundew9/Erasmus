@@ -19,7 +19,7 @@
                "python3": {
                    "0": {
                        "inline": "{} = {} + {}",
-                       "callable": "{}(x, y)\n\treturn x + y"
+                       "callable": "(x, y)\n\treturn x + y"
                    }
                }
            }
@@ -45,7 +45,7 @@
                 "python3": {
                     "0": {
                         "inline": "{} = {} - {}",
-                        "callable": "{}(x, y)\n\treturn x - y"
+                        "callable": "(x, y)\n\treturn x - y"
                     }
                 }
             }
@@ -71,7 +71,7 @@
                 "python3": {
                     "0": {
                         "inline": "{} = {} * {}",
-                        "callable": "{}(x, y)\n\treturn x * y"
+                        "callable": "(x, y)\n\treturn x * y"
                     }
                 }
             }
@@ -97,7 +97,7 @@
                 "python3": {
                     "0": {
                         "inline": "{} = {} / {}",
-                        "callable": "{}(x, y)\n\treturn x / y"
+                        "callable": "(x, y)\n\treturn x / y"
                     }
                 }
             }
@@ -123,7 +123,7 @@
                 "python3": {
                     "0": {
                         "inline": "{} = {} ** {}",
-                        "callable": "{}(x)\n\treturn x ** y"
+                        "callable": "(x, y)\n\treturn x ** y"
                     }
                 }
             }
@@ -149,7 +149,7 @@
                 "python3": {
                     "0": {
                         "inline": "{} = {} < {}",
-                        "callable": "{}(x)\n\treturn x < y"
+                        "callable": "(x, y)\n\treturn x < y"
                     }
                 }
             }
@@ -175,7 +175,7 @@
                 "python3": {
                     "0": {
                         "inline": "{} = {} <= {}",
-                        "callable": "{}(x)\n\treturn x <= y"
+                        "callable": "(x, y)\n\treturn x <= y"
                     }
                 }
             }
@@ -201,7 +201,7 @@
                 "python3": {
                     "0": {
                         "inline": "{} = isclose({}, {})",
-                        "callable": "{}(x)\n\treturn isclose(x, y)"
+                        "callable": "(x, y)\n\treturn isclose(x, y)"
                     }
                 }
             }
@@ -227,7 +227,7 @@
                 "python3": {
                     "0": {
                         "inline": "{} = {} and {}",
-                        "callable": "{}(x)\n\treturn x and y"
+                        "callable": "(x, y)\n\treturn x and y"
                     }
                 }
             }
@@ -253,7 +253,7 @@
                 "python3": {
                     "0": {
                         "inline": "{} = {} or {}",
-                        "callable": "{}(x)\n\treturn x or y"
+                        "callable": "(x, y)\n\treturn x or y"
                     }
                 }
             }
@@ -279,7 +279,7 @@
                 "python3": {
                     "0": {
                         "inline": "{} = bool({}) != bool({})",
-                        "callable": "{}(x)\n\treturn bool(x) != bool(y)"
+                        "callable": "(x, y)\n\treturn bool(x) != bool(y)"
                     }
                 }
             }
@@ -305,7 +305,7 @@
                 "python3": {
                     "0": {
                         "inline": "{} = not {}",
-                        "callable": "{}(x)\n\treturn not x"
+                        "callable": "(x)\n\treturn not x"
                     }
                 }
             }
@@ -332,7 +332,7 @@
                 "python3": {
                     "0": {
                         "inline": "{} = {} if {} else {}",
-                        "callable": "{}(x)\n\treturn x if y else z"
+                        "callable": "(x, y, z)\n\treturn x if y else z"
                     }
                 }
             }

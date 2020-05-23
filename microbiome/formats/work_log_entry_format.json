@@ -1,0 +1,460 @@
+{
+    "idx": {
+        "type": "integer",
+        "min": 0,
+        "meta": {
+            "database": {
+                "type": "SERIAL"
+            },
+            "definition": {
+                "location": ["WORKER"],
+                "immutable": true
+            },
+            "compressed": false
+        }
+    },    
+    "population": {
+        "type": "integer",
+        "min": 0,
+        "max": 2147483647,
+        "meta": {
+            "database": {
+                "type": "INTEGER"
+            },
+            "definition": {
+                "location": ["WORKER"],
+                "immutable": true
+            },
+            "compressed": false,
+            "description": "The current population size."
+        }
+    },
+    "culled": {
+        "type": "integer",
+        "min": 0,
+        "max": 2147483647,
+        "meta": {
+            "database": {
+                "type": "INTEGER"
+            },
+            "definition": {
+                "location": ["WORKER"],
+                "immutable": true
+            },
+            "compressed": false,
+            "description": "The number of individuals culled from this generation."
+        }
+    },
+    "born": {
+        "type": "integer",
+        "min": 0,
+        "max": 2147483647,
+        "meta": {
+            "database": {
+                "type": "INTEGER"
+            },
+            "definition": {
+                "location": ["WORKER"],
+                "immutable": true
+            },
+            "compressed": false,
+            "description": "The number of new individuals created this generation that had a valid fitness score."
+        }
+    },
+    "still_born": {
+        "type": "integer",
+        "min": 0,
+        "max": 2147483647,
+        "meta": {
+            "database": {
+                "type": "INTEGER"
+            },
+            "definition": {
+                "location": ["WORKER"],
+                "immutable": true
+            },
+            "compressed": false,
+            "description": "The number of new individuals created this generation that did not have a valid fitness score."
+        }
+    },
+    "fitness_min": {
+        "type": "float",
+        "required": true,
+        "meta": {
+            "database": {
+                "type": "REAL"
+            },
+            "definition": {
+                "location": ["WORKER"],
+                "immutable": true
+            },
+            "compressed": false,
+            "description": "Minimum fitness for this generation."
+        }
+    },
+    "fitness_max": {
+        "type": "float",
+        "required": true,
+        "meta": {
+            "database": {
+                "type": "REAL"
+            },
+            "definition": {
+                "location": ["WORKER"],
+                "immutable": true
+            },
+            "compressed": false,
+            "description": "Maximum fitness for this generation."
+        }
+    },
+    "fitness_mean": {
+        "type": "float",
+        "required": true,
+        "meta": {
+            "database": {
+                "type": "REAL"
+            },
+            "definition": {
+                "location": ["WORKER"],
+                "immutable": true
+            },
+            "compressed": false,
+            "description": "Average fitness for this generation."
+        }
+    },
+    "fitness_median": {
+        "type": "float",
+        "required": true,
+        "meta": {
+            "database": {
+                "type": "REAL"
+            },
+            "definition": {
+                "location": ["WORKER"],
+                "immutable": true
+            },
+            "compressed": false,
+            "description": "Median fitness for this generation."
+        }
+    },
+    "gc_depth_min": {
+        "type": "float",
+        "required": true,
+        "meta": {
+            "database": {
+                "type": "REAL"
+            },
+            "definition": {
+                "location": ["WORKER"],
+                "immutable": true
+            },
+            "compressed": false,
+            "description": "Minimum genetic code depth for this generation."
+        }
+    },
+    "gc_depth_max": {
+        "type": "float",
+        "required": true,
+        "meta": {
+            "database": {
+                "type": "REAL"
+            },
+            "definition": {
+                "location": ["WORKER"],
+                "immutable": true
+            },
+            "compressed": false,
+            "description": "Maximum genetic code depth for this generation."
+        }
+    },
+    "gc_depth_mean": {
+        "type": "float",
+        "required": true,
+        "meta": {
+            "database": {
+                "type": "REAL"
+            },
+            "definition": {
+                "location": ["WORKER"],
+                "immutable": true
+            },
+            "compressed": false,
+            "description": "Average genetic code depth for this generation."
+        }
+    },
+    "gc_depth_median": {
+        "type": "float",
+        "required": true,
+        "meta": {
+            "database": {
+                "type": "REAL"
+            },
+            "definition": {
+                "location": ["WORKER"],
+                "immutable": true
+            },
+            "compressed": false,
+            "description": "Median genetic code depth for this generation."
+        }
+    },
+    "codon_depth_min": {
+        "type": "float",
+        "required": true,
+        "meta": {
+            "database": {
+                "type": "REAL"
+            },
+            "definition": {
+                "location": ["WORKER"],
+                "immutable": true
+            },
+            "compressed": false,
+            "description": "Minimum codon depth for this generation."
+        }
+    },
+    "codon_depth_max": {
+        "type": "float",
+        "required": true,
+        "meta": {
+            "database": {
+                "type": "REAL"
+            },
+            "definition": {
+                "location": ["WORKER"],
+                "immutable": true
+            },
+            "compressed": false,
+            "description": "Maximum codon depth for this generation."
+        }
+    },
+    "codon_depth_mean": {
+        "type": "float",
+        "required": true,
+        "meta": {
+            "database": {
+                "type": "REAL"
+            },
+            "definition": {
+                "location": ["WORKER"],
+                "immutable": true
+            },
+            "compressed": false,
+            "description": "Average codon depth for this generation."
+        }
+    },
+    "codon_depth_median": {
+        "type": "float",
+        "required": true,
+        "meta": {
+            "database": {
+                "type": "REAL"
+            },
+            "definition": {
+                "location": ["WORKER"],
+                "immutable": true
+            },
+            "compressed": false,
+            "description": "Median codon depth for this generation."
+        }
+    },
+    "gc_count_min": {
+        "type": "float",
+        "required": true,
+        "meta": {
+            "database": {
+                "type": "REAL"
+            },
+            "definition": {
+                "location": ["WORKER"],
+                "immutable": true
+            },
+            "compressed": false,
+            "description": "Minimum genetic code count for this generation."
+        }
+    },
+    "gc_count_max": {
+        "type": "float",
+        "required": true,
+        "meta": {
+            "database": {
+                "type": "REAL"
+            },
+            "definition": {
+                "location": ["WORKER"],
+                "immutable": true
+            },
+            "compressed": false,
+            "description": "Maximum genetic code count for this generation."
+        }
+    },
+    "gc_count_mean": {
+        "type": "float",
+        "required": true,
+        "meta": {
+            "database": {
+                "type": "REAL"
+            },
+            "definition": {
+                "location": ["WORKER"],
+                "immutable": true
+            },
+            "compressed": false,
+            "description": "Average genetic code count for this generation."
+        }
+    },
+    "gc_count_median": {
+        "type": "float",
+        "required": true,
+        "meta": {
+            "database": {
+                "type": "REAL"
+            },
+            "definition": {
+                "location": ["WORKER"],
+                "immutable": true
+            },
+            "compressed": false,
+            "description": "Median genetic code count for this generation."
+        }
+    },
+    "codon_count_min": {
+        "type": "float",
+        "required": true,
+        "meta": {
+            "database": {
+                "type": "REAL"
+            },
+            "definition": {
+                "location": ["WORKER"],
+                "immutable": true
+            },
+            "compressed": false,
+            "description": "Minimum codon count for this generation."
+        }
+    },
+    "codon_count_max": {
+        "type": "float",
+        "required": true,
+        "meta": {
+            "database": {
+                "type": "REAL"
+            },
+            "definition": {
+                "location": ["WORKER"],
+                "immutable": true
+            },
+            "compressed": false,
+            "description": "Maximum codon count for this generation."
+        }
+    },
+    "codon_count_mean": {
+        "type": "float",
+        "required": true,
+        "meta": {
+            "database": {
+                "type": "REAL"
+            },
+            "definition": {
+                "location": ["WORKER"],
+                "immutable": true
+            },
+            "compressed": false,
+            "description": "Average codon count for this generation."
+        }
+    },
+    "codon_count_median": {
+        "type": "float",
+        "required": true,
+        "meta": {
+            "database": {
+                "type": "REAL"
+            },
+            "definition": {
+                "location": ["WORKER"],
+                "immutable": true
+            },
+            "compressed": false,
+            "description": "Median codon count for this generation."
+        }
+    },
+    "wall_clock_runtime": {
+        "type": "float",
+        "required": true,
+        "meta": {
+            "database": {
+                "type": "DOUBLE PRECISION",
+                "cumsum": true
+            },
+            "definition": {
+                "location": ["WORKER"],
+                "immutable": true
+            },
+            "compressed": false,
+            "description": "The real time elapsed in seconds evolving this generation."
+        }
+    },
+    "cpu_runtime": {
+        "type": "float",
+        "required": true,
+        "meta": {
+            "database": {
+                "type": "DOUBLE PRECISION",
+                "cumsum": true
+            },
+            "definition": {
+                "location": ["WORKER"],
+                "immutable": true
+            },
+            "compressed": false,
+            "description": "The CPU time (user + system) elapsed in seconds evolving this generation."
+        }
+    },
+    "EGPOP": {
+        "type": "float",
+        "required": true,
+        "meta": {
+            "database": {
+                "type": "DOUBLE PRECISION",
+                "cumsum": true
+            },
+            "definition": {
+                "location": ["WORKER"],
+                "immutable": true
+            },
+            "compressed": false,
+            "description": "The number of Erasmus GP Operations used to evolve this generation."
+        }
+    },
+    "RSS": {
+        "type": "float",
+        "required": true,
+        "meta": {
+            "database": {
+                "type": "DOUBLE PRECISION"
+            },
+            "definition": {
+                "location": ["WORKER"],
+                "immutable": true
+            },
+            "compressed": false,
+            "description": "The number of GB of RSS RAM used by the worker process at the point of logging. NOTE: This is not the maximum RSS RAM used. It provides a relative reference."
+        }
+    },
+    "created": {
+        "meta": {
+            "database": {
+                "type": "TIMESTAMP"
+            },
+            "definition": {
+                "location": ["WORKER"],
+                "immutable": true
+            },
+            "description": "Time the work was created."
+        },
+        "type": "string",
+        "minlength": 27,
+        "maxlength": 27,
+        "regex": "20[2-9][0-9]-(1[0-2]|0[1-9])-([0-2][0-9]|3[01])T[0-2][0-9](:[0-5][0-9]){2}\\.[0-9]{6}Z",
+        "default_setter": "set_created"
+    }
+}

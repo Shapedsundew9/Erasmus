@@ -6,17 +6,20 @@
             "password": "erasmus"
         }
     },
+    "genomic_library": {
+        "table": "test_genomic_library"
+    },
     "tables": {
         "test_table": {
             "database": "test_database",
             "format_file_folder": "tests",
             "format_file": "test_entry_format.json"
         },
-        "test_genomic_library": {
+        "genomic_library": {
             "database": "test_database",
             "format_file": "genomic_library_entry_format.json"
         },
-        "test_worker_registry": {
+        "worker_registry": {
             "database": "test_database",
             "format_file": "worker_registry_entry_format.json"
         },
@@ -29,6 +32,10 @@
                 "phase_size": 4,
                 "num_phases": 4
             }
+        },
+        "platform_info": {
+            "database": "test_database",
+            "format_file": "platform_info_format.json"
         }
     },
     "workers": {

@@ -163,12 +163,14 @@ class database_table():
 
     def __cast_entry_to_load_type(self, data):
         entry = dict(zip(self.__columns, data))
+        self.__logger.debug("Storage format entry: %s", entry)
         for k, v in entry.items():
             if k in self.schema:
                 if self.schema[k]['compressed']: entry[k] = loads(decompress(v))
                 elif isinstance(v, memoryview): entry[k] = v.hex()
                 elif isinstance(v, datetime): entry[k] = v.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
                 elif 'codec' in self.schema[k]: entry[k] = {b: bool((1 << f) & entry[k]) for b, f in self.schema[k]['codec'].items() }
+        self.__logger.debug("Application format entry: %s", entry)
         return entry
 
 

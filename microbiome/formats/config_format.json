@@ -49,6 +49,17 @@
             }
         }
     },
+    "genomic_library": {
+        "type": "dict",
+        "schema": {
+            "table": {
+                "type": "string",
+                "minlength": 1,
+                "maxlength": 64,
+                "regex": "[a-zA-Z0-9_-]+"
+            }
+        }
+    },
     "tables": {
         "type": "dict",
         "keysrules": {
