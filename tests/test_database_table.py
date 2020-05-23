@@ -28,7 +28,7 @@ basicConfig(filename='erasmus.log', level=DEBUG)
 def test_table():
     data = load(open(join(dirname(__file__), "test_entry_data.json"), "r"))
     set_config(test_config)
-    table = database_table(getLogger(__file__), "test_table", "test_database")
+    table = database_table(getLogger(__file__), "test_table")
     table.store(data)
     return table
 
@@ -42,8 +42,8 @@ def test_db_load(index, test_table):
 
 def test_history_decimation():
     set_config(test_config)
-    table = database_table(getLogger(__file__), "test_history_decimation", "test_database")
-    hd_config = get_config()['databases']['test_database']['tables']['test_history_decimation']['history_decimation']
+    table = database_table(getLogger(__file__), "test_history_decimation")
+    hd_config = get_config()['tables']['test_history_decimation']['history_decimation']
     assert hd_config['phase_size'] == 4
     assert hd_config['num_phases'] == 4
 

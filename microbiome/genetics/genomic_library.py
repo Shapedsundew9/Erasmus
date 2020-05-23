@@ -34,10 +34,10 @@ class genomic_library():
     __logger = getLogger(__name__)
 
 
-    def __init__(self, __table_name="genomic_library", __dbname="microbiome"):
+    def __init__(self, __table_name="genomic_library"):
         if genomic_library.__store is None:
-            genomic_library.__store = database_table(genomic_library.__logger, __table_name, __dbname)
-            genomic_library.__entry_validator = genomic_library_entry_validator(get_config()['databases'][__dbname]['tables'][__table_name]['schema'])
+            genomic_library.__store = database_table(genomic_library.__logger, __table_name)
+            genomic_library.__entry_validator = genomic_library_entry_validator(get_config()['tables'][__table_name]['schema'])
             genomic_library.__query_validator = query_validator(genomic_library.__entry_validator.schema)
             genomic_library.__query_validator.table_name = __table_name
             if not len(genomic_library.__store): self.__initialise()

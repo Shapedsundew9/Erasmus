@@ -23,17 +23,17 @@ class database_table():
     __conn = {}
 
 
-    def __init__(self, logger, table, dbname):
+    def __init__(self, logger, table):
         self.__logger = logger
         self.table = table
-        self.dbname = dbname
         config = get_config()
-        self.schema = {k: v['meta'] for k, v in config['databases'][dbname]['tables'][table]['schema'].items()}
-        c = config['databases'][dbname]
+        self.dbname = config['tables'][table]['database']
+        self.schema = {k: v['meta'] for k, v in config['tables'][table]['schema'].items()}
+        c = config['databases'][self.dbname]
         if self.dbname not in database_table.__conn:
             database_table.__conn[self.dbname] = self.__connection(self.dbname, c['username'], c['password'], c['host'], c['port'])
         if c['recreate']: self.__delete_table()
-        self.__columns = self.__create_table(config['databases'][dbname]['tables'][table]['history_decimation'])
+        self.__columns = self.__create_table(config['tables'][table]['history_decimation'])
         self.__logger.info("%s table has %d entries.", self.table, len(self))
             
 

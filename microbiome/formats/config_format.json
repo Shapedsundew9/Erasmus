@@ -45,56 +45,62 @@
                     "type": "integer",
                     "default": 5432,
                     "min": 1024, "max": 65535
+                }
+            }
+        }
+    },
+    "tables": {
+        "type": "dict",
+        "keysrules": {
+            "type": "string",
+            "minlength": 1,
+            "maxlength": 64,
+            "regex": "[a-zA-Z0-9_-]+"
+        },
+        "valuesrules": {
+            "type": "dict",
+            "schema": {
+                "database": {
+                    "type": "string",
+                    "minlength": 1,
+                    "maxlength": 64,
+                    "regex": "[a-zA-Z-_0-9]*"
                 },
-                "tables": {
+                "format_file_folder": {
+                    "type": "string",
+                    "minlength": 1,
+                    "maxlength": 1024
+                },
+                "format_file": {
+                    "type": "string",
+                    "minlength": 1,
+                    "maxlength": 1024,
+                    "required": true,
+                    "check_with": "valid_format_file"
+                },
+                "history_decimation": {
                     "type": "dict",
-                    "keysrules": {
-                        "type": "string",
-                        "minlength": 1,
-                        "maxlength": 64,
-                        "regex": "[a-zA-Z0-9_-]+"
-                    },
-                    "valuesrules": {
-                        "type": "dict",
-                        "schema": {
-                            "format_file_folder": {
-                                "type": "string",
-                                "minlength": 1,
-                                "maxlength": 1024
-                            },
-                            "format_file": {
-                                "type": "string",
-                                "minlength": 1,
-                                "maxlength": 1024,
-                                "required": true,
-                                "check_with": "valid_format_file"
-                            },
-                            "history_decimation": {
-                                "type": "dict",
-                                "default": {"enabled": false},
-                                "schema": {
-                                    "enabled": {
-                                        "type": "boolean",
-                                        "default": false 
-                                    },
-                                    "phase_size": {
-                                        "type": "integer",
-                                        "min": 1,
-                                        "max": 32,
-                                        "default": 20
-                                    },
-                                    "num_phases": {
-                                        "type": "integer",
-                                        "min": 1,
-                                        "max": 256,
-                                        "default": 8
-                                    }
-                                },
-                                "meta":{
-                                    "description": "TBD"
-                                }
-                            }
+                    "default": {"enabled": false},
+                    "schema": {
+                        "enabled": {
+                            "type": "boolean",
+                            "default": false 
+                        },
+                        "phase_size": {
+                            "type": "integer",
+                            "min": 1,
+                            "max": 32,
+                            "default": 20
+                        },
+                        "num_phases": {
+                            "type": "integer",
+                            "min": 1,
+                            "max": 256,
+                            "default": 8
                         }
+                    },
+                    "meta":{
+                        "description": "TBD"
                     }
                 }
             }

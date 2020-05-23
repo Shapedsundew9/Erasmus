@@ -56,12 +56,11 @@ def validate_config():
     config = v.normalized(config)
 
     # Populate the database table schemas
-    for v1 in config['databases'].values():
-        for k, v in v1['tables'].items():
-            value = v['format_file']
-            value = join(v['format_file_folder'], value) if 'format_file_folder' in v else join(dirname(__file__), 'formats', value)
-            v1['tables'][k]['schema'] = load(open(value, "r"))
-            for k, v in v1['tables'][k]['schema'].items(): v['meta'] = entry_column_meta_validator.normalized(v['meta'])
+    for k, v in config['tables'].items():
+        value = v['format_file']
+        value = join(v['format_file_folder'], value) if 'format_file_folder' in v else join(dirname(__file__), 'formats', value)
+        config['tables'][k]['schema'] = load(open(value, "r"))
+        for k, v in config['tables'][k]['schema'].items(): v['meta'] = entry_column_meta_validator.normalized(v['meta'])
 
     return config
 
