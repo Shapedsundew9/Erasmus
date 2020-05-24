@@ -174,6 +174,16 @@ class database_table():
         return entry
 
 
+    def lock_and_load(self):
+        # TODO: Implement
+        pass
+
+
+    def store_and_release(self):
+        # TODO: Implement
+        pass
+
+
     def load(self, queries, fields=None):
         if fields is None: fields = self.__columns
         retval = []

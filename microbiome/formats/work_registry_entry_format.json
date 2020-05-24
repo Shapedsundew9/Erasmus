@@ -86,7 +86,7 @@
             "check_with": "valid_population_count"
         }
     },
-    "population_list": {
+    "population_dict": {
         "type": "string",
         "required": true,
         "meta": {
@@ -98,8 +98,9 @@
                 "immutable": true
             },
             "compressed": true,
-            "description": "A list of each individuals signature & fitness in the format {'signature': SHA256, 'fitness': float}.",
-            "check_with": "valid_population_list"
+            "description": "A dictionary of each individuals signature & fitness in the format str(SHA256(signature)): float(fitness).",
+            "check_with": "valid_population_list",
+            "default": "[]"
         }
     },
     "population_updated": {

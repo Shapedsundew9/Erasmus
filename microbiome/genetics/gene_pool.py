@@ -34,10 +34,12 @@ class gene_pool():
     __logger = getLogger(__name__)
 
 
-    def __init__(self, population_id, query=[{'gca': NULL_GC, 'gcb': NULL_GC}]):
+    def __init__(self, query=[{'gca': NULL_GC, 'gcb': NULL_GC}], delete_callables_file=True, callables_prefix=None):
         if gene_pool.__gl is None: gene_pool.__gl = genomic_library()
+        self.delete_callables_file = delete_callables_file
+        self.callables_prefix = callables_prefix
         self.__callable_file_ptr = None
-        self.population_id = population_id
+        gene_pool.__logger.info("Initial gene pool query: %s", str(query))
         self.__active_gcs = gene_pool.__gl.load(query)
         self.__gene_pool = set()
         self.__create_callables()
@@ -81,7 +83,7 @@ class gene_pool():
 
 
     def __create_callables(self):
-        self.__callable_file_ptr = NamedTemporaryFile(mode='w', suffix='.py', prefix=str(self.population_id) + '_gp_', delete=False)
+        self.__callable_file_ptr = NamedTemporaryFile(mode='w', suffix='.py', prefix=self.callables_prefix, delete=self.delete_callables_file)
         gene_pool.__logger.debug("Gene pool file created: %s", self.__callable_file_ptr.name)
         self.__callable_file_ptr.write(gene_pool.__CALLABLE_FILE_HEADER)    
         for gc in self.__active_gcs:

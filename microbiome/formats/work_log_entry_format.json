@@ -440,6 +440,23 @@
             "description": "The number of GB of RSS RAM used by the worker process at the point of logging. NOTE: This is not the maximum RSS RAM used. It provides a relative reference."
         }
     },
+    "worker": {
+        "meta": {
+            "database": {
+                "type": "BYTEA"
+            },
+            "definition": {
+                "location": ["WORKER"],
+                "immutable": true
+            },
+            "sha256": true,
+            "description": "Unique identifier for this genetic code."
+        },
+        "type": "string",
+        "minlength": 64,
+        "maxlength": 64,
+        "regex": "[0-9a-f]{64}"
+    },
     "created": {
         "meta": {
             "database": {
