@@ -1,0 +1,272 @@
+{
+    "random_state": {
+        "type": "string",
+        "default_setter": "set_random_state",
+        "check_with": "valid_random_state"
+    },
+    "asexual": {
+        "type": "dict",
+        "schema": {
+            "weight": {
+                "type": "float",
+                "min": 0.0,
+                "default": 1.0
+            },
+            "config": {
+                "type": "dict",
+                "schema": {
+                    "duplication": {
+                        "type": "dict",
+                        "schema": {
+                            "weight": {
+                                "type": "float",
+                                "min": 0.0,
+                                "default": 1.0
+                            },
+                            "dpm": {
+                                "type": "float",
+                                "min": 0.0,
+                                "default": 1.0
+                            },
+                            "gpm": {
+                                "type": "float",
+                                "min": 0.0,
+                                "default": 1.0
+                            }
+                        }
+                    },
+                    "addition": {
+                        "type": "dict",
+                        "schema": {
+                            "weight": {
+                                "type": "float",
+                                "min": 0.0,
+                                "default": 1.0
+                            },
+                            "dpm": {
+                                "type": "float",
+                                "min": 0.0,
+                                "default": 1.0
+                            },
+                            "gpm": {
+                                "type": "float",
+                                "min": 0.0,
+                                "default": 1.0
+                            }
+                        }
+                    },
+                    "subtraction": {
+                        "type": "dict",
+                        "schema": {
+                            "weight": {
+                                "type": "float",
+                                "min": 0.0,
+                                "default": 1.0
+                            },
+                            "dpm": {
+                                "type": "float",
+                                "min": 0.0,
+                                "default": 1.0          
+                            },
+                            "gpm": {
+                                "type": "float",
+                                "min": 0.0,
+                                "default": 1.0
+                            }
+                        }
+                    },
+                    "exchange": {
+                        "type": "dict",
+                        "schema": {
+                            "weight": {
+                                "type": "float",
+                                "min": 0.0,
+                                "default": 1.0
+                            },
+                            "dpm": {
+                                "type": "float",
+                                "min": 0.0,
+                                "default": 1.0          
+                            },
+                            "gpm": {
+                                "type": "float",
+                                "min": 0.0,
+                                "default": 1.0
+                            },
+                            "all": {
+                                "type": "float",
+                                "min": 0.0,
+                                "default": 1.0
+                            },
+                            "gc": {
+                                "type": "float",
+                                "min": 0.0,
+                                "default": 1.0
+                            },
+                            "individual": {
+                                "type": "float",
+                                "min": 0.0,
+                                "default": 1.0
+                            }
+                        }
+                    },
+                    "rewire": {
+                        "type": "dict",
+                        "schema": {
+                            "weight": {
+                                "type": "float",
+                                "min": 0.0,
+                                "default": 1.0
+                            },
+                            "dpm": {
+                                "type": "float",
+                                "min": 0.0,
+                                "default": 1.0          
+                            },
+                            "gpm": {
+                                "type": "float",
+                                "min": 0.0,
+                                "default": 1.0
+                            },
+                            "all": {
+                                "type": "float",
+                                "min": 0.0,
+                                "default": 1.0
+                            },
+                            "gc": {
+                                "type": "float",
+                                "min": 0.0,
+                                "default": 1.0
+                            },
+                            "individual": {
+                                "type": "float",
+                                "min": 0.0,
+                                "default": 1.0
+                            }
+                        }
+                    },
+                    "adjust_constant": {
+                        "type": "dict",
+                        "schema": {
+                            "weight": {
+                                "type": "float",
+                                "min": 0.0,
+                                "default": 1.0
+                            },
+                            "dpm": {
+                                "type": "float",
+                                "min": 0.0,
+                                "default": 1.0          
+                            },
+                            "gpm": {
+                                "type": "float",
+                                "min": 0.0,
+                                "default": 1.0
+                            },
+                            "all": {
+                                "type": "float",
+                                "min": 0.0,
+                                "default": 1.0
+                            },
+                            "gc": {
+                                "type": "float",
+                                "min": 0.0,
+                                "default": 1.0
+                            },
+                            "individual": {
+                                "type": "float",
+                                "min": 0.0,
+                                "default": 1.0
+                            },
+                            "config": {
+                                "type": "dict",
+                                "schema": {
+                                    "random": {
+                                        "type": "dict",
+                                        "schema": {
+                                            "weight": {
+                                                "type": "float",
+                                                "min": 0.0,
+                                                "default": 1.0
+                                            },
+                                            "dpm": {
+                                                "type": "float",
+                                                "min": 0.0,
+                                                "default": 1.0          
+                                            },
+                                            "gpm": {
+                                                "type": "float",
+                                                "min": 0.0,
+                                                "default": 1.0
+                                            },
+                                            "window":  {
+                                                "type": "float",
+                                                "min": 0.0,
+                                                "default": 1.0
+                                            }
+                                        }
+                                    },
+                                    "scale": {
+                                        "type": "dict",
+                                        "schema": {
+                                            "weight": {
+                                                "type": "float",
+                                                "min": 0.0,
+                                                "default": 1.0
+                                            },
+                                            "dpm": {
+                                                "type": "float",
+                                                "min": 0.0,
+                                                "default": 1.0          
+                                            },
+                                            "gpm": {
+                                                "type": "float",
+                                                "min": 0.0,
+                                                "default": 1.0
+                                            },
+                                            "window":  {
+                                                "type": "float",
+                                                "min": 0.0,
+                                                "default": 1.0
+                                            }
+                                        }
+                                    },
+                                    "negate": {
+                                        "type": "float",
+                                        "min": 0.0,
+                                        "default": 1.0
+                                    }                                                
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "sexual": {
+        "type": "dict",
+        "schema": {
+            "weight": {
+                "type": "float",
+                "min": 0.0,
+                "default": 1.0
+            },
+            "dpm": {
+                "type": "float",
+                "min": 0.0,
+                "default": 1.0
+            },
+            "gpm": {
+                "type": "float",
+                "min": 0.0,
+                "default": 1.0
+            },
+            "bias": {
+                "type": "float",
+                "min": 0.0,
+                "default": 1.0
+            }
+        }
+
+}

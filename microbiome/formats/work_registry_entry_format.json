@@ -152,6 +152,22 @@
             "description": "cull_policy parameters."
         }
     },
+    "evolution_parameters": {
+        "type": "string",
+        "required": true,
+        "check_with": "valid_evolution_parameters",
+        "meta": {
+            "database": {
+                "type": "BYTEA"
+            },
+            "definition": {
+                "location": ["WORKER"],
+                "immutable": true
+            },
+            "compressed": true,
+            "description": "Evolution parameters."
+        }
+    },
     "signature": {
         "meta": {
             "database": {
