@@ -7,154 +7,71 @@ Author: Shaped Sundew
 Copyright (c) 2020 Your Company
 '''
 
-from hashlib import md5 as hash_function
-from zlib import compress, decompress
-from pickle import dumps, loads
-from base64 import b64encode, b64decode
-from numpy import array, float32
-from numpy.random import randint, uniform
+
 from random import choices
-from inspect import signature
-from copy import copy
-from .genetic_code_entry import genetic_code_entry as entry
-from .genetic_code_entry import ref, inputs, outputs
-from .codon_library import codon_library
-from .genomic_library import genomic_library
+from numpy import float32, array, amax, amin
 
 
-_INPUT_ENTRY = 0
-_OUTPUT_ENTRY = -1
-
-
-# The genetic code is a list of gene/codon references & the connectivity
-# entry = [inputs, reference to gene/codon, outputs]
-# entries = [entry0, entry1, entry2, ... entryN]
 class genetic_code():
 
-
-    def __init__(self, name=None, ancestor=None, codon_idx=None, constant=None, idx=None, library_entry=None):
-        # In the event the store does not exist an empty one will be created
-        # It is then populated with the genes containing just one codon
-        if not genetic_code._glib is None and genetic_code._glib._store.is_empty:
-            genetic_code._logger.debug("Populating genomic library with codons.")
-            for i, c in enumerate(codon_library): genetic_code._glib.add_code(genetic_code(codon_idx=(c, i)))
-            
-        # TODO: Optimisation idea: entries is a list of entry's which is very inefficient.
-        # Much less RAM can be used by arranging the components into numpy arrays
-        # at the cost of construction time CPU.
-        if library_entry == None:
-            self.name = name
-            self.ancestor = ancestor
-            self.idx = idx
-            if not codon_idx is None:
-                self.entries = []
-                self._initialise_with_codon(*codon_idx, constant)
-            else:
-                # self.entries = [input_entry, output_entry]
-                self.entries = [entry(idx=0, is_codon=True), entry(idx=1, is_codon=True)]
-        else:
-            self.zdeserialise(library_entry.data, library_entry.idx)
-            self.name = library_entry.name
-            self.ancestor = library_entry.ancestor
-            self.idx = library_entry.idx
-
-            # This is a default case if the constant codon library entry is chosen it must have a value.
-            # Really these values should be managed by the mutations.
-            if len(self.entries) == 1 and codon_library[self.idx].isConstant: self.entries[0].output = outputs([uniform()])
+    __GC = 0
+    __PARENT = 1
+    __GCA = 2
+    __GCB = 3
 
 
-    def __getitem__(self, key):
-        return self.entries[key]
+    # A genetic code is created from a gene pool (so GCA & GCB are references to GC objects not signatures)
+    # Build a tree of GC references.
+    # Each node in the tree references the GC it represents in the gene pool
+    # and references to its parent node, the node that represents GC['GCA'] and the node
+    # that represents GC['GCB'] if they exist else None
+    def __init__(self, gc):
+        addition_queue = [[gc, None, None, None]]
+        self.root = addition_queue[0]
+        self.node_list = [addition_queue[0]]
+        self.__depths, self.__generations = [gc['code_depth']], [gc['generation']]
+        while addition_queue:
+            node = addition_queue.pop()
+            if not node[genetic_code.__GC]['gca'] is None:
+                addition_queue.append([gc['gca'], node, None, None])
+                node[genetic_code.__GCA] = addition_queue[-1]
+                self.node_list.append(addition_queue[-1])
+                self.__depths.append(gc['gca']['code_depth'])
+                self.__generations.append(gc['gca']['generation'])
+            if not node[genetic_code.__GC]['gcb'] is None:
+                addition_queue.append([gc['gcb'], node, None, None])
+                node[genetic_code.__GCB] = addition_queue[-1]
+                self.node_list.append(addition_queue[-1])
+                self.__depths.append(gc['gca']['code_depth'])
+                self.__generations.append(gc['gca']['generation'])
+        self.__generations = array(self.__generations, dtype=float32)
+        self.__depths = array(self.__depths, dtype=float32)
+        self.__generations = float32(1.0) + (float32(1.0) - self.__generations / amax(self.__generations))
+        self.__depths = float32(1.0) + (float32(1.0) - self.__depths / amax(self.__depths))
 
 
-    def __len__(self):
-        return len(self.entries)
+    def __node(self, node):
+        return {'gc': node[genetic_code.__GC], 'parent': node[genetic_code.__PARENT], 'gca': node[genetic_code.__GCA], 'gcb': node[genetic_code.__GCB]}
 
 
-    def __str__(self):
-        ret_val = "Name: {0}, Ancestor: {1}, Library Index: {2}\n".format(self.name, self.ancestor, self.idx)
-        for e in self.entries: ret_val += str(e) + "\n"
-        return ret_val
+    # Return a randomly selected weighted node
+    # TODO: Need a lot of diagnostics around this to see how it behaves
+    # Need to identify the instance of the a sub-GC to modifiy which is defined by the incoming
+    # edge in the top level GC graph
+    def select_gc(self, gpm, dpm):
+        node = choices(self.node_list, self.__generations * gpm + self.__depths * dpm)
+        return self.predecesors(node)
 
 
-    def _initialise_with_codon(self, c, i, constant):
-        self.name = c.name
-        if c.isConstant:
-            self.append(entry([], i, True, [constant]))
-        elif c.isIO:
-            self.append(entry([], i, True, []))
-        else:
-            num_params = len(signature(c.func).parameters)
-            if c.isMemory: num_params -= 1
-            self.append(entry([ref() for _ in range(num_params)], i, True, [float32(0.0)]))
+    # Return a list of all the predecesors to a given node.
+    # The list is in the order parent, grandparent, great grandparent...
+    def predecesors(self, node):
+        retval = [self.__node(node)]
+        parent = node[genetic_code.__PARENT]
+        while not parent is None:
+            retval.append(self.__node(parent))
+            parent = parent[genetic_code.__PARENT]
+        return retval
 
-
-    def clone(self):
-        new_me = copy(self)
-        new_me.ancestor = self.idx
-        new_me.idx = None
-        new_me.name = None
-        return new_me
-
-
-    def num_inputs(self):
-        return len(self.entries[_INPUT_ENTRY].input)
-
-
-    def num_outputs(self):
-        return len(self.entries[_OUTPUT_ENTRY].input)
-
-
-    def id(self):
-        return hash_function(dumps(self.entries)).hexdigest()
-
-
-    # TODO: Move the serialisation to the entry and reduce the overall string size.
-    def zserialise(self):
-        # TODO: Strip out the output values for everything but constants to reduce size
-        return b64encode(compress(dumps(self.entries), 9))
-
-
-    def zdeserialise(self, obj, idx):
-        self.entries = loads(decompress(b64decode(obj)))
-        self.idx = idx
-
-
-    def append(self, code):
-        self.entries.insert(_OUTPUT_ENTRY, code)
-        return self
-
-
-    def extend_inputs(self, num):
-        self.entries[_INPUT_ENTRY].input.extend([ref() for _ in range(num)])
-        self.entries[_INPUT_ENTRY].output.extend([float32(0.0)] * num)
 
     
-    def extend_outputs(self, num):
-        self.entries[_OUTPUT_ENTRY].input.extend([ref() for _ in range(num)])
-        self.entries[_OUTPUT_ENTRY].output.extend([float32(0.0)] * num)
-
-
-    def insert_entry(self, new_entry, pos):
-        self.entries.insert(pos, new_entry)
-
-
-    def make_entry(self):
-        return entry(genetic_code=self)
-
-
-    def get_inputs(self, i):
-        return array([self.entries[r.row].output[r.pos] for r in self.entries[i].input], dtype=float32)
-
-
-    def random_index(self):
-        row = randint(len(self))
-        return row if row > 1 else 1 
-
-
-'''
-    def code_graph(self):
-        self.graph = Graph()
-        for i, g in enumerate(self.genetic_code.entries, 1):
-'''
-

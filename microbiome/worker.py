@@ -72,46 +72,45 @@ class worker():
         return True
 
 
-    # TODO: Need a lot of diagnostics around this to see how it behaves
-    # Need to identify the instance of the a sub-GC to modifiy which is defined by the incoming
-    # edge in the top level GC graph
-    def __select_edge(self, signature, dpm, gpm):
-        generations = []
-        depths = []
-        for gc, edge in self.gene_pool.edge_list(signature):
-            generations.append(gc['generation'])
-            depths.append(gc['code_depth'])
-        generations = array(generations, dtype=float32)
-        depths = array(depths, dtype=float32)
-        generations = float32(1.0) + (float32(1.0) - generations / amax(generations)) * gpm
-        depths = float32(1.0) + (float32(1.0) - depths / amax(depths)) * dpm
-        return choices(self.gene_pool.edge_list(signature), generations + depths)
+    # Creation of a new GC as a mutation of an existing GC requires
+    # specific fields to be updated related to lineage 
+    def __create_predecesors(self, new_gc, predecesor_list):
+        new_gc_list = [new_gc]
+        signature = predecesor_list[0]['gc']['signature']
+        if len(predecesor_list) > 1:
+            for predecesor in predecesor_list[1:]:
+                ngcab, gcab = ('gcb', 'gca') if signature == predecesor['gca']['signature'] else ('gca', 'gcb')
+                gc = predecesor['gc']
+                new_gc = {'graph': deepcopy(gc['graph'])}
+                new_gc[gcab] = new_gc_list[-1]['signature']
+                new_gc[ngcab] = predecesor[ngcab]['signature']
+                new_gc['creator'] = self.config['creator']
+                new_gc['meta_data'] = {'parents': [gc['signature']]}        
+                self.gene_pool.normalize(new_gc)
+                new_gc_list.append(new_gc)
+        return new_gc_list
 
 
     # To duplicate a GC a new GC is added that takes the same inputs as the
     # original GC and connects them to two copies in GCA & GCB
-    def __gc_duplication(self, signature):
+    def __gc_duplication(self, agc):
         cf = self.work['evolution_parameters']['asexual']['config']['duplication']
-        gc, edge = self.__select_edge(gc_list, cf['dpm'], cf['gpm'])
+        predecesor_list = agc['genetic_code'].select(cf['dpm'], cf['gpm'])
+        gc = predecesor_list[0]['gc']
 
         # Define the new GC
         new_inputs = [['I', i] for i in range(gc['num_inputs'])]
-        new_gc['graph'] = {
+        new_gc = {'graph': {
             'A': new_inputs,
             'B': new_inputs,
             'O': [[gcab, i] for gcab in ['A', 'B'] for i in range(gc['num_outputs'])]
-        }
+        }}
         new_gc['gca'] = gc['signature']
         new_gc['gcb'] = gc['signature']
-        new_gc['code_depth'] = gc['code_depth'] + 1
-        new_gc['codon_depth'] = gc['codon_depth']
-        new_gc['num_codes'] = gc['num_codes'] * 2
-        new_gc['num_unique_codes'] = gc['num_unique_codes']
-        new_gc['raw_num_codons'] = gc['raw_num_codons'] * 2
         new_gc['creator'] = self.config['creator']
-
-        # Adding to the gene pool automatically creates the new top level GC & all those in between
-        return self.gene_pool.create(new_gc, signature, gc)
+        new_gc['meta_data'] = {'parents': [gc['signature']]}
+        self.gene_pool.normalize(new_gc)
+        return self.__create_predecesors(new_gc, predecesor_list)
 
 
     def __gc_addition(self, signature):
@@ -142,7 +141,7 @@ class worker():
     def __asexual_reproduction(self, signature):
         worker.__logger.debug("Asexual reproduction for individual %s", signature)
         cf = self.work['evolution_parameters']['asexual']['config']
-        method = '__gc_' + choices(list(cf.keys()), [v['weight'] for v in cf.values()]):
+        method = '__gc_' + choices(list(cf.keys()), [v['weight'] for v in cf.values()])
         return getattr(self, method, lambda: self.__function_not_found(method))(signature)
 
 
@@ -155,11 +154,12 @@ class worker():
     def __evolve(self):
         cf = self.work['evolution_parameters']
         new_population = {}
+        new_gc_list = []
         for signature in self.work['population_dict'].keys():
-            if choices([True, False], [cf['asexual']['weight'], cf['sexual']['weight']])
-                new_population[self.__asexual_reproduction(signature)] = 0.0
-             else
-                new_population[self.__sexual_reproduction(signature)] = 0.0
+            funct = self.__asexual_reproduction if choices([True, False], [cf['asexual']['weight'], cf['sexual']['weight']]) else self.__sexual_reproduction
+            new_gc_list.extend(funct(self.gene_pool[signature]))
+            new_population[new_gc_list[-1]] = 0.0
+        self.gene_pool.update(new_gc_list)
         return new_population
 
 
@@ -196,7 +196,7 @@ class worker():
         self.work = worker.__work_registry.load([{'signature': self.registration_document['work']}])[0]
         setstate(self.work['evolution_parameters'])
         existing_population = len(self.work['population_dict'])
-        if existing_population: self.work['initial_query'] = [{'signature': list(self.work['population_list'].keys())}]
+        if existing_population: self.work['initial_query'] = [{'signature': list(self.work['population_dict'].keys())}]
         self.gene_pool = gene_pool(self.work['initial_query'], self.config['delete_gene_pool'], self.config['gene_pool_prefix'])
         if existing_population and not self.__valid_work():
             gene_pool.__logger.error("Work definition is not consistent with existing work registration details. Worker config: %s", str(self.config))

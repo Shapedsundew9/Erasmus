@@ -90,18 +90,23 @@ class genomic_library():
         return genomic_library.__store.load(query, fields)
 
 
+    def normalize(self, entries):
+        if isinstance(entries, list): entries = {e['signature']: e for e in entries}
+        for signature, entry in entries.items(): 
+            if self.validate(entry):
+                entries[signature] = genomic_library.__entry_validator.normalized(entry)
+                if not self.__calculate_fields(entries[signature], entries): return False
+            else:
+                genomic_library.__logger.debug("Entry %s is not valid. No entries will be stored.", signature)
+                return False
+        return True
+
+
     # Store a new application formatted entry.
     # TODO: Implement a bulk store.
     def store(self, entries):
-        if not isinstance(entries, list): entries = list(entries)
-        for i in range(len(entries)): 
-            if self.validate(entries[i]):
-                entries[i] = genomic_library.__entry_validator.normalized(entries[i])
-                if not self.__calculate_fields(entries[i]): return False
-            else:
-                genomic_library.__logger.debug("Entry %s is not valid. No entries will be stored.", entries[i]['signature'])
-                return False
-        return genomic_library.__store.store(entries)
+        self.normalize(entries)
+        return genomic_library.__store.store(list(entries.values()))
 
 
     # Validates an application format entry and populates fields that do not
@@ -114,18 +119,20 @@ class genomic_library():
         return True
 
 
-    def __calculate_fields(self, entry):
+    # Some fields depend on GCA & GCB which must be defined in either the genomic library or the entries to be added.
+    def __calculate_fields(self, entry, entries=None):
         # TODO: Need to update gca & gcb if necessary.
-        gca = self[entry['gca']]
+        gca = self[entry['gca']] if entries is None or not entry['gca'] in entries else entries[entry['gca']]
         if gca is None: genomic_library.__logger.warning("gca %s does not exist.",entry['gca'])
-        gcb = self[entry['gcb']]
+        gcb = self[entry['gcb']] if entries is None or not entry['gcb'] in entries else entries[entry['gcb']]
         if gcb is None: genomic_library.__logger.warning("gcb %s does not exist.",entry['gcb'])
         if gca is None or gcb is None: return False
         entry['code_depth'] = max((gca['code_depth'], gcb['code_depth'])) + 1
         entry['num_codes'] = max((gca['num_codes'] + gcb['num_codes'], 1))
         entry['raw_num_codons'] = max((gca['raw_num_codons'] + gcb['raw_num_codons'], 1))
-        entry['generation'] = max((gca['generation'], gcb['generation'])) + 1
-        entry['properties'] = gca['properties']
+        entry['generation'] = max(max((gca['generation'], gcb['generation'])) + 1, entry['generation'])
+        for k, v in gca['properties'].items():
+            if k in entry['properties']: entry['properties'][k] = entry['properties'][k] or v
         for k, v in gcb['properties'].items():
             if k in entry['properties']: entry['properties'][k] = entry['properties'][k] or v
         return True
