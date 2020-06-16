@@ -88,5 +88,23 @@
         "maxlength": 64,
         "regex": "[0-9a-f]{64}",
         "default_setter": "set_signature"
+    },
+    "creator": {
+        "meta": {
+            "database": {
+                "type": "BYTEA"
+            },
+            "definition": {
+                "location": ["WORKER"],
+                "immutable": true
+            },
+            "sha256": true,
+            "description": "Unique identifier for the creator."
+        },
+        "type": "string",
+        "minlength": 64,
+        "maxlength": 64,
+        "regex": "[0-9a-f]{64}",
+        "required": true
     }
 }

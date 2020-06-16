@@ -26,7 +26,7 @@
                 "immutable": true
             },
             "compressed": false,
-            "description": "The current population size."
+            "description": "The population at the end of the epoch."
         }
     },
     "culled": {
@@ -450,7 +450,7 @@
                 "immutable": true
             },
             "sha256": true,
-            "description": "Unique identifier for this genetic code."
+            "description": "Worker ID"
         },
         "type": "string",
         "minlength": 64,

@@ -13,8 +13,12 @@ from .genomic_library_entry_validator import NULL_GC
 from .genetic_code import genetic_code
 from tempfile import NamedTemporaryFile
 from graph_tool import Graph
-from numpy import int64
+from numpy import int64, float32, zeros, ndarray, array
 from copy import copy
+from ..draw_graph import draw_graph
+from sys import path
+from os.path import dirname, abspath, basename
+from importlib import import_module, reload
 
 
 # The gene_pool organises genetic codes for a worker. Each worker has its own gene pool.
@@ -37,13 +41,15 @@ class gene_pool():
     __logger = getLogger(__name__)
 
 
-    def __init__(self, query=[{'gca': NULL_GC, 'gcb': NULL_GC}], delete_callables_file=True, callables_prefix=None):
+    def __init__(self, query=[{'gca': NULL_GC, 'gcb': NULL_GC}], callables_prefix=None):
         if gene_pool.__gl is None: gene_pool.__gl = genomic_library()
-        self.delete_callables_file = delete_callables_file
-        self.callables_prefix = callables_prefix
+        self.__file_ptr = NamedTemporaryFile(mode='w', suffix='.py', prefix=callables_prefix, delete=False)
+        self.__file_ptr.write(gene_pool.__CALLABLE_FILE_HEADER)
+        self.__file_ptr.close()
+        path.insert(1, dirname(abspath(self.__file_ptr.name)))
+        self.__module = import_module(basename(self.__file_ptr.name))
         gene_pool.__logger.info("Initial gene pool query: %s", str(query))
         self.__gene_pool = {}
-        self.graph = None
         self.update(gene_pool.__gl.load(query))
         self.__create_callables(self.__gene_pool.keys())
 
@@ -56,6 +62,10 @@ class gene_pool():
         return "gc_" + signature
 
 
+    def __function_not_found(self, name):
+        gene_pool.__logger.error("The the GC function %s cannot be found.", name)
+
+
     def __write_arg(self, iab, c):
         last_arg = len(iab)
         line = ""
@@ -66,7 +76,7 @@ class gene_pool():
 
 
     def __create_callables(self, active_gcs):
-        file_ptr = NamedTemporaryFile(mode='w', suffix='.py', prefix=self.callables_prefix, delete=self.delete_callables_file)
+        file_ptr = open(self.__file_ptr.name, "w")
         gene_pool.__logger.debug("Gene pool file created: %s", file_ptr.name)
         file_ptr.write(gene_pool.__CALLABLE_FILE_HEADER)    
         for gc in self.__gene_pool.values(): 
@@ -79,10 +89,30 @@ class gene_pool():
             else:
                 file_ptr.write(gc['meta_data']['function']['python3']['0']['callable'] + "\n\n")
         file_ptr.close()
-        
+        reload(self.__module)
+
+
+    # Return the GC function
+    def callable(self, signature):
+        method = self.__function_name(signature)
+        gc = self.__gene_pool[signature]
+        func = getattr(self.__module, method, lambda: self.__function_not_found(method))
+        def wrapper(i):
+            if not isinstance(i, ndarray): i = array(i)
+            if not isinstance(i[0], float32): i = float32(i)
+            ni = gc['num_inputs']
+            if ni > i.shape[0]:
+                a = zeros((ni), dtype=float32)
+                a[:i.shape[0]] = i
+            else:
+                a = i[:ni]
+            return func(a)
+        return wrapper
+
+
 
     # Add a list of genetic codes to the gene pool
-    # Ad GCs added have no referencing GC they are considered active
+    # GCs added have no referencing GC they are considered active
     # Sub-codes will be added automatically if needed
     # GCA & GCB signatures will be replaced with references to the genetic code
     # A 'count' field is added counting the number of references to the GC within the gene pool
@@ -144,3 +174,19 @@ class gene_pool():
 
     def normalize(self, entry):
         gene_pool.__gl.normalize({entry['signature']: entry})
+
+
+    def draw(self, root=None):
+        dg = draw_graph()
+        node_list = [root] if not root is None else [gc['signature'] for gc in self.__gene_pool.values() if gc['count'] == 0]
+        for node in node_list: node['vertex'] = dg.add_vertex()
+
+        while node_list:
+            node = self.__gene_pool[node_list.pop()]
+            for gcab in ('gca', 'gcb'):
+                if not self.__gene_pool[gcab] is None:
+                    if not 'vertex' in self.__gene_pool[gcab]: self.__gene_pool[gcab]['vertex'] = dg.add_vertex()
+                    dg.add_edge(node['vertex'], self.__gene_pool[gcab]['vertex'])
+                    node_list.append(gcab)
+
+        dg.draw("gene_pool")

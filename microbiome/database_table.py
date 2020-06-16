@@ -174,17 +174,7 @@ class database_table():
         return entry
 
 
-    def lock_and_load(self):
-        # TODO: Implement
-        pass
-
-
-    def store_and_release(self):
-        # TODO: Implement
-        pass
-
-
-    def load(self, queries, fields=None):
+    def load(self, queries, fields=None, lock=False):
         if fields is None: fields = self.__columns
         retval = []
         self.__logger.debug("Queries are %s", str(queries))
@@ -197,12 +187,13 @@ class database_table():
             sql_list.append(sql.SQL(', ').join(map(sql.Identifier, fields)))
             sql_list.append(sql.SQL(" FROM {} ").format(sql.Identifier(self.table)))
             sql_list.append(query_sql)
+            if lock: sql_list.append(sql.SQL(" FOR UPDATE"))
             sql_str = sql.Composed(sql_list)
             self.__logger.debug("Query SQL: %s", sql_str.as_string(database_table.__conn[self.dbname]))
             dbcur.execute(sql_str)
             for row in dbcur: retval.append(self.__cast_entry_to_load_type(row))
             dbcur.close()
-        database_table.__conn[self.dbname].commit()
+        if not lock: database_table.__conn[self.dbname].commit()
         return retval
 
 

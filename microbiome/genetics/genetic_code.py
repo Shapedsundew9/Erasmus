@@ -10,6 +10,7 @@ Copyright (c) 2020 Your Company
 
 from random import choices
 from numpy import float32, array, amax, amin
+from ..draw_graph import draw_graph
 
 
 class genetic_code():
@@ -58,7 +59,7 @@ class genetic_code():
     # TODO: Need a lot of diagnostics around this to see how it behaves
     # Need to identify the instance of the a sub-GC to modifiy which is defined by the incoming
     # edge in the top level GC graph
-    def select_gc(self, gpm, dpm):
+    def select(self, gpm, dpm):
         node = choices(self.node_list, self.__generations * gpm + self.__depths * dpm)
         return self.predecesors(node)
 
@@ -66,12 +67,27 @@ class genetic_code():
     # Return a list of all the predecesors to a given node.
     # The list is in the order parent, grandparent, great grandparent...
     def predecesors(self, node):
-        retval = [self.__node(node)]
+        retval = []
         parent = node[genetic_code.__PARENT]
         while not parent is None:
             retval.append(self.__node(parent))
             parent = parent[genetic_code.__PARENT]
         return retval
+
+
+    # Draw an image of the genetic code graph.
+    # This function is usually slow.
+    def draw(self):
+        dg = draw_graph()
+        self.root.append(dg.add_vertex())
+        node_list = [self.root]
+        while node_list:
+            node = node_list.pop()
+            for ab in (genetic_code.__GCA, genetic_code.__GCB):
+                if not node[ab] is None:
+                    node[ab].append(dg.add_vertex())
+                    dg.add_edge(node[-1], node[ab][-1])
+        dg.draw("genetic_code")
 
 
     

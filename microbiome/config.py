@@ -65,6 +65,29 @@ def validate_config():
     return config
 
 
+# Merges dict b into dict a
+# Credit: https://stackoverflow.com/users/181772/andrew-cooke
+# https://stackoverflow.com/questions/7204805/how-to-merge-dictionaries-of-dictionaries
+def merge(a, b, path=None):
+    if path is None: path = []
+    for key in b:
+        if key in a:
+            if isinstance(a[key], dict) and isinstance(b[key], dict):
+                merge(a[key], b[key], path + [str(key)])
+            elif a[key] == b[key]:
+                pass # same leaf value
+            else:
+                raise Exception('Config merge conflict at %s' % '.'.join(path + [str(key)]))
+        else:
+            a[key] = b[key]
+    return a
+
+
+def update_config(c):
+    global config
+    merge(config, c)
+
+
 def save_config(config_file_path='config.json'):
     with open(config_file_path, 'w') as file_ptr:
         dump(config, file_ptr)
