@@ -1,0 +1,426 @@
+[
+    {
+        "graph": {
+            "C": [0.0, 0.0],
+            "A": [["I", 0], ["C", 0], ["C", 1]],
+            "O": [["A", 0]]
+        },
+        "gca": "0000000000000000000000000000000000000000000000000000000000000000",
+        "gcb": "0000000000000000000000000000000000000000000000000000000000000000",
+        "generation": 0,
+        "alpha_class": 0,
+        "beta_class": 0,
+        "opt_num_codons": 1,
+        "properties": {
+            "unary_mutation": true
+        },
+        "meta_data": {
+            "name": "GCA input connection",
+            "function": {
+                "python3": {
+                    "0": {
+                        "inline": "{} = connect({}, 'A', 'I', {}, {})",
+                        "callable": "(gc, c1, c2)\n\treturn connect(gc, 'A', 'I', c1, c2)"
+                    }
+                }
+            }
+        }
+    },
+    {
+        "graph": {
+            "C": [0.0, 0.0],
+            "A": [["I", 0], ["C", 0], ["C", 1]],
+            "O": [["A", 0]]
+        },
+        "gca": "0000000000000000000000000000000000000000000000000000000000000000",
+        "gcb": "0000000000000000000000000000000000000000000000000000000000000000",
+        "generation": 0,
+        "alpha_class": 0,
+        "beta_class": 0,
+        "opt_num_codons": 1,
+        "properties": {
+            "unary_mutation": true
+        },
+        "meta_data": {
+            "name": "GCA constant connection",
+            "function": {
+                "python3": {
+                    "0": {
+                        "inline": "{} = connect({}, 'A', 'C', {}, {})",
+                        "callable": "(gc, c1, c2)\n\treturn connect(gc, 'A', 'C', c1, c2)"
+                    }
+                }
+            }
+        }
+    },
+    {
+        "graph": {
+            "C": [0.0, 0.0],
+            "A": [["I", 0], ["C", 0], ["C", 1]],
+            "O": [["A", 0]]
+        },
+        "gca": "0000000000000000000000000000000000000000000000000000000000000000",
+        "gcb": "0000000000000000000000000000000000000000000000000000000000000000",
+        "generation": 0,
+        "alpha_class": 0,
+        "beta_class": 0,
+        "opt_num_codons": 1,
+        "properties": {
+            "unary_mutation": true
+        },
+        "meta_data": {
+            "name": "GCB input connection",
+            "function": {
+                "python3": {
+                    "0": {
+                        "inline": "{} = connect({}, 'B', 'I', {}, {})",
+                        "callable": "(gc, c1, c2)\n\treturn connect(gc, 'B', 'I', c1, c2)"
+                    }
+                }
+            }
+        }
+    },
+    {
+        "graph": {
+            "C": [0.0, 0.0],
+            "A": [["I", 0], ["C", 0], ["C", 1]],
+            "O": [["A", 0]]
+        },
+        "gca": "0000000000000000000000000000000000000000000000000000000000000000",
+        "gcb": "0000000000000000000000000000000000000000000000000000000000000000",
+        "generation": 0,
+        "alpha_class": 0,
+        "beta_class": 0,
+        "opt_num_codons": 1,
+        "properties": {
+            "unary_mutation": true
+        },
+        "meta_data": {
+            "name": "GCB GCA connection",
+            "function": {
+                "python3": {
+                    "0": {
+                        "inline": "{} = connect({}, 'B', 'A', {}, {})",
+                        "callable": "(gc, c1, c2)\n\treturn connect(gc, 'B', 'A', c1, c2)"
+                    }
+                }
+            }
+        }
+    },
+    {
+        "graph": {
+            "C": [0.0, 0.0],
+            "A": [["I", 0], ["C", 0], ["C", 1]],
+            "O": [["A", 0]]
+        },
+        "gca": "0000000000000000000000000000000000000000000000000000000000000000",
+        "gcb": "0000000000000000000000000000000000000000000000000000000000000000",
+        "generation": 0,
+        "alpha_class": 0,
+        "beta_class": 0,
+        "opt_num_codons": 1,
+        "properties": {
+            "unary_mutation": true
+        },
+        "meta_data": {
+            "name": "GCB constant connection",
+            "function": {
+                "python3": {
+                    "0": {
+                        "inline": "{} = connect({}, 'B', 'C', {}, {})",
+                        "callable": "(gc, c1, c2)\n\treturn connect(gc, 'B', 'C', c1, c2)"
+                    }
+                }
+            }
+        }
+    },
+    {
+        "graph": {
+            "C": [0.0, 0.0],
+            "A": [["I", 0], ["C", 0], ["C", 1]],
+            "O": [["A", 0]]
+        },
+        "gca": "0000000000000000000000000000000000000000000000000000000000000000",
+        "gcb": "0000000000000000000000000000000000000000000000000000000000000000",
+        "generation": 0,
+        "alpha_class": 0,
+        "beta_class": 0,
+        "opt_num_codons": 1,
+        "properties": {
+            "unary_mutation": true
+        },
+        "meta_data": {
+            "name": "Output input connection",
+            "function": {
+                "python3": {
+                    "0": {
+                        "inline": "{} = connect({}, 'O', 'I', {}, {})",
+                        "callable": "(gc, c1, c2)\n\treturn connect(gc, 'O', 'I', c1, c2)"
+                    }
+                }
+            }
+        }
+    },
+    {
+        "graph": {
+            "C": [0.0, 0.0],
+            "A": [["I", 0], ["C", 0], ["C", 1]],
+            "O": [["A", 0]]
+        },
+        "gca": "0000000000000000000000000000000000000000000000000000000000000000",
+        "gcb": "0000000000000000000000000000000000000000000000000000000000000000",
+        "generation": 0,
+        "alpha_class": 0,
+        "beta_class": 0,
+        "opt_num_codons": 1,
+        "properties": {
+            "unary_mutation": true
+        },
+        "meta_data": {
+            "name": "Output GCA connection",
+            "function": {
+                "python3": {
+                    "0": {
+                        "inline": "{} = connect({}, 'O', 'A', {}, {})",
+                        "callable": "(gc, c1, c2)\n\treturn connect(gc, 'O', 'A', c1, c2)"
+                    }
+                }
+            }
+        }
+    },
+    {
+        "graph": {
+            "C": [0.0, 0.0],
+            "A": [["I", 0], ["C", 0], ["C", 1]],
+            "O": [["A", 0]]
+        },
+        "gca": "0000000000000000000000000000000000000000000000000000000000000000",
+        "gcb": "0000000000000000000000000000000000000000000000000000000000000000",
+        "generation": 0,
+        "alpha_class": 0,
+        "beta_class": 0,
+        "opt_num_codons": 1,
+        "properties": {
+            "unary_mutation": true
+        },
+        "meta_data": {
+            "name": "Output constant connection",
+            "function": {
+                "python3": {
+                    "0": {
+                        "inline": "{} = connect({}, 'O', 'C', {}, {})",
+                        "callable": "(gc, c1, c2)\n\treturn connect(gc, 'O', 'C', c1, c2)"
+                    }
+                }
+            }
+        }
+    },
+    {
+        "graph": {
+            "A": [["I", 0]],
+            "O": [["A", 0]]
+        },
+        "gca": "0000000000000000000000000000000000000000000000000000000000000000",
+        "gcb": "0000000000000000000000000000000000000000000000000000000000000000",
+        "generation": 0,
+        "alpha_class": 0,
+        "beta_class": 0,
+        "opt_num_codons": 1,
+        "properties": {
+            "unary_mutation": true
+        },
+        "meta_data": {
+            "name": "New constant: Random -1.0 to 1.0",
+            "function": {
+                "python3": {
+                    "0": {
+                        "inline": "{} = append_constant({}, uniform(-1.0, 1.0))",
+                        "callable": "(g)\n\treturn append_constant(gc, uniform(-1.0, 1.0))"
+                    }
+                }
+            }
+        }
+    },
+    {
+        "graph": {
+            "A": [["I", 0]],
+            "O": [["A", 0]]
+        },
+        "gca": "0000000000000000000000000000000000000000000000000000000000000000",
+        "gcb": "0000000000000000000000000000000000000000000000000000000000000000",
+        "generation": 0,
+        "alpha_class": 0,
+        "beta_class": 0,
+        "opt_num_codons": 1,
+        "properties": {
+            "unary_mutation": true
+        },
+        "meta_data": {
+            "name": "New constant: 1.0",
+            "function": {
+                "python3": {
+                    "0": {
+                        "inline": "{} = append_constant({}, 1.0)",
+                        "callable": "(g)\n\treturn append_constant(gc, 1.0)"
+                    }
+                }
+            }
+        }
+    },
+    {
+        "graph": {
+            "A": [["I", 0]],
+            "O": [["A", 0]]
+        },
+        "gca": "0000000000000000000000000000000000000000000000000000000000000000",
+        "gcb": "0000000000000000000000000000000000000000000000000000000000000000",
+        "generation": 0,
+        "alpha_class": 0,
+        "beta_class": 0,
+        "opt_num_codons": 1,
+        "properties": {
+            "unary_mutation": true
+        },
+        "meta_data": {
+            "name": "New constant: -1.0",
+            "function": {
+                "python3": {
+                    "0": {
+                        "inline": "{} = append_constant({}, -1.0)",
+                        "callable": "(g)\n\treturn append_constant(gc, -1.0)"
+                    }
+                }
+            }
+        }
+    },
+    {
+        "graph": {
+            "A": [["I", 0]],
+            "O": [["A", 0]]
+        },
+        "gca": "0000000000000000000000000000000000000000000000000000000000000000",
+        "gcb": "0000000000000000000000000000000000000000000000000000000000000000",
+        "generation": 0,
+        "alpha_class": 0,
+        "beta_class": 0,
+        "opt_num_codons": 1,
+        "properties": {
+            "unary_mutation": true
+        },
+        "meta_data": {
+            "name": "New constant: 0.0",
+            "function": {
+                "python3": {
+                    "0": {
+                        "inline": "{} = append_constant({}, 0.0)",
+                        "callable": "(g)\n\treturn append_constant(gc, 0.0)"
+                    }
+                }
+            }
+        }
+    },
+    {
+        "graph": {
+            "A": [["I", 0], ["I", 1]],
+            "O": [["A", 0]]
+        },
+        "gca": "0000000000000000000000000000000000000000000000000000000000000000",
+        "gcb": "0000000000000000000000000000000000000000000000000000000000000000",
+        "generation": 0,
+        "alpha_class": 0,
+        "beta_class": 0,
+        "opt_num_codons": 1,
+        "properties": {
+            "unary_mutation": true
+        },
+        "meta_data": {
+            "name": "Mutate constant: +50%",
+            "function": {
+                "python3": {
+                    "0": {
+                        "inline": "{} = mutate_constant({}, {}, 1.5)",
+                        "callable": "(gc, c)\n\treturn mutate_constant(gc, c, 1.5)"
+                    }
+                }
+            }
+        }
+    },
+    {
+        "graph": {
+            "A": [["I", 0], ["I", 1]],
+            "O": [["A", 0]]
+        },
+        "gca": "0000000000000000000000000000000000000000000000000000000000000000",
+        "gcb": "0000000000000000000000000000000000000000000000000000000000000000",
+        "generation": 0,
+        "alpha_class": 0,
+        "beta_class": 0,
+        "opt_num_codons": 1,
+        "properties": {
+            "unary_mutation": true
+        },
+        "meta_data": {
+            "name": "Mutate constant: -50%",
+            "function": {
+                "python3": {
+                    "0": {
+                        "inline": "{} = mutate_constant({}, {}, 0.5)",
+                        "callable": "(gc, c)\n\treturn mutate_constant(gc, c, 0.5)"
+                    }
+                }
+            }
+        }
+    },
+    {
+        "graph": {
+            "A": [["I", 0], ["I", 1]],
+            "O": [["A", 0]]
+        },
+        "gca": "0000000000000000000000000000000000000000000000000000000000000000",
+        "gcb": "0000000000000000000000000000000000000000000000000000000000000000",
+        "generation": 0,
+        "alpha_class": 0,
+        "beta_class": 0,
+        "opt_num_codons": 1,
+        "properties": {
+            "unary_mutation": true
+        },
+        "meta_data": {
+            "name": "Mutate constant: Negate",
+            "function": {
+                "python3": {
+                    "0": {
+                        "inline": "{} = mutate_constant({}, {}, -1.0)",
+                        "callable": "(gc, c)\n\treturn mutate_constant(gc, c, -1.0)"
+                    }
+                }
+            }
+        }
+    },
+    {
+        "graph": {
+            "A": [["I", 0], ["I", 1]],
+            "O": [["A", 0]]
+        },
+        "gca": "0000000000000000000000000000000000000000000000000000000000000000",
+        "gcb": "0000000000000000000000000000000000000000000000000000000000000000",
+        "generation": 0,
+        "alpha_class": 0,
+        "beta_class": 0,
+        "opt_num_codons": 1,
+        "properties": {
+            "binary_mutation": true
+        },
+        "meta_data": {
+            "name": "Stack",
+            "function": {
+                "python3": {
+                    "0": {
+                        "inline": "{} = stack({}, {})",
+                        "callable": "(gca, gcb)\n\treturn stack(gca, gcb)"
+                    }
+                }
+            }
+        }
+    }
+]

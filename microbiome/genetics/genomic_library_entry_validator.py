@@ -36,29 +36,44 @@ class genomic_library_entry_validator(Validator):
                 for r, i in pr:
                     if r == "C": self._error(field, "C referenced from {} but does not exist: [{},{}]".format(pr, r, i))
 
+        # There must be at least one output from A
+        found_a_output = False
+        keys = ('B', 'O') if 'B' in value else ('O')
+        for pr in keys:
+            for r, i in value[pr]: found_a_output = found_a_output or r == "A" 
+        if not found_a_output: self._error(field, "Missing at least one reference to A output")
+
+        # If B exists there must be at least one output
+        if "B" in value:
+            found_b_output = False
+            for r, i in value['O']: found_b_output = found_b_output or r == "B" 
+            if not found_b_output: self._error(field, "Missing at least one reference to B output")
+
         # If C does exist index references must be in range
         if "C" in value:
-            c_len = len(value["c"])
-            for pr in value.values():
+            c_len = len(value["C"])
+            for pr in value.keys():
                 if pr != "C":
-                    for r, i in pr:
+                    for r, i in value[pr]:
                         if r == "C" and i >= c_len:
                             self._error(field, "Reference into C from {} out of bounds. Max index = {}: [{},{}]".format(pr, c_len, r, i))
 
         # All values in "C" must be referenced at least once
         if "C" in value:
             c_indices = set()
-            for pr in value.values():
-                for r, i in pr:
-                    if r == "C": c_indices.add(i)
+            for pr in value.keys():
+                if pr != "C":
+                    for r, i in value[pr]:
+                        if r == "C": c_indices.add(i)
             c_indices = list(c_indices)
-            if sorted(c_indices) != range(len(c_indices)): self._error(field, "Missing at least one reference to C")
+            if sorted(c_indices) != list(range(len(c_indices))): self._error(field, "Missing at least one reference to C")
 
         # References to I must start at 0 and be contiguous
         i_indices = set()
-        for pr in value.values():
-            for r, i in pr:
-                if r == "I": i_indices.add(i)
+        for pr in value.keys():
+            if pr != "C":
+                for r, i in value[pr]:
+                    if r == "I": i_indices.add(i)
         i_indices = list(i_indices)
         if sorted(i_indices) != list(range(len(i_indices))): self._error(field, "Missing at least one reference to I")
 
@@ -88,7 +103,7 @@ class genomic_library_entry_validator(Validator):
             if "beta_class" in self.document and not self.document['beta_class']:  self._error(field, "If alpha_class != 0, beta_class must != 0.")
             if "generation" in self.document and not self.document['generation']: self._error(field, "If alpha_class != 0, generation must != 0.")
             if "gca" in self.document and self.document['gca'] == NULL_GC: self._error(field, "If alpha_class != 0, gca must != " + NULL_GC)
-            if "meta_data" in self.document and not "parents" in self.document['meta_data']: self._error(field, "If alpha_class != 0 then there mus be at least one parent.")
+            if "meta_data" in self.document and not "parents" in self.document['meta_data']: self._error(field, "If alpha_class != 0 then there must be at least one parent.")
 
 
     def _check_with_valid_created(self, field, value):
@@ -122,9 +137,10 @@ class genomic_library_entry_validator(Validator):
 
     def _normalize_default_setter_set_num_inputs(self, document):
         i_indices = set()
-        for pr in document["graph"].values():
-            for r, i in pr:
-                if r == "I": i_indices.add(i)
+        for pr in document["graph"].keys():
+            if pr != 'C':
+                for r, i in document["graph"][pr]:
+                    if r == "I": i_indices.add(i)
         return len(i_indices)
 
 
