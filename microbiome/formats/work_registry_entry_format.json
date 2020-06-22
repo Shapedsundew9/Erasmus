@@ -82,7 +82,7 @@
                 "immutable": true
             },
             "compressed": false,
-            "description": "Maximum population size.",
+            "description": "Current population size.",
             "check_with": "valid_population_count"
         }
     },

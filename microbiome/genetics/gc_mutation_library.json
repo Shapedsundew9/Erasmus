@@ -19,8 +19,7 @@
             "function": {
                 "python3": {
                     "0": {
-                        "inline": "{} = connect({}, 'A', 'I', {}, {})",
-                        "callable": "(gc, c1, c2)\n\treturn connect(gc, 'A', 'I', c1, c2)"
+                        "inline": "{} = connect({}, 'A', 'I', {}, {})"
                     }
                 }
             }
@@ -46,8 +45,7 @@
             "function": {
                 "python3": {
                     "0": {
-                        "inline": "{} = connect({}, 'A', 'C', {}, {})",
-                        "callable": "(gc, c1, c2)\n\treturn connect(gc, 'A', 'C', c1, c2)"
+                        "inline": "{} = connect({}, 'A', 'C', {}, {})"
                     }
                 }
             }
@@ -73,8 +71,7 @@
             "function": {
                 "python3": {
                     "0": {
-                        "inline": "{} = connect({}, 'B', 'I', {}, {})",
-                        "callable": "(gc, c1, c2)\n\treturn connect(gc, 'B', 'I', c1, c2)"
+                        "inline": "{} = connect({}, 'B', 'I', {}, {})"
                     }
                 }
             }
@@ -100,8 +97,7 @@
             "function": {
                 "python3": {
                     "0": {
-                        "inline": "{} = connect({}, 'B', 'A', {}, {})",
-                        "callable": "(gc, c1, c2)\n\treturn connect(gc, 'B', 'A', c1, c2)"
+                        "inline": "{} = connect({}, 'B', 'A', {}, {})"
                     }
                 }
             }
@@ -127,8 +123,7 @@
             "function": {
                 "python3": {
                     "0": {
-                        "inline": "{} = connect({}, 'B', 'C', {}, {})",
-                        "callable": "(gc, c1, c2)\n\treturn connect(gc, 'B', 'C', c1, c2)"
+                        "inline": "{} = connect({}, 'B', 'C', {}, {})"
                     }
                 }
             }
@@ -154,8 +149,7 @@
             "function": {
                 "python3": {
                     "0": {
-                        "inline": "{} = connect({}, 'O', 'I', {}, {})",
-                        "callable": "(gc, c1, c2)\n\treturn connect(gc, 'O', 'I', c1, c2)"
+                        "inline": "{} = connect({}, 'O', 'I', {}, {})"
                     }
                 }
             }
@@ -181,8 +175,7 @@
             "function": {
                 "python3": {
                     "0": {
-                        "inline": "{} = connect({}, 'O', 'A', {}, {})",
-                        "callable": "(gc, c1, c2)\n\treturn connect(gc, 'O', 'A', c1, c2)"
+                        "inline": "{} = connect({}, 'O', 'A', {}, {})"
                     }
                 }
             }
@@ -208,8 +201,7 @@
             "function": {
                 "python3": {
                     "0": {
-                        "inline": "{} = connect({}, 'O', 'C', {}, {})",
-                        "callable": "(gc, c1, c2)\n\treturn connect(gc, 'O', 'C', c1, c2)"
+                        "inline": "{} = connect({}, 'O', 'C', {}, {})"
                     }
                 }
             }
@@ -234,8 +226,7 @@
             "function": {
                 "python3": {
                     "0": {
-                        "inline": "{} = append_constant({}, uniform(-1.0, 1.0))",
-                        "callable": "(g)\n\treturn append_constant(gc, uniform(-1.0, 1.0))"
+                        "inline": "{} = append_constant({}, uniform(-1.0, 1.0))"
                     }
                 }
             }
@@ -260,8 +251,7 @@
             "function": {
                 "python3": {
                     "0": {
-                        "inline": "{} = append_constant({}, 1.0)",
-                        "callable": "(g)\n\treturn append_constant(gc, 1.0)"
+                        "inline": "{} = append_constant({}, 1.0)"
                     }
                 }
             }
@@ -286,8 +276,7 @@
             "function": {
                 "python3": {
                     "0": {
-                        "inline": "{} = append_constant({}, -1.0)",
-                        "callable": "(g)\n\treturn append_constant(gc, -1.0)"
+                        "inline": "{} = append_constant({}, -1.0)"
                     }
                 }
             }
@@ -312,8 +301,7 @@
             "function": {
                 "python3": {
                     "0": {
-                        "inline": "{} = append_constant({}, 0.0)",
-                        "callable": "(g)\n\treturn append_constant(gc, 0.0)"
+                        "inline": "{} = append_constant({}, 0.0)"
                     }
                 }
             }
@@ -338,8 +326,7 @@
             "function": {
                 "python3": {
                     "0": {
-                        "inline": "{} = mutate_constant({}, {}, 1.5)",
-                        "callable": "(gc, c)\n\treturn mutate_constant(gc, c, 1.5)"
+                        "inline": "{} = mutate_constant({}, {}, 1.5)"
                     }
                 }
             }
@@ -364,8 +351,7 @@
             "function": {
                 "python3": {
                     "0": {
-                        "inline": "{} = mutate_constant({}, {}, 0.5)",
-                        "callable": "(gc, c)\n\treturn mutate_constant(gc, c, 0.5)"
+                        "inline": "{} = mutate_constant({}, {}, 0.5)"
                     }
                 }
             }
@@ -390,8 +376,7 @@
             "function": {
                 "python3": {
                     "0": {
-                        "inline": "{} = mutate_constant({}, {}, -1.0)",
-                        "callable": "(gc, c)\n\treturn mutate_constant(gc, c, -1.0)"
+                        "inline": "{} = mutate_constant({}, {}, -1.0)"
                     }
                 }
             }
@@ -416,8 +401,7 @@
             "function": {
                 "python3": {
                     "0": {
-                        "inline": "{} = stack({}, {})",
-                        "callable": "(gca, gcb)\n\treturn stack(gca, gcb)"
+                        "inline": "{} = stack({}, {})"
                     }
                 }
             }

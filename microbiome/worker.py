@@ -13,10 +13,11 @@ from .database_table import database_table
 from .genetics.gene_pool import gene_pool
 from .worker_registry_validator import worker_registry_validator
 from .work_log_validator import work_log_validator
+from .genetics.mutate import mutate, refresh_mutations
 from copy import deepcopy
 from logging import getLogger
 from math import isclose
-from random import choices, setstate, getrandbits
+from random import choice, choices, setstate, getrandbits
 from numpy import float32, array, amax, amin, mean, median
 from time import perf_counter, process_time
 from psutil import Process
@@ -81,130 +82,15 @@ class worker():
         return False
 
 
-    # Creation of a new GC as a mutation of an existing GC requires
-    # specific fields to be updated related to lineage 
-    def __create_predecesors(self, new_gc, predecesor_list):
-        new_gc_list = [new_gc]
-        signature = predecesor_list[0]['gc']['signature']
-        if len(predecesor_list) > 1:
-            for predecesor in predecesor_list[1:]:
-                ngcab, gcab = ('gcb', 'gca') if signature == predecesor['gca']['signature'] else ('gca', 'gcb')
-                gc = predecesor['gc']
-                new_gc = {'graph': deepcopy(gc['graph'])}
-                new_gc[gcab] = new_gc_list[-1]['signature']
-                new_gc[ngcab] = predecesor[ngcab]['signature']
-                new_gc['creator'] = self.config['creator']
-                new_gc['meta_data'] = {'parents': [gc['signature']]}        
-                self.gene_pool.normalize(new_gc)
-                new_gc_list.append(new_gc)
-        return new_gc_list
-
-
-    # To duplicate a GC a new GC is added that takes the same inputs as the
-    # original GC and connects them to two copies in GCA & GCB
-    def __gc_duplication(self, agc):
-        cf = self.work['evolution_parameters']['asexual']['config']['duplication']
-        predecesor_list = agc['genetic_code'].select(cf['dpm'], cf['gpm'])
-        if predecesor_list:
-            gc = predecesor_list[0]['gc']
-
-            # Define the new GC
-            new_inputs = [['I', i] for i in range(gc['num_inputs'])]
-            new_gc = {'graph': {
-                'A': new_inputs,
-                'B': new_inputs,
-                'O': [[gcab, i] for gcab in ['A', 'B'] for i in range(gc['num_outputs'])]
-            }}
-            new_gc['gca'] = gc['signature']
-            new_gc['gcb'] = gc['signature']
-            new_gc['creator'] = self.config['creator']
-            new_gc['meta_data'] = {'parents': [gc['signature']]}
-            self.gene_pool.normalize(new_gc)
-            return self.__create_predecesors(new_gc, predecesor_list)
-        return [agc['genetic_code']['gc']]
-
-
-    def __gc_addition(self, agc):
-        cf = self.work['evolution_parameters']['asexual']['config']['addition']
-        predecesor_list = agc['genetic_code'].select(cf['dpm'], cf['gpm'])
-        if predecesor_list and False:
-            return self.__create_predecesors({}, predecesor_list)
-        return [agc['genetic_code']['gc']]
-
-
-    # To subtract a GC find set GCA or GCB to None from a random selection.
-    # Route any inputs & constants to outputs.
-    # This will likely change the number of outputs.
-    def __gc_subtraction(self, agc):
-        cf = self.work['evolution_parameters']['asexual']['config']['subtraction']
-        predecesor_list = agc['genetic_code'].select(cf['dpm'], cf['gpm'])
-        if not agc['gca'] is None and not agc['gcb'] is None:
-            new_gc = {'graph': deepcopy(agc['graph'])}
-            new_gc['gca'] = agc['gca']
-            new_gc['gcb'] = agc['gcb']
-            if bool(getrandbits(1)):
-                new_gc['graph']['O'].extend(new_gc['graph']['A'])
-                new_gc['graph']['A'] = []
-                new_gc['gca'] = None
-            else:
-                new_gc['graph']['O'].extend(new_gc['graph']['B'])
-                new_gc['graph']['B'] = []
-                new_gc['gcb'] = None
-            new_gc['creator'] = self.config['creator']
-            new_gc['meta_data'] = {'parents': [agc['signature']]}
-            self.gene_pool.normalize(new_gc)
-            return self.__create_predecesors(new_gc, predecesor_list)
-        return [agc['genetic_code']['gc']]
-
-
-    def __gc_exchange(self, agc):
-        cf = self.work['evolution_parameters']['asexual']['config']['exchange']
-        predecesor_list = agc['genetic_code'].select(cf['dpm'], cf['gpm'])
-        if predecesor_list and False:
-            return self.__create_predecesors({}, predecesor_list)
-        return [agc['genetic_code']['gc']]
-
-
-    def __gc_rewire(self, agc):
-        cf = self.work['evolution_parameters']['asexual']['config']['rewire']
-        predecesor_list = agc['genetic_code'].select(cf['dpm'], cf['gpm'])
-        if predecesor_list and False:
-            return self.__create_predecesors({}, predecesor_list)
-        return [agc['genetic_code']['gc']]
-
-
-    def __gc_adjust_constant(self, agc):
-        cf = self.work['evolution_parameters']['asexual']['config']['adjust_constant']
-        predecesor_list = agc['genetic_code'].select(cf['dpm'], cf['gpm'])
-        if predecesor_list and False:
-            return self.__create_predecesors({}, predecesor_list)
-        return [agc['genetic_code']['gc']]
-
-
-    # Returns a list of GC's to add to the gene pool.The last is added to the next generation population.
-    def __asexual_reproduction(self, agc):
-        worker.__logger.debug("Asexual reproduction for individual %s", agc['signature'])
-        cf = self.work['evolution_parameters']['asexual']['config']
-        method = '__gc_' + choices(list(cf.keys()), [v['weight'] for v in cf.values()])
-        return getattr(self, method, lambda: self.__function_not_found(method))(agc)
-
-
-    # Returns a list of GC's to add to the gene pool.The last is added to the next generation population. 
-    def __sexual_reproduction(self, signature):
-        worker.__logger.debug("Sexual reproduction for individual %s", signature)
-        # TODO: Implement
-        return {}
-
-
     def __evolve(self, population):
-        cf = self.work['evolution_parameters']
         new_population = {}
         new_gc_list = []
         for signature in population.keys():
-            funct = self.__asexual_reproduction if choices([True, False], [cf['asexual']['weight'], cf['sexual']['weight']]) else self.__sexual_reproduction
-            new_gc_list.extend(funct(self.gene_pool[signature]))
+            # FIXME: The selection of a breeding partner needs to be evolved
+            new_gc_list.extend(mutate(self.gene_pool[signature], population))
             new_population[new_gc_list[-1]] = 0.0
         self.gene_pool.update(new_gc_list)
+        refresh_mutations()
         return new_population
 
 
@@ -280,6 +166,11 @@ class worker():
         }
 
 
+    def __handle_maximum_fitness(self, population):
+        # TODO: pass mf to a function to handle the population that meet the maximum fitness.
+        return [s for s, f in population.items() if f == 1.0]
+        
+
     # Initialise
     # ----------
     # 1. Get latest work definition
@@ -290,7 +181,8 @@ class worker():
     # ----
     # 3. Evolve state and assess (this updates the gene pool)
     # 4. Lock the work definition & read it (may have been updated by another worker)
-    # 5. Merge generations
+    # 5a. Merge generations
+    # 5b. Handle any GC's that have maximum fitness
     # 6. Cull
     # 7. Update work definition and unlock
     # 8. Log work results & stats
@@ -318,6 +210,7 @@ class worker():
             population = self.__evolve(self.work['population_dict'])
             population = self.__calculate_fitness(population)
             population.update(worker.__work_registry.load([{'signature': self.registration_document['work']}], ['population_dict'], True)[0])
+            self.__handle_maximum_fitness(population)
             self.work['population_dict'] = self.__cull(population)
             worker.__work_registry.store([{'population_dict': self.work['population_dict']}])
             self.__log_work()

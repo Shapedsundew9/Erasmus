@@ -449,11 +449,12 @@
                         "schema": {
                             "inline": {
                                 "type": "string",
-                                "required": true
+                                "required": true,
+                                "check_with": "valid_inline"
                             },
                             "callable": {
                                 "type": "string",
-                                "required": true
+                                "check_with": "vaild_callable"
                             }
                         }
                     },

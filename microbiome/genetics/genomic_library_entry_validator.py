@@ -117,6 +117,16 @@ class genomic_library_entry_validator(Validator):
             self._error(field, "Created date-time cannot be in the future.")
 
 
+    def _check_with_valid_inline(self, field, value):
+        # TODO: Check right number of return parameters and arguments
+        pass
+
+
+    def _check_with_valid_callable(self, field, value):
+        # TODO: Check right number of return parameters and arguments. Check arguments all have default=None.
+        pass
+
+
     def _normalize_default_setter_set_signature(self, document):
 
         # The signature for a codon GC is slightly different
