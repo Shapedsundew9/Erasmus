@@ -47,8 +47,13 @@ class genomic_library():
     def __initialise(self):
         # TODO: Look for the biome first
         self.__entry_zero()
+        genomic_library.__logger.info("Loading codon library")
         if not self.store(load(open(join(dirname(__file__), "codon_library.json"), "r"))):
-            genomic_library.__logger.error("Codon library failed validation. Unable to initialised genomic library.")
+            genomic_library.__logger.error("Codon library failed validation. Unable to initialise genomic library.")
+            exit(1)
+        genomic_library.__logger.info("Loading mutation primitive library")
+        if not self.store(load(open(join(dirname(__file__), "gc_mutation_library.json"), "r"))):
+            genomic_library.__logger.error("GC mutation library failed validation. Unable to initialise genomic library.")
             exit(1)
 
 
@@ -91,13 +96,20 @@ class genomic_library():
 
 
     def normalize(self, entries):
-        if isinstance(entries, list): entries = {e['signature']: e for e in entries}
-        for signature, entry in entries.items(): 
-            if self.validate(entry):
-                entries[signature] = genomic_library.__entry_validator.normalized(entry)
-                if not self.__calculate_fields(entries[signature], entries): return False
+        if isinstance(entries, list):
+            for i, entry in enumerate(entries):
+                if self.validate(entry):
+                    entries[i] = genomic_library.__entry_validator.normalized(entry)
+                    if not self.__calculate_fields(entries[i], entries): return False
+                else:
+                    genomic_library.__logger.debug("Entry %s is not valid. No entries will be stored.", entries[i])
+                    return False
+        else:
+            if self.validate(entries):
+                entries.update(genomic_library.__entry_validator.normalized(entries))
+                if not self.__calculate_fields(entries, [entries]): return False
             else:
-                genomic_library.__logger.debug("Entry %s is not valid. No entries will be stored.", signature)
+                genomic_library.__logger.debug("Entry %s is not valid. No entries will be stored.", entries)
                 return False
         return True
 
@@ -106,7 +118,7 @@ class genomic_library():
     # TODO: Implement a bulk store.
     def store(self, entries):
         self.normalize(entries)
-        return genomic_library.__store.store(list(entries.values()))
+        return genomic_library.__store.store(entries)
 
 
     # Validates an application format entry and populates fields that do not

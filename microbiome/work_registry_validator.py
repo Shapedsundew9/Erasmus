@@ -27,8 +27,35 @@ class work_registry_validator(Validator):
             self._error(field, "Created date-time cannot be in the future.")
 
 
+    # TODO:
+    def _check_with_valid_population_count(self, field, value):
+        pass
+
+
+    # TODO:
+    def _check_with_valid_population_dict(self, field, value):
+        pass
+
+
+    # TODO:
+    def _check_with_valid_cull_parameters(self, field, value):
+        pass
+
+
+    # TODO:
+    def _check_with_valid_evolution_parameters(self, field, value):
+        pass
+
+
+    # TODO:
+    def _check_with_valid_genomic_library_query(self, field, value):
+        pass
+
+
+    # TODO: Harden this
     def _normalize_default_setter_set_signature(self, document):
-        sig_str = dumps(self.document['cull_parameters']) + dumps(self.document['evolution_parameters']) + self.document['predecessor']
+        #sig_str = dumps(self.document['cull_parameters']) + dumps(self.document['evolution_parameters']) + self.document['predecessor']
+        sig_str = dumps(self.document['name'])
 
         # Remove spaces etc. to give some degrees of freedom in formatting and
         # not breaking the signature

@@ -36,8 +36,7 @@
         }
     },
     "initial_query": {
-        "type": "string",
-        "minlength": 4,
+        "type": "list",
         "check_with": "valid_genomic_library_query",
         "meta": {
             "database": {
@@ -82,13 +81,12 @@
                 "immutable": true
             },
             "compressed": false,
-            "description": "Current population size.",
-            "check_with": "valid_population_count"
-        }
+            "description": "Current population size."
+        },
+        "check_with": "valid_population_count"
     },
     "population_dict": {
-        "type": "string",
-        "required": true,
+        "type": "dict",
         "meta": {
             "database": {
                 "type": "BYTEA"
@@ -98,10 +96,10 @@
                 "immutable": true
             },
             "compressed": true,
-            "description": "A dictionary of each individuals signature & fitness in the format str(SHA256(signature)): float(fitness).",
-            "check_with": "valid_population_list",
-            "default": "[]"
-        }
+            "description": "A dictionary of each individuals signature & fitness in the format str(SHA256(signature)): float(fitness)."
+        },
+        "check_with": "valid_population_dict",
+        "default": {}
     },
     "population_updated": {
         "meta": {
@@ -123,7 +121,6 @@
     "cull_policy": {
         "type": "string",
         "allowed": ["ROULETTE_WHEEL", "STOCASTIC_UNIVERSAL", "RANK", "ELITIST", "TRUNCATION", "TOURNAMENT"],
-        "required": true,
         "meta": {
             "database": {
                 "type": "VARCHAR"
@@ -138,7 +135,6 @@
     },
     "cull_parameters": {
         "type": "string",
-        "required": true,
         "check_with": "valid_cull_parameters",
         "meta": {
             "database": {
@@ -154,7 +150,6 @@
     },
     "evolution_parameters": {
         "type": "string",
-        "required": true,
         "check_with": "valid_evolution_parameters",
         "meta": {
             "database": {

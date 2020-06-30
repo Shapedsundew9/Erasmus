@@ -409,7 +409,7 @@
             "description": "The CPU time (user + system) elapsed in seconds evolving this generation."
         }
     },
-    "EGPOP": {
+    "EGPOPs": {
         "type": "float",
         "required": true,
         "meta": {

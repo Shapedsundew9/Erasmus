@@ -136,9 +136,7 @@ class genomic_library_entry_validator(Validator):
         if "C" in document["graph"]: string += str(document["graph"]["C"])
 
         # If it is a codon glue on the mandatory definition
-        if document["gca"] == NULL_GC:
-            string += document["meta_data"]["function"]["python3"]["0"]["inline"]
-            string += document["meta_data"]["function"]["python3"]["0"]["callable"]
+        if document["gca"] == NULL_GC: string += document["meta_data"]["function"]["python3"]["0"]["inline"]
 
         # Remove spaces etc. to give some degrees of freedom in formatting and
         # not breaking the signature

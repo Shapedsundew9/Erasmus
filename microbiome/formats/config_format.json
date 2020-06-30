@@ -132,15 +132,15 @@
                     "type": "string",
                     "default": "gp_",
                     "minlength": 1,
-                    "max_length": 32,
+                    "maxlength": 32,
                     "regex": "[a-zA-Z-_0-9]+"
                 },
                 "work": {
                     "type": "string",
                     "minlength": 64,
                     "maxlength": 64,
-                    "regex": "[0-9a-f]{64}",
-                    "check_with": "valid_work"                                
+                    "regex": "[0-9a-f]{64}"
+                        
                 }
             }
         }

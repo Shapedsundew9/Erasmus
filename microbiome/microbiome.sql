@@ -173,9 +173,9 @@ CREATE OR REPLACE FUNCTION cumsum_setup(__table_name TEXT, __column_name TEXT)
 	END IF;
 
 	-- Create a table for the last row inserted, a trigger & trigger function to populate it
-	EXECUTE format ('DROP TABLE IF EXISTS %I_last_insert', __table_name);
-	EXECUTE format ('CREATE TABLE %I_last_insert AS TABLE %I WITH NO DATA', __table_name, __table_name);
-	EXECUTE format ('INSERT INTO %I_last_insert ("%I_cumsum") VALUES (0)', __table_name, __column_name);
+	EXECUTE format ('DROP TABLE IF EXISTS %I', __table_name || '_last_insert');
+	EXECUTE format ('CREATE TABLE %I AS TABLE %I WITH NO DATA', __table_name || '_last_insert', __table_name);
+	EXECUTE format ('INSERT INTO %I (%I) VALUES (0)', __table_name || '_last_insert', __column_name || '_cumsum');
 	EXECUTE format ('DROP TRIGGER IF EXISTS %I on %I;', __last_insert_trigger, __table_name);
 	EXECUTE format ('CREATE OR REPLACE FUNCTION %I()
     				 RETURNS TRIGGER
@@ -184,11 +184,11 @@ CREATE OR REPLACE FUNCTION cumsum_setup(__table_name TEXT, __column_name TEXT)
     				 LANGUAGE plpgsql
     				 AS $body$
     				 BEGIN
-					 	DELETE FROM %I_last_insert;
-						INSERT INTO %I_last_insert SELECT (NEW).*;
+					 	DELETE FROM %I;
+						INSERT INTO %I SELECT (NEW).*;
 					 	RETURN NULL;
     				 END;
-    				 $body$;', __last_insert_trigger_function, __table_name, __table_name);
+    				 $body$;', __last_insert_trigger_function, __table_name || '_last_insert', __table_name || '_last_insert');
 	EXECUTE format ('CREATE TRIGGER %I AFTER INSERT ON %I FOR EACH ROW EXECUTE PROCEDURE %I();',
 					__last_insert_trigger, __table_name, __last_insert_trigger_function);
 
@@ -203,11 +203,11 @@ CREATE OR REPLACE FUNCTION cumsum_setup(__table_name TEXT, __column_name TEXT)
 					 DECLARE
 					 	__last_insert RECORD;
     				 BEGIN
-					 	SELECT * FROM %I_last_insert LIMIT 1 INTO __last_insert;
-					 	NEW.%I_cumsum := __last_insert.%I_cumsum + NEW.%I;
+					 	SELECT * FROM %I LIMIT 1 INTO __last_insert;
+					 	NEW.%I := __last_insert.%I + NEW.%I;
 					 	RETURN NEW;
     				 END;
-    				 $body$;', __cumsum_trigger_function, __table_name, __column_name, __column_name, __column_name);
+    				 $body$;', __cumsum_trigger_function, __table_name || '_last_insert', __column_name || '_cumsum', __column_name || '_cumsum', __column_name);
 	EXECUTE format ('CREATE TRIGGER %I BEFORE INSERT ON %I FOR EACH ROW EXECUTE PROCEDURE %I();',
 					__cumsum_trigger, __table_name, __cumsum_trigger_function);
 	RETURN TRUE;

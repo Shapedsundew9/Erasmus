@@ -19,6 +19,10 @@
             "database": "test_database",
             "format_file": "genomic_library_entry_format.json"
         },
+        "test_genomic_library": {
+            "database": "test_database",
+            "format_file": "genomic_library_entry_format.json"
+        },
         "worker_registry": {
             "database": "test_database",
             "format_file": "worker_registry_entry_format.json"

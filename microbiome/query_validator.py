@@ -41,6 +41,7 @@ class query_validator():
         self.errors = None
 
 
+    # TODO: Why does this not draw on the entry_schema for rules on validation of the search terms
     def __query_params(self, entry_schema):
         if entry_schema['type'] == "integer" or entry_schema['type'] == "float" or entry_schema['meta']['database']['type'] == "TIMESTAMP":
             param_schema = {
@@ -69,7 +70,11 @@ class query_validator():
                     }
                 ]
             }
-        else:
+        elif entry_schema['type'] == 'dict' and 'codec' in  entry_schema['meta']:
+            param_schema = {
+                'type': entry_schema['type']
+            }
+        else:            
             param_schema = {
                 'oneof': [
                     {

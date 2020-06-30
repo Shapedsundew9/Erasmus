@@ -1,8 +1,7 @@
 [
     {
         "graph": {
-            "C": [0.0, 0.0],
-            "A": [["I", 0], ["C", 0], ["C", 1]],
+            "A": [["I", 0]],
             "O": [["A", 0]]
         },
         "gca": "0000000000000000000000000000000000000000000000000000000000000000",
@@ -15,11 +14,186 @@
             "unary_mutation": true
         },
         "meta_data": {
-            "name": "GCA input connection",
+            "name": "GCA-input connection with random fractional offsets",
             "function": {
                 "python3": {
                     "0": {
-                        "inline": "{} = connect({}, 'A', 'I', {}, {})"
+                        "inline": "connect({0[i0]}, 'A', 'I', random(), random())"
+                    }
+                }
+            }
+        }
+    },
+    {
+        "graph": {
+            "A": [["I", 0]],
+            "O": [["A", 0]]
+        },
+        "gca": "0000000000000000000000000000000000000000000000000000000000000000",
+        "gcb": "0000000000000000000000000000000000000000000000000000000000000000",
+        "generation": 0,
+        "alpha_class": 0,
+        "beta_class": 0,
+        "opt_num_codons": 1,
+        "properties": {
+            "unary_mutation": true
+        },
+        "meta_data": {
+            "name": "GCA-constant connection with random fractional offsets",
+            "function": {
+                "python3": {
+                    "0": {
+                        "inline": "connect({0[i0]}, 'A', 'C', random(), random())"
+                    }
+                }
+            }
+        }
+    },
+    {
+        "graph": {
+            "A": [["I", 0]],
+            "O": [["A", 0]]
+        },
+        "gca": "0000000000000000000000000000000000000000000000000000000000000000",
+        "gcb": "0000000000000000000000000000000000000000000000000000000000000000",
+        "generation": 0,
+        "alpha_class": 0,
+        "beta_class": 0,
+        "opt_num_codons": 1,
+        "properties": {
+            "unary_mutation": true
+        },
+        "meta_data": {
+            "name": "GCB-input connection with random fractional offsets",
+            "function": {
+                "python3": {
+                    "0": {
+                        "inline": "connect({0[i0]}, 'B', 'I', random(), random())"
+                    }
+                }
+            }
+        }
+    },
+    {
+        "graph": {
+            "A": [["I", 0]],
+            "O": [["A", 0]]
+        },
+        "gca": "0000000000000000000000000000000000000000000000000000000000000000",
+        "gcb": "0000000000000000000000000000000000000000000000000000000000000000",
+        "generation": 0,
+        "alpha_class": 0,
+        "beta_class": 0,
+        "opt_num_codons": 1,
+        "properties": {
+            "unary_mutation": true
+        },
+        "meta_data": {
+            "name": "GCB-GCA connection with random fractional offsets",
+            "function": {
+                "python3": {
+                    "0": {
+                        "inline": "connect({0[i0]}, 'B', 'A', random(), random())"
+                    }
+                }
+            }
+        }
+    },
+    {
+        "graph": {
+            "A": [["I", 0]],
+            "O": [["A", 0]]
+        },
+        "gca": "0000000000000000000000000000000000000000000000000000000000000000",
+        "gcb": "0000000000000000000000000000000000000000000000000000000000000000",
+        "generation": 0,
+        "alpha_class": 0,
+        "beta_class": 0,
+        "opt_num_codons": 1,
+        "properties": {
+            "unary_mutation": true
+        },
+        "meta_data": {
+            "name": "GCB-constant connection with random fractional offsets",
+            "function": {
+                "python3": {
+                    "0": {
+                        "inline": "connect({0[i0]}, 'B', 'C', random(), random())"
+                    }
+                }
+            }
+        }
+    },
+    {
+        "graph": {
+            "A": [["I", 0]],
+            "O": [["A", 0]]
+        },
+        "gca": "0000000000000000000000000000000000000000000000000000000000000000",
+        "gcb": "0000000000000000000000000000000000000000000000000000000000000000",
+        "generation": 0,
+        "alpha_class": 0,
+        "beta_class": 0,
+        "opt_num_codons": 1,
+        "properties": {
+            "unary_mutation": true
+        },
+        "meta_data": {
+            "name": "Output-input connection with random fractional offsets",
+            "function": {
+                "python3": {
+                    "0": {
+                        "inline": "connect({0[i0]}, 'O', 'I', random(), random())"
+                    }
+                }
+            }
+        }
+    },
+    {
+        "graph": {
+            "A": [["I", 0]],
+            "O": [["A", 0]]
+        },
+        "gca": "0000000000000000000000000000000000000000000000000000000000000000",
+        "gcb": "0000000000000000000000000000000000000000000000000000000000000000",
+        "generation": 0,
+        "alpha_class": 0,
+        "beta_class": 0,
+        "opt_num_codons": 1,
+        "properties": {
+            "unary_mutation": true
+        },
+        "meta_data": {
+            "name": "Output-GCA connection with random fractional offsets",
+            "function": {
+                "python3": {
+                    "0": {
+                        "inline": "connect({0[i0]}, 'O', 'A', random(), random())"
+                    }
+                }
+            }
+        }
+    },
+    {
+        "graph": {
+            "A": [["I", 0]],
+            "O": [["A", 0]]
+        },
+        "gca": "0000000000000000000000000000000000000000000000000000000000000000",
+        "gcb": "0000000000000000000000000000000000000000000000000000000000000000",
+        "generation": 0,
+        "alpha_class": 0,
+        "beta_class": 0,
+        "opt_num_codons": 1,
+        "properties": {
+            "unary_mutation": true
+        },
+        "meta_data": {
+            "name": "Output-constant connection with random fractional offsets",
+            "function": {
+                "python3": {
+                    "0": {
+                        "inline": "connect({0[i0]}, 'O', 'C', random(), random())"
                     }
                 }
             }
@@ -41,11 +215,11 @@
             "unary_mutation": true
         },
         "meta_data": {
-            "name": "GCA constant connection",
+            "name": "GCA-input connection with constant fractional offsets",
             "function": {
                 "python3": {
                     "0": {
-                        "inline": "{} = connect({}, 'A', 'C', {}, {})"
+                        "inline": "connect({0[i0]}, 'A', 'I', {0[c0]}, {0[c1]})"
                     }
                 }
             }
@@ -67,11 +241,11 @@
             "unary_mutation": true
         },
         "meta_data": {
-            "name": "GCB input connection",
+            "name": "GCA-constant connection with constant fractional offsets",
             "function": {
                 "python3": {
                     "0": {
-                        "inline": "{} = connect({}, 'B', 'I', {}, {})"
+                        "inline": "connect({0[i0]}, 'A', 'C', {0[c0]}, {0[c1]})"
                     }
                 }
             }
@@ -93,11 +267,11 @@
             "unary_mutation": true
         },
         "meta_data": {
-            "name": "GCB GCA connection",
+            "name": "GCB-input connection with constant fractional offsets",
             "function": {
                 "python3": {
                     "0": {
-                        "inline": "{} = connect({}, 'B', 'A', {}, {})"
+                        "inline": "connect({0[i0]}, 'B', 'I', {0[c0]}, {0[c1]})"
                     }
                 }
             }
@@ -119,11 +293,11 @@
             "unary_mutation": true
         },
         "meta_data": {
-            "name": "GCB constant connection",
+            "name": "GCB-GCA connection with constant fractional offsets",
             "function": {
                 "python3": {
                     "0": {
-                        "inline": "{} = connect({}, 'B', 'C', {}, {})"
+                        "inline": "connect({0[i0]}, 'B', 'A', {0[c0]}, {0[c1]})"
                     }
                 }
             }
@@ -145,11 +319,11 @@
             "unary_mutation": true
         },
         "meta_data": {
-            "name": "Output input connection",
+            "name": "GCB-constant connection with constant fractional offsets",
             "function": {
                 "python3": {
                     "0": {
-                        "inline": "{} = connect({}, 'O', 'I', {}, {})"
+                        "inline": "connect({0[i0]}, 'B', 'C', {0[c0]}, {0[c1]})"
                     }
                 }
             }
@@ -171,11 +345,11 @@
             "unary_mutation": true
         },
         "meta_data": {
-            "name": "Output GCA connection",
+            "name": "Output-input connection with constant fractional offsets",
             "function": {
                 "python3": {
                     "0": {
-                        "inline": "{} = connect({}, 'O', 'A', {}, {})"
+                        "inline": "connect({0[i0]}, 'O', 'I', {0[c0]}, {0[c1]})"
                     }
                 }
             }
@@ -197,11 +371,37 @@
             "unary_mutation": true
         },
         "meta_data": {
-            "name": "Output constant connection",
+            "name": "Output-GCA connection with constant fractional offsets",
             "function": {
                 "python3": {
                     "0": {
-                        "inline": "{} = connect({}, 'O', 'C', {}, {})"
+                        "inline": "connect({0[i0]}, 'O', 'A', {0[c0]}, {0[c1]})"
+                    }
+                }
+            }
+        }
+    },
+    {
+        "graph": {
+            "C": [0.0, 0.0],
+            "A": [["I", 0], ["C", 0], ["C", 1]],
+            "O": [["A", 0]]
+        },
+        "gca": "0000000000000000000000000000000000000000000000000000000000000000",
+        "gcb": "0000000000000000000000000000000000000000000000000000000000000000",
+        "generation": 0,
+        "alpha_class": 0,
+        "beta_class": 0,
+        "opt_num_codons": 1,
+        "properties": {
+            "unary_mutation": true
+        },
+        "meta_data": {
+            "name": "Output-constant connection with constant fractional offsets",
+            "function": {
+                "python3": {
+                    "0": {
+                        "inline": "connect({0[i0]}, 'O', 'C', {0[c0]}, {0[c1]})"
                     }
                 }
             }
@@ -226,7 +426,7 @@
             "function": {
                 "python3": {
                     "0": {
-                        "inline": "{} = append_constant({}, uniform(-1.0, 1.0))"
+                        "inline": "append_constant({0[i0]}, random(-1.0, 1.0))"
                     }
                 }
             }
@@ -251,7 +451,7 @@
             "function": {
                 "python3": {
                     "0": {
-                        "inline": "{} = append_constant({}, 1.0)"
+                        "inline": "append_constant({0[i0]}, 1.0)"
                     }
                 }
             }
@@ -276,7 +476,7 @@
             "function": {
                 "python3": {
                     "0": {
-                        "inline": "{} = append_constant({}, -1.0)"
+                        "inline": "append_constant({0[i0]}, -1.0)"
                     }
                 }
             }
@@ -301,7 +501,7 @@
             "function": {
                 "python3": {
                     "0": {
-                        "inline": "{} = append_constant({}, 0.0)"
+                        "inline": "append_constant({0[i0]}, 0.0)"
                     }
                 }
             }
@@ -326,7 +526,7 @@
             "function": {
                 "python3": {
                     "0": {
-                        "inline": "{} = mutate_constant({}, {}, 1.5)"
+                        "inline": "mutate_constant({0[i0]}, {0[i1]}, 1.5)"
                     }
                 }
             }
@@ -351,7 +551,7 @@
             "function": {
                 "python3": {
                     "0": {
-                        "inline": "{} = mutate_constant({}, {}, 0.5)"
+                        "inline": "mutate_constant({0[i0]}, {0[i1]}, 0.5)"
                     }
                 }
             }
@@ -376,7 +576,7 @@
             "function": {
                 "python3": {
                     "0": {
-                        "inline": "{} = mutate_constant({}, {}, -1.0)"
+                        "inline": "mutate_constant({0[i0]}, {0[i1]}, -1.0)"
                     }
                 }
             }
@@ -401,7 +601,7 @@
             "function": {
                 "python3": {
                     "0": {
-                        "inline": "{} = stack({}, {})"
+                        "inline": "stack({0[i0]}, {0[i1]})"
                     }
                 }
             }

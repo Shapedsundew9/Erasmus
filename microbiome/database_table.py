@@ -23,7 +23,7 @@ class database_table():
     __conn = {}
 
 
-    def __init__(self, logger, table):
+    def __init__(self, logger, table, suppress_recreate=False):
         self.__logger = logger
         self.table = table
         config = get_config()
@@ -32,7 +32,7 @@ class database_table():
         c = config['databases'][self.dbname]
         if self.dbname not in database_table.__conn:
             database_table.__conn[self.dbname] = self.__connection(self.dbname, c['username'], c['password'], c['host'], c['port'])
-        if c['recreate']: self.__delete_table()
+        if c['recreate'] and not suppress_recreate: self.__delete_table()
         self.__columns = self.__create_table(config['tables'][table]['history_decimation'])
         self.__logger.info("%s table has %d entries.", self.table, len(self))
             
@@ -142,10 +142,19 @@ class database_table():
             sql_list.append(sql.SQL(', ').join(map(sql.Literal, [self.__cast_term_to_store_type(term[0], value) for value in term[1]])))
             sql_list.append(sql.SQL(")"))
         elif isinstance(term[1], dict):
-            sql_list.append(sql.SQL(" BETWEEN "))
-            sql_list.append(sql.Literal(self.__cast_term_to_store_type(term[0], term[1]['min'])))
-            sql_list.append(sql.SQL(" AND "))
-            sql_list.append(sql.Literal(self.__cast_term_to_store_type(term[0], term[1]['max'])))
+            if len(term[1]) == 2 and 'min' in term[1] and 'max' in term[1]:
+                # Assume this is a range for a numeric type                    
+                sql_list.append(sql.SQL(" BETWEEN "))
+                sql_list.append(sql.Literal(self.__cast_term_to_store_type(term[0], term[1]['min'])))
+                sql_list.append(sql.SQL(" AND "))
+                sql_list.append(sql.Literal(self.__cast_term_to_store_type(term[0], term[1]['max'])))
+            else:
+                # Assume this field has a codec
+                # term[0] & mask = term[1]
+                sql_list.append(sql.SQL(" & "))
+                sql_list.append(sql.Literal(self.__cast_term_to_store_type(term[0], {k: True for k in term[1].keys()})))
+                sql_list.append(sql.SQL(" = "))
+                sql_list.append(sql.Literal(self.__cast_term_to_store_type(term[0], term[1])))
         else:
             sql_list.append(sql.SQL(" = {}").format(sql.Literal(self.__cast_term_to_store_type(*term))))
         return sql.Composed(sql_list)
@@ -165,7 +174,7 @@ class database_table():
         entry = dict(zip(self.__columns, data))
         self.__logger.debug("Storage format entry: %s", entry)
         for k, v in entry.items():
-            if k in self.schema:
+            if k in self.schema and not v is None:
                 if self.schema[k]['compressed']: entry[k] = loads(decompress(v))
                 elif isinstance(v, memoryview): entry[k] = v.hex()
                 elif isinstance(v, datetime): entry[k] = v.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
@@ -179,7 +188,7 @@ class database_table():
         retval = []
         self.__logger.debug("Queries are %s", str(queries))
         for query in queries:
-            dbcur = database_table.__conn[self.dbname].cursor(name="bill", withhold=True)
+            dbcur = database_table.__conn[self.dbname].cursor(name="bill", withhold=True and not lock)
             dbcur.itersize = 1000
             self.__logger.debug("Query is %s", str(query))
             query_sql = self.__query_to_sql(query)
@@ -203,7 +212,7 @@ class database_table():
         elif 'codec' in self.schema[term]:
             bitfield = 0x0000000000000000
             for k, v in value.items():
-                if v: val |= 1 << self.schema[term]['codec'][k]
+                if v: bitfield |= 1 << self.schema[term]['codec'][k]
             value = bitfield
         return value
 

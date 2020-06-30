@@ -13,15 +13,13 @@ from logging import getLogger
 from platform import machine, processor, python_version, system, release, platform
 from .config import get_config
 from .database_table import database_table
-from cerberus import Validator
+from .platform_info_validator import platform_info_validator
 
 
 __logger = getLogger(__name__)
 
 
-# See https://en.wikipedia.org/wiki/BogoMips
-# This function will only get that MHz & bogoMIPS of the last CPU in the list. The assumption is they are all the same.
-# It is recognised that these data is flaky...but it is better than nothing.
+# TODO: Implemented EGPOPs
 def __get_platform_info():
     # TODO: Replace these with an Erasmus benchmark.
     # The metric needs to be stable on a system to 1 unit as it is used in the SHA256 signature to
@@ -34,14 +32,14 @@ def __get_platform_info():
         "python_version": python_version(),
         "system": system(),
         "release": release(),
-        "performance": performance,
+        "EGPOPs": performance
     }
 
 
 # Add the platform info to the platform info table if it is not already there & return it
 def get_platform_info():
     platform_info = __get_platform_info()
-    validator = Validator(get_config()['platform_info']['format_file'])
+    validator = platform_info_validator(get_config()['tables']['platform_info']['schema'])
     if not validator.validate(platform_info):
         __logger.error("Platform information validation failed: %s", validator.errors)
         exit(1)

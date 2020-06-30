@@ -18,8 +18,7 @@
            "function": {
                "python3": {
                    "0": {
-                       "inline": "{} = {} + {}",
-                       "callable": "(x=None, y=None)\n\treturn x + y"
+                       "inline": "{0[i0]} + {0[i1]}"
                    }
                }
            }
@@ -44,8 +43,7 @@
             "function": {
                 "python3": {
                     "0": {
-                        "inline": "{} = {} - {}",
-                        "callable": "(x=None, y=None)\n\treturn x - y"
+                        "inline": "{0[i0]} - {0[i1]}"
                     }
                 }
             }
@@ -70,8 +68,7 @@
             "function": {
                 "python3": {
                     "0": {
-                        "inline": "{} = {} * {}",
-                        "callable": "(x=None, y=None)\n\treturn x * y"
+                        "inline": "{0[i0]} * {0[i1]}"
                     }
                 }
             }
@@ -96,8 +93,7 @@
             "function": {
                 "python3": {
                     "0": {
-                        "inline": "{} = {} / {}",
-                        "callable": "(x=None, y=None)\n\treturn x / y"
+                        "inline": "{0[i0]} / {0[i1]}"
                     }
                 }
             }
@@ -122,8 +118,7 @@
             "function": {
                 "python3": {
                     "0": {
-                        "inline": "{} = {} ** {}",
-                        "callable": "(x=None, y=None)\n\treturn x ** y"
+                        "inline": "{0[i0]} ** {0[i1]}"
                     }
                 }
             }
@@ -148,8 +143,7 @@
             "function": {
                 "python3": {
                     "0": {
-                        "inline": "{} = {} < {}",
-                        "callable": "(x=None, y=None)\n\treturn x < y"
+                        "inline": "{0[i0]} < {0[i1]}"
                     }
                 }
             }
@@ -174,8 +168,7 @@
             "function": {
                 "python3": {
                     "0": {
-                        "inline": "{} = {} <= {}",
-                        "callable": "(x=None, y=None)\n\treturn x <= y"
+                        "inline": "{0[i0]} <= {0[i1]}"
                     }
                 }
             }
@@ -200,8 +193,7 @@
             "function": {
                 "python3": {
                     "0": {
-                        "inline": "{} = isclose({}, {})",
-                        "callable": "(x=None, y=None)\n\treturn isclose(x, y)"
+                        "inline": "isclose({0[i0]}, {0[i1]})"
                     }
                 }
             }
@@ -226,8 +218,7 @@
             "function": {
                 "python3": {
                     "0": {
-                        "inline": "{} = {} and {}",
-                        "callable": "(x=None, y=None)\n\treturn x and y"
+                        "inline": "{0[i0]} and {0[i1]}"
                     }
                 }
             }
@@ -252,8 +243,7 @@
             "function": {
                 "python3": {
                     "0": {
-                        "inline": "{} = {} or {}",
-                        "callable": "(x=None, y=None)\n\treturn x or y"
+                        "inline": "{0[i0]} or {0[i1]}"
                     }
                 }
             }
@@ -278,8 +268,7 @@
             "function": {
                 "python3": {
                     "0": {
-                        "inline": "{} = bool({}) != bool({})",
-                        "callable": "(x=None, y=None)\n\treturn bool(x) != bool(y)"
+                        "inline": "bool({0[i0]}) != bool({0[i1]})"
                     }
                 }
             }
@@ -304,8 +293,7 @@
             "function": {
                 "python3": {
                     "0": {
-                        "inline": "{} = not {}",
-                        "callable": "(x=None)\n\treturn not x"
+                        "inline": "not {0[i0]}"
                     }
                 }
             }
@@ -331,8 +319,7 @@
             "function": {
                 "python3": {
                     "0": {
-                        "inline": "{} = {} if {} else {}",
-                        "callable": "(x=None, y=None, z=None)\n\treturn x if y else z"
+                        "inline": "{0[i0]} if {0[i1]} else {0[i2]}" 
                     }
                 }
             }

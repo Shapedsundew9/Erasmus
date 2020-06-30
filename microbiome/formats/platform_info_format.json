@@ -32,7 +32,8 @@
         "type": "string",
         "minlength": 64,
         "maxlength": 64,
-        "regex": "[0-9a-f]{64}"
+        "regex": "[0-9a-f]{64}",
+        "default_setter": "set_signature"
     },        
     "processor": {
         "type": "string",

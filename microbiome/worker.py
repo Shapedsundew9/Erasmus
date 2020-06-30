@@ -34,17 +34,18 @@ class worker():
 
     # fitness_function must be a callable that takes a callable func() and returns a single > 0.0 floating point fitness value. The bigger the better.
     # func() takes a numpy.array(dtype=numpy.float32) and returns a numpy.array(dtype=numpy.float32)
+    # TODO: Decide what to do with fitness_function
     def __init__(self, worker_config, fitness_function):
         self.config = worker_config
-        self.registration_document = { "platform": get_platform_info(), "work": worker_config['work'] }
-        validator = worker_registry_validator()
+        self.registration_document = { "platform": get_platform_info(), "work": worker_config['work'], "creator": worker_config['creator'] }
+        validator = worker_registry_validator(get_config()['tables']['worker_registry']['schema'])
         if not validator.validate(self.registration_document):
             worker.__logger.error("Invalid worker registration document: %s", validator.errors)
             exit(1)
         self.registration_document = validator.normalized(self.registration_document)
         if worker.__worker_registry is None: worker.__worker_registry = database_table(worker.__logger, 'worker_registry')
         worker.__worker_registry.store([self.registration_document])
-        if worker.__work_registry is None:  worker.__work_registry = database_table(worker.__logger, 'work_registry')
+        if worker.__work_registry is None:  worker.__work_registry = database_table(worker.__logger, 'work_registry', True)
         self.work = None
         self.__fitness_function = fitness_function
         self.gene_pool = None
@@ -193,13 +194,16 @@ class worker():
 
         # Initialise
         self.work = worker.__work_registry.load([{'signature': self.registration_document['work']}])[0]
-        work_log_table = 'work_' + self.work['signature'] + '_log'
-        update_config({'table': {work_log_table: deepcopy(get_config()['table']['work_log_template'])}})
+        work_log_table = 'work_' + self.work['signature'][:16] + '_log'
+        update_config({'tables': {work_log_table: deepcopy(get_config()['tables']['work_log_template'])}})
         self.__work_log = database_table(worker.__logger, work_log_table)
-        setstate(self.work['evolution_parameters']['random_state'])
+
+        # TODO: Random state management
+        # setstate(self.work['evolution_parameters']['random_state'])
+
         existing_population = len(self.work['population_dict'])
         if existing_population: self.work['initial_query'] = [{'signature': list(self.work['population_dict'].keys())}]
-        self.gene_pool = gene_pool(self.work['initial_query'], self.config['gene_pool_prefix'])
+        self.gene_pool = gene_pool(self.work['initial_query']) if not self.work['initial_query'] is None else gene_pool() 
         if existing_population and not self.__valid_work(self.work['population_dict']):
             gene_pool.__logger.error("Work definition is not consistent with existing work registration details. Worker config: %s", str(self.config))
             exit(1)

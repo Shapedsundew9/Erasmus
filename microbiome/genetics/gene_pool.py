@@ -37,21 +37,22 @@ class gene_pool():
 
 
     __gl = None
-    __CALLABLE_FILE_HEADER = "# Erasmus GP Gene Pool\n\n\n"
+    __CALLABLE_FILE_HEADER = "# Erasmus GP Gene Pool\n"
     __logger = getLogger(__name__)
 
 
-    def __init__(self, query=[{'gca': NULL_GC, 'gcb': NULL_GC}], callables_prefix=None):
+    def __init__(self, query=[{'gca': NULL_GC, 'gcb': NULL_GC}], callables_prefix=None, file_ptr=None):
         if gene_pool.__gl is None: gene_pool.__gl = genomic_library()
-        self.__file_ptr = NamedTemporaryFile(mode='w', suffix='.py', prefix=callables_prefix, delete=False)
+        self.__file_ptr = NamedTemporaryFile(mode='w', suffix='.py', prefix=callables_prefix, delete=False) if file_ptr is None else open(file_ptr, 'w')
         self.__file_ptr.write(gene_pool.__CALLABLE_FILE_HEADER)
         self.__file_ptr.close()
-        path.insert(1, dirname(abspath(self.__file_ptr.name)))
-        self.__module = import_module(basename(self.__file_ptr.name))
         gene_pool.__logger.info("Initial gene pool query: %s", str(query))
         self.__gene_pool = {}
         self.update(gene_pool.__gl.load(query))
+        self.__module = None
         self.__create_callables(self.__gene_pool.keys())
+        path.insert(1, dirname(abspath(self.__file_ptr.name)))
+        self.__module = import_module(basename(self.__file_ptr.name)[:-3])
 
 
     def __getitem__(self, signature):
@@ -79,17 +80,20 @@ class gene_pool():
         file_ptr = open(self.__file_ptr.name, "w")
         gene_pool.__logger.debug("Gene pool file created: %s", file_ptr.name)
         file_ptr.write(gene_pool.__CALLABLE_FILE_HEADER)    
+        file_ptr.write("\n\nfrom microbiome.genetics.gc_mutation_functions import *\nfrom random import random\n\n\n")
         for gc in self.__gene_pool.values(): 
-            file_ptr.write("def " + self.__function_name(gc['signature'] + "(i):\n"))
+            file_ptr.write("def " + self.__function_name(gc['signature']) + "(i):\n")
             if not 'function' in gc['meta_data']:
                 c = gc['graph']['C'] if 'C' in gc['graph'] else [] 
                 if gc['gca'] != NULL_GC: file_ptr.write("\ta = " + self.__function_name(gc['gca']) + "((" + self.__write_arg(gc['graph']['A'], c)) + ")"
                 if gc['gcb'] != NULL_GC: file_ptr.write("\tb = " + self.__function_name(gc['gcb']) + "((" + self.__write_arg(gc['graph']['B'], c)) + ")"
-                file_ptr.write("\treturn (" + self.__write_arg(gc['graph']['O'], c)) + "\n\n"
+                file_ptr.write("\treturn (" + self.__write_arg(gc['graph']['O'], c)) + ",)\n\n\n"
             else:
-                file_ptr.write(gc['meta_data']['function']['python3']['0']['callable'] + "\n\n")
+                format_dict = {'c' + str(i): v for i, v in enumerate(gc['graph']['C'])} if 'C' in gc['graph'] else {}
+                format_dict.update({'i' + str(i): 'i[{}]'.format(i) for i in range(gc['num_inputs'])})
+                file_ptr.write("\treturn (" + gc['meta_data']['function']['python3']['0']['inline'].format(format_dict) + ",)\n\n\n")
         file_ptr.close()
-        reload(self.__module)
+        if not self.__module is None: reload(self.__module)
 
 
     # Return the GC function
@@ -138,9 +142,9 @@ class gene_pool():
                 if 'count' not in gc:
                     gc['count'] = 0
                     zero_count_list.append(signature)
-                for ab in ('gca', 'gbc'):
+                for ab in ('gca', 'gcb'):
                     if not gc[ab] in self.__gene_pool:
-                        if gc[ab] in signature_queue:
+                        if not gc[ab] in signature_queue:
                             if  gc[ab] == NULL_GC:
                                 gc[ab] = None
                             else:
@@ -149,7 +153,7 @@ class gene_pool():
                                 gc[ab] = addition_queue[-1]
                                 gc[ab]['count'] = 1
                         else:
-                            gc[ab] = addition_queue[signature_queue.index(ab)]
+                            gc[ab] = addition_queue[signature_queue.index(gc[ab])]
                             if not 'count' in gc[ab]: gc[ab]['count'] = 0
                             gc[ab]['count'] += 1
                     else:
@@ -162,8 +166,9 @@ class gene_pool():
             victim = delete_queue.pop()
             for gcab in ('gca', 'gcb'):
                 gc = self.__gene_pool[victim][gcab]
-                gc['count'] -= 1
-                if not gc['count']: delete_queue.append(gc['signature'])
+                if not gc is None:
+                    gc['count'] -= 1
+                    if not gc['count']: delete_queue.append(gc['signature'])
             del self.__gene_pool[victim]
 
         # Create a a genetic_code node tree for top level (0 gene pool reference count) GCs

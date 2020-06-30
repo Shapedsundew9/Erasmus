@@ -8,31 +8,41 @@ Author: Shapedsundew9
 Copyright (c) 2020 Your Company
 '''
 
+from logging import getLogger, basicConfig, DEBUG
+basicConfig(filename='erasmus.log', level=DEBUG)
+
 import pytest
 from os.path import join, dirname
 from json import load
+from microbiome.genetics.genomic_library_entry_validator import genomic_library_entry_validator, NULL_GC
 from microbiome.config import set_config, get_config
-from microbiome.work_registry_validator import work_registry_validator
+
+set_config(load(open(join(dirname(__file__), "test_config.json"), "r")))
+
 from microbiome.creator import register_creator
-from logging import getLogger, basicConfig, DEBUG
-from sklearn.datasets import load_iris
+from microbiome.work import register_work
+from microbiome.worker import worker
 
 
-basicConfig(filename='erasmus.log', level=DEBUG)
+gc_validator = genomic_library_entry_validator(load(open('./microbiome/formats/genomic_library_entry_format.json', "r")))
 
 
-def test_work(self):
-    worker_config = {
-        'work': {
-            'name': 'iris',
-            'description': 'The sklearn "iris" dataset. https://scikit-learn.org/stable/modules/generated/sklearn.datasets.load_iris.html#sklearn.datasets.load_iris',
-            'population_limit': 1000
-        },
-        'creator': register_creator({}),
-        'fitness_function_file': 'ff_iris.py'
+def test_work():
+    work = {
+        'name': 'Meta Evolution',
+        'description': 'Evolving the evolver',
+        'population_limit': 1000,
+        'initial_query': [
+            {'gca': NULL_GC, 'gcb': NULL_GC, 'properties': {'unary_mutation': True}},
+            {'gca': NULL_GC, 'gcb': NULL_GC, 'properties': {'binary_mutation': True}}
+        ]
     }
-    return worker_config
-
+    worker_config = {
+        'work': register_work(work),
+        'creator': register_creator({}),
+    }
+    w1 = worker(worker_config, lambda x: float(gc_validator(x)))
+    w1.evolve()
 
 
 

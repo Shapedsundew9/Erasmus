@@ -328,6 +328,8 @@
             "description": "The properties for the genetic code.",
             "codec": {
                 "extended": 0,
+                "unary_mutation": 1,
+                "binary_mutation": 2,
                 "mathematical": 8,
                 "logical": 9,
                 "conditional": 10
@@ -454,7 +456,7 @@
                             },
                             "callable": {
                                 "type": "string",
-                                "check_with": "vaild_callable"
+                                "check_with": "valid_callable"
                             }
                         }
                     },
