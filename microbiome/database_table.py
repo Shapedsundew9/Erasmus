@@ -170,8 +170,8 @@ class database_table():
         return sql_obj
 
 
-    def __cast_entry_to_load_type(self, data):
-        entry = dict(zip(self.__columns, data))
+    def __cast_entry_to_load_type(self, data, fields):
+        entry = dict(zip(fields, data))
         self.__logger.debug("Storage format entry: %s", entry)
         for k, v in entry.items():
             if k in self.schema and not v is None:
@@ -200,9 +200,10 @@ class database_table():
             sql_str = sql.Composed(sql_list)
             self.__logger.debug("Query SQL: %s", sql_str.as_string(database_table.__conn[self.dbname]))
             dbcur.execute(sql_str)
-            for row in dbcur: retval.append(self.__cast_entry_to_load_type(row))
+            for row in dbcur: retval.append(self.__cast_entry_to_load_type(row, fields))
             dbcur.close()
         if not lock: database_table.__conn[self.dbname].commit()
+        self.__logger.debug("Query result: \n %s", str(retval))
         return retval
 
 
@@ -230,7 +231,7 @@ class database_table():
             entry = self.__cast_entry_to_store_type(e) 
             fields = sql.SQL(", ").join([sql.Identifier(k) for k in entry.keys()])
             values = sql.SQL(", ").join([sql.Literal(v) for v in entry.values()])
-            sql_str = sql.SQL("INSERT INTO {} ({}) VALUES ({})").format(sql.Identifier(self.table), fields, values)
+            sql_str = sql.SQL("INSERT INTO {} ({}) VALUES ({}) ON CONFLICT DO NOTHING").format(sql.Identifier(self.table), fields, values)
             self.__logger.debug(sql_str.as_string(database_table.__conn[self.dbname]))
             try:
                 cur.execute(sql_str)

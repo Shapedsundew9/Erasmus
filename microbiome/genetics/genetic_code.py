@@ -33,18 +33,18 @@ class genetic_code():
         self.__depths, self.__generations = [gc['code_depth']], [gc['generation']]
         while addition_queue:
             node = addition_queue.pop()
-            if not node[genetic_code.__GC]['gca'] is None:
-                addition_queue.append([gc['gca'], node, None, None])
+            if not node[genetic_code.__GC]['__gca'] is None:
+                addition_queue.append([gc['__gca'], node, None, None])
                 node[genetic_code.__GCA] = addition_queue[-1]
                 self.node_list.append(addition_queue[-1])
-                self.__depths.append(gc['gca']['code_depth'])
-                self.__generations.append(gc['gca']['generation'])
-            if not node[genetic_code.__GC]['gcb'] is None:
-                addition_queue.append([gc['gcb'], node, None, None])
+                self.__depths.append(gc['__gca']['code_depth'])
+                self.__generations.append(gc['__gca']['generation'])
+            if not node[genetic_code.__GC]['__gcb'] is None:
+                addition_queue.append([gc['__gcb'], node, None, None])
                 node[genetic_code.__GCB] = addition_queue[-1]
                 self.node_list.append(addition_queue[-1])
-                self.__depths.append(gc['gca']['code_depth'])
-                self.__generations.append(gc['gca']['generation'])
+                self.__depths.append(gc['__gca']['code_depth'])
+                self.__generations.append(gc['__gca']['generation'])
         self.__generations = array(self.__generations, dtype=float32)
         self.__depths = array(self.__depths, dtype=float32)
         self.__generations = float32(1.0) + (float32(1.0) - self.__generations / amax(self.__generations))
@@ -52,7 +52,7 @@ class genetic_code():
 
 
     def __node(self, node):
-        return {'gc': node[genetic_code.__GC], 'parent': node[genetic_code.__PARENT], 'gca': node[genetic_code.__GCA], 'gcb': node[genetic_code.__GCB]}
+        return {'gc': node[genetic_code.__GC], 'parent': node[genetic_code.__PARENT], '__gca': node[genetic_code.__GCA], '__gcb': node[genetic_code.__GCB]}
 
 
     # Return a randomly selected weighted node

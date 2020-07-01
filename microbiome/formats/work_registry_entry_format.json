@@ -17,6 +17,22 @@
             "description": "A short name to identify this work."
         }
     },
+    "gene_pool": {
+        "type": "string",
+        "minlength": 1,
+        "maxlength": 256,
+        "meta": {
+            "database": {
+                "type": "VARCHAR"
+            },
+            "definition": {
+                "location": ["WORKER"],
+                "immutable": true
+            },
+            "compressed": false,
+            "description": "File path of the gene pool generated module."
+        }
+    },
     "description": {
         "type": "string",
         "minlength": 1,

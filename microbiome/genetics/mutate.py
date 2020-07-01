@@ -9,7 +9,7 @@ Copyright (c) 2020 Your Company
 '''
 
 from inspect import getmembers, isfunction
-from importlib import import_module, reload
+
 from random import choice
 from .gene_pool import gene_pool
 from sys import path
@@ -17,27 +17,20 @@ from os.path import dirname, abspath, basename, isfile
 from .genomic_library_entry_validator import NULL_GC
 
 
-__MUTATIONS_FILE = "mutations.py"
+__MUTATIONS_FILE = 'mutations.py'
 __MUTATION_PRIMITIVES_QUERY = [
     {'gca': NULL_GC, 'gcb': NULL_GC, 'properties': {'unary_mutation': True}},
     {'gca': NULL_GC, 'gcb': NULL_GC, 'properties': {'binary_mutation': True}}
 ]
 
-if not isfile(__MUTATIONS_FILE): gene_pool(__MUTATION_PRIMITIVES_QUERY, file_ptr=__MUTATIONS_FILE)
-path.insert(1, dirname(abspath(__MUTATIONS_FILE)))
-__mutations_module = import_module(__MUTATIONS_FILE[:-3])
-__all_functions = None
-
-
-# This assumes all function either take a single GC Entry or 2 GC Entries.
-# TODO: This should probably take a GC instance (or 2)
-def mutate(gca, population):
-    func = choice(__all_functions)
-    return func[1](gca, choice(population)) if len(func[1].__defaults__) == 2 else func[1](gca)    
+__gp = gene_pool(__MUTATION_PRIMITIVES_QUERY, file_ptr=__MUTATIONS_FILE)
 
 
 def refresh_mutations():
-    global __all_functions
-    # OPTIMISATION: Could check to see if the source code has changed before reloading
-    reload(__mutations_module)
-    __all_functions = getmembers(__mutations_module, isfunction)
+    # I know - private function
+    __gp.__update()
+    __gp.__header = "mutations = (\n"
+    for gp in __gp.__gene_pool.values(): __gp.__header += "\t({}, {}),\n".format(gp['signature'], gp['properties']['binary_mutation'])
+    __gp.__header += ")"
+    __gp.__update() 
+

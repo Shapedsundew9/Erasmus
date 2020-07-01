@@ -20,6 +20,7 @@ basicConfig(filename='erasmus.log', level=DEBUG)
 validator = genomic_library_entry_validator(load(open('./microbiome/formats/genomic_library_entry_format.json', "r")))
 
 
+# TODO: For performance reasons this should just use a graph validator rather than a whole entry.
 def entry_wrapper(graph):
     return {
         "graph": graph,

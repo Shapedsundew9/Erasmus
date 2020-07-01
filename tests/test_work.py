@@ -32,6 +32,7 @@ def test_work():
         'name': 'Meta Evolution',
         'description': 'Evolving the evolver',
         'population_limit': 1000,
+        'gene_pool': 'microbiome/genetics/mutations.py',
         'initial_query': [
             {'gca': NULL_GC, 'gcb': NULL_GC, 'properties': {'unary_mutation': True}},
             {'gca': NULL_GC, 'gcb': NULL_GC, 'properties': {'binary_mutation': True}}

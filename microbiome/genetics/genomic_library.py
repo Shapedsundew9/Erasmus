@@ -38,7 +38,7 @@ class genomic_library():
         if genomic_library.__store is None:
             table_name = get_config()['genomic_library']['table']
             genomic_library.__store = database_table(genomic_library.__logger, table_name)
-            genomic_library.__entry_validator = genomic_library_entry_validator(get_config()['tables'][table_name]['schema'])
+            genomic_library.__entry_validator = genomic_library_entry_validator(get_config()['tables'][table_name]['schema'], purge_unknown=True)
             genomic_library.__query_validator = query_validator(genomic_library.__entry_validator.schema)
             genomic_library.__query_validator.table_name = table_name
             if not len(genomic_library.__store): self.__initialise()
@@ -115,7 +115,6 @@ class genomic_library():
 
 
     # Store a new application formatted entry.
-    # TODO: Implement a bulk store.
     def store(self, entries):
         self.normalize(entries)
         return genomic_library.__store.store(entries)
