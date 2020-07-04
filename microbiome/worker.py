@@ -113,6 +113,15 @@ class worker():
         return f_pop, nf_pop
 
 
+    def __individual_fitness(self, gc):
+        try:
+            fitness = self.__fitness_function(self.gene_pool.callable(gc['signature']))
+        except Exception as ex:
+            worker.__logger.info("Individual failed the fitness test: {}, {}".format(type(ex).__name__, ex.args))
+            fitness = 0.0
+        return fitness
+
+
     # TODO: Currently hard coded
     def __stop_criteria_met(self, population):
         for fitness in population.values():
@@ -209,6 +218,7 @@ class worker():
                 else:
                     del invalid_population[cull_list[victim][0]]
                 weights[victim] = 0.0
+        self.__log_data['population'] = len(population) + len(invalid_population)
         return population, invalid_population
 
 
@@ -216,7 +226,7 @@ class worker():
         self.__log_data['wall_clock_runtime'] = perf_counter() - self.__log_data['wall_clock_runtime']
         self.__log_data['cpu_runtime'] = process_time() - self.__log_data['cpu_runtime']
         self.__log_data['EGPOPs'] = self.__log_data['cpu_runtime']
-        self.__log_data['RSS'] = Process().memory_info().rss
+        self.__log_data['RSS'] = Process().memory_info().rss / (1024 * 1024 * 1024.0)
         self.__log_data['worker'] = self.registration_document['signature']
 
         fitness_data = array([v for v in self.work['population_dict'].values()])
@@ -308,7 +318,7 @@ class worker():
         else:
             worker.__logger.info("No exisiting population found in work registry. Generating from initial query: %s.", self.work['initial_query'])
         self.gene_pool = gene_pool(self.work['initial_query'], file_ptr=self.work['gene_pool'])
-        self.work['population_dict'] = { s['signature']: 0.0 for s in self.gene_pool.gl(self.work['initial_query'], ['signature']) }   
+        self.work['population_dict'] = { s['signature']: self.__individual_fitness(self.gene_pool[s['signature']]) for s in self.gene_pool.gl(self.work['initial_query'], ['signature']) }   
         worker.__logger.info("Starting population of %d individuals loaded into gene pool.", len(self.work['population_dict']))
 
         if existing_population and not self.__valid_work(self.work['population_dict']):

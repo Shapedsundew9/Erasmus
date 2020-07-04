@@ -173,8 +173,8 @@ CREATE OR REPLACE FUNCTION cumsum_setup(__table_name TEXT, __column_name TEXT)
 	END IF;
 
 	-- Create a table for the last row inserted, a trigger & trigger function to populate it
-	EXECUTE format ('DROP TABLE IF EXISTS %I', __table_name || '_last_insert');
-	EXECUTE format ('CREATE TABLE %I AS TABLE %I WITH NO DATA', __table_name || '_last_insert', __table_name);
+	-- EXECUTE format ('DROP TABLE IF EXISTS %I', __table_name || '_last_insert');
+	-- EXECUTE format ('CREATE TABLE %I (LIKE %I INCLUDING ALL)', __table_name || '_last_insert', __table_name);
 	EXECUTE format ('INSERT INTO %I (%I) VALUES (0)', __table_name || '_last_insert', __column_name || '_cumsum');
 	EXECUTE format ('DROP TRIGGER IF EXISTS %I on %I;', __last_insert_trigger, __table_name);
 	EXECUTE format ('CREATE OR REPLACE FUNCTION %I()

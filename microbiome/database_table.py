@@ -92,6 +92,7 @@ class database_table():
 
             # Create the column definitions
             columns = []
+            has_cumsum = False
             for k ,c in self.schema.items():
                 sql_str = " " + c['database']['type']
                 if c['database']['null']: sql_str += " NOT NULL"
@@ -99,13 +100,20 @@ class database_table():
                 columns.append(sql.Identifier(k) + sql.SQL(sql_str))
                 if c['database']['cumsum']:
                     sql_str = sql.Identifier(k + '_cumsum') + sql.SQL(" " + c['database']['type'])
-                    sql_str += sql.SQL(" NOT NULL DEFAULT 0")
+                    sql_str += sql.SQL(" DEFAULT 0 NOT NULL")
                     columns.append(sql_str)
+                    has_cumsum = True
 
             # Create the table
             sql_str = sql.SQL("CREATE TABLE {} ({})").format(sql.Identifier(self.table), sql.SQL(", ").join(columns))
             self.__logger.info(sql_str.as_string(database_table.__conn[self.dbname]))
             cur.execute(sql_str)
+            if has_cumsum:
+                sql_str = sql.SQL("DROP TABLE IF EXISTS {} CASCADE").format(sql.Identifier(self.table + "_last_insert"))
+                cur.execute(sql_str)
+                sql_str = sql.SQL("CREATE TABLE {} ({})").format(sql.Identifier(self.table + "_last_insert"), sql.SQL(", ").join(columns))
+                self.__logger.info(sql_str.as_string(database_table.__conn[self.dbname]))
+                cur.execute(sql_str)
 
             # If decimation history is enabled create the triggers
             if history_decimation['enabled']:
@@ -128,7 +136,7 @@ class database_table():
 
     def __delete_table(self):
         cur = database_table.__conn[self.dbname].cursor()
-        sql_str = sql.SQL("DROP TABLE IF EXISTS {}").format(sql.Identifier(self.table))
+        sql_str = sql.SQL("DROP TABLE IF EXISTS {} CASCADE").format(sql.Identifier(self.table))
         cur.execute(sql_str)
         cur.close()    
         database_table.__conn[self.dbname].commit()
