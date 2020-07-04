@@ -426,7 +426,7 @@
             "function": {
                 "python3": {
                     "0": {
-                        "inline": "append_constant({0[i0]}, random(-1.0, 1.0))"
+                        "inline": "append_constant({0[i0]}, uniform(-1.0, 1.0))"
                     }
                 }
             }

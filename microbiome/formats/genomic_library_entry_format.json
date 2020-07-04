@@ -418,6 +418,9 @@
             "name": {
                 "type": "string"
             },
+            "extended_properties": {
+                "type": "dict"
+            },
             "extended_class": {
                 "type": "dict"
             },

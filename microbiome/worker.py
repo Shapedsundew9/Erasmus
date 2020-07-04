@@ -45,6 +45,7 @@ class worker():
     # TODO: Decide what to do with fitness_function
     def __init__(self, worker_config, fitness_function):
         self.config = worker_config
+        worker.__work_log_validator = work_log_validator(get_config()['tables']['work_log_template']['schema'])
         self.registration_document = { "platform": get_platform_info(), "work": worker_config['work'], "creator": worker_config['creator'] }
         validator = worker_registry_validator(get_config()['tables']['worker_registry']['schema'])
         if not validator.validate(self.registration_document):
@@ -69,7 +70,8 @@ class worker():
 
     def __valid_work(self, population):
         count = 0
-        for signature, fitness in self.__calculate_fitness(population).items():
+        valid_population, _ = self.__calculate_fitness([self.gene_pool[signature] for signature in population.keys()])
+        for signature, fitness in valid_population.items():
             if not isclose(population[signature], fitness):
                 worker.__logger.warning("Fitness score for GC %s cannot be reproduced: Work registry fitness score %f versus worker fitness %f score",
                     signature, population[signature], fitness)
@@ -82,8 +84,33 @@ class worker():
         return True
 
 
-    def __calculate_fitness(self, population):
-        return {signature: self.__fitness_function(self.gene_pool.callable(signature)) for signature in population.keys()}
+    # GCs may be generated that are not valid to be put into the genomic library
+    # They are identfied and collected seperately from the functioning
+    # population.
+    def __calculate_fitness(self, gcs):
+        f_pop = {}
+        nf_pop = []
+        valid_gcs = []
+        for gc in gcs:
+            if self.gene_pool.validate(gc):
+                valid_gcs.append(self.gene_pool.normalize(gc))
+            else:
+                nf_pop.append(gc)
+                self.__log_data['invalid_gc'] += 1    
+   
+        self.gene_pool.update(valid_gcs)
+
+        for gc in valid_gcs:
+                try:
+                    fitness = self.__fitness_function(self.gene_pool.callable(gc['signature']))
+                except Exception as ex:
+                    worker.__logger.info("Individual failed the fitness test: {}, {}".format(type(ex).__name__, ex.args))
+                    f_pop[gc['signature']] = 0.0
+                    self.__log_data['failed_fitness'] += 1       
+                else:
+                    f_pop[gc['signature']] = fitness
+
+        return f_pop, nf_pop
 
 
     # TODO: Currently hard coded
@@ -93,91 +120,134 @@ class worker():
         return False
 
 
-    def __mutate(self, gc, population):
+    # Return a copy of the GC without any unique fields
+    def __clone(self, gc):
+        return {
+            'graph': deepcopy(gc['graph']),
+
+            # If this is generation 0 then generation 1 cannot have GCA == NULL_GC
+            'gca': gc['gca'] if gc['generation'] else gc['signature'],
+            'gcb': gc['gcb'],
+            'properties': deepcopy(gc['properties']),
+        }
+
+
+    def __mutate(self, signature, population, meta_data, invalid=None):
         # FIXME: The selection of mutation candidates needs to be evolved
         mutation = choice(self.__mutation_keys)
-        func = meta_data[mutation]['callable'] 
-        # FIXME: The selection of a breeding partner needs to be evolved
-        return func([gc]) if meta_data[mutation]['properties']['unary_mutation'] else func([gc, choice(population)])
+        worker.__logger.debug("Chosen mutation %s", mutation)
+
+        # Mutations modify the GC passed to them so it is necessary to
+        # clone the relevant fields into a new object
+        gc = invalid if not invalid is None else self.__clone(self.gene_pool[signature])
+
+        # Unary or binary copulation
+        if meta_data[mutation]['properties']['unary_mutation']:
+            func = lambda: meta_data[mutation]['callable']((gc,)) 
+        else:
+            # FIXME: The selection of a breeding partner needs to be evolved
+            partner = choice(population)
+            func = lambda: meta_data[mutation]['callable']((gc, self.__clone(self.gene_pool[partner])))
+
+        # Handle & log failed conception i.e. runtime exceptions in mutation
+        try:
+                ngc = func()[0]
+        except Exception as ex:
+            worker.__logger.info("Conception failed with {}, {}".format(type(ex).__name__, ex.args))
+            self.__log_data['failed_conception'] += 1
+            ngc = None
+
+        # Update parentage & class data
+        if not ngc is None:
+            if not 'meta_data' in ngc: ngc['meta_data'] = {}
+            ngc['meta_data']['parents'] = [[signature]] if invalid is None else invalid['meta_data']['parents']
+            if meta_data[mutation]['properties']['binary_mutation']: ngc['meta_data']['parents'][-1].append(partner)
+            ngc['alpha_class'] = 1
+
+        return ngc
 
 
-    def __evolve(self, population):
+    def __evolve(self, population, invalid_population):
         if getmtime(gm.__file__) > self.__mutation_file_mtime:
-            worker.__logger.debug("%s", list(sys.modules.keys()))
             reload(sys.modules['microbiome.genetics.mutations'])
             from .genetics.mutations import meta_data
             self.__mutation_file_mtime = getmtime(gm.__file__)
             self.__mutation_keys = list(meta_data.keys())
 
         population_list = list(population.keys())
-        new_gcs = [self.__mutate(self.gene_pool[signature], population_list) for signature in population.keys()]
-        new_population = {ngc['signature']: 0.0 for ngc in new_gcs}
-        self.gene_pool.update(new_population.keys())
-        worker.__logger.debug("New population: %s", new_population)
-        return new_population
+        new_gcs = []
+        for signature in population.keys():
+            gc = self.__mutate(signature, population_list, meta_data)
+            if not gc is None: new_gcs.append(gc)
+        for invalid in invalid_population:
+            gc = self.__mutate(NULL_GC, population_list, meta_data, invalid)
+            if not gc is None: new_gcs.append(gc)
+        worker.__logger.debug("%s", new_gcs)
+        self.__log_data['born'] = len(new_gcs)
+        return new_gcs
 
 
     # TODO: This is currently hard coded.
-    def __cull(self, population):
-        self.__log_data['born'] = len(population) - self.work['population_limit']
-        worker.__logger.debug("Population: %s", population)
-        cull_list = [(k, 1.0 - v) for k, v in population.items()]
-        cull_list.sort(key=lambda t: t[1])
-
+    def __cull(self, population, invalid_population, minimum_viable_fraction=0.0):
+        max_fitness = 1.0 if not len(population) else max(population.values())
+        cull_list = [(k, max_fitness - v + 1.0) for k, v in population.items()]
+        cull_list.extend([(i, max_fitness) for i in range(len(invalid_population))])
+        cull_list.sort(key=lambda x:x[1])
+        worker.__logger.debug("Cull list: %s", cull_list)
         # Determine how many were still born
-        num = len(cull_list)
-        while cull_list and cull_list[-1] == 1.0: del population[cull_list.pop()[0]]
-        self.__log_data['still_born'] = num - len(cull_list)
         self.__log_data['culled'] = 0
-
         if len(cull_list) > self.work['population_limit']:
-            self.__log_data['culled'] = len(population) - self.work['population_limit']
-            saved = int(0.5 * len(cull_list) + 0.5)
+            self.__log_data['culled'] = len(cull_list) - self.work['population_limit']
+            saved = int(minimum_viable_fraction * (self.work['population_limit'] - 2)) + 1
             cull_list = cull_list[saved:]
+            worker.__logger.debug("Reduced cull list: %s", cull_list)
             weights = [t[1] for t in cull_list]
             for _ in range(self.__log_data['culled']):
                 victim = choices(cull_list, weights)
-                del population[cull_list[victim][0]]
+                if cull_list[victim][0] in population:
+                    del population[cull_list[victim][0]]
+                else:
+                    del invalid_population[cull_list[victim][0]]
                 weights[victim] = 0.0
-        return population
+        return population, invalid_population
 
 
     def __log_work(self):
         self.__log_data['wall_clock_runtime'] = perf_counter() - self.__log_data['wall_clock_runtime']
-        self.__log_data['cpu_runtme'] = process_time() - self.__log_data['cpu_runtme']
-        self.__log_data['EGPOP'] = self.__log_data['cpu_runtme']
+        self.__log_data['cpu_runtime'] = process_time() - self.__log_data['cpu_runtime']
+        self.__log_data['EGPOPs'] = self.__log_data['cpu_runtime']
         self.__log_data['RSS'] = Process().memory_info().rss
         self.__log_data['worker'] = self.registration_document['signature']
 
         fitness_data = array([v for v in self.work['population_dict'].values()])
-        self.__log_data['fitness_min'] = amin(fitness_data)
-        self.__log_data['fitness_max'] = amax(fitness_data)
-        self.__log_data['fitness_mean'] = mean(fitness_data)
-        self.__log_data['fitness_median'] = median(fitness_data)
+        self.__log_data['fitness_min'] = float(amin(fitness_data) if fitness_data.size > 0 else None)
+        self.__log_data['fitness_max'] = float(amax(fitness_data) if fitness_data.size > 0 else None)
+        self.__log_data['fitness_mean'] = float(mean(fitness_data) if fitness_data.size > 0 else None)
+        self.__log_data['fitness_median'] = float(median(fitness_data) if fitness_data.size > 0 else None)
 
-        gc_depth_data = array([self.gene_pool[k]['gc_depth'] for k in self.work['population_dict'].keys()])
-        self.__log_data['gc_depth_min'] = amin(gc_depth_data)
-        self.__log_data['gc_depth_max'] = amax(gc_depth_data)
-        self.__log_data['gc_depth_mean'] = mean(gc_depth_data)
-        self.__log_data['gc_depth_median'] = median(gc_depth_data)
+        code_depth_data = array([self.gene_pool[k]['code_depth'] for k in self.work['population_dict'].keys()])
+        self.__log_data['code_depth_min'] = int(amin(code_depth_data) if code_depth_data.size > 0 else None)
+        self.__log_data['code_depth_max'] = int(amax(code_depth_data) if code_depth_data.size > 0 else None)
+        self.__log_data['code_depth_mean'] = float(mean(code_depth_data) if code_depth_data.size > 0 else None)
+        self.__log_data['code_depth_median'] = int(median(code_depth_data) if code_depth_data.size > 0 else None)
 
         codon_depth_data = array([self.gene_pool[k]['codon_depth'] for k in self.work['population_dict'].keys()])
-        self.__log_data['codon_depth_min'] = amin(codon_depth_data)
-        self.__log_data['codon_depth_max'] = amax(codon_depth_data)
-        self.__log_data['codon_depth_mean'] = mean(codon_depth_data)
-        self.__log_data['codon_depth_median'] = median(codon_depth_data)
+        self.__log_data['codon_depth_min'] = int(amin(codon_depth_data) if codon_depth_data.size > 0 else None)
+        self.__log_data['codon_depth_max'] = int(amax(codon_depth_data) if codon_depth_data.size > 0 else None)
+        self.__log_data['codon_depth_mean'] = float(mean(codon_depth_data) if codon_depth_data.size > 0 else None)
+        self.__log_data['codon_depth_median'] = int(median(codon_depth_data) if codon_depth_data.size > 0 else None)
 
-        gc_count_data = array([self.gene_pool[k]['gc_count'] for k in self.work['population_dict'].keys()])
-        self.__log_data['gc_count_min'] = amin(gc_count_data)
-        self.__log_data['gc_count_max'] = amax(gc_count_data)
-        self.__log_data['gc_count_mean'] = mean(gc_count_data)
-        self.__log_data['gc_count_median'] = median(gc_count_data)
+        code_count_data = array([self.gene_pool[k]['num_codes'] for k in self.work['population_dict'].keys()])
+        self.__log_data['code_count_min'] = int(amin(code_count_data) if code_count_data.size > 0 else None)
+        self.__log_data['code_count_max'] = int(amax(code_count_data) if code_count_data.size > 0 else None )
+        self.__log_data['code_count_mean'] = float(mean(code_count_data) if code_count_data.size > 0 else None)
+        self.__log_data['code_count_median'] = int(median(code_count_data) if code_count_data.size > 0 else None )
 
-        codon_count_data = array([self.gene_pool[k]['codon_count'] for k in self.work['population_dict'].keys()])
-        self.__log_data['codon_count_min'] = amin(codon_count_data)
-        self.__log_data['codon_count_max'] = amax(codon_count_data)
-        self.__log_data['codon_count_mean'] = mean(codon_count_data)
-        self.__log_data['codon_count_median'] = median(codon_count_data)
+        codon_count_data = array([self.gene_pool[k]['raw_num_codons'] for k in self.work['population_dict'].keys()])
+        self.__log_data['codon_count_min'] = int(amin(codon_count_data) if codon_count_data.size > 0 else None)
+        self.__log_data['codon_count_max'] = int(amax(codon_count_data) if codon_count_data.size > 0 else None)
+        self.__log_data['codon_count_mean'] = float(mean(codon_count_data) if codon_count_data.size > 0 else None)
+        self.__log_data['codon_count_median'] = int(median(codon_count_data) if codon_count_data.size > 0 else None)
 
         self.__log_data = worker.__work_log_validator.normalized(self.__log_data)
         self.__work_log.store([self.__log_data])
@@ -186,7 +256,10 @@ class worker():
     def __starting_log_data(self):
         self.__log_data = {
             'wall_clock_runtime': perf_counter(),
-            'cpu_runtime': process_time()
+            'cpu_runtime': process_time(),
+            'failed_conception': 0,
+            'failed_fitness': 0,
+            'invalid_gc': 0 
         }
 
 
@@ -244,29 +317,39 @@ class worker():
             exit(1)
 
         # Loop
-        epoch = 1
+        epoch = 0
+        invalid_population = []
         while not self.__stop_criteria_met(self.work['population_dict']):
+            epoch += 1
             worker.__logger.info("Starting epoch %d.", epoch)
             self.__starting_log_data()
             worker.__logger.debug("Epoch %d. Initialised logging data.", epoch)
 
-            population = self.__evolve(self.work['population_dict'])
-            worker.__logger.debug("Epoch %d. Evolution completed.", epoch)
+            new_gcs = self.__evolve(self.work['population_dict'], invalid_population)
+            worker.__logger.debug("Epoch %d. Breeding completed.", epoch)
 
-            population = self.__calculate_fitness(population)
-            worker.__logger.debug("Epoch %d. Fitness calculated.", epoch)
+            population, invalid_population = self.__calculate_fitness(new_gcs)
+            population.update(self.work['population_dict'])
+            worker.__logger.debug("Epoch %d. Fitness calculated", epoch)
+            worker.__logger.debug("Epoch %d. Population: %s", epoch, population)
+            worker.__logger.debug("Epoch %d. Invalid population: %s", epoch, invalid_population)
 
-            population.update(worker.__work_registry.load([{'signature': self.registration_document['work']}], ['population_dict'], True)[0])
+            population.update(worker.__work_registry.load([{'signature': self.registration_document['work']}], ['population_dict'], True)[0]['population_dict'])
             worker.__logger.debug("Epoch %d. Population merged with other workers.", epoch)
+            worker.__logger.debug("Epoch %d. Population: %s", epoch, population)
+            worker.__logger.debug("Epoch %d. Invalid population: %s", epoch, invalid_population)
 
             self.__handle_maximum_fitness(population)
             worker.__logger.debug("Epoch %d. Individuals with maximum fitness handled.", epoch)
 
-            self.work['population_dict'] = self.__cull(population)
+            self.work['population_dict'], invalid_population = self.__cull(population, invalid_population)
             worker.__logger.debug("Epoch %d. Culling completed.", epoch)
+            worker.__logger.debug("Epoch %d. Population: %s", epoch, population)
+            worker.__logger.debug("Epoch %d. Invalid population: %s", epoch, invalid_population)
 
-            worker.__work_registry.store([{'population_dict': self.work['population_dict']}])
+            worker.__work_registry.update([{'population_dict': self.work['population_dict']}], [{'signature': self.registration_document['work']}])
             worker.__logger.debug("Epoch %d. Work registry updated.", epoch)
 
             self.__log_work()
             worker.__logger.debug("Epoch %d. Statistics logged and epoch completed.", epoch)
+            barf()

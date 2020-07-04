@@ -77,6 +77,54 @@
             "description": "The number of new individuals created this generation that did not have a valid fitness score."
         }
     },
+    "failed_conception": {
+        "type": "integer",
+        "min": 0,
+        "max": 2147483647,
+        "meta": {
+            "database": {
+                "type": "INTEGER"
+            },
+            "definition": {
+                "location": ["WORKER"],
+                "immutable": true
+            },
+            "compressed": false,
+            "description": "The number of mutations that failed to produce an individual."
+        }
+    },
+    "failed_fitness": {
+        "type": "integer",
+        "min": 0,
+        "max": 2147483647,
+        "meta": {
+            "database": {
+                "type": "INTEGER"
+            },
+            "definition": {
+                "location": ["WORKER"],
+                "immutable": true
+            },
+            "compressed": false,
+            "description": "The number of GC's that did not return a result from the fitness function."
+        }
+    },
+    "invalid_gc": {
+        "type": "integer",
+        "min": 0,
+        "max": 2147483647,
+        "meta": {
+            "database": {
+                "type": "INTEGER"
+            },
+            "definition": {
+                "location": ["WORKER"],
+                "immutable": true
+            },
+            "compressed": false,
+            "description": "The number individuals created by mutation with invalid GC's"
+        }
+    },
     "fitness_min": {
         "type": "float",
         "required": true,
@@ -137,7 +185,7 @@
             "description": "Median fitness for this generation."
         }
     },
-    "gc_depth_min": {
+    "code_depth_min": {
         "type": "float",
         "required": true,
         "meta": {
@@ -152,7 +200,7 @@
             "description": "Minimum genetic code depth for this generation."
         }
     },
-    "gc_depth_max": {
+    "code_depth_max": {
         "type": "float",
         "required": true,
         "meta": {
@@ -167,7 +215,7 @@
             "description": "Maximum genetic code depth for this generation."
         }
     },
-    "gc_depth_mean": {
+    "code_depth_mean": {
         "type": "float",
         "required": true,
         "meta": {
@@ -182,7 +230,7 @@
             "description": "Average genetic code depth for this generation."
         }
     },
-    "gc_depth_median": {
+    "code_depth_median": {
         "type": "float",
         "required": true,
         "meta": {
@@ -257,7 +305,7 @@
             "description": "Median codon depth for this generation."
         }
     },
-    "gc_count_min": {
+    "code_count_min": {
         "type": "float",
         "required": true,
         "meta": {
@@ -272,7 +320,7 @@
             "description": "Minimum genetic code count for this generation."
         }
     },
-    "gc_count_max": {
+    "code_count_max": {
         "type": "float",
         "required": true,
         "meta": {
@@ -287,7 +335,7 @@
             "description": "Maximum genetic code count for this generation."
         }
     },
-    "gc_count_mean": {
+    "code_count_mean": {
         "type": "float",
         "required": true,
         "meta": {
@@ -302,7 +350,7 @@
             "description": "Average genetic code count for this generation."
         }
     },
-    "gc_count_median": {
+    "code_count_median": {
         "type": "float",
         "required": true,
         "meta": {

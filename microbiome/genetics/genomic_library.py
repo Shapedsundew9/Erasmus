@@ -116,8 +116,7 @@ class genomic_library():
 
     # Store a new application formatted entry.
     def store(self, entries):
-        self.normalize(entries)
-        return genomic_library.__store.store(entries)
+        return genomic_library.__store.store(entries) if self.normalize(entries) else False
 
 
     # Validates an application format entry and populates fields that do not

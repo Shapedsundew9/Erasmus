@@ -249,3 +249,29 @@ class database_table():
             return False
         return True
 
+
+    # TODO: This can be slow for a lot of values. Consider a multi-row insert.
+    def update(self, entries, keys):
+        cur = database_table.__conn[self.dbname].cursor()
+        for e, condition in zip(entries, keys):
+            entry = self.__cast_entry_to_store_type(e) 
+            fields = sql.SQL(", ").join([sql.SQL(" = ").join((sql.Identifier(k), sql.Literal(v))) for k, v in entry.items()])
+            pairs = [sql.SQL(" = ").join((sql.Identifier(k), sql.Literal(v))) for k,v in condition.items()]
+            conditions = pairs[0] if len(pairs) == 1 else sql.SQL(" AND ").join(pairs)
+            sql_str = sql.SQL("UPDATE {} SET {} WHERE {}").format(sql.Identifier(self.table), fields, conditions)
+            self.__logger.debug(sql_str.as_string(database_table.__conn[self.dbname]))
+            try:
+                cur.execute(sql_str)
+            except (Exception, DatabaseError) as ex:
+                self.__logger.error("Failed to update entry in DB: %s: %s", ex, sql_str.as_string(database_table.__conn[self.dbname]))
+                self.__logger.info("All entries rolled back")
+                database_table.__conn[self.dbname].rollback()
+                return False
+        try:
+            cur.close()
+            database_table.__conn[self.dbname].commit()
+        except (Exception, DatabaseError) as ex:
+            self.__logger.error("Failed to store entries in DB: %s", ex)
+            database_table.__conn[self.dbname].rollback()
+            return False
+        return True

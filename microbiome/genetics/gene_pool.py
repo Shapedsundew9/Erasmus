@@ -87,9 +87,11 @@ class gene_pool():
         file_ptr = open(self.__file_ptr.name, "w")
         gene_pool.__logger.debug("Gene pool file created: %s", file_ptr.name)
         file_ptr.write(gene_pool.__CALLABLE_FILE_HEADER)    
-        file_ptr.write("\n\nfrom microbiome.genetics.gc_mutation_functions import *\nfrom random import random\n\n\n")
-        for gc in self.__gene_pool.values(): 
-            file_ptr.write("def " + self.function_name(gc['signature']) + "(i):\n")
+        file_ptr.write("\n\nfrom microbiome.genetics.gc_mutation_functions import *\nfrom random import random, uniform\n\n\n")
+        signature_list = list(self.__gene_pool.keys())
+        for signature in sorted(signature_list):
+            gc = self.__gene_pool[signature]
+            file_ptr.write("def " + self.function_name(signature) + "(i):\n")
             if not 'function' in gc['meta_data']:
                 c = gc['graph']['C'] if 'C' in gc['graph'] else [] 
                 if gc['gca'] != NULL_GC: file_ptr.write("\ta = " + self.function_name(gc['gca']) + "((" + self.__write_arg(gc['graph']['A'], c)) + ")"
@@ -101,11 +103,12 @@ class gene_pool():
                 file_ptr.write("\treturn (" + gc['meta_data']['function']['python3']['0']['inline'].format(format_dict) + ",)\n\n\n")
 
         # Add some function meta_data
-        file_ptr.write("\n\nmeta_data = {\n")
+        file_ptr.write("meta_data = {\n\t")
+        lines = []
         for gc in self.__gene_pool.values():
-            body = ','.join(["'{}': {}".format(k, gc[k]) for k in gene_pool.__META_DATA_FIELDS]) 
-            file_ptr.write("\t'{}': {{ {}, 'callable': {} }},\n".format(gc['signature'], body, self.function_name(gc['signature'])))
-        file_ptr.write("\t'total': {}\n}}".format(len(self.__gene_pool)))
+            line = "'{}':{{".format(gc['signature']) + ','.join(["'{}': {}".format(k, gc[k]) for k in gene_pool.__META_DATA_FIELDS])
+            lines.append(line + ", 'callable': {} }}".format(self.function_name(gc['signature'])))
+        file_ptr.write(',\n\t'.join(lines) + "\n}\n")
         file_ptr.close()
         if not self.__module is None: reload(self.__module)
 
@@ -189,8 +192,12 @@ class gene_pool():
         self.__create_callables(self.__gene_pool.keys())
 
 
+    def validate(self, entry):
+        return gene_pool.__gl.validate(entry)
+
+
     def normalize(self, entry):
-        gene_pool.__gl.normalize({entry['signature']: entry})
+        return gene_pool.__gl.normalize(entry)
 
 
     def draw(self, root=None):

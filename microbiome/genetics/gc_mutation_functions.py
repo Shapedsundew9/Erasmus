@@ -8,6 +8,9 @@ Author: Shapedsundew9
 Copyright (c) 2020 Your Company
 '''
 
+# GC arguments can be modified by mutation functions
+
+
 # field = 'I', 'C', 'A', 'B', 'O'
 # f_offset = fractional offset 0.0 <= offset <= 1.0)
 # Index into the gc['graph'] member lists 

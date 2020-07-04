@@ -84,7 +84,7 @@ class genomic_library_entry_validator(Validator):
         if not value:
             # Valid codon
             if "beta_class" in self.document and self.document['beta_class']: self._error(field, "If alpha_class == 0, beta_class must == 0.")
-            if "generation" in self.document and self.document['generation']: self._error(field, "If alpha_class == 0, generation must == 0.")
+            # if "generation" in self.document and self.document['generation']: self._error(field, "If alpha_class == 0, generation must == 0.")
             if "codon_depth" in self.document and self.document['codon_depth'] != 1: self._error(field, "If alpha_class == 0, codon_depth must == 1.")
             if "code_depth" in self.document and self.document['code_depth'] != 1: self._error(field, "If alpha_class == 0, code_depth must == 1.")
             if "gca" in self.document and self.document['gca'] != NULL_GC: self._error(field, "If alpha_class == 0, gca must == " + NULL_GC)
@@ -101,8 +101,6 @@ class genomic_library_entry_validator(Validator):
         else:
             # Valid non-codon
             if "beta_class" in self.document and not self.document['beta_class']:  self._error(field, "If alpha_class != 0, beta_class must != 0.")
-            if "generation" in self.document and not self.document['generation']: self._error(field, "If alpha_class != 0, generation must != 0.")
-            if "gca" in self.document and self.document['gca'] == NULL_GC: self._error(field, "If alpha_class != 0, gca must != " + NULL_GC)
             if "meta_data" in self.document and not "parents" in self.document['meta_data']: self._error(field, "If alpha_class != 0 then there must be at least one parent.")
 
 
@@ -130,13 +128,13 @@ class genomic_library_entry_validator(Validator):
     def _normalize_default_setter_set_signature(self, document):
 
         # The signature for a codon GC is slightly different
-        string = str(document["graph"]["A"]) + str(document["graph"]["O"])
-        string += document["gca"] + document["gcb"]
-        if "B" in document["graph"]: string += str(document["graph"]["B"])
-        if "C" in document["graph"]: string += str(document["graph"]["C"])
+        string = str(self.document["graph"]["A"]) + str(self.document["graph"]["O"])
+        string += self.document["gca"] + self.document["gcb"]
+        if "B" in self.document["graph"]: string += str(self.document["graph"]["B"])
+        if "C" in self.document["graph"]: string += str(self.document["graph"]["C"])
 
         # If it is a codon glue on the mandatory definition
-        if document["gca"] == NULL_GC: string += document["meta_data"]["function"]["python3"]["0"]["inline"]
+        if "generation" in self.document and self.document["generation"] == 0: string += self.document["meta_data"]["function"]["python3"]["0"]["inline"]
 
         # Remove spaces etc. to give some degrees of freedom in formatting and
         # not breaking the signature
