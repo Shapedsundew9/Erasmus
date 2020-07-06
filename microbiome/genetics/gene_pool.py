@@ -7,7 +7,7 @@ Author: Shapedsundew9
 Copyright (c) 2020 Your Company
 '''
 
-from logging import getLogger
+from logging import getLogger, DEBUG
 from .genomic_library import genomic_library
 from .genomic_library_entry_validator import NULL_GC
 from .genetic_code import genetic_code
@@ -19,6 +19,7 @@ from ..draw_graph import draw_graph
 from sys import path
 from os.path import dirname, abspath, basename
 from importlib import import_module, reload
+from pprint import pformat
 
 
 # The gene_pool organises genetic codes for a worker. Each worker has its own gene pool.
@@ -75,13 +76,8 @@ class gene_pool():
 
 
     def __write_arg(self, iab, c):
-        last_arg = len(iab)
-        line = ""
-        for pos, arg in enumerate(iab, 1):
-            line = str(c[arg[1]]) if arg[0] == 'C' else arg[0].lower() + "[" + str(arg[1]) + "]" 
-            line += ", " if pos < last_arg else ")\n"
-        return line
-
+        return "(" + ", ".join([str(c[arg[1]]) if arg[0] == 'C' else arg[0].lower() + "[" + str(arg[1]) + "]" for arg in iab]) + ",)"
+        
 
     def __create_callables(self, active_gcs):
         file_ptr = open(self.__file_ptr.name, "w")
@@ -91,12 +87,13 @@ class gene_pool():
         signature_list = list(self.__gene_pool.keys())
         for signature in sorted(signature_list):
             gc = self.__gene_pool[signature]
+            if gene_pool.__logger.getEffectiveLevel() == DEBUG: file_ptr.write("'''\n{}\n'''\n".format(pformat(gc)))    
             file_ptr.write("def " + self.function_name(signature) + "(i):\n")
             if not 'function' in gc['meta_data']:
                 c = gc['graph']['C'] if 'C' in gc['graph'] else [] 
-                if gc['gca'] != NULL_GC: file_ptr.write("\ta = " + self.function_name(gc['gca']) + "((" + self.__write_arg(gc['graph']['A'], c)) + ")"
-                if gc['gcb'] != NULL_GC: file_ptr.write("\tb = " + self.function_name(gc['gcb']) + "((" + self.__write_arg(gc['graph']['B'], c)) + ")"
-                file_ptr.write("\treturn (" + self.__write_arg(gc['graph']['O'], c)) + ",)\n\n\n"
+                if gc['gca'] != NULL_GC: file_ptr.write("\ta = " + self.function_name(gc['gca']) + "(" + self.__write_arg(gc['graph']['A'], c) + ")\n")
+                if gc['gcb'] != NULL_GC: file_ptr.write("\tb = " + self.function_name(gc['gcb']) + "(" + self.__write_arg(gc['graph']['B'], c) + ")\n")
+                file_ptr.write("\treturn " + self.__write_arg(gc['graph']['O'], c) + "\n\n\n")
             else:
                 format_dict = {'c' + str(i): v for i, v in enumerate(gc['graph']['C'])} if 'C' in gc['graph'] else {}
                 format_dict.update({'i' + str(i): 'i[{}]'.format(i) for i in range(gc['num_inputs'])})
@@ -158,6 +155,7 @@ class gene_pool():
                             if  gc[ab] == NULL_GC:
                                 gc[__ab] = None
                             else:
+                                gene_pool.__logger.debug("Loading GCAB %s from genomic library.", gc[ab])
                                 addition_queue.append(gene_pool.__gl[gc[ab]])
                                 signature_queue.append(addition_queue[-1]['signature'])
                                 gc[__ab] = addition_queue[-1]
@@ -167,6 +165,8 @@ class gene_pool():
                             if not '__count' in gc[__ab]: gc[__ab]['__count'] = 0
                             gc[__ab]['__count'] += 1
                     else:
+                        if __ab not in gc: gc[__ab] = self.__gene_pool[gc[ab]]
+                        if '__count' not in gc[__ab]: gc[__ab]['__count'] = 0
                         gc[__ab]['__count'] += 1
 
         # Delete any GCs that were sent for deletion that have no references.

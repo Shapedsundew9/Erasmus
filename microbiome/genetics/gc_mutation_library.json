@@ -18,7 +18,7 @@
             "function": {
                 "python3": {
                     "0": {
-                        "inline": "connect({0[i0]}, 'A', 'I', random(), random())"
+                        "inline": "connect({0[i0]}, 'I', 'A', random(), random())"
                     }
                 }
             }
@@ -43,7 +43,7 @@
             "function": {
                 "python3": {
                     "0": {
-                        "inline": "connect({0[i0]}, 'A', 'C', random(), random())"
+                        "inline": "connect({0[i0]}, 'C', 'A', random(), random())"
                     }
                 }
             }
@@ -68,7 +68,7 @@
             "function": {
                 "python3": {
                     "0": {
-                        "inline": "connect({0[i0]}, 'B', 'I', random(), random())"
+                        "inline": "connect({0[i0]}, 'I', 'B', random(), random())"
                     }
                 }
             }
@@ -93,7 +93,7 @@
             "function": {
                 "python3": {
                     "0": {
-                        "inline": "connect({0[i0]}, 'B', 'A', random(), random())"
+                        "inline": "connect({0[i0]}, 'A', 'B', random(), random())"
                     }
                 }
             }
@@ -118,7 +118,7 @@
             "function": {
                 "python3": {
                     "0": {
-                        "inline": "connect({0[i0]}, 'B', 'C', random(), random())"
+                        "inline": "connect({0[i0]}, 'C', 'B', random(), random())"
                     }
                 }
             }
@@ -143,7 +143,7 @@
             "function": {
                 "python3": {
                     "0": {
-                        "inline": "connect({0[i0]}, 'O', 'I', random(), random())"
+                        "inline": "connect({0[i0]}, 'I', 'O', random(), random())"
                     }
                 }
             }
@@ -168,7 +168,7 @@
             "function": {
                 "python3": {
                     "0": {
-                        "inline": "connect({0[i0]}, 'O', 'A', random(), random())"
+                        "inline": "connect({0[i0]}, 'A', 'O', random(), random())"
                     }
                 }
             }
@@ -193,7 +193,7 @@
             "function": {
                 "python3": {
                     "0": {
-                        "inline": "connect({0[i0]}, 'O', 'C', random(), random())"
+                        "inline": "connect({0[i0]}, 'C', 'O', random(), random())"
                     }
                 }
             }
@@ -219,7 +219,7 @@
             "function": {
                 "python3": {
                     "0": {
-                        "inline": "connect({0[i0]}, 'A', 'I', {0[c0]}, {0[c1]})"
+                        "inline": "connect({0[i0]}, 'I', 'C', {0[c0]}, {0[c1]})"
                     }
                 }
             }
@@ -245,7 +245,7 @@
             "function": {
                 "python3": {
                     "0": {
-                        "inline": "connect({0[i0]}, 'A', 'C', {0[c0]}, {0[c1]})"
+                        "inline": "connect({0[i0]}, 'C', 'A', {0[c0]}, {0[c1]})"
                     }
                 }
             }
@@ -271,7 +271,7 @@
             "function": {
                 "python3": {
                     "0": {
-                        "inline": "connect({0[i0]}, 'B', 'I', {0[c0]}, {0[c1]})"
+                        "inline": "connect({0[i0]}, 'I', 'B', {0[c0]}, {0[c1]})"
                     }
                 }
             }
@@ -297,7 +297,7 @@
             "function": {
                 "python3": {
                     "0": {
-                        "inline": "connect({0[i0]}, 'B', 'A', {0[c0]}, {0[c1]})"
+                        "inline": "connect({0[i0]}, 'A', 'B', {0[c0]}, {0[c1]})"
                     }
                 }
             }
@@ -323,7 +323,7 @@
             "function": {
                 "python3": {
                     "0": {
-                        "inline": "connect({0[i0]}, 'B', 'C', {0[c0]}, {0[c1]})"
+                        "inline": "connect({0[i0]}, 'C', 'B', {0[c0]}, {0[c1]})"
                     }
                 }
             }
@@ -349,7 +349,7 @@
             "function": {
                 "python3": {
                     "0": {
-                        "inline": "connect({0[i0]}, 'O', 'I', {0[c0]}, {0[c1]})"
+                        "inline": "connect({0[i0]}, 'I', 'O', {0[c0]}, {0[c1]})"
                     }
                 }
             }
@@ -375,7 +375,7 @@
             "function": {
                 "python3": {
                     "0": {
-                        "inline": "connect({0[i0]}, 'O', 'A', {0[c0]}, {0[c1]})"
+                        "inline": "connect({0[i0]}, 'A', 'O', {0[c0]}, {0[c1]})"
                     }
                 }
             }
@@ -401,7 +401,7 @@
             "function": {
                 "python3": {
                     "0": {
-                        "inline": "connect({0[i0]}, 'O', 'C', {0[c0]}, {0[c1]})"
+                        "inline": "connect({0[i0]}, 'C', 'O', {0[c0]}, {0[c1]})"
                     }
                 }
             }

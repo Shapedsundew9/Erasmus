@@ -24,7 +24,14 @@ from microbiome.work import register_work
 from microbiome.worker import worker
 
 
-gc_validator = genomic_library_entry_validator(load(open('./microbiome/formats/genomic_library_entry_format.json', "r")))
+gc_validator = genomic_library_entry_validator(load(open('./microbiome/formats/genomic_library_entry_format.json', "r")), allow_unknown=True)
+__logger = getLogger(__name__)
+
+
+def fitness_function(func, gc):
+    if gc_validator(gc): return 1.0
+    __logger.debug("Test work fitness function GC validation failed with %s.", gc_validator.errors)
+    return 0.0
 
 
 def test_work():
@@ -42,7 +49,7 @@ def test_work():
         'work': register_work(work),
         'creator': register_creator({}),
     }
-    w1 = worker(worker_config, lambda x: float(gc_validator(x)))
+    w1 = worker(worker_config, fitness_function)
     w1.evolve()
 
 

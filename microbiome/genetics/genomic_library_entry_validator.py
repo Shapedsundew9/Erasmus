@@ -12,6 +12,7 @@ from datetime import datetime
 from os.path import dirname, join
 from json import load
 from hashlib import sha256
+from logging import getLogger
 
 
 NULL_GC = "0" * 64
@@ -23,6 +24,9 @@ class genomic_library_entry_validator(Validator):
 
     # TODO: Make errors ValidationError types for full disclosure
     # https://docs.python-cerberus.org/en/stable/customize.html#validator-error
+
+    __logger = getLogger(__name__)
+
 
     def _check_with_valid_graph(self, field, value):
         # If "B" does not exist there must be no references to it.
@@ -66,7 +70,7 @@ class genomic_library_entry_validator(Validator):
                     for r, i in value[pr]:
                         if r == "C": c_indices.add(i)
             c_indices = list(c_indices)
-            if sorted(c_indices) != list(range(len(c_indices))): self._error(field, "Missing at least one reference to C")
+            if sorted(c_indices) != list(range(len(value["C"]))): self._error(field, "Missing at least one reference to C")
 
         # References to I must start at 0 and be contiguous
         i_indices = set()
@@ -134,7 +138,9 @@ class genomic_library_entry_validator(Validator):
         if "C" in self.document["graph"]: string += str(self.document["graph"]["C"])
 
         # If it is a codon glue on the mandatory definition
-        if "generation" in self.document and self.document["generation"] == 0: string += self.document["meta_data"]["function"]["python3"]["0"]["inline"]
+        if "generation" in self.document and self.document["generation"] == 0:
+            if "meta_data" in self.document and "function" in self.document["meta_data"]:
+                string += self.document["meta_data"]["function"]["python3"]["0"]["inline"]
 
         # Remove spaces etc. to give some degrees of freedom in formatting and
         # not breaking the signature

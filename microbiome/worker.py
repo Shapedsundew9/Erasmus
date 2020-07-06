@@ -93,16 +93,18 @@ class worker():
         valid_gcs = []
         for gc in gcs:
             if self.gene_pool.validate(gc):
-                valid_gcs.append(self.gene_pool.normalize(gc))
+                self.gene_pool.normalize(gc)
+                valid_gcs.append(gc)
             else:
                 nf_pop.append(gc)
                 self.__log_data['invalid_gc'] += 1    
    
         self.gene_pool.update(valid_gcs)
 
+        # TODO: Use __individual_fitness()
         for gc in valid_gcs:
                 try:
-                    fitness = self.__fitness_function(self.gene_pool.callable(gc['signature']))
+                    fitness = self.__fitness_function(self.gene_pool.callable(gc['signature']), gc=gc)
                 except Exception as ex:
                     worker.__logger.info("Individual failed the fitness test: {}, {}".format(type(ex).__name__, ex.args))
                     f_pop[gc['signature']] = 0.0
@@ -115,7 +117,7 @@ class worker():
 
     def __individual_fitness(self, gc):
         try:
-            fitness = self.__fitness_function(self.gene_pool.callable(gc['signature']))
+            fitness = self.__fitness_function(self.gene_pool.callable(gc['signature']), gc=gc)
         except Exception as ex:
             worker.__logger.info("Individual failed the fitness test: {}, {}".format(type(ex).__name__, ex.args))
             fitness = 0.0
@@ -124,6 +126,7 @@ class worker():
 
     # TODO: Currently hard coded
     def __stop_criteria_met(self, population):
+        if len(population) != self.work['population_limit']: return False
         for fitness in population.values():
             if fitness == 1.0: return True 
         return False
@@ -135,7 +138,7 @@ class worker():
             'graph': deepcopy(gc['graph']),
 
             # If this is generation 0 then generation 1 cannot have GCA == NULL_GC
-            'gca': gc['gca'] if gc['generation'] else gc['signature'],
+            'gca': gc['gca'] if gc['gca'] != NULL_GC else gc['signature'],
             'gcb': gc['gcb'],
             'properties': deepcopy(gc['properties']),
         }
@@ -162,7 +165,7 @@ class worker():
         try:
                 ngc = func()[0]
         except Exception as ex:
-            worker.__logger.info("Conception failed with {}, {}".format(type(ex).__name__, ex.args))
+            worker.__logger.warning("Conception failed with {}, {}".format(type(ex).__name__, ex.args))
             self.__log_data['failed_conception'] += 1
             ngc = None
 
@@ -198,7 +201,7 @@ class worker():
 
     # TODO: This is currently hard coded.
     def __cull(self, population, invalid_population, minimum_viable_fraction=0.0):
-        max_fitness = 1.0 if not len(population) else max(population.values())
+        max_fitness = 1.0 if not len(population) else max((max(population.values()), 1.0))
         cull_list = [(k, max_fitness - v + 1.0) for k, v in population.items()]
         cull_list.extend([(i, max_fitness) for i in range(len(invalid_population))])
         cull_list.sort(key=lambda x:x[1])
@@ -211,13 +214,18 @@ class worker():
             cull_list = cull_list[saved:]
             worker.__logger.debug("Reduced cull list: %s", cull_list)
             weights = [t[1] for t in cull_list]
+            indices = list(range(len(cull_list)))
+            ip_victims = []
             for _ in range(self.__log_data['culled']):
-                victim = choices(cull_list, weights)
-                if cull_list[victim][0] in population:
-                    del population[cull_list[victim][0]]
+                victim_idx = choices(indices, weights)[0]
+                victim = cull_list[victim_idx][0]
+                worker.__logger.debug("Cull victim: %s", victim)
+                if victim in population:
+                    del population[victim]
                 else:
-                    del invalid_population[cull_list[victim][0]]
-                weights[victim] = 0.0
+                    ip_victims.append(victim)
+                weights[victim_idx] = 0.0
+            invalid_population = [p for i, p in enumerate(invalid_population) if i not in ip_victims]
         self.__log_data['population'] = len(population) + len(invalid_population)
         return population, invalid_population
 
@@ -230,34 +238,34 @@ class worker():
         self.__log_data['worker'] = self.registration_document['signature']
 
         fitness_data = array([v for v in self.work['population_dict'].values()])
-        self.__log_data['fitness_min'] = float(amin(fitness_data) if fitness_data.size > 0 else None)
-        self.__log_data['fitness_max'] = float(amax(fitness_data) if fitness_data.size > 0 else None)
-        self.__log_data['fitness_mean'] = float(mean(fitness_data) if fitness_data.size > 0 else None)
-        self.__log_data['fitness_median'] = float(median(fitness_data) if fitness_data.size > 0 else None)
+        self.__log_data['fitness_min'] = float(amin(fitness_data)) if fitness_data.size > 0 else None
+        self.__log_data['fitness_max'] = float(amax(fitness_data)) if fitness_data.size > 0 else None
+        self.__log_data['fitness_mean'] = float(mean(fitness_data)) if fitness_data.size > 0 else None
+        self.__log_data['fitness_median'] = float(median(fitness_data)) if fitness_data.size > 0 else None
 
         code_depth_data = array([self.gene_pool[k]['code_depth'] for k in self.work['population_dict'].keys()])
-        self.__log_data['code_depth_min'] = int(amin(code_depth_data) if code_depth_data.size > 0 else None)
-        self.__log_data['code_depth_max'] = int(amax(code_depth_data) if code_depth_data.size > 0 else None)
-        self.__log_data['code_depth_mean'] = float(mean(code_depth_data) if code_depth_data.size > 0 else None)
-        self.__log_data['code_depth_median'] = int(median(code_depth_data) if code_depth_data.size > 0 else None)
+        self.__log_data['code_depth_min'] = int(amin(code_depth_data)) if code_depth_data.size > 0 else None
+        self.__log_data['code_depth_max'] = int(amax(code_depth_data)) if code_depth_data.size > 0 else None
+        self.__log_data['code_depth_mean'] = float(mean(code_depth_data)) if code_depth_data.size > 0 else None
+        self.__log_data['code_depth_median'] = int(median(code_depth_data)) if code_depth_data.size > 0 else None
 
         codon_depth_data = array([self.gene_pool[k]['codon_depth'] for k in self.work['population_dict'].keys()])
-        self.__log_data['codon_depth_min'] = int(amin(codon_depth_data) if codon_depth_data.size > 0 else None)
-        self.__log_data['codon_depth_max'] = int(amax(codon_depth_data) if codon_depth_data.size > 0 else None)
-        self.__log_data['codon_depth_mean'] = float(mean(codon_depth_data) if codon_depth_data.size > 0 else None)
-        self.__log_data['codon_depth_median'] = int(median(codon_depth_data) if codon_depth_data.size > 0 else None)
+        self.__log_data['codon_depth_min'] = int(amin(codon_depth_data)) if codon_depth_data.size > 0 else None
+        self.__log_data['codon_depth_max'] = int(amax(codon_depth_data)) if codon_depth_data.size > 0 else None
+        self.__log_data['codon_depth_mean'] = float(mean(codon_depth_data)) if codon_depth_data.size > 0 else None
+        self.__log_data['codon_depth_median'] = int(median(codon_depth_data)) if codon_depth_data.size > 0 else None
 
         code_count_data = array([self.gene_pool[k]['num_codes'] for k in self.work['population_dict'].keys()])
-        self.__log_data['code_count_min'] = int(amin(code_count_data) if code_count_data.size > 0 else None)
-        self.__log_data['code_count_max'] = int(amax(code_count_data) if code_count_data.size > 0 else None )
-        self.__log_data['code_count_mean'] = float(mean(code_count_data) if code_count_data.size > 0 else None)
-        self.__log_data['code_count_median'] = int(median(code_count_data) if code_count_data.size > 0 else None )
+        self.__log_data['code_count_min'] = int(amin(code_count_data)) if code_count_data.size > 0 else None
+        self.__log_data['code_count_max'] = int(amax(code_count_data)) if code_count_data.size > 0 else None
+        self.__log_data['code_count_mean'] = float(mean(code_count_data)) if code_count_data.size > 0 else None
+        self.__log_data['code_count_median'] = int(median(code_count_data)) if code_count_data.size > 0 else None
 
         codon_count_data = array([self.gene_pool[k]['raw_num_codons'] for k in self.work['population_dict'].keys()])
-        self.__log_data['codon_count_min'] = int(amin(codon_count_data) if codon_count_data.size > 0 else None)
-        self.__log_data['codon_count_max'] = int(amax(codon_count_data) if codon_count_data.size > 0 else None)
-        self.__log_data['codon_count_mean'] = float(mean(codon_count_data) if codon_count_data.size > 0 else None)
-        self.__log_data['codon_count_median'] = int(median(codon_count_data) if codon_count_data.size > 0 else None)
+        self.__log_data['codon_count_min'] = int(amin(codon_count_data)) if codon_count_data.size > 0 else None
+        self.__log_data['codon_count_max'] = int(amax(codon_count_data)) if codon_count_data.size > 0 else None
+        self.__log_data['codon_count_mean'] = float(mean(codon_count_data)) if codon_count_data.size > 0 else None
+        self.__log_data['codon_count_median'] = int(median(codon_count_data)) if codon_count_data.size > 0 else None
 
         self.__log_data = worker.__work_log_validator.normalized(self.__log_data)
         self.__work_log.store([self.__log_data])
@@ -318,13 +326,17 @@ class worker():
         else:
             worker.__logger.info("No exisiting population found in work registry. Generating from initial query: %s.", self.work['initial_query'])
         self.gene_pool = gene_pool(self.work['initial_query'], file_ptr=self.work['gene_pool'])
-        self.work['population_dict'] = { s['signature']: self.__individual_fitness(self.gene_pool[s['signature']]) for s in self.gene_pool.gl(self.work['initial_query'], ['signature']) }   
         worker.__logger.info("Starting population of %d individuals loaded into gene pool.", len(self.work['population_dict']))
 
         if existing_population and not self.__valid_work(self.work['population_dict']):
             worker.__logger.error("Work definition is not consistent with existing work registration details. Worker config: %s", str(self.config))
             worker.__logger.error("Has the fitness function been modified?")
             exit(1)
+        if not existing_population:
+            initial_population = self.gene_pool.gl(self.work['initial_query'], ['signature'])
+            self.work['population_dict'] = { s['signature']: self.__individual_fitness(self.gene_pool[s['signature']]) for s in initial_population }   
+            worker.__logger.debug("Initial population: %s", self.work['population_dict'])
+
 
         # Loop
         epoch = 0
@@ -338,7 +350,8 @@ class worker():
             new_gcs = self.__evolve(self.work['population_dict'], invalid_population)
             worker.__logger.debug("Epoch %d. Breeding completed.", epoch)
 
-            population, invalid_population = self.__calculate_fitness(new_gcs)
+            population, invalid_population_tmp = self.__calculate_fitness(new_gcs)
+            invalid_population.extend(invalid_population_tmp)
             population.update(self.work['population_dict'])
             worker.__logger.debug("Epoch %d. Fitness calculated", epoch)
             worker.__logger.debug("Epoch %d. Population: %s", epoch, population)
@@ -362,4 +375,4 @@ class worker():
 
             self.__log_work()
             worker.__logger.debug("Epoch %d. Statistics logged and epoch completed.", epoch)
-            barf()
+            #if epoch == 2: barf()

@@ -12,7 +12,7 @@ from ..database_table import database_table
 from logging import getLogger
 from .genomic_library_entry_validator import genomic_library_entry_validator
 from ..query_validator import query_validator
-from pprint import pprint, pformat
+from pprint import pformat
 from ..config import get_config
 from os.path import dirname, join
 from json import load
