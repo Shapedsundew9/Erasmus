@@ -19,12 +19,12 @@ from .platform_info_validator import platform_info_validator
 __logger = getLogger(__name__)
 
 
-# TODO: Implemented EGPOPs
+# TODO: Implemented EGPOps
 def __get_platform_info():
     # TODO: Replace these with an Erasmus benchmark.
     # The metric needs to be stable on a system to 1 unit as it is used in the SHA256 signature to
     # identify the platform.
-    performance = 0.0
+    performance = 1.0
     return {
         "machine": machine(),
         "processor": processor(),
@@ -32,7 +32,7 @@ def __get_platform_info():
         "python_version": python_version(),
         "system": system(),
         "release": release(),
-        "EGPOPs": performance
+        "EGPOps/s": performance
     }
 
 

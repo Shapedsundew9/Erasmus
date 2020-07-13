@@ -120,7 +120,7 @@
             "description": "The system’s release, e.g. '2.2.0' or 'NT'. An empty string if the value cannot be determined."
         }
     },
-    "EGPOPs": {
+    "EGPOps": {
         "type": "float",
         "min": 0.0,
         "required": true,

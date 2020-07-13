@@ -28,7 +28,7 @@ class platform_info_validator(Validator):
 
     def _normalize_default_setter_set_signature(self, document):
         sig_str = self.document['machine'] + self.document['processor'] + self.document['python_version']
-        sig_str += self.document['system'] + self.document['release'] + str(int(self.document['EGPOPs']))
+        sig_str += self.document['system'] + self.document['release'] + str(int(self.document['EGPOps']))
 
         # Remove spaces etc. to give some degrees of freedom in formatting and
         # not breaking the signature

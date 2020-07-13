@@ -509,6 +509,31 @@
     },
     {
         "graph": {
+            "A": [["I", 0]],
+            "O": [["A", 0]]
+        },
+        "gca": "0000000000000000000000000000000000000000000000000000000000000000",
+        "gcb": "0000000000000000000000000000000000000000000000000000000000000000",
+        "generation": 0,
+        "alpha_class": 0,
+        "beta_class": 0,
+        "opt_num_codons": 1,
+        "properties": {
+            "unary_mutation": true
+        },
+        "meta_data": {
+            "name": "Remove constant with random offset",
+            "function": {
+                "python3": {
+                    "0": {
+                        "inline": "remove_constant({0[i0]}, random())"
+                    }
+                }
+            }
+        }
+    },
+    {
+        "graph": {
             "A": [["I", 0], ["I", 1]],
             "O": [["A", 0]]
         },

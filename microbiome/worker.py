@@ -8,6 +8,7 @@ Copyright (c) 2020 Your Company
 '''
 
 import sys
+from traceback import format_exc
 from .genetics import mutations as gm
 from .genetics.mutations import meta_data
 from .platform_info import get_platform_info
@@ -165,9 +166,12 @@ class worker():
         try:
                 ngc = func()[0]
         except Exception as ex:
-            worker.__logger.warning("Conception failed with {}, {}".format(type(ex).__name__, ex.args))
+            worker.__logger.warning("Conception failed with {}, {}, {}".format(type(ex).__name__, ex.args, format_exc()))
             self.__log_data['failed_conception'] += 1
             ngc = None
+
+        # It is possible that a mutation could turn a gc into another type
+        if not isinstance(ngc, dict): ngc = None
 
         # Update parentage & class data
         if not ngc is None:
@@ -233,7 +237,7 @@ class worker():
     def __log_work(self):
         self.__log_data['wall_clock_runtime'] = perf_counter() - self.__log_data['wall_clock_runtime']
         self.__log_data['cpu_runtime'] = process_time() - self.__log_data['cpu_runtime']
-        self.__log_data['EGPOPs'] = self.__log_data['cpu_runtime']
+        self.__log_data['EGPOps'] = self.work['platform']['EGPOps/s'] * self.__log_data['cpu_runtime']
         self.__log_data['RSS'] = Process().memory_info().rss / (1024 * 1024 * 1024.0)
         self.__log_data['worker'] = self.registration_document['signature']
 

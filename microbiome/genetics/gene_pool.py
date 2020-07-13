@@ -87,7 +87,7 @@ class gene_pool():
         signature_list = list(self.__gene_pool.keys())
         for signature in sorted(signature_list):
             gc = self.__gene_pool[signature]
-            if gene_pool.__logger.getEffectiveLevel() == DEBUG: file_ptr.write("'''\n{}\n'''\n".format(pformat(gc)))    
+            if gene_pool.__logger.getEffectiveLevel() == DEBUG: file_ptr.write("'''\n{}\n'''\n".format(pformat({k: v for k, v in gc.items() if k[:2] != '__'})))    
             file_ptr.write("def " + self.function_name(signature) + "(i):\n")
             if not 'function' in gc['meta_data']:
                 c = gc['graph']['C'] if 'C' in gc['graph'] else [] 

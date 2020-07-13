@@ -64,23 +64,30 @@ class genomic_library_entry_validator(Validator):
 
         # All values in "C" must be referenced at least once
         if "C" in value:
-            c_indices = set()
+            actual_indices = set()
             for pr in value.keys():
                 if pr != "C":
                     for r, i in value[pr]:
-                        if r == "C": c_indices.add(i)
-            c_indices = list(c_indices)
-            if sorted(c_indices) != list(range(len(value["C"]))): self._error(field, "Missing at least one reference to C")
+                        if r == "C": actual_indices.add(i)
+            expected_indices = set(range(len(value["C"])))
+            for i in actual_indices - expected_indices: self._error(field, "Index {} is out of range for 'C'".format(i))
+            for i in expected_indices - actual_indices: self._error(field, "Index {} was expected in 'C'".format(i))
 
         # References to I must start at 0 and be contiguous
-        i_indices = set()
+        actual_indices = set()
         for pr in value.keys():
             if pr != "C":
                 for r, i in value[pr]:
-                    if r == "I": i_indices.add(i)
-        i_indices = list(i_indices)
-        if sorted(i_indices) != list(range(len(i_indices))): self._error(field, "Missing at least one reference to I")
+                    if r == "I": actual_indices.add(i)
+        expected_indices = set(range(max(actual_indices))) if len(actual_indices) > 0 else set()
+        for i in expected_indices - actual_indices: self._error(field, "Index {} was expected in 'I'".format(i))
 
+        # 'D's mark deleted references that were not fixed.
+        for pr in value.keys():
+            if pr != "C":
+                for idx, (r, _) in enumerate(value[pr]):
+                    if r == "D": self._error(field, "Field: '{}' Index: {} was deleted.".format(pr, idx))
+            
 
     # Checks for a valid codon or non-codon
     def _check_with_valid_alpha_class(self, field, value):
