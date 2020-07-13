@@ -16,6 +16,7 @@ from logging import getLogger
 
 
 NULL_GC = "0" * 64
+DEAD_GC_PREFIX = "deadbeef000000000000000000000000"
 
 
 #TODO: Add and entry format JSON validator for the meta data

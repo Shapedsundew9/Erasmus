@@ -98,14 +98,14 @@ class genomic_library():
     def normalize(self, entries):
         if isinstance(entries, list):
             for i, entry in enumerate(entries):
-                if self.validate(entry):
+                if self.validate(entry)[0]:
                     entries[i] = genomic_library.__entry_validator.normalized(entry)
                     if not self.__calculate_fields(entries[i], entries): return False
                 else:
                     genomic_library.__logger.debug("Entry %s is not valid. No entries will be stored.", entries[i])
                     return False
         else:
-            if self.validate(entries):
+            if self.validate(entries)[0]:
                 entries.update(genomic_library.__entry_validator.normalized(entries))
                 if not self.__calculate_fields(entries, [entries]): return False
             else:
@@ -124,9 +124,9 @@ class genomic_library():
     def validate(self, entry):
         if not genomic_library.__entry_validator(entry):
             err_txt = genomic_library.__entry_validator.errors
-            genomic_library.__logger.debug("Entry is not valid:\n%s\n%s", pformat(err_txt), pformat(entry))
-            return False
-        return True
+            genomic_library.__logger.debug("Entry is not valid:\n%s\n%s", pformat(err_txt), pformat({k: v for k, v in entry.items() if k[:2] != '__'}))
+            return False, err_txt 
+        return True, []
 
 
     # Some fields depend on GCA & GCB which must be defined in either the genomic library or the entries to be added.

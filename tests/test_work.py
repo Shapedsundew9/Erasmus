@@ -9,7 +9,7 @@ Copyright (c) 2020 Your Company
 '''
 
 from logging import getLogger, basicConfig, DEBUG, INFO
-basicConfig(filename='erasmus.log', filemode='w', format='%(asctime)s %(levelname)s %(name)s.%(funcName)s: %(message)s', level=DEBUG)
+basicConfig(filename='erasmus.log', filemode='w', format='%(asctime)s %(levelname)s %(name)s.%(funcName)s: %(message)s', level=INFO)
 
 import pytest
 from os.path import join, dirname

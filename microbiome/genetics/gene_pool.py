@@ -9,7 +9,7 @@ Copyright (c) 2020 Your Company
 
 from logging import getLogger, DEBUG
 from .genomic_library import genomic_library
-from .genomic_library_entry_validator import NULL_GC
+from .genomic_library_entry_validator import NULL_GC, DEAD_GC_PREFIX
 from .genetic_code import genetic_code
 from tempfile import NamedTemporaryFile
 from graph_tool import Graph
@@ -67,8 +67,11 @@ class gene_pool():
         return "gc_" + signature
 
 
+    # Any GCs pulled from the genomic library are by definition valid
     def __update(self):
-        self.update(gene_pool.__gl.load(self.__query), push=False)
+        gcs = gene_pool.__gl.load(self.__query)
+        for gc in gcs: gc['__valid'] = True
+        self.update(gcs, push=False)
 
 
     def __function_not_found(self, name):
@@ -84,11 +87,9 @@ class gene_pool():
         gene_pool.__logger.debug("Gene pool file created: %s", file_ptr.name)
         file_ptr.write(gene_pool.__CALLABLE_FILE_HEADER)    
         file_ptr.write("\n\nfrom microbiome.genetics.gc_mutation_functions import *\nfrom random import random, uniform\n\n\n")
-        signature_list = list(self.__gene_pool.keys())
-        for signature in sorted(signature_list):
-            gc = self.__gene_pool[signature]
+        for gc in active_gcs:
             if gene_pool.__logger.getEffectiveLevel() == DEBUG: file_ptr.write("'''\n{}\n'''\n".format(pformat({k: v for k, v in gc.items() if k[:2] != '__'})))    
-            file_ptr.write("def " + self.function_name(signature) + "(i):\n")
+            file_ptr.write("def " + self.function_name(gc['signature']) + "(i):\n")
             if not 'function' in gc['meta_data']:
                 c = gc['graph']['C'] if 'C' in gc['graph'] else [] 
                 if gc['gca'] != NULL_GC: file_ptr.write("\ta = " + self.function_name(gc['gca']) + "(" + self.__write_arg(gc['graph']['A'], c) + ")\n")
@@ -102,7 +103,7 @@ class gene_pool():
         # Add some function meta_data
         file_ptr.write("meta_data = {\n\t")
         lines = []
-        for gc in self.__gene_pool.values():
+        for gc in active_gcs:
             line = "'{}':{{".format(gc['signature']) + ','.join(["'{}': {}".format(k, gc[k]) for k in gene_pool.__META_DATA_FIELDS])
             lines.append(line + ", 'callable': {} }}".format(self.function_name(gc['signature'])))
         file_ptr.write(',\n\t'.join(lines) + "\n}\n")
@@ -145,29 +146,30 @@ class gene_pool():
             signature = signature_queue.pop()
             if not signature in self.__gene_pool:
                 self.__gene_pool[signature] = gc
-                self.__push_queue.append(gc)
-                if '__count' not in gc:
-                    gc['__count'] = 0
-                    zero_count_list.append(signature)
-                for __ab, ab in (('__gca', 'gca'), ('__gcb', 'gcb')):
-                    if not gc[ab] in self.__gene_pool:
-                        if not gc[ab] in signature_queue:
-                            if  gc[ab] == NULL_GC:
-                                gc[__ab] = None
+                if gc['__valid']:
+                    self.__push_queue.append(gc)
+                    if '__count' not in gc:
+                        gc['__count'] = 0
+                        zero_count_list.append(signature)
+                    for __ab, ab in (('__gca', 'gca'), ('__gcb', 'gcb')):
+                        if not gc[ab] in self.__gene_pool:
+                            if not gc[ab] in signature_queue:
+                                if  gc[ab] == NULL_GC:
+                                    gc[__ab] = None
+                                else:
+                                    gene_pool.__logger.debug("Loading GCAB %s from genomic library.", gc[ab])
+                                    addition_queue.append(gene_pool.__gl[gc[ab]])
+                                    signature_queue.append(addition_queue[-1]['signature'])
+                                    gc[__ab] = addition_queue[-1]
+                                    gc[__ab]['__count'] = 1
                             else:
-                                gene_pool.__logger.debug("Loading GCAB %s from genomic library.", gc[ab])
-                                addition_queue.append(gene_pool.__gl[gc[ab]])
-                                signature_queue.append(addition_queue[-1]['signature'])
-                                gc[__ab] = addition_queue[-1]
-                                gc[__ab]['__count'] = 1
+                                gc[__ab] = addition_queue[signature_queue.index(gc[ab])]
+                                if not '__count' in gc[__ab]: gc[__ab]['__count'] = 0
+                                gc[__ab]['__count'] += 1
                         else:
-                            gc[__ab] = addition_queue[signature_queue.index(gc[ab])]
-                            if not '__count' in gc[__ab]: gc[__ab]['__count'] = 0
+                            if __ab not in gc: gc[__ab] = self.__gene_pool[gc[ab]]
+                            if '__count' not in gc[__ab]: gc[__ab]['__count'] = 0
                             gc[__ab]['__count'] += 1
-                    else:
-                        if __ab not in gc: gc[__ab] = self.__gene_pool[gc[ab]]
-                        if '__count' not in gc[__ab]: gc[__ab]['__count'] = 0
-                        gc[__ab]['__count'] += 1
 
         # Delete any GCs that were sent for deletion that have no references.
         delete_queue = [signature for signature in delete_queue if not self.__gene_pool[signature]['count']]
@@ -189,7 +191,7 @@ class gene_pool():
         if push: self.push()
 
         # Re-create the callables file
-        self.__create_callables(self.__gene_pool.keys())
+        self.__create_callables([gc for gc in filter(lambda x: x['__valid'], self.__gene_pool.values())])
 
 
     def validate(self, entry):
