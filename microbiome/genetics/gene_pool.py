@@ -58,8 +58,11 @@ class gene_pool():
         self.__update()
  
 
-
     def __getitem__(self, signature):
+        if signature not in self.__gene_pool:
+            gcs = gene_pool.__gl.load([{'signature': signature}])
+            gcs[0]['__valid'] = True
+            self.add(gcs, push=False)
         return self.__gene_pool[signature]
 
 
@@ -71,7 +74,7 @@ class gene_pool():
     def __update(self):
         gcs = gene_pool.__gl.load(self.__query)
         for gc in gcs: gc['__valid'] = True
-        self.update(gcs, push=False)
+        self.add(gcs, push=False)
 
 
     def __function_not_found(self, name):
@@ -127,16 +130,29 @@ class gene_pool():
         return getattr(self.__module, method, lambda: self.__function_not_found(method))
 
 
+    # Delete any GCs that were sent for deletion that have no references.
+    def remove(self, gcs):
+        delete_queue = [self.__gene_pool[gc] for gc in gcs]
+        while delete_queue:
+            victim = delete_queue.pop()
+            if not '__count' in victim or not victim['__count']:
+                for __gcab in ('__gca', '__gcb'):
+                    gc = victim[__gcab]
+                    if not gc is None:
+                        gc['__count'] -= 1
+                        if not gc['__count']: delete_queue.append(gc)
+                del self.__gene_pool[victim['signature']]
+
+
     # Add a list of genetic codes to the gene pool
     # GCs added have no referencing GC they are considered active
     # Sub-codes will be added automatically if needed
     # GCA & GCB signatures will be replaced with references to the genetic code
     # A 'count' field is added counting the number of references to the GC within the gene pool
-    def update(self, gcs, delete_queue=None, push=True):
+    def add(self, gcs, push=True):
         addition_queue = [gc for gc in gcs if gc['signature'] != NULL_GC]
         signature_queue = [gc['signature'] for gc in addition_queue]
         zero_count_list = []
-        if delete_queue is None: delete_queue = [] 
 
         # Add to the gene pool
         # Link GCA & GCB directly to thier GC objects
@@ -170,17 +186,6 @@ class gene_pool():
                             if __ab not in gc: gc[__ab] = self.__gene_pool[gc[ab]]
                             if '__count' not in gc[__ab]: gc[__ab]['__count'] = 0
                             gc[__ab]['__count'] += 1
-
-        # Delete any GCs that were sent for deletion that have no references.
-        delete_queue = [signature for signature in delete_queue if not self.__gene_pool[signature]['count']]
-        while delete_queue:
-            victim = delete_queue.pop()
-            for __gcab in ('__gca', '__gcb'):
-                gc = self.__gene_pool[victim][__gcab]
-                if not gc is None:
-                    gc['__count'] -= 1
-                    if not gc['__count']: delete_queue.append(gc['signature'])
-            del self.__gene_pool[victim]
 
         # Create a a genetic_code node tree for top level (0 gene pool reference count) GCs
         for signature in zero_count_list:

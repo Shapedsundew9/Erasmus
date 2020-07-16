@@ -10,6 +10,11 @@ Copyright (c) 2020 Your Company
 
 
 from copy import deepcopy 
+from logging import getLogger
+from pprint import pformat
+
+
+__logger = getLogger(__name__)
 
 
 # GC arguments can be modified by mutation functions
@@ -119,6 +124,8 @@ def mutate_constant(gc, f_offset, factor):
 
 # Stack gca on gcb.
 def stack(gca, gcb):
+    __logger.debug("GCA: {}".format(pformat(gca)))
+    __logger.debug("GCB: {}".format(pformat(gcb)))
     len_ai = len(gca['graph']['A'])
     len_ao = len(gca['graph']['O'])
     len_bi = len(gcb['graph']['A'])

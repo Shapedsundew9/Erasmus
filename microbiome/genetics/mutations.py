@@ -5,1450 +5,2713 @@ from microbiome.genetics.gc_mutation_functions import *
 from random import random, uniform
 
 
-def gc_ce4e58fcbe55e5caf14c456fd2603a7d81c19e89e61e63b0e56f8c1958ba3da1(i):
-	return (stack(i[0], i[1]),)
-
-
-def gc_4140f47e72adf3343c04c82d7766bf9e3bc71a6b606b7bc2e93f45a6349792e5(i):
-	return (mutate_constant(i[0], i[1], -1.0),)
-
-
-def gc_fcba468768bf701a1234ea41739916b0655512c74c74e5930cae35d13b92925f(i):
-	return (mutate_constant(i[0], i[1], 0.5),)
-
-
-def gc_ea549df0fcde3b6375528205fef6eea94b79a442fd8afa77905fbeab96c6bcea(i):
-	return (mutate_constant(i[0], i[1], 1.5),)
-
-
-def gc_bcf49ecb02279621bc1dd9d70265175f142ccfcc742ff07cf3983c830c4670fc(i):
-	return (remove_constant(i[0], random()),)
-
-
-def gc_81b5a567e50cf6fd71bfcfc3c5d23faa0f245fb0a71900fa9573eba1a94ee80d(i):
-	return (append_constant(i[0], 0.0),)
-
-
+'''
+{'alpha_class': 0,
+ 'beta_class': 0,
+ 'code_depth': 1,
+ 'codon_depth': 1,
+ 'created': '2020-07-16T00:25:44.370142Z',
+ 'creator': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gca': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gcb': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'generation': 1,
+ 'graph': {'A': [['I', 0]], 'O': [['A', 0]]},
+ 'meta_data': {'function': {'python3': {'0': {'inline': 'append_constant({0[i0]}, '
+                                                        '-1.0)'}}},
+               'name': 'New constant: -1.0'},
+ 'num_codes': 1,
+ 'num_inputs': 1,
+ 'num_outputs': 1,
+ 'num_unique_codes': 1,
+ 'opt_num_codons': 1,
+ 'properties': {'binary_mutation': False,
+                'conditional': False,
+                'extended': False,
+                'logical': False,
+                'mathematical': False,
+                'unary_mutation': True},
+ 'raw_num_codons': 1,
+ 'reference_count': 0,
+ 'signature': '7404cd51f0ff21ae1b51cd8e13b6bacf706cafde670c9ef05ae282fea9ff2364'}
+'''
 def gc_7404cd51f0ff21ae1b51cd8e13b6bacf706cafde670c9ef05ae282fea9ff2364(i):
 	return (append_constant(i[0], -1.0),)
 
 
-def gc_7bb5eb204e326fbabe069fb824e88a6ca68ec34c39eaa05a4d271a3f92e4b4fd(i):
-	return (append_constant(i[0], 1.0),)
-
-
-def gc_e279714512f0498ee888c84f1906de2a5e6bf082d60fdbb32de84a0c16f6f071(i):
-	return (append_constant(i[0], uniform(-1.0, 1.0)),)
-
-
-def gc_ee2cc4658d03ebb3ffbcdc44d31fa89b7644a654567d66b93bac5f6186899d4d(i):
-	return (connect(i[0], 'C', 'O', 0.0, 0.0),)
-
-
-def gc_f131f1d7c087d2b567acec3f2a476de27b9110e0794c11b2c97098e878feed08(i):
-	return (connect(i[0], 'A', 'O', 0.0, 0.0),)
-
-
-def gc_b4dc32c9bc15e51d8070be7bf0ee9bfc344b73cc8ec857978ff72e71a3efb911(i):
-	return (connect(i[0], 'I', 'O', 0.0, 0.0),)
-
-
-def gc_c436ba9675317cfa2b5e32a3f00cf08b57295e06f28d5203fbaa1cd6b430e6d7(i):
-	return (connect(i[0], 'C', 'B', 0.0, 0.0),)
-
-
-def gc_23c441e967ef4b8637554409522bc07c1d0faac129bccf73473c098650a63957(i):
-	return (connect(i[0], 'A', 'B', 0.0, 0.0),)
-
-
-def gc_5f1ff9bfaf9bc1cdb5d520bd056048ebe5467cc6580f03b9c0c29b7eb64c4d2b(i):
-	return (connect(i[0], 'I', 'B', 0.0, 0.0),)
-
-
-def gc_4f54b44dd522c044b41833089ca47ece6b280ff8c11324a5b8b6a957d92f6de8(i):
-	return (connect(i[0], 'C', 'A', 0.0, 0.0),)
-
-
-def gc_a95ea10e7327badf07045086c7e935f5cc66a9b47f323fcdf30d76f66a592829(i):
-	return (connect(i[0], 'I', 'C', 0.0, 0.0),)
-
-
-def gc_63971bfb77792f35cda0463d310e2724ae108354fb287df386ab88a752743fcc(i):
-	return (connect(i[0], 'C', 'O', random(), random()),)
-
-
-def gc_4793e082e2462b3ed47a23c000e9e8165bf7b6dea9bde08182b7203a708f6214(i):
-	return (connect(i[0], 'A', 'O', random(), random()),)
-
-
-def gc_6bba0589ed454784e75f8a184fb8fc8d59a3772e73a8414f2ba915ce211f6773(i):
-	return (connect(i[0], 'I', 'O', random(), random()),)
-
-
-def gc_278ddaaaa439429bad68df4b81f3b42ecdc7cf2d2ea8ad086a2ca185a3acbbb6(i):
-	return (connect(i[0], 'C', 'B', random(), random()),)
-
-
+'''
+{'alpha_class': 0,
+ 'beta_class': 0,
+ 'code_depth': 1,
+ 'codon_depth': 1,
+ 'created': '2020-07-16T00:25:44.079798Z',
+ 'creator': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gca': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gcb': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'generation': 1,
+ 'graph': {'A': [['I', 0]], 'O': [['A', 0]]},
+ 'meta_data': {'function': {'python3': {'0': {'inline': "connect({0[i0]}, 'A', "
+                                                        "'B', random(), "
+                                                        'random())'}}},
+               'name': 'GCB-GCA connection with random fractional offsets'},
+ 'num_codes': 1,
+ 'num_inputs': 1,
+ 'num_outputs': 1,
+ 'num_unique_codes': 1,
+ 'opt_num_codons': 1,
+ 'properties': {'binary_mutation': False,
+                'conditional': False,
+                'extended': False,
+                'logical': False,
+                'mathematical': False,
+                'unary_mutation': True},
+ 'raw_num_codons': 1,
+ 'reference_count': 0,
+ 'signature': 'b3426a0b5077c14d09c2eb091e8ba0ded68486890d5f0146cfdec34ebbe383d6'}
+'''
 def gc_b3426a0b5077c14d09c2eb091e8ba0ded68486890d5f0146cfdec34ebbe383d6(i):
 	return (connect(i[0], 'A', 'B', random(), random()),)
 
 
-def gc_81d83b6dfe8764bc32df13948a86e7721818e3648d8f916708f8d416b2b94370(i):
-	return (connect(i[0], 'I', 'B', random(), random()),)
-
-
-def gc_102a4d1fc747c5f81b314937da02b830ca4a49a6010aa65fd478dd1bd68675e8(i):
-	return (connect(i[0], 'C', 'A', random(), random()),)
-
-
-def gc_4cde93184158819b805ef591641fad84f4c0ee4fdb2715d267cbbcce1a53f8a4(i):
-	return (connect(i[0], 'I', 'A', random(), random()),)
-
-
-def gc_15351a2e310bb0e2f6189d1728d5eee750c673dcb0b15c0f40302c6ef4e33535(i):
-	a = gc_bcf49ecb02279621bc1dd9d70265175f142ccfcc742ff07cf3983c830c4670fc((i[0],))
-	return (a[0],)
-
-
-def gc_cf8cd9075b571cb5a59d37e378029ff54502df66779163ba058c01384f335c2c(i):
-	a = gc_4f54b44dd522c044b41833089ca47ece6b280ff8c11324a5b8b6a957d92f6de8((i[0], 0.0, 0.0,))
-	return (a[0],)
-
-
-def gc_66ac33a3f469fe70a0c72886b61ccd32f2b9b4738c8dd22112ba9e47ebe4ff2b(i):
-	a = gc_ce4e58fcbe55e5caf14c456fd2603a7d81c19e89e61e63b0e56f8c1958ba3da1((i[0], i[1],))
-	return (a[0],)
-
-
-def gc_065c6b174b50d8682b49d71112febf3f052ad94f794cef68009887ae1bc09b69(i):
-	a = gc_f131f1d7c087d2b567acec3f2a476de27b9110e0794c11b2c97098e878feed08((i[0], 0.0, 0.0,))
-	return (a[0],)
-
-
-def gc_aa177a51676b4ac9993b3491a70b5e6d53f2b26bde6e775c5a22fa1e22186c41(i):
-	a = gc_b4dc32c9bc15e51d8070be7bf0ee9bfc344b73cc8ec857978ff72e71a3efb911((0.0, 0.0, 0.0,))
-	return (a[0],)
-
-
-def gc_3669b2f53208e322423da38d8006444917940ddfedbf169eaf0212c0fe6f10b7(i):
-	a = gc_23c441e967ef4b8637554409522bc07c1d0faac129bccf73473c098650a63957((i[0], 0.0, 0.0,))
-	return (a[0],)
-
-
-def gc_7bf45529286677eb2266ff38b3c8a6a898ea41a3cbe831a2e60b1397faa8c106(i):
-	a = gc_a95ea10e7327badf07045086c7e935f5cc66a9b47f323fcdf30d76f66a592829((i[0], 0.0, 0.0,))
-	return (a[0],)
-
-
-def gc_3af2281d4860011bb078e2a1c247e28fde86faba860f905eb5579380d2616559(i):
-	a = gc_81d83b6dfe8764bc32df13948a86e7721818e3648d8f916708f8d416b2b94370((0.0,))
-	return (a[0],)
-
-
-def gc_a380199b1efb5e06e8bf0ba253f2250b665534df9402e9ba08405876a9d0911b(i):
-	a = gc_4cde93184158819b805ef591641fad84f4c0ee4fdb2715d267cbbcce1a53f8a4((i[0],))
-	return (a[0],)
-
-
-def gc_46b77d4a61398a228ef0b64e465cc33ee6f4527980586ea4a40ab2e6d3aedec0(i):
-	a = gc_23c441e967ef4b8637554409522bc07c1d0faac129bccf73473c098650a63957((0.0, 0.0, 0.0,))
-	return (a[0],)
-
-
+'''
+{'alpha_class': 1,
+ 'beta_class': -1,
+ 'code_depth': 2,
+ 'codon_depth': 1,
+ 'created': '2020-07-16T00:25:45.086937Z',
+ 'creator': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gca': 'fcba468768bf701a1234ea41739916b0655512c74c74e5930cae35d13b92925f',
+ 'gcb': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'generation': 2,
+ 'graph': {'A': [['I', 0], ['I', 1]], 'O': [['A', 0]]},
+ 'meta_data': {'parents': [['fcba468768bf701a1234ea41739916b0655512c74c74e5930cae35d13b92925f']]},
+ 'num_codes': 1,
+ 'num_inputs': 2,
+ 'num_outputs': 1,
+ 'num_unique_codes': 1,
+ 'opt_num_codons': 0,
+ 'properties': {'binary_mutation': False,
+                'conditional': False,
+                'extended': False,
+                'logical': False,
+                'mathematical': False,
+                'unary_mutation': True},
+ 'raw_num_codons': 1,
+ 'reference_count': 0,
+ 'signature': '282424295de4addaa42b8117a6e53ce0136fcfba2b1cdfab61ac3c7e3a823516'}
+'''
 def gc_282424295de4addaa42b8117a6e53ce0136fcfba2b1cdfab61ac3c7e3a823516(i):
 	a = gc_fcba468768bf701a1234ea41739916b0655512c74c74e5930cae35d13b92925f((i[0], i[1],))
 	return (a[0],)
 
 
+'''
+{'alpha_class': 1,
+ 'beta_class': -1,
+ 'code_depth': 2,
+ 'codon_depth': 1,
+ 'created': '2020-07-16T00:25:45.045221Z',
+ 'creator': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gca': '81b5a567e50cf6fd71bfcfc3c5d23faa0f245fb0a71900fa9573eba1a94ee80d',
+ 'gcb': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'generation': 2,
+ 'graph': {'A': [['I', 0]], 'O': [['A', 0]]},
+ 'meta_data': {'parents': [['81b5a567e50cf6fd71bfcfc3c5d23faa0f245fb0a71900fa9573eba1a94ee80d']]},
+ 'num_codes': 1,
+ 'num_inputs': 1,
+ 'num_outputs': 1,
+ 'num_unique_codes': 1,
+ 'opt_num_codons': 0,
+ 'properties': {'binary_mutation': False,
+                'conditional': False,
+                'extended': False,
+                'logical': False,
+                'mathematical': False,
+                'unary_mutation': True},
+ 'raw_num_codons': 1,
+ 'reference_count': 0,
+ 'signature': 'b98b16eb6649388de0a5294dcbde704470050a9c23850db69a1b239bd6788ee6'}
+'''
 def gc_b98b16eb6649388de0a5294dcbde704470050a9c23850db69a1b239bd6788ee6(i):
 	a = gc_81b5a567e50cf6fd71bfcfc3c5d23faa0f245fb0a71900fa9573eba1a94ee80d((i[0],))
 	return (a[0],)
 
 
-def gc_562f9ffb473aade86537c9d78a94314f32cc0e1e6a5c71926777777c5fd35bbf(i):
-	a = gc_63971bfb77792f35cda0463d310e2724ae108354fb287df386ab88a752743fcc((i[0],))
-	return (a[0],)
-
-
-def gc_65205972c2842865c3b8de9cd43d117c8bc0ff4fc05f27284d93416cd604dcf4(i):
-	a = gc_81d83b6dfe8764bc32df13948a86e7721818e3648d8f916708f8d416b2b94370((i[0],))
-	return (a[0],)
-
-
-def gc_5d180795babcb82e7ea8b4357ae602a44666c60f0d2b851051c89e1149e72f97(i):
-	a = gc_278ddaaaa439429bad68df4b81f3b42ecdc7cf2d2ea8ad086a2ca185a3acbbb6((i[0],))
-	return (a[0],)
-
-
-def gc_64bf889a2002c7617f0b7b15e7cceaec029a54e17fc67c007767a05e55a5e65f(i):
-	a = gc_4f54b44dd522c044b41833089ca47ece6b280ff8c11324a5b8b6a957d92f6de8((i[0], 0.0, i[0],))
-	return (a[0],)
-
-
-def gc_0b71cf0dd17adf2126959c3712c97c25420a33cb71657225c3d76c127a2d3f8d(i):
-	a = gc_ee2cc4658d03ebb3ffbcdc44d31fa89b7644a654567d66b93bac5f6186899d4d((i[0], 0.0, 0.0,))
-	return (a[0],)
-
-
-def gc_8e63d58261949359d0c4f000d50406d5c5df57a1809ca623baa7940a1ac1c84a(i):
-	a = gc_278ddaaaa439429bad68df4b81f3b42ecdc7cf2d2ea8ad086a2ca185a3acbbb6((0.0,))
-	return (a[0],)
-
-
-def gc_572f3d56521fb576738b38239b46b1f2e4f881dbeb18ba57b3254a6dceb5782e(i):
-	a = gc_6bba0589ed454784e75f8a184fb8fc8d59a3772e73a8414f2ba915ce211f6773((i[0],))
-	return (a[0],)
-
-
-def gc_42bdabf6208e9529f50a37386efafc88a45bdd1ed90be29c97a18041626dba9b(i):
-	a = gc_7bb5eb204e326fbabe069fb824e88a6ca68ec34c39eaa05a4d271a3f92e4b4fd((i[0],))
-	return (a[0],)
-
-
-def gc_e85a273594784a9e97619cb998fe8dd6f0cb52a4f283de654e0899b4b1c0d481(i):
-	a = gc_e279714512f0498ee888c84f1906de2a5e6bf082d60fdbb32de84a0c16f6f071((0.768639686811253,))
-	return (a[0],)
-
-
+'''
+{'alpha_class': 1,
+ 'beta_class': -1,
+ 'code_depth': 2,
+ 'codon_depth': 1,
+ 'created': '2020-07-16T00:25:45.002726Z',
+ 'creator': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gca': 'f131f1d7c087d2b567acec3f2a476de27b9110e0794c11b2c97098e878feed08',
+ 'gcb': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'generation': 2,
+ 'graph': {'A': [['C', 0], ['C', 0], ['C', 1]],
+           'C': [0.0, 0.0],
+           'O': [['A', 0]]},
+ 'meta_data': {'parents': [['f131f1d7c087d2b567acec3f2a476de27b9110e0794c11b2c97098e878feed08']]},
+ 'num_codes': 1,
+ 'num_inputs': 0,
+ 'num_outputs': 1,
+ 'num_unique_codes': 1,
+ 'opt_num_codons': 0,
+ 'properties': {'binary_mutation': False,
+                'conditional': False,
+                'extended': False,
+                'logical': False,
+                'mathematical': False,
+                'unary_mutation': True},
+ 'raw_num_codons': 1,
+ 'reference_count': 0,
+ 'signature': 'aab332740bb7b6730311c956b05c16d19814c2d752e1db38b65aa95c7b9209d7'}
+'''
 def gc_aab332740bb7b6730311c956b05c16d19814c2d752e1db38b65aa95c7b9209d7(i):
 	a = gc_f131f1d7c087d2b567acec3f2a476de27b9110e0794c11b2c97098e878feed08((0.0, 0.0, 0.0,))
 	return (a[0],)
 
 
-def gc_830056fc717060a25cfa061faedab989fdbc7208958cac782cfddff53a9de65b(i):
-	a = gc_a95ea10e7327badf07045086c7e935f5cc66a9b47f323fcdf30d76f66a592829((0.0, 0.0, 0.0,))
+'''
+{'alpha_class': 1,
+ 'beta_class': -1,
+ 'code_depth': 2,
+ 'codon_depth': 1,
+ 'created': '2020-07-16T00:25:44.959186Z',
+ 'creator': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gca': '23c441e967ef4b8637554409522bc07c1d0faac129bccf73473c098650a63957',
+ 'gcb': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'generation': 2,
+ 'graph': {'A': [['I', 0], ['C', 0], ['C', 1]],
+           'C': [0.0, 0.0],
+           'O': [['A', 0]]},
+ 'meta_data': {'parents': [['23c441e967ef4b8637554409522bc07c1d0faac129bccf73473c098650a63957']]},
+ 'num_codes': 1,
+ 'num_inputs': 1,
+ 'num_outputs': 1,
+ 'num_unique_codes': 1,
+ 'opt_num_codons': 0,
+ 'properties': {'binary_mutation': False,
+                'conditional': False,
+                'extended': False,
+                'logical': False,
+                'mathematical': False,
+                'unary_mutation': True},
+ 'raw_num_codons': 1,
+ 'reference_count': 0,
+ 'signature': '3669b2f53208e322423da38d8006444917940ddfedbf169eaf0212c0fe6f10b7'}
+'''
+def gc_3669b2f53208e322423da38d8006444917940ddfedbf169eaf0212c0fe6f10b7(i):
+	a = gc_23c441e967ef4b8637554409522bc07c1d0faac129bccf73473c098650a63957((i[0], 0.0, 0.0,))
 	return (a[0],)
 
 
-def gc_31e4e3af86f9d2a46cdc37171097324bfe35d2459baa32d61f46fe95742ba07e(i):
-	a = gc_4f54b44dd522c044b41833089ca47ece6b280ff8c11324a5b8b6a957d92f6de8((0.0, 0.0, 0.0,))
-	return (a[0],)
-
-
-def gc_57445022b9dc0d937721bb272de55001607f26c9b9cc9dd40cd4dead77da6366(i):
-	a = gc_b3426a0b5077c14d09c2eb091e8ba0ded68486890d5f0146cfdec34ebbe383d6((i[0],))
-	return (a[0],)
-
-
-def gc_2cc43f4b661600a9cf288e4d34e7604fde5add19da18219cb4eb716500c70d11(i):
-	a = gc_4793e082e2462b3ed47a23c000e9e8165bf7b6dea9bde08182b7203a708f6214((1.0,))
-	return (a[0],)
-
-
-def gc_ca8deda24130ae5dfb70aef9babcfac3074873dbe1613e31e6d4a5c1c88d8a41(i):
-	a = gc_278ddaaaa439429bad68df4b81f3b42ecdc7cf2d2ea8ad086a2ca185a3acbbb6((-0.4916969985019546,))
-	return (a[0],)
-
-
-def gc_e563ee519dd1a462af0803bf71a68ed2761e0a287e10447e368a5bf471eb4f1e(i):
-	a = gc_ee2cc4658d03ebb3ffbcdc44d31fa89b7644a654567d66b93bac5f6186899d4d((0.0, 0.0, 0.0,))
-	return (a[0],)
-
-
-def gc_69f8bddf1ba8386b128c82b9e9d61bfbcd39a2adfb0f072e1c0edd6fc96c2b5e(i):
-	a = gc_b4dc32c9bc15e51d8070be7bf0ee9bfc344b73cc8ec857978ff72e71a3efb911((i[0], 0.0, 0.0,))
-	return (a[0],)
-
-
-def gc_548c936adb05c438822541970d65a54a1a094c4c4a9b7921a52ef443b513e98b(i):
-	a = gc_e279714512f0498ee888c84f1906de2a5e6bf082d60fdbb32de84a0c16f6f071((-0.23966977014582258,))
-	return (a[0],)
-
-
-def gc_2dca664b598893d24cef3105ed6ca7b198ac2dc4ef494d8e1f6670c21390872e(i):
-	a = gc_ce4e58fcbe55e5caf14c456fd2603a7d81c19e89e61e63b0e56f8c1958ba3da1((i[0], -1.0,))
-	return (a[0],)
-
-
-def gc_db707d1e30841606ccbc7f7d349dcdadcf7b3b5e1e8d1a2e8cec17e1317bfd13(i):
-	a = gc_e279714512f0498ee888c84f1906de2a5e6bf082d60fdbb32de84a0c16f6f071((i[0],))
-	return (a[0],)
-
-
-def gc_ae4e6d8dc8c8456491c0454fe55675261f80615f0d0f5c08b53ad56606abc7e4(i):
-	a = gc_23c441e967ef4b8637554409522bc07c1d0faac129bccf73473c098650a63957((0.0, 0.0, 0.0,))
-	return (a[0],)
-
-
-def gc_7768bb71073ef4e7aaf1b15a957e49bf68d5bf744fb85c0be06fa205ddbda359(i):
-	a = gc_b4dc32c9bc15e51d8070be7bf0ee9bfc344b73cc8ec857978ff72e71a3efb911((0.0, i[0], 0.0,))
-	return (a[0],)
-
-
-def gc_731f9ff5e9cfdb53f1944bf6962c32b21be104ef51b2fdb3db0244b077010af2(i):
-	a = gc_6bba0589ed454784e75f8a184fb8fc8d59a3772e73a8414f2ba915ce211f6773((0.0,))
-	return (a[0],)
-
-
+'''
+{'alpha_class': 1,
+ 'beta_class': -1,
+ 'code_depth': 2,
+ 'codon_depth': 1,
+ 'created': '2020-07-16T00:25:44.922374Z',
+ 'creator': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gca': '5f1ff9bfaf9bc1cdb5d520bd056048ebe5467cc6580f03b9c0c29b7eb64c4d2b',
+ 'gcb': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'generation': 2,
+ 'graph': {'A': [['I', 0], ['C', 0], ['C', 1]],
+           'C': [0.0, 0.0],
+           'O': [['A', 0]]},
+ 'meta_data': {'parents': [['5f1ff9bfaf9bc1cdb5d520bd056048ebe5467cc6580f03b9c0c29b7eb64c4d2b']]},
+ 'num_codes': 1,
+ 'num_inputs': 1,
+ 'num_outputs': 1,
+ 'num_unique_codes': 1,
+ 'opt_num_codons': 0,
+ 'properties': {'binary_mutation': False,
+                'conditional': False,
+                'extended': False,
+                'logical': False,
+                'mathematical': False,
+                'unary_mutation': True},
+ 'raw_num_codons': 1,
+ 'reference_count': 0,
+ 'signature': 'cc7cfb52a4658ba440bd7691c5a3d6f736f94d3d795857725a2e400f9e3624a9'}
+'''
 def gc_cc7cfb52a4658ba440bd7691c5a3d6f736f94d3d795857725a2e400f9e3624a9(i):
 	a = gc_5f1ff9bfaf9bc1cdb5d520bd056048ebe5467cc6580f03b9c0c29b7eb64c4d2b((i[0], 0.0, 0.0,))
 	return (a[0],)
 
 
-def gc_edd8747214af1b5de59ed894a4425cadcf727466417d7f752e9c8e82f959efba(i):
-	a = gc_7404cd51f0ff21ae1b51cd8e13b6bacf706cafde670c9ef05ae282fea9ff2364((0.0,))
-	return (a[0],)
-
-
-def gc_7c81e32cacdeb941a0c6989d24d58a9591a9771cce66ec0752ebbd0b2e1f5eae(i):
-	a = gc_c436ba9675317cfa2b5e32a3f00cf08b57295e06f28d5203fbaa1cd6b430e6d7((i[0], 0.0, 0.0,))
-	return (a[0],)
-
-
-def gc_7743aba320d9a6dd5f2b7a8e5777b997d61131f2a4db0f78fb4a881d40244898(i):
-	a = gc_4793e082e2462b3ed47a23c000e9e8165bf7b6dea9bde08182b7203a708f6214((0.0,))
-	return (a[0],)
-
-
-def gc_4e31cd46908623b5b0704e94d73ff37ed9babd444d896464559539e5c5d0f8db(i):
-	a = gc_278ddaaaa439429bad68df4b81f3b42ecdc7cf2d2ea8ad086a2ca185a3acbbb6((1.0,))
-	return (a[0],)
-
-
-def gc_f269bf2281717b6c6d4cd1c4f6bdd61dd63f8501ed8a3846b79dca9c82387a51(i):
-	a = gc_7404cd51f0ff21ae1b51cd8e13b6bacf706cafde670c9ef05ae282fea9ff2364((i[0],))
-	return (a[0],)
-
-
-def gc_56847c9cff84d51988f66580688885a9a0a104f4d749f8121af9c952d88085e3(i):
-	a = gc_7404cd51f0ff21ae1b51cd8e13b6bacf706cafde670c9ef05ae282fea9ff2364((-1.0,))
-	return (a[0],)
-
-
-def gc_21ebcdab3d0ac3d6a4882e9fecaf691354ca2be9fff8f6bb2c96376d59d569b9(i):
-	a = gc_102a4d1fc747c5f81b314937da02b830ca4a49a6010aa65fd478dd1bd68675e8((0.0,))
-	return (a[0],)
-
-
-def gc_962e18fd8e34fe127659346683f879366d1fe38d78bde2cae2c2ad67e79c0da1(i):
-	a = gc_ee2cc4658d03ebb3ffbcdc44d31fa89b7644a654567d66b93bac5f6186899d4d((i[0], 0.0, i[0],))
-	return (a[0],)
-
-
-def gc_354073df22150907738f0aacb34c5257c9ab85c82610becd677b275a9eaa6b32(i):
-	a = gc_bcf49ecb02279621bc1dd9d70265175f142ccfcc742ff07cf3983c830c4670fc((0.5166889325511137,))
-	return (a[0],)
-
-
-def gc_e9feec3177d2a1de26b5d3d85ab6a372fc6bc1e0e4414a0f7a317ed2c582025f(i):
-	a = gc_4f54b44dd522c044b41833089ca47ece6b280ff8c11324a5b8b6a957d92f6de8((0.0, i[0], i[0],))
-	return (a[0],)
-
-
-def gc_287826f5c96000e18bf60b2499634d9fb01fc9d402fbcc2067f7ce5e54af6371(i):
-	a = gc_ee2cc4658d03ebb3ffbcdc44d31fa89b7644a654567d66b93bac5f6186899d4d((0.0, i[0], 0.0,))
-	return (a[0],)
-
-
-def gc_986ae757be6910ae3b92411b03d2f9feace48fe748d96a7933f98b0ca9d5e3c9(i):
-	a = gc_23c441e967ef4b8637554409522bc07c1d0faac129bccf73473c098650a63957((0.0, i[0], 0.0,))
-	return (a[0],)
-
-
-def gc_0060c0a984babda61ba83e3ac857c0381376db9f844309bef789c726fd106cfd(i):
-	a = gc_7404cd51f0ff21ae1b51cd8e13b6bacf706cafde670c9ef05ae282fea9ff2364((1.0,))
-	return (a[0],)
-
-
-def gc_37d1df4cd5eb71801f535485c55b30bd9147acf3a94f5c78e16ac8f65a172d38(i):
-	a = gc_23c441e967ef4b8637554409522bc07c1d0faac129bccf73473c098650a63957((0.0, 0.0, 0.0,))
-	return (a[0],)
-
-
-def gc_214d15161e2357e1ebf3de8e92fffee4e2ebefc0941adf9656998a06002687af(i):
-	a = gc_bcf49ecb02279621bc1dd9d70265175f142ccfcc742ff07cf3983c830c4670fc((-1.0,))
-	return (a[0],)
-
-
-def gc_31285d892a552e09bb16f72e451cb90ce77cad98776303475f925a617460e83d(i):
-	a = gc_b3426a0b5077c14d09c2eb091e8ba0ded68486890d5f0146cfdec34ebbe383d6((0.0,))
-	return (a[0],)
-
-
-def gc_b39cb29be10e3f1a1020a92c916162366a444848dadcf6f360c7fe095c0cb7e9(i):
-	a = gc_7bb5eb204e326fbabe069fb824e88a6ca68ec34c39eaa05a4d271a3f92e4b4fd((-0.992723804787971,))
-	return (a[0],)
-
-
-def gc_5e518b6b4668611c3d1602f784ad410609d5657a5d5690f9abca54eb4b7c0f3a(i):
-	a = gc_102a4d1fc747c5f81b314937da02b830ca4a49a6010aa65fd478dd1bd68675e8((i[0],))
-	return (a[0],)
-
-
-def gc_7eb61a64d6aa1248cf7c1973ece726698b4d3b61964060a46a9789bda79d7c72(i):
-	a = gc_81b5a567e50cf6fd71bfcfc3c5d23faa0f245fb0a71900fa9573eba1a94ee80d((-1.0,))
-	return (a[0],)
-
-
-def gc_eb298e1bfc9d2bd2344a2dba0acc194f353cd55c44773c5d19c9f3e8c342bd3a(i):
-	a = gc_c436ba9675317cfa2b5e32a3f00cf08b57295e06f28d5203fbaa1cd6b430e6d7((0.0, i[0], 0.0,))
-	return (a[0],)
-
-
-def gc_ed1deb5a3578f1cb74c983c3e72426ceb8fd6fc4df308ae1671645a27a3505fa(i):
-	a = gc_81d83b6dfe8764bc32df13948a86e7721818e3648d8f916708f8d416b2b94370((0.8038901346985587,))
-	return (a[0],)
-
-
-def gc_8017375ce50edad2756f1778baad4d320df2180b53defe5b239b23294cb3e6d3(i):
-	a = gc_ea549df0fcde3b6375528205fef6eea94b79a442fd8afa77905fbeab96c6bcea((i[0], 1.0,))
-	return (a[0],)
-
-
-def gc_4d21e118f75e0485cdddea9988ba7fa3e2e7092a4fab79800dd46a2197c1a437(i):
-	a = gc_81d83b6dfe8764bc32df13948a86e7721818e3648d8f916708f8d416b2b94370((-0.7916909241681123,))
-	return (a[0],)
-
-
-def gc_f2964c5f8028674c425bb7cc1610e940f3ccd873c284805f76085cfe332b5809(i):
-	a = gc_4f54b44dd522c044b41833089ca47ece6b280ff8c11324a5b8b6a957d92f6de8((i[0], i[0], i[0],))
-	return (a[0],)
-
-
-def gc_cac707a22d85abde1d3c579599611957a8ef872125add801c70d78eea6173093(i):
-	a = gc_4f54b44dd522c044b41833089ca47ece6b280ff8c11324a5b8b6a957d92f6de8((0.0, i[1], i[0],))
-	return (a[0],)
-
-
-def gc_d675555760668f9ba949b1d675049e0b6191ef3a2fbbf2adf6a7e46d6d7d1918(i):
-	a = gc_7bb5eb204e326fbabe069fb824e88a6ca68ec34c39eaa05a4d271a3f92e4b4fd((0.0,))
-	return (a[0],)
-
-
-def gc_98c7bcfc10c5a9a4fd9116b48fe02d529d2f045500cc75f78f1deec64dcc7161(i):
-	a = gc_4cde93184158819b805ef591641fad84f4c0ee4fdb2715d267cbbcce1a53f8a4((-0.5096155099721933,))
-	return (a[0],)
-
-
-def gc_28d42217d49eaddf16ebb2898bc258bc4682d8d14aa85ed6c8806336f44e6c06(i):
-	a = gc_ee2cc4658d03ebb3ffbcdc44d31fa89b7644a654567d66b93bac5f6186899d4d((0.0, i[0], i[0],))
-	return (a[0],)
-
-
-def gc_276e602cd7d50916f70beaf87aadcfafbe61bd99815e7f2b83899afac14b42c7(i):
-	a = gc_23c441e967ef4b8637554409522bc07c1d0faac129bccf73473c098650a63957((0.0, i[0], 0.0,))
-	return (a[0],)
-
-
-def gc_1134b97d9b015581fc341b5928418da4dbf5d327c8b1eee0da84b3b179276115(i):
-	a = gc_ea549df0fcde3b6375528205fef6eea94b79a442fd8afa77905fbeab96c6bcea((1.0, 1.0,))
-	return (a[0],)
-
-
-def gc_670a0aa12cc1491b80aa34adae09fa3a0e801f4b0d3cd47851fb452b736fbe1a(i):
-	a = gc_b3426a0b5077c14d09c2eb091e8ba0ded68486890d5f0146cfdec34ebbe383d6((1.0,))
-	return (a[0],)
-
-
-def gc_bf1500c41ce9bdf64e8696bf79dfb4a64653304f2d08a0c4ee170a2bdc3fea33(i):
-	a = gc_ee2cc4658d03ebb3ffbcdc44d31fa89b7644a654567d66b93bac5f6186899d4d((i[0], i[0], 0.0,))
-	return (a[0],)
-
-
-def gc_bfd010ec1db290614a408872aa7e43640a50e11f035a47bd2d484cc080db8b8a(i):
-	a = gc_e279714512f0498ee888c84f1906de2a5e6bf082d60fdbb32de84a0c16f6f071((0.0,))
-	return (a[0],)
-
-
-def gc_36d84309ae559742b87876978de2304a030409a4bad25e63e1617d2e603049f9(i):
-	a = gc_4f54b44dd522c044b41833089ca47ece6b280ff8c11324a5b8b6a957d92f6de8((0.0, 0.0, 0.0,))
-	return (a[0],)
-
-
-def gc_1e20d31505c2249121a5d3344551855a2e06d785624f4679b6f68b6e5f394bb2(i):
-	a = gc_a95ea10e7327badf07045086c7e935f5cc66a9b47f323fcdf30d76f66a592829((0.0, i[0], 0.0,))
-	return (a[0],)
-
-
-def gc_af779f4a38ebac5e44f595533aa4e4b41565ae1426abeb3edfb883b940c00539(i):
-	a = gc_ce4e58fcbe55e5caf14c456fd2603a7d81c19e89e61e63b0e56f8c1958ba3da1((-1.0, -1.0,))
-	return (a[0],)
-
-
-def gc_bf3161b1d66c4f7b2c4d7c9901bd0044d3dcb0e2bc05dbe82e1feeeb40ef9931(i):
-	a = gc_a95ea10e7327badf07045086c7e935f5cc66a9b47f323fcdf30d76f66a592829((i[0], i[0], 0.0,))
-	return (a[0],)
-
-
-def gc_14a3f7694ecb8828de41cb4c8028533844d853f514e7e19d02209e81969bea45(i):
-	a = gc_63971bfb77792f35cda0463d310e2724ae108354fb287df386ab88a752743fcc((1.0,))
-	return (a[0],)
-
-
+'''
+{'alpha_class': 1,
+ 'beta_class': -1,
+ 'code_depth': 2,
+ 'codon_depth': 1,
+ 'created': '2020-07-16T00:25:44.833983Z',
+ 'creator': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gca': '4793e082e2462b3ed47a23c000e9e8165bf7b6dea9bde08182b7203a708f6214',
+ 'gcb': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'generation': 2,
+ 'graph': {'A': [['I', 0]], 'O': [['A', 0]]},
+ 'meta_data': {'parents': [['4793e082e2462b3ed47a23c000e9e8165bf7b6dea9bde08182b7203a708f6214']]},
+ 'num_codes': 1,
+ 'num_inputs': 1,
+ 'num_outputs': 1,
+ 'num_unique_codes': 1,
+ 'opt_num_codons': 0,
+ 'properties': {'binary_mutation': False,
+                'conditional': False,
+                'extended': False,
+                'logical': False,
+                'mathematical': False,
+                'unary_mutation': True},
+ 'raw_num_codons': 1,
+ 'reference_count': 0,
+ 'signature': 'f5b607832778f539c313b5dbe664e0cdbaf016bcdba4ac95d45c54f999e08a4f'}
+'''
 def gc_f5b607832778f539c313b5dbe664e0cdbaf016bcdba4ac95d45c54f999e08a4f(i):
 	a = gc_4793e082e2462b3ed47a23c000e9e8165bf7b6dea9bde08182b7203a708f6214((i[0],))
 	return (a[0],)
 
 
-def gc_f8b10edaff6ed9589b9fca0e879f4fe586848150ac629d136cc37f769d0bdd1d(i):
-	a = gc_b4dc32c9bc15e51d8070be7bf0ee9bfc344b73cc8ec857978ff72e71a3efb911((0.0, 0.0, 0.0,))
-	return (a[0],)
-
-
-def gc_8b123e29bd49d5010787c3622d13fdb327f57f015f49d65f55535aece4b5ae20(i):
-	a = gc_4f54b44dd522c044b41833089ca47ece6b280ff8c11324a5b8b6a957d92f6de8((0.0, 0.0, i[0],))
-	return (a[0],)
-
-
-def gc_295b1bb9ef8d6ebb6924b067041cb9966b6696a5576aa1d3cc628b41343be2a7(i):
-	a = gc_ce4e58fcbe55e5caf14c456fd2603a7d81c19e89e61e63b0e56f8c1958ba3da1((i[0], 1.0,))
-	return (a[0],)
-
-
-def gc_059d99393482efe9d7ef5a4dfe0824b336af5c471af92f56cbf53a0ba433d6c5(i):
-	a = gc_b4dc32c9bc15e51d8070be7bf0ee9bfc344b73cc8ec857978ff72e71a3efb911((0.0, 0.0, i[0],))
-	return (a[0],)
-
-
-def gc_cd3de5e6d4722a72bdd55203c51f7b616dd5f6a7db68158ff5148b2ef17ed6cb(i):
-	a = gc_ce4e58fcbe55e5caf14c456fd2603a7d81c19e89e61e63b0e56f8c1958ba3da1((i[0], i[0],))
-	return (a[0],)
-
-
-def gc_b33df5beef7cd7d5e49e74b229864ba0664bae07dbe6a28a3c9c11643518f37d(i):
-	a = gc_4140f47e72adf3343c04c82d7766bf9e3bc71a6b606b7bc2e93f45a6349792e5((i[0], i[1],))
-	return (a[0],)
-
-
-def gc_8568fa49a69fc9c42c30d78866a45316976afca26ce6a75284546f07ad9f6aef(i):
-	a = gc_ea549df0fcde3b6375528205fef6eea94b79a442fd8afa77905fbeab96c6bcea((i[0], i[1],))
-	return (a[0],)
-
-
-def gc_a427790d770b0fa722ca1ebae60ce603fbc45f0358ed7df37f88f0a042284a70(i):
-	a = gc_ea549df0fcde3b6375528205fef6eea94b79a442fd8afa77905fbeab96c6bcea((i[0], i[0],))
-	return (a[0],)
-
-
-def gc_67aa64f950ed976c1835461b09f7aee23a9ef5508d2a06d7b02e026b32f4134a(i):
-	a = gc_4f54b44dd522c044b41833089ca47ece6b280ff8c11324a5b8b6a957d92f6de8((i[0], i[0], 0.0,))
-	return (a[0],)
-
-
-def gc_fe499790c5cf7ffe0030c11ee70427270d37186fb429404eecba703b81f1d397(i):
-	a = gc_c436ba9675317cfa2b5e32a3f00cf08b57295e06f28d5203fbaa1cd6b430e6d7((0.0, i[0], 0.0,))
-	return (a[0],)
-
-
-def gc_ce171d8207600a6c5b494439f1af004fb58b93f4051e75a05ef354e360cf2fe3(i):
-	a = gc_e279714512f0498ee888c84f1906de2a5e6bf082d60fdbb32de84a0c16f6f071((1.0,))
-	return (a[0],)
-
-
-def gc_1745bd810b62f97916ccde4247e74fb6b04fa3e07a0a2349d115daea3708c540(i):
-	a = gc_278ddaaaa439429bad68df4b81f3b42ecdc7cf2d2ea8ad086a2ca185a3acbbb6((-1.0,))
-	return (a[0],)
-
-
-def gc_60d07bbabc49cd676d92a9b866a4e7e1364c10d6ef5b7f26852e5632308d0743(i):
-	a = gc_81d83b6dfe8764bc32df13948a86e7721818e3648d8f916708f8d416b2b94370((0.9205842323328093,))
-	return (a[0],)
-
-
-def gc_67c58df6fe8472924d2bcac33a535abd5f7d125423461f2dc240ddf3281284d3(i):
-	a = gc_23c441e967ef4b8637554409522bc07c1d0faac129bccf73473c098650a63957((i[1], i[0], 0.0,))
-	return (a[0],)
-
-
-def gc_7e62a64053de9defba501aca718fa54beab0db1ec0861845c7573f7c2feb122d(i):
-	a = gc_a95ea10e7327badf07045086c7e935f5cc66a9b47f323fcdf30d76f66a592829((i[1], i[0], 0.0,))
-	return (a[0],)
-
-
+'''
+{'alpha_class': 1,
+ 'beta_class': -1,
+ 'code_depth': 2,
+ 'codon_depth': 1,
+ 'created': '2020-07-16T00:25:45.999753Z',
+ 'creator': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gca': 'c436ba9675317cfa2b5e32a3f00cf08b57295e06f28d5203fbaa1cd6b430e6d7',
+ 'gcb': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'generation': 2,
+ 'graph': {'A': [['C', 0], ['C', 0], ['C', 1]],
+           'C': [0.0, 0.0],
+           'O': [['A', 0]]},
+ 'meta_data': {'parents': [['c436ba9675317cfa2b5e32a3f00cf08b57295e06f28d5203fbaa1cd6b430e6d7']]},
+ 'num_codes': 1,
+ 'num_inputs': 0,
+ 'num_outputs': 1,
+ 'num_unique_codes': 1,
+ 'opt_num_codons': 0,
+ 'properties': {'binary_mutation': False,
+                'conditional': False,
+                'extended': False,
+                'logical': False,
+                'mathematical': False,
+                'unary_mutation': True},
+ 'raw_num_codons': 1,
+ 'reference_count': 0,
+ 'signature': 'de16d05c96f141351c6e918906ad8565426b05c77a187edc20763c01f4d8db86'}
+'''
 def gc_de16d05c96f141351c6e918906ad8565426b05c77a187edc20763c01f4d8db86(i):
 	a = gc_c436ba9675317cfa2b5e32a3f00cf08b57295e06f28d5203fbaa1cd6b430e6d7((0.0, 0.0, 0.0,))
 	return (a[0],)
 
 
-def gc_8302f7ebfa7604701b0799d946b8c2c578d3a1f9723699b97cb4598d4a9ad955(i):
-	a = gc_81d83b6dfe8764bc32df13948a86e7721818e3648d8f916708f8d416b2b94370((-1.0,))
-	return (a[0],)
-
-
-def gc_9d73cee6029fd4053ff88c76b7d183a9df3bfd83400f823be0d9c3c78798d486(i):
-	a = gc_4140f47e72adf3343c04c82d7766bf9e3bc71a6b606b7bc2e93f45a6349792e5((i[0], i[0],))
-	return (a[0],)
-
-
-def gc_0a355ff1670a8316c371872ba06dfd472d2ee8de91a33f828888f028a2ca8422(i):
-	a = gc_ce4e58fcbe55e5caf14c456fd2603a7d81c19e89e61e63b0e56f8c1958ba3da1((-1.0, i[0],))
-	return (a[0],)
-
-
-def gc_f92604ef79344f03a694512685f7a7544caaf7ff00b2253c3905bf6638cbdfa8(i):
-	a = gc_f131f1d7c087d2b567acec3f2a476de27b9110e0794c11b2c97098e878feed08((i[0], i[0], 0.0,))
-	return (a[0],)
-
-
-def gc_9dcafa5bcb06b9be5b3e3dfa2018a599223e0cc0abfabffe80a11cd44c3ba4a8(i):
-	a = gc_ea549df0fcde3b6375528205fef6eea94b79a442fd8afa77905fbeab96c6bcea((0.0, i[0],))
-	return (a[0],)
-
-
-def gc_bc8d48eeeebdf1447e710d27387e5f7791916def6af6f956342533f8f203ec9e(i):
-	a = gc_ee2cc4658d03ebb3ffbcdc44d31fa89b7644a654567d66b93bac5f6186899d4d((0.0, 0.0, 0.0,))
-	return (a[0],)
-
-
-def gc_fa0a4e1fb0614d291ab65eb8ffd07d4fcfcd42bd817385e32853f7a3f370b1f5(i):
-	a = gc_f131f1d7c087d2b567acec3f2a476de27b9110e0794c11b2c97098e878feed08((i[0], 0.0, 0.0,))
-	return (a[0],)
-
-
-def gc_46fcfdcac7be9ed0895a1e2a68d5e032d6a4eae7f2e358b5e15df169657067a2(i):
-	a = gc_f131f1d7c087d2b567acec3f2a476de27b9110e0794c11b2c97098e878feed08((0.0, i[0], 0.0,))
-	return (a[0],)
-
-
-def gc_3f05e42ce5eae26a0dcfeb3976aa0160c37d891bc4d7b7dd98136303d1a5fc0f(i):
-	a = gc_ee2cc4658d03ebb3ffbcdc44d31fa89b7644a654567d66b93bac5f6186899d4d((i[0], i[1], 0.0,))
-	return (a[0],)
-
-
-def gc_eeea0aa9c818b6a25decc0d5894b1b51b2c015d8991ad7f5d4365c0b69e88e1a(i):
-	a = gc_4f54b44dd522c044b41833089ca47ece6b280ff8c11324a5b8b6a957d92f6de8((0.0, i[0], 0.0,))
-	return (a[0],)
-
-
-def gc_2c4518bcacc3cd0e79d85f61a07b316f009f7421cd5df23b100fb66dc1963a42(i):
-	a = gc_5f1ff9bfaf9bc1cdb5d520bd056048ebe5467cc6580f03b9c0c29b7eb64c4d2b((0.0, 0.0, 0.0,))
-	return (a[0],)
-
-
-def gc_ad935593af5277b9f4ba8c09335d9217246b19f86e59225a914ddc7bbb269cab(i):
-	a = gc_ea549df0fcde3b6375528205fef6eea94b79a442fd8afa77905fbeab96c6bcea((1.0, i[0],))
-	return (a[0],)
-
-
-def gc_ceb17738f60b3f0d3a292d80c6fd5d555d3fd7b012312b9e4503206d9feff0ce(i):
-	a = gc_23c441e967ef4b8637554409522bc07c1d0faac129bccf73473c098650a63957((0.0, 0.0, i[0],))
-	return (a[0],)
-
-
-def gc_30f394319fa21fbc05aaaf43955c66b906be723dd5f98555cba887a7bcefe726(i):
-	a = gc_f131f1d7c087d2b567acec3f2a476de27b9110e0794c11b2c97098e878feed08((i[1], i[0], 0.0,))
-	return (a[0],)
-
-
-def gc_ab28a63a19a2b0add66417c8f624eeecd4b719d85b22dca116097acb848fc95c(i):
-	a = gc_4f54b44dd522c044b41833089ca47ece6b280ff8c11324a5b8b6a957d92f6de8((i[0], 0.0, 0.0,))
-	return (a[0],)
-
-
-def gc_696e86557ec25d3a51d32c3b5c0763e2d895f332c3387e18a6e1d8803381f81f(i):
-	a = gc_ee2cc4658d03ebb3ffbcdc44d31fa89b7644a654567d66b93bac5f6186899d4d((0.0, i[0], 0.0,))
-	return (a[0],)
-
-
-def gc_24a4ea61ef5a700b5d116f3a63532d137510b2423fc194679847314894c29e12(i):
-	a = gc_4f54b44dd522c044b41833089ca47ece6b280ff8c11324a5b8b6a957d92f6de8((-1.0, -1.0, i[0],))
-	return (a[0],)
-
-
-def gc_203ded6297b6689d1acb8250dfda1ef4d794ffd4e4a4ee2af963abda47b5f729(i):
-	a = gc_b4dc32c9bc15e51d8070be7bf0ee9bfc344b73cc8ec857978ff72e71a3efb911((0.0, 0.0, 0.0,))
-	return (a[0],)
-
-
-def gc_415d15beb2420f13f7e82eea20c837f8c605f6d0ef7c44cd4c38241297069331(i):
-	a = gc_f131f1d7c087d2b567acec3f2a476de27b9110e0794c11b2c97098e878feed08((0.0, 0.0, 0.0,))
-	return (a[0],)
-
-
-def gc_b9955c72d910773f069643abb44e1ba658b5c991f73a1ae3b2b4ca8309cff34b(i):
-	a = gc_6bba0589ed454784e75f8a184fb8fc8d59a3772e73a8414f2ba915ce211f6773((-0.06752403842332799,))
-	return (a[0],)
-
-
-def gc_5a36c7f69c8ad54320041167d11b87d1138b6060e1ebd3e090e32d838b11890b(i):
-	a = gc_c436ba9675317cfa2b5e32a3f00cf08b57295e06f28d5203fbaa1cd6b430e6d7((0.0, 0.0, 0.0,))
-	return (a[0],)
-
-
-def gc_d583313ac7265d903f96aebefac338b54f234df8c3250552bea73f53de7b4cfa(i):
-	a = gc_5f1ff9bfaf9bc1cdb5d520bd056048ebe5467cc6580f03b9c0c29b7eb64c4d2b((0.0, 0.0, 0.0,))
-	return (a[0],)
-
-
-def gc_609668c68a2624af6f138934618b253074ee90207940afb6ee8643fca7662fdb(i):
-	a = gc_ee2cc4658d03ebb3ffbcdc44d31fa89b7644a654567d66b93bac5f6186899d4d((0.0, 0.0, i[0],))
-	return (a[0],)
-
-
-def gc_f7a9aed0049a8b640476298444082f927eec27ffdc95f27ea5bc345c45dd76bc(i):
-	a = gc_4f54b44dd522c044b41833089ca47ece6b280ff8c11324a5b8b6a957d92f6de8((0.0, i[0], i[1],))
-	return (a[0],)
-
-
-def gc_50a50636739475822eb79cbe7b2aaee8eca0f9bfad64c53aa70cd0b2896021e1(i):
-	a = gc_ee2cc4658d03ebb3ffbcdc44d31fa89b7644a654567d66b93bac5f6186899d4d((0.0, 0.0, 0.0,))
-	return (a[0],)
-
-
-def gc_1174e37306a43ba5f963d4f655817c3f798b9d8e4546777ea63ff9198ab22004(i):
-	a = gc_278ddaaaa439429bad68df4b81f3b42ecdc7cf2d2ea8ad086a2ca185a3acbbb6((-0.22800473518978448,))
-	return (a[0],)
-
-
-def gc_0cb8e32db276e7b7464427dd2b7311b433314098f2451bb6ad02c1762d640f6d(i):
-	a = gc_ee2cc4658d03ebb3ffbcdc44d31fa89b7644a654567d66b93bac5f6186899d4d((i[0], 0.0, 0.0,))
-	return (a[0],)
-
-
-def gc_42c677ca93c0fcc72f4c650505d7eb2867cef0c094241e6a9246504029bdff34(i):
-	a = gc_7404cd51f0ff21ae1b51cd8e13b6bacf706cafde670c9ef05ae282fea9ff2364((0.08232884405338026,))
-	return (a[0],)
-
-
-def gc_736c557a504026ef5d4acff2ab43259cf49273780a99f7bda23513b477e92091(i):
-	a = gc_81d83b6dfe8764bc32df13948a86e7721818e3648d8f916708f8d416b2b94370((-0.9603052906199521,))
-	return (a[0],)
-
-
-def gc_685205c83d06aa7b8f9c6f034a73d712887481fa5c9eb7a503b6bfe34cf8cf89(i):
-	a = gc_4f54b44dd522c044b41833089ca47ece6b280ff8c11324a5b8b6a957d92f6de8((-1.0, i[0], i[0],))
-	return (a[0],)
-
-
-def gc_780ee513440048be8dade7f7430174b05921cccd20009a28ccbde894bc329788(i):
-	a = gc_a95ea10e7327badf07045086c7e935f5cc66a9b47f323fcdf30d76f66a592829((i[0], i[0], i[1],))
-	return (a[0],)
-
-
-def gc_f4ba73e6970849794b753a6c2451aef5621bd2b892e94e15f1e96d027bfa629e(i):
-	a = gc_23c441e967ef4b8637554409522bc07c1d0faac129bccf73473c098650a63957((0.0, i[0], 0.0,))
-	return (a[0],)
-
-
+'''
+{'alpha_class': 1,
+ 'beta_class': -1,
+ 'code_depth': 2,
+ 'codon_depth': 1,
+ 'created': '2020-07-16T00:25:45.927752Z',
+ 'creator': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gca': '4f54b44dd522c044b41833089ca47ece6b280ff8c11324a5b8b6a957d92f6de8',
+ 'gcb': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'generation': 2,
+ 'graph': {'A': [['C', 1], ['C', 0], ['C', 1]],
+           'C': [0.0, 0.0],
+           'O': [['A', 0]]},
+ 'meta_data': {'parents': [['4f54b44dd522c044b41833089ca47ece6b280ff8c11324a5b8b6a957d92f6de8']]},
+ 'num_codes': 1,
+ 'num_inputs': 0,
+ 'num_outputs': 1,
+ 'num_unique_codes': 1,
+ 'opt_num_codons': 0,
+ 'properties': {'binary_mutation': False,
+                'conditional': False,
+                'extended': False,
+                'logical': False,
+                'mathematical': False,
+                'unary_mutation': True},
+ 'raw_num_codons': 1,
+ 'reference_count': 0,
+ 'signature': '63f4c2177ea134118ee0d3b75c8a1e48a85dbb4214bcf0abf70b44241329f23c'}
+'''
 def gc_63f4c2177ea134118ee0d3b75c8a1e48a85dbb4214bcf0abf70b44241329f23c(i):
 	a = gc_4f54b44dd522c044b41833089ca47ece6b280ff8c11324a5b8b6a957d92f6de8((0.0, 0.0, 0.0,))
 	return (a[0],)
 
 
-def gc_ea69bccc1973aaff350a95c2d8cc9b3b41832729d1a7492c05beb61f1f8bd79e(i):
-	a = gc_102a4d1fc747c5f81b314937da02b830ca4a49a6010aa65fd478dd1bd68675e8((1.0,))
+'''
+{'alpha_class': 1,
+ 'beta_class': -1,
+ 'code_depth': 2,
+ 'codon_depth': 1,
+ 'created': '2020-07-16T00:25:46.576239Z',
+ 'creator': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gca': 'ea549df0fcde3b6375528205fef6eea94b79a442fd8afa77905fbeab96c6bcea',
+ 'gcb': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'generation': 2,
+ 'graph': {'A': [['I', 0], ['I', 1]], 'O': [['A', 0]]},
+ 'meta_data': {'parents': [['ea549df0fcde3b6375528205fef6eea94b79a442fd8afa77905fbeab96c6bcea']]},
+ 'num_codes': 1,
+ 'num_inputs': 2,
+ 'num_outputs': 1,
+ 'num_unique_codes': 1,
+ 'opt_num_codons': 0,
+ 'properties': {'binary_mutation': False,
+                'conditional': False,
+                'extended': False,
+                'logical': False,
+                'mathematical': False,
+                'unary_mutation': True},
+ 'raw_num_codons': 1,
+ 'reference_count': 0,
+ 'signature': '8568fa49a69fc9c42c30d78866a45316976afca26ce6a75284546f07ad9f6aef'}
+'''
+def gc_8568fa49a69fc9c42c30d78866a45316976afca26ce6a75284546f07ad9f6aef(i):
+	a = gc_ea549df0fcde3b6375528205fef6eea94b79a442fd8afa77905fbeab96c6bcea((i[0], i[1],))
 	return (a[0],)
 
 
-def gc_f5a37bdfb571237b8eb72e4740eb5566ad5a3a2b2308d2bb20cd797fad623f93(i):
-	a = gc_f131f1d7c087d2b567acec3f2a476de27b9110e0794c11b2c97098e878feed08((0.0, i[0], 0.0,))
+'''
+{'alpha_class': 1,
+ 'beta_class': -1,
+ 'code_depth': 2,
+ 'codon_depth': 1,
+ 'created': '2020-07-16T00:25:46.515385Z',
+ 'creator': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gca': 'ee2cc4658d03ebb3ffbcdc44d31fa89b7644a654567d66b93bac5f6186899d4d',
+ 'gcb': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'generation': 2,
+ 'graph': {'A': [['I', 0], ['C', 0], ['C', 1]],
+           'C': [0.0, 0.0],
+           'O': [['A', 0]]},
+ 'meta_data': {'parents': [['ee2cc4658d03ebb3ffbcdc44d31fa89b7644a654567d66b93bac5f6186899d4d']]},
+ 'num_codes': 1,
+ 'num_inputs': 1,
+ 'num_outputs': 1,
+ 'num_unique_codes': 1,
+ 'opt_num_codons': 0,
+ 'properties': {'binary_mutation': False,
+                'conditional': False,
+                'extended': False,
+                'logical': False,
+                'mathematical': False,
+                'unary_mutation': True},
+ 'raw_num_codons': 1,
+ 'reference_count': 0,
+ 'signature': '0b71cf0dd17adf2126959c3712c97c25420a33cb71657225c3d76c127a2d3f8d'}
+'''
+def gc_0b71cf0dd17adf2126959c3712c97c25420a33cb71657225c3d76c127a2d3f8d(i):
+	a = gc_ee2cc4658d03ebb3ffbcdc44d31fa89b7644a654567d66b93bac5f6186899d4d((i[0], 0.0, 0.0,))
 	return (a[0],)
 
 
-def gc_2c77eca10e9d4b6166545f021b512aee2c7dc6b8c3e77bb6d2a56c923a98f73d(i):
-	a = gc_bcf49ecb02279621bc1dd9d70265175f142ccfcc742ff07cf3983c830c4670fc((0.48095990403263733,))
+'''
+{'alpha_class': 1,
+ 'beta_class': -1,
+ 'code_depth': 2,
+ 'codon_depth': 1,
+ 'created': '2020-07-16T00:25:46.480136Z',
+ 'creator': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gca': 'f131f1d7c087d2b567acec3f2a476de27b9110e0794c11b2c97098e878feed08',
+ 'gcb': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'generation': 2,
+ 'graph': {'A': [['I', 0], ['C', 0], ['C', 1]],
+           'C': [0.0, 0.0],
+           'O': [['A', 0]]},
+ 'meta_data': {'parents': [['f131f1d7c087d2b567acec3f2a476de27b9110e0794c11b2c97098e878feed08']]},
+ 'num_codes': 1,
+ 'num_inputs': 1,
+ 'num_outputs': 1,
+ 'num_unique_codes': 1,
+ 'opt_num_codons': 0,
+ 'properties': {'binary_mutation': False,
+                'conditional': False,
+                'extended': False,
+                'logical': False,
+                'mathematical': False,
+                'unary_mutation': True},
+ 'raw_num_codons': 1,
+ 'reference_count': 0,
+ 'signature': '065c6b174b50d8682b49d71112febf3f052ad94f794cef68009887ae1bc09b69'}
+'''
+def gc_065c6b174b50d8682b49d71112febf3f052ad94f794cef68009887ae1bc09b69(i):
+	a = gc_f131f1d7c087d2b567acec3f2a476de27b9110e0794c11b2c97098e878feed08((i[0], 0.0, 0.0,))
 	return (a[0],)
 
 
-def gc_a21ab2924c5f3532f06892ca04adb570122723368cd5f2ca74389da6b0384f7d(i):
-	a = gc_ee2cc4658d03ebb3ffbcdc44d31fa89b7644a654567d66b93bac5f6186899d4d((i[0], i[1], i[0],))
+'''
+{'alpha_class': 1,
+ 'beta_class': -1,
+ 'code_depth': 2,
+ 'codon_depth': 1,
+ 'created': '2020-07-16T00:25:46.398723Z',
+ 'creator': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gca': '4cde93184158819b805ef591641fad84f4c0ee4fdb2715d267cbbcce1a53f8a4',
+ 'gcb': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'generation': 2,
+ 'graph': {'A': [['I', 0]], 'O': [['A', 0]]},
+ 'meta_data': {'parents': [['4cde93184158819b805ef591641fad84f4c0ee4fdb2715d267cbbcce1a53f8a4']]},
+ 'num_codes': 1,
+ 'num_inputs': 1,
+ 'num_outputs': 1,
+ 'num_unique_codes': 1,
+ 'opt_num_codons': 0,
+ 'properties': {'binary_mutation': False,
+                'conditional': False,
+                'extended': False,
+                'logical': False,
+                'mathematical': False,
+                'unary_mutation': True},
+ 'raw_num_codons': 1,
+ 'reference_count': 0,
+ 'signature': 'a380199b1efb5e06e8bf0ba253f2250b665534df9402e9ba08405876a9d0911b'}
+'''
+def gc_a380199b1efb5e06e8bf0ba253f2250b665534df9402e9ba08405876a9d0911b(i):
+	a = gc_4cde93184158819b805ef591641fad84f4c0ee4fdb2715d267cbbcce1a53f8a4((i[0],))
 	return (a[0],)
 
 
-def gc_da97d5ee9da9e50f640023c4689fcf791be91b5396f7d82dafb7a6710ab64562(i):
-	a = gc_ea549df0fcde3b6375528205fef6eea94b79a442fd8afa77905fbeab96c6bcea((i[0], 0.0,))
+'''
+{'alpha_class': 1,
+ 'beta_class': -1,
+ 'code_depth': 2,
+ 'codon_depth': 1,
+ 'created': '2020-07-16T00:25:46.313539Z',
+ 'creator': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gca': 'bcf49ecb02279621bc1dd9d70265175f142ccfcc742ff07cf3983c830c4670fc',
+ 'gcb': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'generation': 2,
+ 'graph': {'A': [['I', 0]], 'O': [['A', 0]]},
+ 'meta_data': {'parents': [['bcf49ecb02279621bc1dd9d70265175f142ccfcc742ff07cf3983c830c4670fc']]},
+ 'num_codes': 1,
+ 'num_inputs': 1,
+ 'num_outputs': 1,
+ 'num_unique_codes': 1,
+ 'opt_num_codons': 0,
+ 'properties': {'binary_mutation': False,
+                'conditional': False,
+                'extended': False,
+                'logical': False,
+                'mathematical': False,
+                'unary_mutation': True},
+ 'raw_num_codons': 1,
+ 'reference_count': 0,
+ 'signature': '15351a2e310bb0e2f6189d1728d5eee750c673dcb0b15c0f40302c6ef4e33535'}
+'''
+def gc_15351a2e310bb0e2f6189d1728d5eee750c673dcb0b15c0f40302c6ef4e33535(i):
+	a = gc_bcf49ecb02279621bc1dd9d70265175f142ccfcc742ff07cf3983c830c4670fc((i[0],))
 	return (a[0],)
 
 
-def gc_bfbda3a0972e759ab662b7eb6a716b86299fa7488abd9634ae98adc5746f643f(i):
-	a = gc_4f54b44dd522c044b41833089ca47ece6b280ff8c11324a5b8b6a957d92f6de8((0.0, i[0], 0.0,))
+'''
+{'alpha_class': 1,
+ 'beta_class': -1,
+ 'code_depth': 2,
+ 'codon_depth': 1,
+ 'created': '2020-07-16T00:25:46.234992Z',
+ 'creator': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gca': '278ddaaaa439429bad68df4b81f3b42ecdc7cf2d2ea8ad086a2ca185a3acbbb6',
+ 'gcb': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'generation': 2,
+ 'graph': {'A': [['C', 0]], 'C': [0.0], 'O': [['A', 0]]},
+ 'meta_data': {'parents': [['278ddaaaa439429bad68df4b81f3b42ecdc7cf2d2ea8ad086a2ca185a3acbbb6']]},
+ 'num_codes': 1,
+ 'num_inputs': 0,
+ 'num_outputs': 1,
+ 'num_unique_codes': 1,
+ 'opt_num_codons': 0,
+ 'properties': {'binary_mutation': False,
+                'conditional': False,
+                'extended': False,
+                'logical': False,
+                'mathematical': False,
+                'unary_mutation': True},
+ 'raw_num_codons': 1,
+ 'reference_count': 0,
+ 'signature': '8e63d58261949359d0c4f000d50406d5c5df57a1809ca623baa7940a1ac1c84a'}
+'''
+def gc_8e63d58261949359d0c4f000d50406d5c5df57a1809ca623baa7940a1ac1c84a(i):
+	a = gc_278ddaaaa439429bad68df4b81f3b42ecdc7cf2d2ea8ad086a2ca185a3acbbb6((0.0,))
 	return (a[0],)
 
 
-def gc_5c71d5f7476b97d337046668b4d20d7e9657d1677fd216a76db5576e6902d31b(i):
-	a = gc_23c441e967ef4b8637554409522bc07c1d0faac129bccf73473c098650a63957((0.0, 0.0, 0.0,))
+'''
+{'alpha_class': 1,
+ 'beta_class': -1,
+ 'code_depth': 2,
+ 'codon_depth': 1,
+ 'created': '2020-07-16T00:25:47.282471Z',
+ 'creator': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gca': 'ce4e58fcbe55e5caf14c456fd2603a7d81c19e89e61e63b0e56f8c1958ba3da1',
+ 'gcb': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'generation': 2,
+ 'graph': {'A': [['I', 0], ['I', 1]], 'O': [['A', 0]]},
+ 'meta_data': {'parents': [['ce4e58fcbe55e5caf14c456fd2603a7d81c19e89e61e63b0e56f8c1958ba3da1']]},
+ 'num_codes': 1,
+ 'num_inputs': 2,
+ 'num_outputs': 1,
+ 'num_unique_codes': 1,
+ 'opt_num_codons': 0,
+ 'properties': {'binary_mutation': True,
+                'conditional': False,
+                'extended': False,
+                'logical': False,
+                'mathematical': False,
+                'unary_mutation': False},
+ 'raw_num_codons': 1,
+ 'reference_count': 0,
+ 'signature': '66ac33a3f469fe70a0c72886b61ccd32f2b9b4738c8dd22112ba9e47ebe4ff2b'}
+'''
+def gc_66ac33a3f469fe70a0c72886b61ccd32f2b9b4738c8dd22112ba9e47ebe4ff2b(i):
+	a = gc_ce4e58fcbe55e5caf14c456fd2603a7d81c19e89e61e63b0e56f8c1958ba3da1((i[0], i[1],))
 	return (a[0],)
 
 
-def gc_d91aec2848d9b2a917bc2edbf315e5c015fd56e9b4d961d39eaf7bdc07228eb4(i):
-	a = gc_f131f1d7c087d2b567acec3f2a476de27b9110e0794c11b2c97098e878feed08((i[0], 0.0, i[0],))
+'''
+{'alpha_class': 1,
+ 'beta_class': -1,
+ 'code_depth': 2,
+ 'codon_depth': 1,
+ 'created': '2020-07-16T00:25:47.213333Z',
+ 'creator': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gca': 'b4dc32c9bc15e51d8070be7bf0ee9bfc344b73cc8ec857978ff72e71a3efb911',
+ 'gcb': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'generation': 2,
+ 'graph': {'A': [['I', 0], ['C', 0], ['C', 1]],
+           'C': [0.0, 0.0],
+           'O': [['A', 0]]},
+ 'meta_data': {'parents': [['b4dc32c9bc15e51d8070be7bf0ee9bfc344b73cc8ec857978ff72e71a3efb911']]},
+ 'num_codes': 1,
+ 'num_inputs': 1,
+ 'num_outputs': 1,
+ 'num_unique_codes': 1,
+ 'opt_num_codons': 0,
+ 'properties': {'binary_mutation': False,
+                'conditional': False,
+                'extended': False,
+                'logical': False,
+                'mathematical': False,
+                'unary_mutation': True},
+ 'raw_num_codons': 1,
+ 'reference_count': 0,
+ 'signature': '69f8bddf1ba8386b128c82b9e9d61bfbcd39a2adfb0f072e1c0edd6fc96c2b5e'}
+'''
+def gc_69f8bddf1ba8386b128c82b9e9d61bfbcd39a2adfb0f072e1c0edd6fc96c2b5e(i):
+	a = gc_b4dc32c9bc15e51d8070be7bf0ee9bfc344b73cc8ec857978ff72e71a3efb911((i[0], 0.0, 0.0,))
 	return (a[0],)
 
 
-def gc_594d4fecf49ba673e352b34630cb34723db65c22c2de3f7b380d89b3ea2e91b6(i):
-	a = gc_c436ba9675317cfa2b5e32a3f00cf08b57295e06f28d5203fbaa1cd6b430e6d7((i[0], i[0], 0.0,))
+'''
+{'alpha_class': 1,
+ 'beta_class': -1,
+ 'code_depth': 2,
+ 'codon_depth': 1,
+ 'created': '2020-07-16T00:25:47.004854Z',
+ 'creator': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gca': '6bba0589ed454784e75f8a184fb8fc8d59a3772e73a8414f2ba915ce211f6773',
+ 'gcb': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'generation': 2,
+ 'graph': {'A': [['I', 0]], 'O': [['A', 0]]},
+ 'meta_data': {'parents': [['6bba0589ed454784e75f8a184fb8fc8d59a3772e73a8414f2ba915ce211f6773']]},
+ 'num_codes': 1,
+ 'num_inputs': 1,
+ 'num_outputs': 1,
+ 'num_unique_codes': 1,
+ 'opt_num_codons': 0,
+ 'properties': {'binary_mutation': False,
+                'conditional': False,
+                'extended': False,
+                'logical': False,
+                'mathematical': False,
+                'unary_mutation': True},
+ 'raw_num_codons': 1,
+ 'reference_count': 0,
+ 'signature': '572f3d56521fb576738b38239b46b1f2e4f881dbeb18ba57b3254a6dceb5782e'}
+'''
+def gc_572f3d56521fb576738b38239b46b1f2e4f881dbeb18ba57b3254a6dceb5782e(i):
+	a = gc_6bba0589ed454784e75f8a184fb8fc8d59a3772e73a8414f2ba915ce211f6773((i[0],))
 	return (a[0],)
 
 
-def gc_7d5822650106683c1fcd908d1158c4812af087fac65cc2ecfe159378a7779d21(i):
-	a = gc_23c441e967ef4b8637554409522bc07c1d0faac129bccf73473c098650a63957((i[0], i[0], 0.0,))
+'''
+{'alpha_class': 1,
+ 'beta_class': -1,
+ 'code_depth': 2,
+ 'codon_depth': 1,
+ 'created': '2020-07-16T00:25:48.162033Z',
+ 'creator': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gca': '4140f47e72adf3343c04c82d7766bf9e3bc71a6b606b7bc2e93f45a6349792e5',
+ 'gcb': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'generation': 2,
+ 'graph': {'A': [['I', 0], ['I', 1]], 'O': [['A', 0]]},
+ 'meta_data': {'parents': [['4140f47e72adf3343c04c82d7766bf9e3bc71a6b606b7bc2e93f45a6349792e5']]},
+ 'num_codes': 1,
+ 'num_inputs': 2,
+ 'num_outputs': 1,
+ 'num_unique_codes': 1,
+ 'opt_num_codons': 0,
+ 'properties': {'binary_mutation': False,
+                'conditional': False,
+                'extended': False,
+                'logical': False,
+                'mathematical': False,
+                'unary_mutation': True},
+ 'raw_num_codons': 1,
+ 'reference_count': 0,
+ 'signature': 'b33df5beef7cd7d5e49e74b229864ba0664bae07dbe6a28a3c9c11643518f37d'}
+'''
+def gc_b33df5beef7cd7d5e49e74b229864ba0664bae07dbe6a28a3c9c11643518f37d(i):
+	a = gc_4140f47e72adf3343c04c82d7766bf9e3bc71a6b606b7bc2e93f45a6349792e5((i[0], i[1],))
 	return (a[0],)
 
 
-def gc_8cdc59519347b731b456141805655a9566f2cc7b579f183ca914389cb6fdbe97(i):
-	a = gc_7404cd51f0ff21ae1b51cd8e13b6bacf706cafde670c9ef05ae282fea9ff2364((-0.017798880041817178,))
+'''
+{'alpha_class': 1,
+ 'beta_class': -1,
+ 'code_depth': 2,
+ 'codon_depth': 1,
+ 'created': '2020-07-16T00:25:48.094573Z',
+ 'creator': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gca': '7bb5eb204e326fbabe069fb824e88a6ca68ec34c39eaa05a4d271a3f92e4b4fd',
+ 'gcb': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'generation': 2,
+ 'graph': {'A': [['I', 0]], 'O': [['A', 0]]},
+ 'meta_data': {'parents': [['7bb5eb204e326fbabe069fb824e88a6ca68ec34c39eaa05a4d271a3f92e4b4fd']]},
+ 'num_codes': 1,
+ 'num_inputs': 1,
+ 'num_outputs': 1,
+ 'num_unique_codes': 1,
+ 'opt_num_codons': 0,
+ 'properties': {'binary_mutation': False,
+                'conditional': False,
+                'extended': False,
+                'logical': False,
+                'mathematical': False,
+                'unary_mutation': True},
+ 'raw_num_codons': 1,
+ 'reference_count': 0,
+ 'signature': '42bdabf6208e9529f50a37386efafc88a45bdd1ed90be29c97a18041626dba9b'}
+'''
+def gc_42bdabf6208e9529f50a37386efafc88a45bdd1ed90be29c97a18041626dba9b(i):
+	a = gc_7bb5eb204e326fbabe069fb824e88a6ca68ec34c39eaa05a4d271a3f92e4b4fd((i[0],))
 	return (a[0],)
 
 
-def gc_7c8a5644e8760b4b932ab2aeed309ffc9959b725a1f9e30040bcec123cf4c120(i):
-	a = gc_23c441e967ef4b8637554409522bc07c1d0faac129bccf73473c098650a63957((0.0, 0.0, 0.0,))
-	return (a[0],)
-
-
-def gc_4a30b83252a92b1520be549254483be8398a7c342bc0d6900094b549900f9fe3(i):
-	a = gc_ea549df0fcde3b6375528205fef6eea94b79a442fd8afa77905fbeab96c6bcea((0.0, 0.0,))
-	return (a[0],)
-
-
-def gc_1ed4cc41f784bda5b2f1920e8118ecd146ce23229cfffe13fc6dc622e40c1540(i):
-	a = gc_6bba0589ed454784e75f8a184fb8fc8d59a3772e73a8414f2ba915ce211f6773((1.0,))
-	return (a[0],)
-
-
-def gc_2e79268b02ef88094b57181d85c78e05bcd27d5868d22b7558293f0f6d6dc689(i):
-	a = gc_23c441e967ef4b8637554409522bc07c1d0faac129bccf73473c098650a63957((0.0, 0.0, 0.0,))
-	return (a[0],)
-
-
-def gc_4a7af51922bb87525abed064e5f820ebbc79c2802f06342d6aa0daa8653cb5d7(i):
-	a = gc_4f54b44dd522c044b41833089ca47ece6b280ff8c11324a5b8b6a957d92f6de8((i[1], 0.0, i[0],))
-	return (a[0],)
-
-
-def gc_869efd02bf40eef6ab29c0ad5387bce4a852f417c285b989e204932d3384418a(i):
-	a = gc_4f54b44dd522c044b41833089ca47ece6b280ff8c11324a5b8b6a957d92f6de8((0.0, 0.0, 0.0,))
-	return (a[0],)
-
-
-def gc_fd2b9b334a25775b01ffbcfa3d51be1940ea26257275f58ed8d072c2e3c562e3(i):
+'''
+{'alpha_class': 1,
+ 'beta_class': -1,
+ 'code_depth': 2,
+ 'codon_depth': 1,
+ 'created': '2020-07-16T00:25:48.043672Z',
+ 'creator': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gca': 'c436ba9675317cfa2b5e32a3f00cf08b57295e06f28d5203fbaa1cd6b430e6d7',
+ 'gcb': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'generation': 2,
+ 'graph': {'A': [['I', 0], ['C', 0], ['C', 1]],
+           'C': [0.0, 0.0],
+           'O': [['A', 0]]},
+ 'meta_data': {'parents': [['c436ba9675317cfa2b5e32a3f00cf08b57295e06f28d5203fbaa1cd6b430e6d7']]},
+ 'num_codes': 1,
+ 'num_inputs': 1,
+ 'num_outputs': 1,
+ 'num_unique_codes': 1,
+ 'opt_num_codons': 0,
+ 'properties': {'binary_mutation': False,
+                'conditional': False,
+                'extended': False,
+                'logical': False,
+                'mathematical': False,
+                'unary_mutation': True},
+ 'raw_num_codons': 1,
+ 'reference_count': 0,
+ 'signature': '7c81e32cacdeb941a0c6989d24d58a9591a9771cce66ec0752ebbd0b2e1f5eae'}
+'''
+def gc_7c81e32cacdeb941a0c6989d24d58a9591a9771cce66ec0752ebbd0b2e1f5eae(i):
 	a = gc_c436ba9675317cfa2b5e32a3f00cf08b57295e06f28d5203fbaa1cd6b430e6d7((i[0], 0.0, 0.0,))
 	return (a[0],)
 
 
-def gc_25345bc7f15998f42c66172678da46b0847a9ca2f723d3b9b72cdbaacf3fd8a3(i):
-	a = gc_f131f1d7c087d2b567acec3f2a476de27b9110e0794c11b2c97098e878feed08((0.0, 0.0, i[0],))
+'''
+{'alpha_class': 1,
+ 'beta_class': -1,
+ 'code_depth': 2,
+ 'codon_depth': 1,
+ 'created': '2020-07-16T00:25:49.053697Z',
+ 'creator': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gca': '102a4d1fc747c5f81b314937da02b830ca4a49a6010aa65fd478dd1bd68675e8',
+ 'gcb': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'generation': 2,
+ 'graph': {'A': [['I', 0]], 'O': [['A', 0]]},
+ 'meta_data': {'parents': [['102a4d1fc747c5f81b314937da02b830ca4a49a6010aa65fd478dd1bd68675e8']]},
+ 'num_codes': 1,
+ 'num_inputs': 1,
+ 'num_outputs': 1,
+ 'num_unique_codes': 1,
+ 'opt_num_codons': 0,
+ 'properties': {'binary_mutation': False,
+                'conditional': False,
+                'extended': False,
+                'logical': False,
+                'mathematical': False,
+                'unary_mutation': True},
+ 'raw_num_codons': 1,
+ 'reference_count': 0,
+ 'signature': '5e518b6b4668611c3d1602f784ad410609d5657a5d5690f9abca54eb4b7c0f3a'}
+'''
+def gc_5e518b6b4668611c3d1602f784ad410609d5657a5d5690f9abca54eb4b7c0f3a(i):
+	a = gc_102a4d1fc747c5f81b314937da02b830ca4a49a6010aa65fd478dd1bd68675e8((i[0],))
 	return (a[0],)
 
 
-def gc_88658c38ce763ae5bd877b7dcfc9c68d3056bc47465836a8e2de8915efa41fa1(i):
-	a = gc_b3426a0b5077c14d09c2eb091e8ba0ded68486890d5f0146cfdec34ebbe383d6((-1.0,))
+'''
+{'alpha_class': 1,
+ 'beta_class': -1,
+ 'code_depth': 2,
+ 'codon_depth': 1,
+ 'created': '2020-07-16T00:25:48.791218Z',
+ 'creator': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gca': '23c441e967ef4b8637554409522bc07c1d0faac129bccf73473c098650a63957',
+ 'gcb': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'generation': 2,
+ 'graph': {'A': [['I', 0], ['C', 0], ['I', 0]], 'C': [0.0], 'O': [['A', 0]]},
+ 'meta_data': {'parents': [['23c441e967ef4b8637554409522bc07c1d0faac129bccf73473c098650a63957']]},
+ 'num_codes': 1,
+ 'num_inputs': 1,
+ 'num_outputs': 1,
+ 'num_unique_codes': 1,
+ 'opt_num_codons': 0,
+ 'properties': {'binary_mutation': False,
+                'conditional': False,
+                'extended': False,
+                'logical': False,
+                'mathematical': False,
+                'unary_mutation': True},
+ 'raw_num_codons': 1,
+ 'reference_count': 0,
+ 'signature': 'a0429192b8ead5be37fc2c644a9ed57cf4a9eaf2a10c9fe225a6e39a204b5e16'}
+'''
+def gc_a0429192b8ead5be37fc2c644a9ed57cf4a9eaf2a10c9fe225a6e39a204b5e16(i):
+	a = gc_23c441e967ef4b8637554409522bc07c1d0faac129bccf73473c098650a63957((i[0], 0.0, i[0],))
 	return (a[0],)
 
 
-def gc_7ae090ce82e6a50a1278469424ac9934dd3e61ab61d8d72417e0bcbc1901fdc7(i):
-	a = gc_c436ba9675317cfa2b5e32a3f00cf08b57295e06f28d5203fbaa1cd6b430e6d7((0.0, 0.0, 0.0,))
+'''
+{'alpha_class': 1,
+ 'beta_class': -1,
+ 'code_depth': 2,
+ 'codon_depth': 1,
+ 'created': '2020-07-16T00:25:48.756988Z',
+ 'creator': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gca': 'a95ea10e7327badf07045086c7e935f5cc66a9b47f323fcdf30d76f66a592829',
+ 'gcb': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'generation': 2,
+ 'graph': {'A': [['I', 0], ['I', 0], ['C', 0]], 'C': [0.0], 'O': [['A', 0]]},
+ 'meta_data': {'parents': [['a95ea10e7327badf07045086c7e935f5cc66a9b47f323fcdf30d76f66a592829']]},
+ 'num_codes': 1,
+ 'num_inputs': 1,
+ 'num_outputs': 1,
+ 'num_unique_codes': 1,
+ 'opt_num_codons': 0,
+ 'properties': {'binary_mutation': False,
+                'conditional': False,
+                'extended': False,
+                'logical': False,
+                'mathematical': False,
+                'unary_mutation': True},
+ 'raw_num_codons': 1,
+ 'reference_count': 0,
+ 'signature': 'bf3161b1d66c4f7b2c4d7c9901bd0044d3dcb0e2bc05dbe82e1feeeb40ef9931'}
+'''
+def gc_bf3161b1d66c4f7b2c4d7c9901bd0044d3dcb0e2bc05dbe82e1feeeb40ef9931(i):
+	a = gc_a95ea10e7327badf07045086c7e935f5cc66a9b47f323fcdf30d76f66a592829((i[0], i[0], 0.0,))
 	return (a[0],)
 
 
-def gc_bf9dea0e81d0d95de000006af40c6d9ffa713aefcfb21c6df80c7de5e5382c06(i):
-	a = gc_7bb5eb204e326fbabe069fb824e88a6ca68ec34c39eaa05a4d271a3f92e4b4fd((-1.0,))
+'''
+{'alpha_class': 1,
+ 'beta_class': -1,
+ 'code_depth': 2,
+ 'codon_depth': 1,
+ 'created': '2020-07-16T00:25:50.962542Z',
+ 'creator': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gca': '4f54b44dd522c044b41833089ca47ece6b280ff8c11324a5b8b6a957d92f6de8',
+ 'gcb': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'generation': 2,
+ 'graph': {'A': [['I', 0], ['C', 0], ['C', 1]],
+           'C': [0.0, 0.0],
+           'O': [['A', 0]]},
+ 'meta_data': {'parents': [['4f54b44dd522c044b41833089ca47ece6b280ff8c11324a5b8b6a957d92f6de8']]},
+ 'num_codes': 1,
+ 'num_inputs': 1,
+ 'num_outputs': 1,
+ 'num_unique_codes': 1,
+ 'opt_num_codons': 0,
+ 'properties': {'binary_mutation': False,
+                'conditional': False,
+                'extended': False,
+                'logical': False,
+                'mathematical': False,
+                'unary_mutation': True},
+ 'raw_num_codons': 1,
+ 'reference_count': 0,
+ 'signature': 'cf8cd9075b571cb5a59d37e378029ff54502df66779163ba058c01384f335c2c'}
+'''
+def gc_cf8cd9075b571cb5a59d37e378029ff54502df66779163ba058c01384f335c2c(i):
+	a = gc_4f54b44dd522c044b41833089ca47ece6b280ff8c11324a5b8b6a957d92f6de8((i[0], 0.0, 0.0,))
 	return (a[0],)
 
 
-def gc_7522efd6a5871583f9754ab4fed5bce89c533e45c1b96a2cfbdbc2425e37471f(i):
-	a = gc_102a4d1fc747c5f81b314937da02b830ca4a49a6010aa65fd478dd1bd68675e8((0.977080746225961,))
+'''
+{'alpha_class': 1,
+ 'beta_class': -1,
+ 'code_depth': 2,
+ 'codon_depth': 1,
+ 'created': '2020-07-16T00:25:50.876654Z',
+ 'creator': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gca': '81d83b6dfe8764bc32df13948a86e7721818e3648d8f916708f8d416b2b94370',
+ 'gcb': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'generation': 2,
+ 'graph': {'A': [['I', 0]], 'O': [['A', 0]]},
+ 'meta_data': {'parents': [['81d83b6dfe8764bc32df13948a86e7721818e3648d8f916708f8d416b2b94370']]},
+ 'num_codes': 1,
+ 'num_inputs': 1,
+ 'num_outputs': 1,
+ 'num_unique_codes': 1,
+ 'opt_num_codons': 0,
+ 'properties': {'binary_mutation': False,
+                'conditional': False,
+                'extended': False,
+                'logical': False,
+                'mathematical': False,
+                'unary_mutation': True},
+ 'raw_num_codons': 1,
+ 'reference_count': 0,
+ 'signature': '65205972c2842865c3b8de9cd43d117c8bc0ff4fc05f27284d93416cd604dcf4'}
+'''
+def gc_65205972c2842865c3b8de9cd43d117c8bc0ff4fc05f27284d93416cd604dcf4(i):
+	a = gc_81d83b6dfe8764bc32df13948a86e7721818e3648d8f916708f8d416b2b94370((i[0],))
 	return (a[0],)
 
 
-def gc_db7b67c6868db694fde553c689fdd1797d461419e6d7c3d5e857133b19dc5036(i):
-	a = gc_a95ea10e7327badf07045086c7e935f5cc66a9b47f323fcdf30d76f66a592829((-0.9869114881221441, i[0], i[1],))
+'''
+{'alpha_class': 1,
+ 'beta_class': -1,
+ 'code_depth': 2,
+ 'codon_depth': 1,
+ 'created': '2020-07-16T00:25:50.790871Z',
+ 'creator': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gca': '81b5a567e50cf6fd71bfcfc3c5d23faa0f245fb0a71900fa9573eba1a94ee80d',
+ 'gcb': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'generation': 2,
+ 'graph': {'A': [['C', 0]], 'C': [-1.0], 'O': [['A', 0]]},
+ 'meta_data': {'parents': [['81b5a567e50cf6fd71bfcfc3c5d23faa0f245fb0a71900fa9573eba1a94ee80d']]},
+ 'num_codes': 1,
+ 'num_inputs': 0,
+ 'num_outputs': 1,
+ 'num_unique_codes': 1,
+ 'opt_num_codons': 0,
+ 'properties': {'binary_mutation': False,
+                'conditional': False,
+                'extended': False,
+                'logical': False,
+                'mathematical': False,
+                'unary_mutation': True},
+ 'raw_num_codons': 1,
+ 'reference_count': 0,
+ 'signature': '7eb61a64d6aa1248cf7c1973ece726698b4d3b61964060a46a9789bda79d7c72'}
+'''
+def gc_7eb61a64d6aa1248cf7c1973ece726698b4d3b61964060a46a9789bda79d7c72(i):
+	a = gc_81b5a567e50cf6fd71bfcfc3c5d23faa0f245fb0a71900fa9573eba1a94ee80d((-1.0,))
 	return (a[0],)
 
 
-def gc_7d8ff68f10d8ad1ee760e4aa97e4521f691357857c73bbb9a0b64a720795bd36(i):
-	a = gc_bcf49ecb02279621bc1dd9d70265175f142ccfcc742ff07cf3983c830c4670fc((0.39637413322663084,))
+'''
+{'alpha_class': 1,
+ 'beta_class': -1,
+ 'code_depth': 2,
+ 'codon_depth': 1,
+ 'created': '2020-07-16T00:25:50.686983Z',
+ 'creator': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gca': 'e279714512f0498ee888c84f1906de2a5e6bf082d60fdbb32de84a0c16f6f071',
+ 'gcb': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'generation': 2,
+ 'graph': {'A': [['I', 0]], 'O': [['A', 0]]},
+ 'meta_data': {'parents': [['e279714512f0498ee888c84f1906de2a5e6bf082d60fdbb32de84a0c16f6f071']]},
+ 'num_codes': 1,
+ 'num_inputs': 1,
+ 'num_outputs': 1,
+ 'num_unique_codes': 1,
+ 'opt_num_codons': 0,
+ 'properties': {'binary_mutation': False,
+                'conditional': False,
+                'extended': False,
+                'logical': False,
+                'mathematical': False,
+                'unary_mutation': True},
+ 'raw_num_codons': 1,
+ 'reference_count': 0,
+ 'signature': 'db707d1e30841606ccbc7f7d349dcdadcf7b3b5e1e8d1a2e8cec17e1317bfd13'}
+'''
+def gc_db707d1e30841606ccbc7f7d349dcdadcf7b3b5e1e8d1a2e8cec17e1317bfd13(i):
+	a = gc_e279714512f0498ee888c84f1906de2a5e6bf082d60fdbb32de84a0c16f6f071((i[0],))
 	return (a[0],)
 
 
-def gc_51fa4191894a45e0f2c9f09dfb4ef07c13396fb60985cdd6452403290bbc0a86(i):
-	a = gc_f131f1d7c087d2b567acec3f2a476de27b9110e0794c11b2c97098e878feed08((i[1], i[0], i[1],))
+'''
+{'alpha_class': 1,
+ 'beta_class': -1,
+ 'code_depth': 2,
+ 'codon_depth': 1,
+ 'created': '2020-07-16T00:25:50.175609Z',
+ 'creator': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gca': '4793e082e2462b3ed47a23c000e9e8165bf7b6dea9bde08182b7203a708f6214',
+ 'gcb': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'generation': 2,
+ 'graph': {'A': [['C', 0]], 'C': [0.63940154460376], 'O': [['A', 0]]},
+ 'meta_data': {'parents': [['f5b607832778f539c313b5dbe664e0cdbaf016bcdba4ac95d45c54f999e08a4f']]},
+ 'num_codes': 1,
+ 'num_inputs': 0,
+ 'num_outputs': 1,
+ 'num_unique_codes': 1,
+ 'opt_num_codons': 0,
+ 'properties': {'binary_mutation': False,
+                'conditional': False,
+                'extended': False,
+                'logical': False,
+                'mathematical': False,
+                'unary_mutation': True},
+ 'raw_num_codons': 1,
+ 'reference_count': 0,
+ 'signature': 'afa54e4b4caac53b34964c353bec7a56c8f8a41a501e37afe3a2f0237968b97e'}
+'''
+def gc_afa54e4b4caac53b34964c353bec7a56c8f8a41a501e37afe3a2f0237968b97e(i):
+	a = gc_4793e082e2462b3ed47a23c000e9e8165bf7b6dea9bde08182b7203a708f6214((0.63940154460376,))
 	return (a[0],)
 
 
-def gc_27117522bd9676f93cf53570ffc4d45e48383df6a9342283ee02213336c7864d(i):
-	a = gc_ce4e58fcbe55e5caf14c456fd2603a7d81c19e89e61e63b0e56f8c1958ba3da1((0.0, i[0],))
+'''
+{'alpha_class': 1,
+ 'beta_class': -1,
+ 'code_depth': 2,
+ 'codon_depth': 1,
+ 'created': '2020-07-16T00:25:50.046057Z',
+ 'creator': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gca': '63971bfb77792f35cda0463d310e2724ae108354fb287df386ab88a752743fcc',
+ 'gcb': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'generation': 2,
+ 'graph': {'A': [['I', 0]], 'O': [['A', 0]]},
+ 'meta_data': {'parents': [['63971bfb77792f35cda0463d310e2724ae108354fb287df386ab88a752743fcc']]},
+ 'num_codes': 1,
+ 'num_inputs': 1,
+ 'num_outputs': 1,
+ 'num_unique_codes': 1,
+ 'opt_num_codons': 0,
+ 'properties': {'binary_mutation': False,
+                'conditional': False,
+                'extended': False,
+                'logical': False,
+                'mathematical': False,
+                'unary_mutation': True},
+ 'raw_num_codons': 1,
+ 'reference_count': 0,
+ 'signature': '562f9ffb473aade86537c9d78a94314f32cc0e1e6a5c71926777777c5fd35bbf'}
+'''
+def gc_562f9ffb473aade86537c9d78a94314f32cc0e1e6a5c71926777777c5fd35bbf(i):
+	a = gc_63971bfb77792f35cda0463d310e2724ae108354fb287df386ab88a752743fcc((i[0],))
 	return (a[0],)
 
 
-def gc_61b68ea57835c37b20ebac8b99694ff1ebd9f8bb9fa0f5002b687bbf13ee27e4(i):
-	a = gc_ee2cc4658d03ebb3ffbcdc44d31fa89b7644a654567d66b93bac5f6186899d4d((0.0, 0.0, i[0],))
+'''
+{'alpha_class': 1,
+ 'beta_class': -1,
+ 'code_depth': 2,
+ 'codon_depth': 1,
+ 'created': '2020-07-16T00:25:49.731821Z',
+ 'creator': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gca': '4f54b44dd522c044b41833089ca47ece6b280ff8c11324a5b8b6a957d92f6de8',
+ 'gcb': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'generation': 2,
+ 'graph': {'A': [['I', 0], ['I', 0], ['C', 0]], 'C': [0.0], 'O': [['A', 0]]},
+ 'meta_data': {'parents': [['4f54b44dd522c044b41833089ca47ece6b280ff8c11324a5b8b6a957d92f6de8']]},
+ 'num_codes': 1,
+ 'num_inputs': 1,
+ 'num_outputs': 1,
+ 'num_unique_codes': 1,
+ 'opt_num_codons': 0,
+ 'properties': {'binary_mutation': False,
+                'conditional': False,
+                'extended': False,
+                'logical': False,
+                'mathematical': False,
+                'unary_mutation': True},
+ 'raw_num_codons': 1,
+ 'reference_count': 0,
+ 'signature': '67aa64f950ed976c1835461b09f7aee23a9ef5508d2a06d7b02e026b32f4134a'}
+'''
+def gc_67aa64f950ed976c1835461b09f7aee23a9ef5508d2a06d7b02e026b32f4134a(i):
+	a = gc_4f54b44dd522c044b41833089ca47ece6b280ff8c11324a5b8b6a957d92f6de8((i[0], i[0], 0.0,))
 	return (a[0],)
 
 
-def gc_315774e833d514d7ebcd50e83a42e91b93910f3590880100f0582c8734bdb919(i):
-	a = gc_5f1ff9bfaf9bc1cdb5d520bd056048ebe5467cc6580f03b9c0c29b7eb64c4d2b((i[0], i[0], 0.0,))
+'''
+{'alpha_class': 0,
+ 'beta_class': 0,
+ 'code_depth': 1,
+ 'codon_depth': 1,
+ 'created': '2020-07-16T00:25:44.042046Z',
+ 'creator': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gca': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gcb': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'generation': 1,
+ 'graph': {'A': [['I', 0]], 'O': [['A', 0]]},
+ 'meta_data': {'function': {'python3': {'0': {'inline': "connect({0[i0]}, 'C', "
+                                                        "'A', random(), "
+                                                        'random())'}}},
+               'name': 'GCA-constant connection with random fractional '
+                       'offsets'},
+ 'num_codes': 1,
+ 'num_inputs': 1,
+ 'num_outputs': 1,
+ 'num_unique_codes': 1,
+ 'opt_num_codons': 1,
+ 'properties': {'binary_mutation': False,
+                'conditional': False,
+                'extended': False,
+                'logical': False,
+                'mathematical': False,
+                'unary_mutation': True},
+ 'raw_num_codons': 1,
+ 'reference_count': 0,
+ 'signature': '102a4d1fc747c5f81b314937da02b830ca4a49a6010aa65fd478dd1bd68675e8'}
+'''
+def gc_102a4d1fc747c5f81b314937da02b830ca4a49a6010aa65fd478dd1bd68675e8(i):
+	return (connect(i[0], 'C', 'A', random(), random()),)
+
+
+'''
+{'alpha_class': 0,
+ 'beta_class': 0,
+ 'code_depth': 1,
+ 'codon_depth': 1,
+ 'created': '2020-07-16T00:25:44.061054Z',
+ 'creator': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gca': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gcb': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'generation': 1,
+ 'graph': {'A': [['I', 0]], 'O': [['A', 0]]},
+ 'meta_data': {'function': {'python3': {'0': {'inline': "connect({0[i0]}, 'I', "
+                                                        "'B', random(), "
+                                                        'random())'}}},
+               'name': 'GCB-input connection with random fractional offsets'},
+ 'num_codes': 1,
+ 'num_inputs': 1,
+ 'num_outputs': 1,
+ 'num_unique_codes': 1,
+ 'opt_num_codons': 1,
+ 'properties': {'binary_mutation': False,
+                'conditional': False,
+                'extended': False,
+                'logical': False,
+                'mathematical': False,
+                'unary_mutation': True},
+ 'raw_num_codons': 1,
+ 'reference_count': 0,
+ 'signature': '81d83b6dfe8764bc32df13948a86e7721818e3648d8f916708f8d416b2b94370'}
+'''
+def gc_81d83b6dfe8764bc32df13948a86e7721818e3648d8f916708f8d416b2b94370(i):
+	return (connect(i[0], 'I', 'B', random(), random()),)
+
+
+'''
+{'alpha_class': 0,
+ 'beta_class': 0,
+ 'code_depth': 1,
+ 'codon_depth': 1,
+ 'created': '2020-07-16T00:25:44.117988Z',
+ 'creator': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gca': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gcb': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'generation': 1,
+ 'graph': {'A': [['I', 0]], 'O': [['A', 0]]},
+ 'meta_data': {'function': {'python3': {'0': {'inline': "connect({0[i0]}, 'I', "
+                                                        "'O', random(), "
+                                                        'random())'}}},
+               'name': 'Output-input connection with random fractional '
+                       'offsets'},
+ 'num_codes': 1,
+ 'num_inputs': 1,
+ 'num_outputs': 1,
+ 'num_unique_codes': 1,
+ 'opt_num_codons': 1,
+ 'properties': {'binary_mutation': False,
+                'conditional': False,
+                'extended': False,
+                'logical': False,
+                'mathematical': False,
+                'unary_mutation': True},
+ 'raw_num_codons': 1,
+ 'reference_count': 0,
+ 'signature': '6bba0589ed454784e75f8a184fb8fc8d59a3772e73a8414f2ba915ce211f6773'}
+'''
+def gc_6bba0589ed454784e75f8a184fb8fc8d59a3772e73a8414f2ba915ce211f6773(i):
+	return (connect(i[0], 'I', 'O', random(), random()),)
+
+
+'''
+{'alpha_class': 0,
+ 'beta_class': 0,
+ 'code_depth': 1,
+ 'codon_depth': 1,
+ 'created': '2020-07-16T00:25:44.137077Z',
+ 'creator': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gca': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gcb': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'generation': 1,
+ 'graph': {'A': [['I', 0]], 'O': [['A', 0]]},
+ 'meta_data': {'function': {'python3': {'0': {'inline': "connect({0[i0]}, 'A', "
+                                                        "'O', random(), "
+                                                        'random())'}}},
+               'name': 'Output-GCA connection with random fractional offsets'},
+ 'num_codes': 1,
+ 'num_inputs': 1,
+ 'num_outputs': 1,
+ 'num_unique_codes': 1,
+ 'opt_num_codons': 1,
+ 'properties': {'binary_mutation': False,
+                'conditional': False,
+                'extended': False,
+                'logical': False,
+                'mathematical': False,
+                'unary_mutation': True},
+ 'raw_num_codons': 1,
+ 'reference_count': 0,
+ 'signature': '4793e082e2462b3ed47a23c000e9e8165bf7b6dea9bde08182b7203a708f6214'}
+'''
+def gc_4793e082e2462b3ed47a23c000e9e8165bf7b6dea9bde08182b7203a708f6214(i):
+	return (connect(i[0], 'A', 'O', random(), random()),)
+
+
+'''
+{'alpha_class': 0,
+ 'beta_class': 0,
+ 'code_depth': 1,
+ 'codon_depth': 1,
+ 'created': '2020-07-16T00:25:44.156605Z',
+ 'creator': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gca': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gcb': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'generation': 1,
+ 'graph': {'A': [['I', 0]], 'O': [['A', 0]]},
+ 'meta_data': {'function': {'python3': {'0': {'inline': "connect({0[i0]}, 'C', "
+                                                        "'O', random(), "
+                                                        'random())'}}},
+               'name': 'Output-constant connection with random fractional '
+                       'offsets'},
+ 'num_codes': 1,
+ 'num_inputs': 1,
+ 'num_outputs': 1,
+ 'num_unique_codes': 1,
+ 'opt_num_codons': 1,
+ 'properties': {'binary_mutation': False,
+                'conditional': False,
+                'extended': False,
+                'logical': False,
+                'mathematical': False,
+                'unary_mutation': True},
+ 'raw_num_codons': 1,
+ 'reference_count': 0,
+ 'signature': '63971bfb77792f35cda0463d310e2724ae108354fb287df386ab88a752743fcc'}
+'''
+def gc_63971bfb77792f35cda0463d310e2724ae108354fb287df386ab88a752743fcc(i):
+	return (connect(i[0], 'C', 'O', random(), random()),)
+
+
+'''
+{'alpha_class': 0,
+ 'beta_class': 0,
+ 'code_depth': 1,
+ 'codon_depth': 1,
+ 'created': '2020-07-16T00:25:44.176071Z',
+ 'creator': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gca': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gcb': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'generation': 1,
+ 'graph': {'A': [['I', 0], ['C', 0], ['C', 1]],
+           'C': [0.0, 0.0],
+           'O': [['A', 0]]},
+ 'meta_data': {'function': {'python3': {'0': {'inline': "connect({0[i0]}, 'I', "
+                                                        "'C', {0[c0]}, "
+                                                        '{0[c1]})'}}},
+               'name': 'GCA-input connection with constant fractional offsets'},
+ 'num_codes': 1,
+ 'num_inputs': 1,
+ 'num_outputs': 1,
+ 'num_unique_codes': 1,
+ 'opt_num_codons': 1,
+ 'properties': {'binary_mutation': False,
+                'conditional': False,
+                'extended': False,
+                'logical': False,
+                'mathematical': False,
+                'unary_mutation': True},
+ 'raw_num_codons': 1,
+ 'reference_count': 0,
+ 'signature': 'a95ea10e7327badf07045086c7e935f5cc66a9b47f323fcdf30d76f66a592829'}
+'''
+def gc_a95ea10e7327badf07045086c7e935f5cc66a9b47f323fcdf30d76f66a592829(i):
+	return (connect(i[0], 'I', 'C', 0.0, 0.0),)
+
+
+'''
+{'alpha_class': 0,
+ 'beta_class': 0,
+ 'code_depth': 1,
+ 'codon_depth': 1,
+ 'created': '2020-07-16T00:25:44.195624Z',
+ 'creator': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gca': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gcb': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'generation': 1,
+ 'graph': {'A': [['I', 0], ['C', 0], ['C', 1]],
+           'C': [0.0, 0.0],
+           'O': [['A', 0]]},
+ 'meta_data': {'function': {'python3': {'0': {'inline': "connect({0[i0]}, 'C', "
+                                                        "'A', {0[c0]}, "
+                                                        '{0[c1]})'}}},
+               'name': 'GCA-constant connection with constant fractional '
+                       'offsets'},
+ 'num_codes': 1,
+ 'num_inputs': 1,
+ 'num_outputs': 1,
+ 'num_unique_codes': 1,
+ 'opt_num_codons': 1,
+ 'properties': {'binary_mutation': False,
+                'conditional': False,
+                'extended': False,
+                'logical': False,
+                'mathematical': False,
+                'unary_mutation': True},
+ 'raw_num_codons': 1,
+ 'reference_count': 0,
+ 'signature': '4f54b44dd522c044b41833089ca47ece6b280ff8c11324a5b8b6a957d92f6de8'}
+'''
+def gc_4f54b44dd522c044b41833089ca47ece6b280ff8c11324a5b8b6a957d92f6de8(i):
+	return (connect(i[0], 'C', 'A', 0.0, 0.0),)
+
+
+'''
+{'alpha_class': 0,
+ 'beta_class': 0,
+ 'code_depth': 1,
+ 'codon_depth': 1,
+ 'created': '2020-07-16T00:25:44.254348Z',
+ 'creator': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gca': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gcb': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'generation': 1,
+ 'graph': {'A': [['I', 0], ['C', 0], ['C', 1]],
+           'C': [0.0, 0.0],
+           'O': [['A', 0]]},
+ 'meta_data': {'function': {'python3': {'0': {'inline': "connect({0[i0]}, 'C', "
+                                                        "'B', {0[c0]}, "
+                                                        '{0[c1]})'}}},
+               'name': 'GCB-constant connection with constant fractional '
+                       'offsets'},
+ 'num_codes': 1,
+ 'num_inputs': 1,
+ 'num_outputs': 1,
+ 'num_unique_codes': 1,
+ 'opt_num_codons': 1,
+ 'properties': {'binary_mutation': False,
+                'conditional': False,
+                'extended': False,
+                'logical': False,
+                'mathematical': False,
+                'unary_mutation': True},
+ 'raw_num_codons': 1,
+ 'reference_count': 0,
+ 'signature': 'c436ba9675317cfa2b5e32a3f00cf08b57295e06f28d5203fbaa1cd6b430e6d7'}
+'''
+def gc_c436ba9675317cfa2b5e32a3f00cf08b57295e06f28d5203fbaa1cd6b430e6d7(i):
+	return (connect(i[0], 'C', 'B', 0.0, 0.0),)
+
+
+'''
+{'alpha_class': 0,
+ 'beta_class': 0,
+ 'code_depth': 1,
+ 'codon_depth': 1,
+ 'created': '2020-07-16T00:25:44.274756Z',
+ 'creator': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gca': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gcb': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'generation': 1,
+ 'graph': {'A': [['I', 0], ['C', 0], ['C', 1]],
+           'C': [0.0, 0.0],
+           'O': [['A', 0]]},
+ 'meta_data': {'function': {'python3': {'0': {'inline': "connect({0[i0]}, 'I', "
+                                                        "'O', {0[c0]}, "
+                                                        '{0[c1]})'}}},
+               'name': 'Output-input connection with constant fractional '
+                       'offsets'},
+ 'num_codes': 1,
+ 'num_inputs': 1,
+ 'num_outputs': 1,
+ 'num_unique_codes': 1,
+ 'opt_num_codons': 1,
+ 'properties': {'binary_mutation': False,
+                'conditional': False,
+                'extended': False,
+                'logical': False,
+                'mathematical': False,
+                'unary_mutation': True},
+ 'raw_num_codons': 1,
+ 'reference_count': 0,
+ 'signature': 'b4dc32c9bc15e51d8070be7bf0ee9bfc344b73cc8ec857978ff72e71a3efb911'}
+'''
+def gc_b4dc32c9bc15e51d8070be7bf0ee9bfc344b73cc8ec857978ff72e71a3efb911(i):
+	return (connect(i[0], 'I', 'O', 0.0, 0.0),)
+
+
+'''
+{'alpha_class': 0,
+ 'beta_class': 0,
+ 'code_depth': 1,
+ 'codon_depth': 1,
+ 'created': '2020-07-16T00:25:44.293938Z',
+ 'creator': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gca': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gcb': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'generation': 1,
+ 'graph': {'A': [['I', 0], ['C', 0], ['C', 1]],
+           'C': [0.0, 0.0],
+           'O': [['A', 0]]},
+ 'meta_data': {'function': {'python3': {'0': {'inline': "connect({0[i0]}, 'A', "
+                                                        "'O', {0[c0]}, "
+                                                        '{0[c1]})'}}},
+               'name': 'Output-GCA connection with constant fractional '
+                       'offsets'},
+ 'num_codes': 1,
+ 'num_inputs': 1,
+ 'num_outputs': 1,
+ 'num_unique_codes': 1,
+ 'opt_num_codons': 1,
+ 'properties': {'binary_mutation': False,
+                'conditional': False,
+                'extended': False,
+                'logical': False,
+                'mathematical': False,
+                'unary_mutation': True},
+ 'raw_num_codons': 1,
+ 'reference_count': 0,
+ 'signature': 'f131f1d7c087d2b567acec3f2a476de27b9110e0794c11b2c97098e878feed08'}
+'''
+def gc_f131f1d7c087d2b567acec3f2a476de27b9110e0794c11b2c97098e878feed08(i):
+	return (connect(i[0], 'A', 'O', 0.0, 0.0),)
+
+
+'''
+{'alpha_class': 0,
+ 'beta_class': 0,
+ 'code_depth': 1,
+ 'codon_depth': 1,
+ 'created': '2020-07-16T00:25:44.313303Z',
+ 'creator': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gca': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gcb': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'generation': 1,
+ 'graph': {'A': [['I', 0], ['C', 0], ['C', 1]],
+           'C': [0.0, 0.0],
+           'O': [['A', 0]]},
+ 'meta_data': {'function': {'python3': {'0': {'inline': "connect({0[i0]}, 'C', "
+                                                        "'O', {0[c0]}, "
+                                                        '{0[c1]})'}}},
+               'name': 'Output-constant connection with constant fractional '
+                       'offsets'},
+ 'num_codes': 1,
+ 'num_inputs': 1,
+ 'num_outputs': 1,
+ 'num_unique_codes': 1,
+ 'opt_num_codons': 1,
+ 'properties': {'binary_mutation': False,
+                'conditional': False,
+                'extended': False,
+                'logical': False,
+                'mathematical': False,
+                'unary_mutation': True},
+ 'raw_num_codons': 1,
+ 'reference_count': 0,
+ 'signature': 'ee2cc4658d03ebb3ffbcdc44d31fa89b7644a654567d66b93bac5f6186899d4d'}
+'''
+def gc_ee2cc4658d03ebb3ffbcdc44d31fa89b7644a654567d66b93bac5f6186899d4d(i):
+	return (connect(i[0], 'C', 'O', 0.0, 0.0),)
+
+
+'''
+{'alpha_class': 0,
+ 'beta_class': 0,
+ 'code_depth': 1,
+ 'codon_depth': 1,
+ 'created': '2020-07-16T00:25:44.332305Z',
+ 'creator': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gca': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gcb': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'generation': 1,
+ 'graph': {'A': [['I', 0]], 'O': [['A', 0]]},
+ 'meta_data': {'function': {'python3': {'0': {'inline': 'append_constant({0[i0]}, '
+                                                        'uniform(-1.0, '
+                                                        '1.0))'}}},
+               'name': 'New constant: Random -1.0 to 1.0'},
+ 'num_codes': 1,
+ 'num_inputs': 1,
+ 'num_outputs': 1,
+ 'num_unique_codes': 1,
+ 'opt_num_codons': 1,
+ 'properties': {'binary_mutation': False,
+                'conditional': False,
+                'extended': False,
+                'logical': False,
+                'mathematical': False,
+                'unary_mutation': True},
+ 'raw_num_codons': 1,
+ 'reference_count': 0,
+ 'signature': 'e279714512f0498ee888c84f1906de2a5e6bf082d60fdbb32de84a0c16f6f071'}
+'''
+def gc_e279714512f0498ee888c84f1906de2a5e6bf082d60fdbb32de84a0c16f6f071(i):
+	return (append_constant(i[0], uniform(-1.0, 1.0)),)
+
+
+'''
+{'alpha_class': 0,
+ 'beta_class': 0,
+ 'code_depth': 1,
+ 'codon_depth': 1,
+ 'created': '2020-07-16T00:25:44.351029Z',
+ 'creator': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gca': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gcb': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'generation': 1,
+ 'graph': {'A': [['I', 0]], 'O': [['A', 0]]},
+ 'meta_data': {'function': {'python3': {'0': {'inline': 'append_constant({0[i0]}, '
+                                                        '1.0)'}}},
+               'name': 'New constant: 1.0'},
+ 'num_codes': 1,
+ 'num_inputs': 1,
+ 'num_outputs': 1,
+ 'num_unique_codes': 1,
+ 'opt_num_codons': 1,
+ 'properties': {'binary_mutation': False,
+                'conditional': False,
+                'extended': False,
+                'logical': False,
+                'mathematical': False,
+                'unary_mutation': True},
+ 'raw_num_codons': 1,
+ 'reference_count': 0,
+ 'signature': '7bb5eb204e326fbabe069fb824e88a6ca68ec34c39eaa05a4d271a3f92e4b4fd'}
+'''
+def gc_7bb5eb204e326fbabe069fb824e88a6ca68ec34c39eaa05a4d271a3f92e4b4fd(i):
+	return (append_constant(i[0], 1.0),)
+
+
+'''
+{'alpha_class': 0,
+ 'beta_class': 0,
+ 'code_depth': 1,
+ 'codon_depth': 1,
+ 'created': '2020-07-16T00:25:44.408511Z',
+ 'creator': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gca': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gcb': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'generation': 1,
+ 'graph': {'A': [['I', 0]], 'O': [['A', 0]]},
+ 'meta_data': {'function': {'python3': {'0': {'inline': 'remove_constant({0[i0]}, '
+                                                        'random())'}}},
+               'name': 'Remove constant with random offset'},
+ 'num_codes': 1,
+ 'num_inputs': 1,
+ 'num_outputs': 1,
+ 'num_unique_codes': 1,
+ 'opt_num_codons': 1,
+ 'properties': {'binary_mutation': False,
+                'conditional': False,
+                'extended': False,
+                'logical': False,
+                'mathematical': False,
+                'unary_mutation': True},
+ 'raw_num_codons': 1,
+ 'reference_count': 0,
+ 'signature': 'bcf49ecb02279621bc1dd9d70265175f142ccfcc742ff07cf3983c830c4670fc'}
+'''
+def gc_bcf49ecb02279621bc1dd9d70265175f142ccfcc742ff07cf3983c830c4670fc(i):
+	return (remove_constant(i[0], random()),)
+
+
+'''
+{'alpha_class': 0,
+ 'beta_class': 0,
+ 'code_depth': 1,
+ 'codon_depth': 1,
+ 'created': '2020-07-16T00:25:44.427737Z',
+ 'creator': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gca': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gcb': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'generation': 1,
+ 'graph': {'A': [['I', 0], ['I', 1]], 'O': [['A', 0]]},
+ 'meta_data': {'function': {'python3': {'0': {'inline': 'mutate_constant({0[i0]}, '
+                                                        '{0[i1]}, 1.5)'}}},
+               'name': 'Mutate constant: +50%'},
+ 'num_codes': 1,
+ 'num_inputs': 2,
+ 'num_outputs': 1,
+ 'num_unique_codes': 1,
+ 'opt_num_codons': 1,
+ 'properties': {'binary_mutation': False,
+                'conditional': False,
+                'extended': False,
+                'logical': False,
+                'mathematical': False,
+                'unary_mutation': True},
+ 'raw_num_codons': 1,
+ 'reference_count': 0,
+ 'signature': 'ea549df0fcde3b6375528205fef6eea94b79a442fd8afa77905fbeab96c6bcea'}
+'''
+def gc_ea549df0fcde3b6375528205fef6eea94b79a442fd8afa77905fbeab96c6bcea(i):
+	return (mutate_constant(i[0], i[1], 1.5),)
+
+
+'''
+{'alpha_class': 0,
+ 'beta_class': 0,
+ 'code_depth': 1,
+ 'codon_depth': 1,
+ 'created': '2020-07-16T00:25:44.448360Z',
+ 'creator': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gca': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gcb': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'generation': 1,
+ 'graph': {'A': [['I', 0], ['I', 1]], 'O': [['A', 0]]},
+ 'meta_data': {'function': {'python3': {'0': {'inline': 'mutate_constant({0[i0]}, '
+                                                        '{0[i1]}, 0.5)'}}},
+               'name': 'Mutate constant: -50%'},
+ 'num_codes': 1,
+ 'num_inputs': 2,
+ 'num_outputs': 1,
+ 'num_unique_codes': 1,
+ 'opt_num_codons': 1,
+ 'properties': {'binary_mutation': False,
+                'conditional': False,
+                'extended': False,
+                'logical': False,
+                'mathematical': False,
+                'unary_mutation': True},
+ 'raw_num_codons': 1,
+ 'reference_count': 0,
+ 'signature': 'fcba468768bf701a1234ea41739916b0655512c74c74e5930cae35d13b92925f'}
+'''
+def gc_fcba468768bf701a1234ea41739916b0655512c74c74e5930cae35d13b92925f(i):
+	return (mutate_constant(i[0], i[1], 0.5),)
+
+
+'''
+{'alpha_class': 0,
+ 'beta_class': 0,
+ 'code_depth': 1,
+ 'codon_depth': 1,
+ 'created': '2020-07-16T00:25:44.467937Z',
+ 'creator': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gca': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gcb': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'generation': 1,
+ 'graph': {'A': [['I', 0], ['I', 1]], 'O': [['A', 0]]},
+ 'meta_data': {'function': {'python3': {'0': {'inline': 'mutate_constant({0[i0]}, '
+                                                        '{0[i1]}, -1.0)'}}},
+               'name': 'Mutate constant: Negate'},
+ 'num_codes': 1,
+ 'num_inputs': 2,
+ 'num_outputs': 1,
+ 'num_unique_codes': 1,
+ 'opt_num_codons': 1,
+ 'properties': {'binary_mutation': False,
+                'conditional': False,
+                'extended': False,
+                'logical': False,
+                'mathematical': False,
+                'unary_mutation': True},
+ 'raw_num_codons': 1,
+ 'reference_count': 0,
+ 'signature': '4140f47e72adf3343c04c82d7766bf9e3bc71a6b606b7bc2e93f45a6349792e5'}
+'''
+def gc_4140f47e72adf3343c04c82d7766bf9e3bc71a6b606b7bc2e93f45a6349792e5(i):
+	return (mutate_constant(i[0], i[1], -1.0),)
+
+
+'''
+{'alpha_class': 0,
+ 'beta_class': 0,
+ 'code_depth': 1,
+ 'codon_depth': 1,
+ 'created': '2020-07-16T00:25:44.487233Z',
+ 'creator': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gca': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gcb': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'generation': 1,
+ 'graph': {'A': [['I', 0], ['I', 1]], 'O': [['A', 0]]},
+ 'meta_data': {'function': {'python3': {'0': {'inline': 'stack({0[i0]}, '
+                                                        '{0[i1]})'}}},
+               'name': 'Stack'},
+ 'num_codes': 1,
+ 'num_inputs': 2,
+ 'num_outputs': 1,
+ 'num_unique_codes': 1,
+ 'opt_num_codons': 1,
+ 'properties': {'binary_mutation': True,
+                'conditional': False,
+                'extended': False,
+                'logical': False,
+                'mathematical': False,
+                'unary_mutation': False},
+ 'raw_num_codons': 1,
+ 'reference_count': 0,
+ 'signature': 'ce4e58fcbe55e5caf14c456fd2603a7d81c19e89e61e63b0e56f8c1958ba3da1'}
+'''
+def gc_ce4e58fcbe55e5caf14c456fd2603a7d81c19e89e61e63b0e56f8c1958ba3da1(i):
+	return (stack(i[0], i[1]),)
+
+
+'''
+{'alpha_class': 1,
+ 'beta_class': -1,
+ 'code_depth': 2,
+ 'codon_depth': 1,
+ 'created': '2020-07-16T00:25:53.075365Z',
+ 'creator': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gca': 'e279714512f0498ee888c84f1906de2a5e6bf082d60fdbb32de84a0c16f6f071',
+ 'gcb': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'generation': 2,
+ 'graph': {'A': [['C', 0]], 'C': [1.0], 'O': [['A', 0]]},
+ 'meta_data': {'parents': [['e279714512f0498ee888c84f1906de2a5e6bf082d60fdbb32de84a0c16f6f071']]},
+ 'num_codes': 1,
+ 'num_inputs': 0,
+ 'num_outputs': 1,
+ 'num_unique_codes': 1,
+ 'opt_num_codons': 0,
+ 'properties': {'binary_mutation': False,
+                'conditional': False,
+                'extended': False,
+                'logical': False,
+                'mathematical': False,
+                'unary_mutation': True},
+ 'raw_num_codons': 1,
+ 'reference_count': 0,
+ 'signature': 'ce171d8207600a6c5b494439f1af004fb58b93f4051e75a05ef354e360cf2fe3'}
+'''
+def gc_ce171d8207600a6c5b494439f1af004fb58b93f4051e75a05ef354e360cf2fe3(i):
+	a = gc_e279714512f0498ee888c84f1906de2a5e6bf082d60fdbb32de84a0c16f6f071((1.0,))
 	return (a[0],)
 
 
-def gc_adee3971a38fb8601dddfb3d6472cfb65284ff38ea0a8bf1b557c076f12f9a54(i):
-	a = gc_4f54b44dd522c044b41833089ca47ece6b280ff8c11324a5b8b6a957d92f6de8((0.6313966967649149, i[0], i[0],))
-	return (a[0],)
-
-
-def gc_c0aa3c77eaef8e33c38a853639874e3de27e4dda98c576c77b46bbd289b75f10(i):
-	a = gc_ee2cc4658d03ebb3ffbcdc44d31fa89b7644a654567d66b93bac5f6186899d4d((0.0, 0.0, i[0],))
-	return (a[0],)
-
-
-def gc_741dff48a79753267cf9a997d68aae53b6a993908c1e7d31f62112692fc39f54(i):
-	a = gc_ce4e58fcbe55e5caf14c456fd2603a7d81c19e89e61e63b0e56f8c1958ba3da1((1.0, 1.0,))
-	return (a[0],)
-
-
-def gc_2bd8cd056e0ca77331c2a0ccbc073372b0e2ab5b4e5969d4f911019d4aadc2d6(i):
-	a = gc_7bb5eb204e326fbabe069fb824e88a6ca68ec34c39eaa05a4d271a3f92e4b4fd((1.0,))
-	return (a[0],)
-
-
-def gc_ba2dba2e8e6e7b9bb382e0f6410237d36e4ec17908782801cdabf2dc5b793d9a(i):
-	a = gc_278ddaaaa439429bad68df4b81f3b42ecdc7cf2d2ea8ad086a2ca185a3acbbb6((-0.6484693549070482,))
-	return (a[0],)
-
-
-def gc_62383808b1d6af3c94995e6372e7a59b20e7a1103746e380e67b4431d752be6c(i):
-	a = gc_4f54b44dd522c044b41833089ca47ece6b280ff8c11324a5b8b6a957d92f6de8((i[0], 0.6313966967649149, i[0],))
-	return (a[0],)
-
-
-def gc_ef2db2963e8995e6e0b358c7de17327c6f8ef96f5c0c9e8c1ccfba6fe5d36f0c(i):
-	a = gc_e279714512f0498ee888c84f1906de2a5e6bf082d60fdbb32de84a0c16f6f071((-0.40227710350839496,))
-	return (a[0],)
-
-
-def gc_fa1c7ed40d7c912f63dd164a0a70a1d8565f3fe61ba247c57f76542649dbedf7(i):
-	a = gc_23c441e967ef4b8637554409522bc07c1d0faac129bccf73473c098650a63957((0.0, i[0], i[0],))
-	return (a[0],)
-
-
-def gc_01cf4460b9950ec3e375a4aa4ac80492a8ce814f6026b51d7d22d4dd578e0ac2(i):
-	a = gc_ea549df0fcde3b6375528205fef6eea94b79a442fd8afa77905fbeab96c6bcea((0.7002932417679979, 0.7002932417679979,))
-	return (a[0],)
-
-
-def gc_0437ccbd2a063d08fd9c5bc8498cc21fb1368b9a653982b3a26a5b78a41824b2(i):
-	a = gc_ea549df0fcde3b6375528205fef6eea94b79a442fd8afa77905fbeab96c6bcea((i[0], 0.3926712060024391,))
-	return (a[0],)
-
-
-def gc_2a970d33e80eb8c520e4212e091fe4c0e30f337d783f8b776c81cff1a577c19e(i):
-	a = gc_23c441e967ef4b8637554409522bc07c1d0faac129bccf73473c098650a63957((i[0], i[1], 0.0,))
-	return (a[0],)
-
-
-def gc_41f2ab7ce23ba3f0e0eb3b8dd1ebba1c68ab00306099c247b98defdf205b2a1d(i):
-	a = gc_f131f1d7c087d2b567acec3f2a476de27b9110e0794c11b2c97098e878feed08((i[0], i[1], 0.0,))
-	return (a[0],)
-
-
-def gc_d849b50b3877bd437c27d41487f9c9836b6a470b1308738b1ef19a4c43cf007d(i):
-	a = gc_5f1ff9bfaf9bc1cdb5d520bd056048ebe5467cc6580f03b9c0c29b7eb64c4d2b((0.0, i[0], 0.0,))
-	return (a[0],)
-
-
+'''
+{'alpha_class': 1,
+ 'beta_class': -1,
+ 'code_depth': 2,
+ 'codon_depth': 1,
+ 'created': '2020-07-16T00:25:52.623651Z',
+ 'creator': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gca': '23c441e967ef4b8637554409522bc07c1d0faac129bccf73473c098650a63957',
+ 'gcb': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'generation': 2,
+ 'graph': {'A': [['C', 0], ['C', 0], ['I', 0]], 'C': [0.0], 'O': [['A', 0]]},
+ 'meta_data': {'parents': [['a0429192b8ead5be37fc2c644a9ed57cf4a9eaf2a10c9fe225a6e39a204b5e16']]},
+ 'num_codes': 1,
+ 'num_inputs': 1,
+ 'num_outputs': 1,
+ 'num_unique_codes': 1,
+ 'opt_num_codons': 0,
+ 'properties': {'binary_mutation': False,
+                'conditional': False,
+                'extended': False,
+                'logical': False,
+                'mathematical': False,
+                'unary_mutation': True},
+ 'raw_num_codons': 1,
+ 'reference_count': 0,
+ 'signature': 'aa04da1966f1433e73396dd5c16b8deb59e0104cdbc1f0a41aa021a3aad22268'}
+'''
 def gc_aa04da1966f1433e73396dd5c16b8deb59e0104cdbc1f0a41aa021a3aad22268(i):
 	a = gc_23c441e967ef4b8637554409522bc07c1d0faac129bccf73473c098650a63957((0.0, 0.0, i[0],))
 	return (a[0],)
 
 
+'''
+{'alpha_class': 1,
+ 'beta_class': -1,
+ 'code_depth': 2,
+ 'codon_depth': 1,
+ 'created': '2020-07-16T00:25:52.395936Z',
+ 'creator': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gca': 'bcf49ecb02279621bc1dd9d70265175f142ccfcc742ff07cf3983c830c4670fc',
+ 'gcb': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'generation': 2,
+ 'graph': {'A': [['C', 0]], 'C': [1.0], 'O': [['A', 0]]},
+ 'meta_data': {'parents': [['bcf49ecb02279621bc1dd9d70265175f142ccfcc742ff07cf3983c830c4670fc']]},
+ 'num_codes': 1,
+ 'num_inputs': 0,
+ 'num_outputs': 1,
+ 'num_unique_codes': 1,
+ 'opt_num_codons': 0,
+ 'properties': {'binary_mutation': False,
+                'conditional': False,
+                'extended': False,
+                'logical': False,
+                'mathematical': False,
+                'unary_mutation': True},
+ 'raw_num_codons': 1,
+ 'reference_count': 0,
+ 'signature': '75ff6e5392d8ac373c8b0445027b904ffd1a62b19774a2326aa1e596049ca132'}
+'''
+def gc_75ff6e5392d8ac373c8b0445027b904ffd1a62b19774a2326aa1e596049ca132(i):
+	a = gc_bcf49ecb02279621bc1dd9d70265175f142ccfcc742ff07cf3983c830c4670fc((1.0,))
+	return (a[0],)
+
+
+'''
+{'alpha_class': 1,
+ 'beta_class': -1,
+ 'code_depth': 2,
+ 'codon_depth': 1,
+ 'created': '2020-07-16T00:25:52.352474Z',
+ 'creator': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gca': '23c441e967ef4b8637554409522bc07c1d0faac129bccf73473c098650a63957',
+ 'gcb': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'generation': 2,
+ 'graph': {'A': [['C', 0], ['I', 0], ['C', 1]],
+           'C': [0.0, 0.0],
+           'O': [['A', 0]]},
+ 'meta_data': {'parents': [['23c441e967ef4b8637554409522bc07c1d0faac129bccf73473c098650a63957']]},
+ 'num_codes': 1,
+ 'num_inputs': 1,
+ 'num_outputs': 1,
+ 'num_unique_codes': 1,
+ 'opt_num_codons': 0,
+ 'properties': {'binary_mutation': False,
+                'conditional': False,
+                'extended': False,
+                'logical': False,
+                'mathematical': False,
+                'unary_mutation': True},
+ 'raw_num_codons': 1,
+ 'reference_count': 0,
+ 'signature': '986ae757be6910ae3b92411b03d2f9feace48fe748d96a7933f98b0ca9d5e3c9'}
+'''
+def gc_986ae757be6910ae3b92411b03d2f9feace48fe748d96a7933f98b0ca9d5e3c9(i):
+	a = gc_23c441e967ef4b8637554409522bc07c1d0faac129bccf73473c098650a63957((0.0, i[0], 0.0,))
+	return (a[0],)
+
+
+'''
+{'alpha_class': 0,
+ 'beta_class': 0,
+ 'code_depth': 1,
+ 'codon_depth': 1,
+ 'created': '2020-07-16T00:25:44.389566Z',
+ 'creator': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gca': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gcb': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'generation': 1,
+ 'graph': {'A': [['I', 0]], 'O': [['A', 0]]},
+ 'meta_data': {'function': {'python3': {'0': {'inline': 'append_constant({0[i0]}, '
+                                                        '0.0)'}}},
+               'name': 'New constant: 0.0'},
+ 'num_codes': 1,
+ 'num_inputs': 1,
+ 'num_outputs': 1,
+ 'num_unique_codes': 1,
+ 'opt_num_codons': 1,
+ 'properties': {'binary_mutation': False,
+                'conditional': False,
+                'extended': False,
+                'logical': False,
+                'mathematical': False,
+                'unary_mutation': True},
+ 'raw_num_codons': 1,
+ 'reference_count': 0,
+ 'signature': '81b5a567e50cf6fd71bfcfc3c5d23faa0f245fb0a71900fa9573eba1a94ee80d'}
+'''
+def gc_81b5a567e50cf6fd71bfcfc3c5d23faa0f245fb0a71900fa9573eba1a94ee80d(i):
+	return (append_constant(i[0], 0.0),)
+
+
+'''
+{'alpha_class': 1,
+ 'beta_class': -1,
+ 'code_depth': 2,
+ 'codon_depth': 1,
+ 'created': '2020-07-16T00:25:54.740354Z',
+ 'creator': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gca': 'bcf49ecb02279621bc1dd9d70265175f142ccfcc742ff07cf3983c830c4670fc',
+ 'gcb': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'generation': 2,
+ 'graph': {'A': [['C', 0]], 'C': [0.0], 'O': [['A', 0]]},
+ 'meta_data': {'parents': [['bcf49ecb02279621bc1dd9d70265175f142ccfcc742ff07cf3983c830c4670fc']]},
+ 'num_codes': 1,
+ 'num_inputs': 0,
+ 'num_outputs': 1,
+ 'num_unique_codes': 1,
+ 'opt_num_codons': 0,
+ 'properties': {'binary_mutation': False,
+                'conditional': False,
+                'extended': False,
+                'logical': False,
+                'mathematical': False,
+                'unary_mutation': True},
+ 'raw_num_codons': 1,
+ 'reference_count': 0,
+ 'signature': '6583b66e7cb73e5c773e7700cb4485a2b81d4ce942220fbc65ef67b99589ca08'}
+'''
+def gc_6583b66e7cb73e5c773e7700cb4485a2b81d4ce942220fbc65ef67b99589ca08(i):
+	a = gc_bcf49ecb02279621bc1dd9d70265175f142ccfcc742ff07cf3983c830c4670fc((0.0,))
+	return (a[0],)
+
+
+'''
+{'alpha_class': 1,
+ 'beta_class': -1,
+ 'code_depth': 2,
+ 'codon_depth': 1,
+ 'created': '2020-07-16T00:25:54.539880Z',
+ 'creator': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gca': '63971bfb77792f35cda0463d310e2724ae108354fb287df386ab88a752743fcc',
+ 'gcb': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'generation': 2,
+ 'graph': {'A': [['C', 0]], 'C': [-1.0], 'O': [['A', 0]]},
+ 'meta_data': {'parents': [['63971bfb77792f35cda0463d310e2724ae108354fb287df386ab88a752743fcc']]},
+ 'num_codes': 1,
+ 'num_inputs': 0,
+ 'num_outputs': 1,
+ 'num_unique_codes': 1,
+ 'opt_num_codons': 0,
+ 'properties': {'binary_mutation': False,
+                'conditional': False,
+                'extended': False,
+                'logical': False,
+                'mathematical': False,
+                'unary_mutation': True},
+ 'raw_num_codons': 1,
+ 'reference_count': 0,
+ 'signature': '0377050cd3534281ac885213d141494d2ea6ce8b50f787f224a6dc65ecb90e10'}
+'''
+def gc_0377050cd3534281ac885213d141494d2ea6ce8b50f787f224a6dc65ecb90e10(i):
+	a = gc_63971bfb77792f35cda0463d310e2724ae108354fb287df386ab88a752743fcc((-1.0,))
+	return (a[0],)
+
+
+'''
+{'alpha_class': 1,
+ 'beta_class': -1,
+ 'code_depth': 2,
+ 'codon_depth': 1,
+ 'created': '2020-07-16T00:25:54.146820Z',
+ 'creator': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gca': '6bba0589ed454784e75f8a184fb8fc8d59a3772e73a8414f2ba915ce211f6773',
+ 'gcb': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'generation': 2,
+ 'graph': {'A': [['C', 0]], 'C': [0.0], 'O': [['A', 0]]},
+ 'meta_data': {'parents': [['6bba0589ed454784e75f8a184fb8fc8d59a3772e73a8414f2ba915ce211f6773']]},
+ 'num_codes': 1,
+ 'num_inputs': 0,
+ 'num_outputs': 1,
+ 'num_unique_codes': 1,
+ 'opt_num_codons': 0,
+ 'properties': {'binary_mutation': False,
+                'conditional': False,
+                'extended': False,
+                'logical': False,
+                'mathematical': False,
+                'unary_mutation': True},
+ 'raw_num_codons': 1,
+ 'reference_count': 0,
+ 'signature': '731f9ff5e9cfdb53f1944bf6962c32b21be104ef51b2fdb3db0244b077010af2'}
+'''
+def gc_731f9ff5e9cfdb53f1944bf6962c32b21be104ef51b2fdb3db0244b077010af2(i):
+	a = gc_6bba0589ed454784e75f8a184fb8fc8d59a3772e73a8414f2ba915ce211f6773((0.0,))
+	return (a[0],)
+
+
+'''
+{'alpha_class': 1,
+ 'beta_class': -1,
+ 'code_depth': 2,
+ 'codon_depth': 1,
+ 'created': '2020-07-16T00:25:53.973717Z',
+ 'creator': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gca': '81d83b6dfe8764bc32df13948a86e7721818e3648d8f916708f8d416b2b94370',
+ 'gcb': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'generation': 2,
+ 'graph': {'A': [['C', 0]], 'C': [-0.8225245593482424], 'O': [['A', 0]]},
+ 'meta_data': {'parents': [['81d83b6dfe8764bc32df13948a86e7721818e3648d8f916708f8d416b2b94370']]},
+ 'num_codes': 1,
+ 'num_inputs': 0,
+ 'num_outputs': 1,
+ 'num_unique_codes': 1,
+ 'opt_num_codons': 0,
+ 'properties': {'binary_mutation': False,
+                'conditional': False,
+                'extended': False,
+                'logical': False,
+                'mathematical': False,
+                'unary_mutation': True},
+ 'raw_num_codons': 1,
+ 'reference_count': 0,
+ 'signature': '18aefb88a3ddaf2056601643afd03be838c5c77317ca3b89c700e219db26e18c'}
+'''
+def gc_18aefb88a3ddaf2056601643afd03be838c5c77317ca3b89c700e219db26e18c(i):
+	a = gc_81d83b6dfe8764bc32df13948a86e7721818e3648d8f916708f8d416b2b94370((-0.8225245593482424,))
+	return (a[0],)
+
+
+'''
+{'alpha_class': 1,
+ 'beta_class': -1,
+ 'code_depth': 2,
+ 'codon_depth': 1,
+ 'created': '2020-07-16T00:25:56.462599Z',
+ 'creator': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gca': '278ddaaaa439429bad68df4b81f3b42ecdc7cf2d2ea8ad086a2ca185a3acbbb6',
+ 'gcb': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'generation': 2,
+ 'graph': {'A': [['I', 0]], 'O': [['A', 0]]},
+ 'meta_data': {'parents': [['278ddaaaa439429bad68df4b81f3b42ecdc7cf2d2ea8ad086a2ca185a3acbbb6']]},
+ 'num_codes': 1,
+ 'num_inputs': 1,
+ 'num_outputs': 1,
+ 'num_unique_codes': 1,
+ 'opt_num_codons': 0,
+ 'properties': {'binary_mutation': False,
+                'conditional': False,
+                'extended': False,
+                'logical': False,
+                'mathematical': False,
+                'unary_mutation': True},
+ 'raw_num_codons': 1,
+ 'reference_count': 0,
+ 'signature': '5d180795babcb82e7ea8b4357ae602a44666c60f0d2b851051c89e1149e72f97'}
+'''
+def gc_5d180795babcb82e7ea8b4357ae602a44666c60f0d2b851051c89e1149e72f97(i):
+	a = gc_278ddaaaa439429bad68df4b81f3b42ecdc7cf2d2ea8ad086a2ca185a3acbbb6((i[0],))
+	return (a[0],)
+
+
+'''
+{'alpha_class': 1,
+ 'beta_class': -1,
+ 'code_depth': 2,
+ 'codon_depth': 1,
+ 'created': '2020-07-16T00:25:56.342044Z',
+ 'creator': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gca': '4793e082e2462b3ed47a23c000e9e8165bf7b6dea9bde08182b7203a708f6214',
+ 'gcb': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'generation': 2,
+ 'graph': {'A': [['C', 0]], 'C': [0.0], 'O': [['A', 0]]},
+ 'meta_data': {'parents': [['4793e082e2462b3ed47a23c000e9e8165bf7b6dea9bde08182b7203a708f6214']]},
+ 'num_codes': 1,
+ 'num_inputs': 0,
+ 'num_outputs': 1,
+ 'num_unique_codes': 1,
+ 'opt_num_codons': 0,
+ 'properties': {'binary_mutation': False,
+                'conditional': False,
+                'extended': False,
+                'logical': False,
+                'mathematical': False,
+                'unary_mutation': True},
+ 'raw_num_codons': 1,
+ 'reference_count': 0,
+ 'signature': '7743aba320d9a6dd5f2b7a8e5777b997d61131f2a4db0f78fb4a881d40244898'}
+'''
+def gc_7743aba320d9a6dd5f2b7a8e5777b997d61131f2a4db0f78fb4a881d40244898(i):
+	a = gc_4793e082e2462b3ed47a23c000e9e8165bf7b6dea9bde08182b7203a708f6214((0.0,))
+	return (a[0],)
+
+
+'''
+{'alpha_class': 1,
+ 'beta_class': -1,
+ 'code_depth': 2,
+ 'codon_depth': 1,
+ 'created': '2020-07-16T00:25:55.724426Z',
+ 'creator': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gca': '5f1ff9bfaf9bc1cdb5d520bd056048ebe5467cc6580f03b9c0c29b7eb64c4d2b',
+ 'gcb': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'generation': 2,
+ 'graph': {'A': [['C', 0], ['I', 0], ['C', 1]],
+           'C': [0.0, 0.0],
+           'O': [['A', 0]]},
+ 'meta_data': {'parents': [['cc7cfb52a4658ba440bd7691c5a3d6f736f94d3d795857725a2e400f9e3624a9']]},
+ 'num_codes': 1,
+ 'num_inputs': 1,
+ 'num_outputs': 1,
+ 'num_unique_codes': 1,
+ 'opt_num_codons': 0,
+ 'properties': {'binary_mutation': False,
+                'conditional': False,
+                'extended': False,
+                'logical': False,
+                'mathematical': False,
+                'unary_mutation': True},
+ 'raw_num_codons': 1,
+ 'reference_count': 0,
+ 'signature': '13b3b21f4b1e53f66075fa59d78dccab619d1f8e65a22bb82d9a68c347a212c6'}
+'''
+def gc_13b3b21f4b1e53f66075fa59d78dccab619d1f8e65a22bb82d9a68c347a212c6(i):
+	a = gc_5f1ff9bfaf9bc1cdb5d520bd056048ebe5467cc6580f03b9c0c29b7eb64c4d2b((0.0, i[0], 0.0,))
+	return (a[0],)
+
+
+'''
+{'alpha_class': 1,
+ 'beta_class': -1,
+ 'code_depth': 2,
+ 'codon_depth': 1,
+ 'created': '2020-07-16T00:25:57.183688Z',
+ 'creator': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gca': 'ea549df0fcde3b6375528205fef6eea94b79a442fd8afa77905fbeab96c6bcea',
+ 'gcb': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'generation': 2,
+ 'graph': {'A': [['I', 0], ['C', 0]],
+           'C': [0.9258937854313394],
+           'O': [['A', 0]]},
+ 'meta_data': {'parents': [['8568fa49a69fc9c42c30d78866a45316976afca26ce6a75284546f07ad9f6aef']]},
+ 'num_codes': 1,
+ 'num_inputs': 1,
+ 'num_outputs': 1,
+ 'num_unique_codes': 1,
+ 'opt_num_codons': 0,
+ 'properties': {'binary_mutation': False,
+                'conditional': False,
+                'extended': False,
+                'logical': False,
+                'mathematical': False,
+                'unary_mutation': True},
+ 'raw_num_codons': 1,
+ 'reference_count': 0,
+ 'signature': 'cb159d2420f0a661bcdd192ab4cfac4363d652f0ec3ac8ab69e84e33768b97ec'}
+'''
+def gc_cb159d2420f0a661bcdd192ab4cfac4363d652f0ec3ac8ab69e84e33768b97ec(i):
+	a = gc_ea549df0fcde3b6375528205fef6eea94b79a442fd8afa77905fbeab96c6bcea((i[0], 0.9258937854313394,))
+	return (a[0],)
+
+
+'''
+{'alpha_class': 0,
+ 'beta_class': 0,
+ 'code_depth': 1,
+ 'codon_depth': 1,
+ 'created': '2020-07-16T00:25:44.098931Z',
+ 'creator': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gca': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gcb': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'generation': 1,
+ 'graph': {'A': [['I', 0]], 'O': [['A', 0]]},
+ 'meta_data': {'function': {'python3': {'0': {'inline': "connect({0[i0]}, 'C', "
+                                                        "'B', random(), "
+                                                        'random())'}}},
+               'name': 'GCB-constant connection with random fractional '
+                       'offsets'},
+ 'num_codes': 1,
+ 'num_inputs': 1,
+ 'num_outputs': 1,
+ 'num_unique_codes': 1,
+ 'opt_num_codons': 1,
+ 'properties': {'binary_mutation': False,
+                'conditional': False,
+                'extended': False,
+                'logical': False,
+                'mathematical': False,
+                'unary_mutation': True},
+ 'raw_num_codons': 1,
+ 'reference_count': 0,
+ 'signature': '278ddaaaa439429bad68df4b81f3b42ecdc7cf2d2ea8ad086a2ca185a3acbbb6'}
+'''
+def gc_278ddaaaa439429bad68df4b81f3b42ecdc7cf2d2ea8ad086a2ca185a3acbbb6(i):
+	return (connect(i[0], 'C', 'B', random(), random()),)
+
+
+'''
+{'alpha_class': 1,
+ 'beta_class': -1,
+ 'code_depth': 2,
+ 'codon_depth': 1,
+ 'created': '2020-07-16T00:25:59.633086Z',
+ 'creator': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gca': '5f1ff9bfaf9bc1cdb5d520bd056048ebe5467cc6580f03b9c0c29b7eb64c4d2b',
+ 'gcb': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'generation': 2,
+ 'graph': {'A': [['C', 0], ['C', 0], ['C', 1]],
+           'C': [0.0, 0.0],
+           'O': [['A', 0]]},
+ 'meta_data': {'parents': [['5f1ff9bfaf9bc1cdb5d520bd056048ebe5467cc6580f03b9c0c29b7eb64c4d2b']]},
+ 'num_codes': 1,
+ 'num_inputs': 0,
+ 'num_outputs': 1,
+ 'num_unique_codes': 1,
+ 'opt_num_codons': 0,
+ 'properties': {'binary_mutation': False,
+                'conditional': False,
+                'extended': False,
+                'logical': False,
+                'mathematical': False,
+                'unary_mutation': True},
+ 'raw_num_codons': 1,
+ 'reference_count': 0,
+ 'signature': 'd583313ac7265d903f96aebefac338b54f234df8c3250552bea73f53de7b4cfa'}
+'''
+def gc_d583313ac7265d903f96aebefac338b54f234df8c3250552bea73f53de7b4cfa(i):
+	a = gc_5f1ff9bfaf9bc1cdb5d520bd056048ebe5467cc6580f03b9c0c29b7eb64c4d2b((0.0, 0.0, 0.0,))
+	return (a[0],)
+
+
+'''
+{'alpha_class': 1,
+ 'beta_class': -1,
+ 'code_depth': 2,
+ 'codon_depth': 1,
+ 'created': '2020-07-16T00:25:59.494506Z',
+ 'creator': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gca': '7404cd51f0ff21ae1b51cd8e13b6bacf706cafde670c9ef05ae282fea9ff2364',
+ 'gcb': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'generation': 2,
+ 'graph': {'A': [['I', 0]], 'O': [['A', 0]]},
+ 'meta_data': {'parents': [['7404cd51f0ff21ae1b51cd8e13b6bacf706cafde670c9ef05ae282fea9ff2364']]},
+ 'num_codes': 1,
+ 'num_inputs': 1,
+ 'num_outputs': 1,
+ 'num_unique_codes': 1,
+ 'opt_num_codons': 0,
+ 'properties': {'binary_mutation': False,
+                'conditional': False,
+                'extended': False,
+                'logical': False,
+                'mathematical': False,
+                'unary_mutation': True},
+ 'raw_num_codons': 1,
+ 'reference_count': 0,
+ 'signature': 'f269bf2281717b6c6d4cd1c4f6bdd61dd63f8501ed8a3846b79dca9c82387a51'}
+'''
+def gc_f269bf2281717b6c6d4cd1c4f6bdd61dd63f8501ed8a3846b79dca9c82387a51(i):
+	a = gc_7404cd51f0ff21ae1b51cd8e13b6bacf706cafde670c9ef05ae282fea9ff2364((i[0],))
+	return (a[0],)
+
+
+'''
+{'alpha_class': 1,
+ 'beta_class': -1,
+ 'code_depth': 2,
+ 'codon_depth': 1,
+ 'created': '2020-07-16T00:25:58.591615Z',
+ 'creator': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gca': 'e279714512f0498ee888c84f1906de2a5e6bf082d60fdbb32de84a0c16f6f071',
+ 'gcb': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'generation': 2,
+ 'graph': {'A': [['C', 0]], 'C': [-1.0], 'O': [['A', 0]]},
+ 'meta_data': {'parents': [['e279714512f0498ee888c84f1906de2a5e6bf082d60fdbb32de84a0c16f6f071']]},
+ 'num_codes': 1,
+ 'num_inputs': 0,
+ 'num_outputs': 1,
+ 'num_unique_codes': 1,
+ 'opt_num_codons': 0,
+ 'properties': {'binary_mutation': False,
+                'conditional': False,
+                'extended': False,
+                'logical': False,
+                'mathematical': False,
+                'unary_mutation': True},
+ 'raw_num_codons': 1,
+ 'reference_count': 0,
+ 'signature': '2a1a7136267b40ddef2589b706851cadea6ea3617c681bca44d915ca2c48c865'}
+'''
 def gc_2a1a7136267b40ddef2589b706851cadea6ea3617c681bca44d915ca2c48c865(i):
 	a = gc_e279714512f0498ee888c84f1906de2a5e6bf082d60fdbb32de84a0c16f6f071((-1.0,))
 	return (a[0],)
 
 
-def gc_5eefc37d6f5112ec0fb69fd734e54cd93e4be341579adce265a6f0994c082f6a(i):
-	a = gc_f131f1d7c087d2b567acec3f2a476de27b9110e0794c11b2c97098e878feed08((-1.0, i[0], i[1],))
+'''
+{'alpha_class': 1,
+ 'beta_class': -1,
+ 'code_depth': 2,
+ 'codon_depth': 1,
+ 'created': '2020-07-16T00:26:00.941061Z',
+ 'creator': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gca': 'b3426a0b5077c14d09c2eb091e8ba0ded68486890d5f0146cfdec34ebbe383d6',
+ 'gcb': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'generation': 2,
+ 'graph': {'A': [['I', 0]], 'O': [['A', 0]]},
+ 'meta_data': {'parents': [['b3426a0b5077c14d09c2eb091e8ba0ded68486890d5f0146cfdec34ebbe383d6']]},
+ 'num_codes': 1,
+ 'num_inputs': 1,
+ 'num_outputs': 1,
+ 'num_unique_codes': 1,
+ 'opt_num_codons': 0,
+ 'properties': {'binary_mutation': False,
+                'conditional': False,
+                'extended': False,
+                'logical': False,
+                'mathematical': False,
+                'unary_mutation': True},
+ 'raw_num_codons': 1,
+ 'reference_count': 0,
+ 'signature': '57445022b9dc0d937721bb272de55001607f26c9b9cc9dd40cd4dead77da6366'}
+'''
+def gc_57445022b9dc0d937721bb272de55001607f26c9b9cc9dd40cd4dead77da6366(i):
+	a = gc_b3426a0b5077c14d09c2eb091e8ba0ded68486890d5f0146cfdec34ebbe383d6((i[0],))
 	return (a[0],)
 
 
-def gc_93f145b91fb5c4ac6103e84632f3df852e0d128f54f67519484d80172ee51ad2(i):
-	a = gc_81b5a567e50cf6fd71bfcfc3c5d23faa0f245fb0a71900fa9573eba1a94ee80d((-0.588829535688179,))
-	return (a[0],)
+'''
+{'alpha_class': 0,
+ 'beta_class': 0,
+ 'code_depth': 1,
+ 'codon_depth': 1,
+ 'created': '2020-07-16T00:25:44.215255Z',
+ 'creator': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gca': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gcb': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'generation': 1,
+ 'graph': {'A': [['I', 0], ['C', 0], ['C', 1]],
+           'C': [0.0, 0.0],
+           'O': [['A', 0]]},
+ 'meta_data': {'function': {'python3': {'0': {'inline': "connect({0[i0]}, 'I', "
+                                                        "'B', {0[c0]}, "
+                                                        '{0[c1]})'}}},
+               'name': 'GCB-input connection with constant fractional offsets'},
+ 'num_codes': 1,
+ 'num_inputs': 1,
+ 'num_outputs': 1,
+ 'num_unique_codes': 1,
+ 'opt_num_codons': 1,
+ 'properties': {'binary_mutation': False,
+                'conditional': False,
+                'extended': False,
+                'logical': False,
+                'mathematical': False,
+                'unary_mutation': True},
+ 'raw_num_codons': 1,
+ 'reference_count': 0,
+ 'signature': '5f1ff9bfaf9bc1cdb5d520bd056048ebe5467cc6580f03b9c0c29b7eb64c4d2b'}
+'''
+def gc_5f1ff9bfaf9bc1cdb5d520bd056048ebe5467cc6580f03b9c0c29b7eb64c4d2b(i):
+	return (connect(i[0], 'I', 'B', 0.0, 0.0),)
 
 
-def gc_91846aeaaad2448aa0b561291172b80797bee466c6cc5c4e655ba507bfdf4685(i):
-	a = gc_7404cd51f0ff21ae1b51cd8e13b6bacf706cafde670c9ef05ae282fea9ff2364((0.6550064993633791,))
-	return (a[0],)
-
-
-def gc_c5165a4e8042b8a389c90e67d5dfb4ddb0cdac672c89eb0e5bdf16a04f755f4f(i):
-	a = gc_c436ba9675317cfa2b5e32a3f00cf08b57295e06f28d5203fbaa1cd6b430e6d7((0.0, 0.0, i[0],))
-	return (a[0],)
-
-
-def gc_133ba72b11aa12e85e170902cbd5d931f8f7c81e79fac4db6b3b39f2c8a97fef(i):
-	a = gc_4f54b44dd522c044b41833089ca47ece6b280ff8c11324a5b8b6a957d92f6de8((0.6313966967649149, 0.6313966967649149, i[0],))
-	return (a[0],)
-
-
-def gc_a60a3238b878f2f13259b96cc2265c3f226fc70044c6c1d9060318953d53c4a8(i):
-	a = gc_4f54b44dd522c044b41833089ca47ece6b280ff8c11324a5b8b6a957d92f6de8((0.6313966967649149, i[0], i[1],))
-	return (a[0],)
-
-
-def gc_66d588f256485907d2dcc512b0693560cf58207a03e5dfa5a215a9a700ef1377(i):
-	a = gc_ea549df0fcde3b6375528205fef6eea94b79a442fd8afa77905fbeab96c6bcea((0.7002932417679979, i[0],))
-	return (a[0],)
-
-
-def gc_759297cf0c108b77ad38d6128401b28c222be3b0f701e7e87ba4d1dc80966965(i):
-	a = gc_4f54b44dd522c044b41833089ca47ece6b280ff8c11324a5b8b6a957d92f6de8((-0.11858991854520551, i[0], i[0],))
-	return (a[0],)
-
-
-def gc_f54f31ebc1029e296ad87a7d20a51d49425a00c5a1e59e65bd75d7ec462fc81e(i):
-	a = gc_f131f1d7c087d2b567acec3f2a476de27b9110e0794c11b2c97098e878feed08((i[1], i[0], i[0],))
-	return (a[0],)
-
-
-def gc_156c100ef6051ec6ce488689060385a1469c08780d5e4c63da10885f012cdd35(i):
-	a = gc_81d83b6dfe8764bc32df13948a86e7721818e3648d8f916708f8d416b2b94370((-0.18314202677365854,))
-	return (a[0],)
-
-
-def gc_bd65251cfdc66f4e3219df4d99004b7c350621db7119743c1da05092f70e4a5c(i):
-	a = gc_6bba0589ed454784e75f8a184fb8fc8d59a3772e73a8414f2ba915ce211f6773((-1.0,))
-	return (a[0],)
-
-
-def gc_ac2b3ea71d9908ebd68d81016d0c50d8416e09b1a193ef8927f40d76057ee186(i):
-	a = gc_5f1ff9bfaf9bc1cdb5d520bd056048ebe5467cc6580f03b9c0c29b7eb64c4d2b((i[0], i[0], i[1],))
-	return (a[0],)
-
-
-def gc_dddd92c2fd40ccda944d399946804fa361912ea833902d2fc6fa2a53c5bd2d8c(i):
-	a = gc_81d83b6dfe8764bc32df13948a86e7721818e3648d8f916708f8d416b2b94370((1.0,))
-	return (a[0],)
-
-
-def gc_486ca6dacc46f872694e821172b3a1e098c451b0c157b51d5641bf3744305cf2(i):
-	a = gc_a95ea10e7327badf07045086c7e935f5cc66a9b47f323fcdf30d76f66a592829((0.0, 0.0, 0.0,))
-	return (a[0],)
-
-
-def gc_6d727686576d1d664fad5a375402b4be26c669d94c45e0a5d54ca4a7e57c6a17(i):
-	a = gc_4f54b44dd522c044b41833089ca47ece6b280ff8c11324a5b8b6a957d92f6de8((1.0, i[0], i[0],))
-	return (a[0],)
-
-
-def gc_a6f622c192645ccb862acbee4ffa56b595d196cca2814ca7a253808b69f4e8d6(i):
+'''
+{'alpha_class': 1,
+ 'beta_class': -1,
+ 'code_depth': 2,
+ 'codon_depth': 1,
+ 'created': '2020-07-16T00:26:02.188011Z',
+ 'creator': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gca': 'f131f1d7c087d2b567acec3f2a476de27b9110e0794c11b2c97098e878feed08',
+ 'gcb': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'generation': 2,
+ 'graph': {'A': [['C', 1], ['C', 0], ['C', 1]],
+           'C': [0.0, 0.0],
+           'O': [['A', 0]]},
+ 'meta_data': {'parents': [['aab332740bb7b6730311c956b05c16d19814c2d752e1db38b65aa95c7b9209d7']]},
+ 'num_codes': 1,
+ 'num_inputs': 0,
+ 'num_outputs': 1,
+ 'num_unique_codes': 1,
+ 'opt_num_codons': 0,
+ 'properties': {'binary_mutation': False,
+                'conditional': False,
+                'extended': False,
+                'logical': False,
+                'mathematical': False,
+                'unary_mutation': True},
+ 'raw_num_codons': 1,
+ 'reference_count': 0,
+ 'signature': 'd990e3a0af629cd2048c76bdc4dbfe12a93eb16e35ccf71818050b1a9c915ae2'}
+'''
+def gc_d990e3a0af629cd2048c76bdc4dbfe12a93eb16e35ccf71818050b1a9c915ae2(i):
 	a = gc_f131f1d7c087d2b567acec3f2a476de27b9110e0794c11b2c97098e878feed08((0.0, 0.0, 0.0,))
 	return (a[0],)
 
 
-def gc_aa22c210b2e5c8e6780171f785675da254542e5dd587a904b6c5f8260fa544fe(i):
-	a = gc_23c441e967ef4b8637554409522bc07c1d0faac129bccf73473c098650a63957((i[0], 0.0, 0.0,))
+'''
+{'alpha_class': 1,
+ 'beta_class': -1,
+ 'code_depth': 2,
+ 'codon_depth': 1,
+ 'created': '2020-07-16T00:26:01.853522Z',
+ 'creator': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gca': '5f1ff9bfaf9bc1cdb5d520bd056048ebe5467cc6580f03b9c0c29b7eb64c4d2b',
+ 'gcb': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'generation': 2,
+ 'graph': {'A': [['I', 0], ['I', 0], ['C', 0]], 'C': [0.0], 'O': [['A', 0]]},
+ 'meta_data': {'parents': [['cc7cfb52a4658ba440bd7691c5a3d6f736f94d3d795857725a2e400f9e3624a9']]},
+ 'num_codes': 1,
+ 'num_inputs': 1,
+ 'num_outputs': 1,
+ 'num_unique_codes': 1,
+ 'opt_num_codons': 0,
+ 'properties': {'binary_mutation': False,
+                'conditional': False,
+                'extended': False,
+                'logical': False,
+                'mathematical': False,
+                'unary_mutation': True},
+ 'raw_num_codons': 1,
+ 'reference_count': 0,
+ 'signature': '315774e833d514d7ebcd50e83a42e91b93910f3590880100f0582c8734bdb919'}
+'''
+def gc_315774e833d514d7ebcd50e83a42e91b93910f3590880100f0582c8734bdb919(i):
+	a = gc_5f1ff9bfaf9bc1cdb5d520bd056048ebe5467cc6580f03b9c0c29b7eb64c4d2b((i[0], i[0], 0.0,))
 	return (a[0],)
 
 
-def gc_e06f500f88052940d7d207ee503325c123872974f8f3dc72bf625e36bc7cdbcb(i):
-	a = gc_c436ba9675317cfa2b5e32a3f00cf08b57295e06f28d5203fbaa1cd6b430e6d7((i[0], 0.0, i[0],))
-	return (a[0],)
-
-
-def gc_17cad858a92f3bb247ab6f1fef9b2535dd570d7ead2732ed05a98ac3ce87d01a(i):
+'''
+{'alpha_class': 1,
+ 'beta_class': -1,
+ 'code_depth': 2,
+ 'codon_depth': 1,
+ 'created': '2020-07-16T00:26:01.584386Z',
+ 'creator': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gca': 'b4dc32c9bc15e51d8070be7bf0ee9bfc344b73cc8ec857978ff72e71a3efb911',
+ 'gcb': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'generation': 2,
+ 'graph': {'A': [['C', 0], ['C', 0], ['C', 1]],
+           'C': [0.0, 0.0],
+           'O': [['A', 0]]},
+ 'meta_data': {'parents': [['69f8bddf1ba8386b128c82b9e9d61bfbcd39a2adfb0f072e1c0edd6fc96c2b5e']]},
+ 'num_codes': 1,
+ 'num_inputs': 0,
+ 'num_outputs': 1,
+ 'num_unique_codes': 1,
+ 'opt_num_codons': 0,
+ 'properties': {'binary_mutation': False,
+                'conditional': False,
+                'extended': False,
+                'logical': False,
+                'mathematical': False,
+                'unary_mutation': True},
+ 'raw_num_codons': 1,
+ 'reference_count': 0,
+ 'signature': 'aa177a51676b4ac9993b3491a70b5e6d53f2b26bde6e775c5a22fa1e22186c41'}
+'''
+def gc_aa177a51676b4ac9993b3491a70b5e6d53f2b26bde6e775c5a22fa1e22186c41(i):
 	a = gc_b4dc32c9bc15e51d8070be7bf0ee9bfc344b73cc8ec857978ff72e71a3efb911((0.0, 0.0, 0.0,))
 	return (a[0],)
 
 
-def gc_4324d087675bc1969de8667a4a0eca3646008094cae495b63683ab2a499715b5(i):
-	a = gc_c436ba9675317cfa2b5e32a3f00cf08b57295e06f28d5203fbaa1cd6b430e6d7((0.0, 0.0, 0.0,))
+'''
+{'alpha_class': 1,
+ 'beta_class': -1,
+ 'code_depth': 2,
+ 'codon_depth': 1,
+ 'created': '2020-07-16T00:26:01.520992Z',
+ 'creator': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gca': '102a4d1fc747c5f81b314937da02b830ca4a49a6010aa65fd478dd1bd68675e8',
+ 'gcb': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'generation': 2,
+ 'graph': {'A': [['C', 0]], 'C': [1.0], 'O': [['A', 0]]},
+ 'meta_data': {'parents': [['102a4d1fc747c5f81b314937da02b830ca4a49a6010aa65fd478dd1bd68675e8']]},
+ 'num_codes': 1,
+ 'num_inputs': 0,
+ 'num_outputs': 1,
+ 'num_unique_codes': 1,
+ 'opt_num_codons': 0,
+ 'properties': {'binary_mutation': False,
+                'conditional': False,
+                'extended': False,
+                'logical': False,
+                'mathematical': False,
+                'unary_mutation': True},
+ 'raw_num_codons': 1,
+ 'reference_count': 0,
+ 'signature': 'ea69bccc1973aaff350a95c2d8cc9b3b41832729d1a7492c05beb61f1f8bd79e'}
+'''
+def gc_ea69bccc1973aaff350a95c2d8cc9b3b41832729d1a7492c05beb61f1f8bd79e(i):
+	a = gc_102a4d1fc747c5f81b314937da02b830ca4a49a6010aa65fd478dd1bd68675e8((1.0,))
 	return (a[0],)
 
 
-def gc_f083d617080c81bfedc5f3dcc377d69103d3fd32680f2a13a2a664808eda5601(i):
-	a = gc_f131f1d7c087d2b567acec3f2a476de27b9110e0794c11b2c97098e878feed08((1.0, i[0], i[0],))
+'''
+{'alpha_class': 1,
+ 'beta_class': -1,
+ 'code_depth': 2,
+ 'codon_depth': 1,
+ 'created': '2020-07-16T00:26:05.015378Z',
+ 'creator': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gca': 'ce4e58fcbe55e5caf14c456fd2603a7d81c19e89e61e63b0e56f8c1958ba3da1',
+ 'gcb': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'generation': 2,
+ 'graph': {'A': [['I', 0], ['I', 0]], 'O': [['A', 0]]},
+ 'meta_data': {'parents': [['ce4e58fcbe55e5caf14c456fd2603a7d81c19e89e61e63b0e56f8c1958ba3da1']]},
+ 'num_codes': 1,
+ 'num_inputs': 1,
+ 'num_outputs': 1,
+ 'num_unique_codes': 1,
+ 'opt_num_codons': 0,
+ 'properties': {'binary_mutation': True,
+                'conditional': False,
+                'extended': False,
+                'logical': False,
+                'mathematical': False,
+                'unary_mutation': False},
+ 'raw_num_codons': 1,
+ 'reference_count': 0,
+ 'signature': 'cd3de5e6d4722a72bdd55203c51f7b616dd5f6a7db68158ff5148b2ef17ed6cb'}
+'''
+def gc_cd3de5e6d4722a72bdd55203c51f7b616dd5f6a7db68158ff5148b2ef17ed6cb(i):
+	a = gc_ce4e58fcbe55e5caf14c456fd2603a7d81c19e89e61e63b0e56f8c1958ba3da1((i[0], i[0],))
 	return (a[0],)
 
 
-def gc_d03dc69058702930c081e74d9b62fdbe068fda297c62e1b2be5f5faf37a19b8c(i):
-	a = gc_63971bfb77792f35cda0463d310e2724ae108354fb287df386ab88a752743fcc((-0.2324116832617238,))
+'''
+{'alpha_class': 1,
+ 'beta_class': -1,
+ 'code_depth': 2,
+ 'codon_depth': 1,
+ 'created': '2020-07-16T00:26:04.946458Z',
+ 'creator': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gca': '23c441e967ef4b8637554409522bc07c1d0faac129bccf73473c098650a63957',
+ 'gcb': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'generation': 2,
+ 'graph': {'A': [['C', 1], ['C', 0], ['C', 1]],
+           'C': [0.0, 0.0],
+           'O': [['A', 0]]},
+ 'meta_data': {'parents': [['23c441e967ef4b8637554409522bc07c1d0faac129bccf73473c098650a63957']]},
+ 'num_codes': 1,
+ 'num_inputs': 0,
+ 'num_outputs': 1,
+ 'num_unique_codes': 1,
+ 'opt_num_codons': 0,
+ 'properties': {'binary_mutation': False,
+                'conditional': False,
+                'extended': False,
+                'logical': False,
+                'mathematical': False,
+                'unary_mutation': True},
+ 'raw_num_codons': 1,
+ 'reference_count': 0,
+ 'signature': '325fe4a0507140bc1587cb40eb3f8dcb256226f6395341db9a7f6112ca0f858e'}
+'''
+def gc_325fe4a0507140bc1587cb40eb3f8dcb256226f6395341db9a7f6112ca0f858e(i):
+	a = gc_23c441e967ef4b8637554409522bc07c1d0faac129bccf73473c098650a63957((0.0, 0.0, 0.0,))
 	return (a[0],)
 
 
-def gc_c8e1d86b16a6d7c155e6adbd53121b6be173492c8df59a2ec7358c3a9ed0241f(i):
-	a = gc_ea549df0fcde3b6375528205fef6eea94b79a442fd8afa77905fbeab96c6bcea((0.3926712060024391, 0.3926712060024391,))
+'''
+{'alpha_class': 1,
+ 'beta_class': -1,
+ 'code_depth': 2,
+ 'codon_depth': 1,
+ 'created': '2020-07-16T00:26:04.579792Z',
+ 'creator': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gca': '5f1ff9bfaf9bc1cdb5d520bd056048ebe5467cc6580f03b9c0c29b7eb64c4d2b',
+ 'gcb': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'generation': 2,
+ 'graph': {'A': [['C', 0], ['I', 0], ['C', 0]], 'C': [0.0], 'O': [['A', 0]]},
+ 'meta_data': {'parents': [['cc7cfb52a4658ba440bd7691c5a3d6f736f94d3d795857725a2e400f9e3624a9']]},
+ 'num_codes': 1,
+ 'num_inputs': 1,
+ 'num_outputs': 1,
+ 'num_unique_codes': 1,
+ 'opt_num_codons': 0,
+ 'properties': {'binary_mutation': False,
+                'conditional': False,
+                'extended': False,
+                'logical': False,
+                'mathematical': False,
+                'unary_mutation': True},
+ 'raw_num_codons': 1,
+ 'reference_count': 0,
+ 'signature': 'd849b50b3877bd437c27d41487f9c9836b6a470b1308738b1ef19a4c43cf007d'}
+'''
+def gc_d849b50b3877bd437c27d41487f9c9836b6a470b1308738b1ef19a4c43cf007d(i):
+	a = gc_5f1ff9bfaf9bc1cdb5d520bd056048ebe5467cc6580f03b9c0c29b7eb64c4d2b((0.0, i[0], 0.0,))
 	return (a[0],)
 
 
-def gc_ed240ca2ba21f136e18e66e1d57538567626c897a8256db599d499f66f117271(i):
-	a = gc_c436ba9675317cfa2b5e32a3f00cf08b57295e06f28d5203fbaa1cd6b430e6d7((0.0, 0.0, 0.0,))
-	return (a[0],)
-
-
-def gc_8c4b5e94417106622e5cf40c08583f1706b2a7f2167b03e94df79976e7f2542f(i):
-	a = gc_4793e082e2462b3ed47a23c000e9e8165bf7b6dea9bde08182b7203a708f6214((-0.9957193359881806,))
-	return (a[0],)
-
-
-def gc_c7434185f04c20a26fb1acdaa4ba340657d5d0535b29d98d2cfbdd96782c1c69(i):
-	a = gc_4f54b44dd522c044b41833089ca47ece6b280ff8c11324a5b8b6a957d92f6de8((i[0], i[1], i[0],))
-	return (a[0],)
-
-
-def gc_8ed38c8ed8c40acf695a25aa1f0781560f73c00152329a617df1d3be61fe7535(i):
-	a = gc_4cde93184158819b805ef591641fad84f4c0ee4fdb2715d267cbbcce1a53f8a4((1.0,))
-	return (a[0],)
-
-
-def gc_1baf935af32a6a0c0b8ef3e970e611ad71a4b83a53643f73d16d70c73f9e9f8f(i):
-	a = gc_a95ea10e7327badf07045086c7e935f5cc66a9b47f323fcdf30d76f66a592829((0.0, i[0], i[0],))
-	return (a[0],)
-
-
-def gc_354aa2cd45db2402322a68816f7387d4f8cde867c558a335af293b069fa420d3(i):
-	a = gc_ce4e58fcbe55e5caf14c456fd2603a7d81c19e89e61e63b0e56f8c1958ba3da1((0.0, 0.0,))
-	return (a[0],)
-
-
-def gc_53adbe5e171e51916d2a048ddd54580e48531e171b81f7fc13ef2e309769ac4a(i):
-	a = gc_b4dc32c9bc15e51d8070be7bf0ee9bfc344b73cc8ec857978ff72e71a3efb911((0.0, i[0], 0.0,))
-	return (a[0],)
-
-
-def gc_77ae182a67474814f085334bc43eb4b9574ad507c9fe0ed9801d81e3a922522e(i):
-	a = gc_e279714512f0498ee888c84f1906de2a5e6bf082d60fdbb32de84a0c16f6f071((0.06118863315610601,))
-	return (a[0],)
-
-
-def gc_1e9089ec5f3a29820630c4a857b42511fea0a74e8e722e49538e2acb0fdb5c24(i):
-	a = gc_5f1ff9bfaf9bc1cdb5d520bd056048ebe5467cc6580f03b9c0c29b7eb64c4d2b((0.0, i[0], i[1],))
-	return (a[0],)
-
-
-def gc_a3632ea07fbc2bc411b5f2c8fe66baabdd6cd88364a1884e33e402110d852fc8(i):
-	a = gc_5f1ff9bfaf9bc1cdb5d520bd056048ebe5467cc6580f03b9c0c29b7eb64c4d2b((i[0], 0.0, 0.0,))
-	return (a[0],)
-
-
-def gc_89962c4987d6b75688f6d21657ed07a60d34d56f7e4d464804b0e2d5f86c7df9(i):
-	a = gc_23c441e967ef4b8637554409522bc07c1d0faac129bccf73473c098650a63957((0.0, 0.0, i[0],))
-	return (a[0],)
-
-
-def gc_9bfeb16a97d34a632160a0757c4b6841c500c74b702af0c81969e68744cec2ad(i):
-	a = gc_f131f1d7c087d2b567acec3f2a476de27b9110e0794c11b2c97098e878feed08((i[0], 0.0, i[1],))
-	return (a[0],)
-
-
-def gc_81c39d6d3834048a4d1b0b2fee40ececb7fa9535c0acf3c89e3263eac1a5b4ae(i):
-	a = gc_ea549df0fcde3b6375528205fef6eea94b79a442fd8afa77905fbeab96c6bcea((0.3926712060024391, i[0],))
-	return (a[0],)
-
-
-def gc_e0bf571ad57686ce87463c79374558a16b6168fdc3f374ddd411a4a8b4a8722c(i):
-	a = gc_4f54b44dd522c044b41833089ca47ece6b280ff8c11324a5b8b6a957d92f6de8((1.0, i[1], i[0],))
-	return (a[0],)
-
-
-def gc_f1183ba071275a871039235c9c5b347f66f836864dba9cbb07363358c853f393(i):
-	a = gc_4f54b44dd522c044b41833089ca47ece6b280ff8c11324a5b8b6a957d92f6de8((0.6313966967649149, i[0], 0.6313966967649149,))
-	return (a[0],)
-
-
-def gc_ab331fd2bd4954ea7182250959614572b6584ce99ca1bbf4486e02e5124fccf5(i):
-	a = gc_ce4e58fcbe55e5caf14c456fd2603a7d81c19e89e61e63b0e56f8c1958ba3da1((1.0, i[0],))
-	return (a[0],)
-
-
-def gc_5f389a7c3b4a7dc78ac7f31aa2739e22ad43ea10e7723fa1444cb95e0953a14f(i):
-	a = gc_c436ba9675317cfa2b5e32a3f00cf08b57295e06f28d5203fbaa1cd6b430e6d7((0.0, 0.0, i[0],))
-	return (a[0],)
-
-
-def gc_680d118644077298a193b75aa60abd05063f6892893c6dc4f02660352eee472b(i):
-	a = gc_4cde93184158819b805ef591641fad84f4c0ee4fdb2715d267cbbcce1a53f8a4((-1.0,))
-	return (a[0],)
-
-
-def gc_1a7516e16734b13ddfacc734e5568ebf503e95ab3016eee8c41d5b358619c2c5(i):
-	a = gc_bcf49ecb02279621bc1dd9d70265175f142ccfcc742ff07cf3983c830c4670fc((0.2145066672652196,))
-	return (a[0],)
-
-
-def gc_eab2a97a6e443c64d02233ef7d4f36aad480209cc485249a4bae8e30fdb01afd(i):
-	a = gc_ee2cc4658d03ebb3ffbcdc44d31fa89b7644a654567d66b93bac5f6186899d4d((i[0], i[0], i[0],))
-	return (a[0],)
-
-
-def gc_97929f0d08c99e39b602d667adc186f4aa328b959519de5c0a706257f54c1afd(i):
-	a = gc_ea549df0fcde3b6375528205fef6eea94b79a442fd8afa77905fbeab96c6bcea((i[1], i[0],))
-	return (a[0],)
-
-
-def gc_fa27c16f8342827be245d4fcd9aef7771f0877b9c595efb2f2564b953678d9f3(i):
-	a = gc_b4dc32c9bc15e51d8070be7bf0ee9bfc344b73cc8ec857978ff72e71a3efb911((i[1], i[0], i[0],))
-	return (a[0],)
-
-
-def gc_31cfe93748d007c06a18549d9c4e75b75323ca2d23a23ad531e816b34c7be805(i):
-	a = gc_4793e082e2462b3ed47a23c000e9e8165bf7b6dea9bde08182b7203a708f6214((-1.0,))
-	return (a[0],)
-
-
-def gc_dc908bcae02d486c77e1f79690acf229794fbc77c4803bfc7eecd752c3d814ee(i):
-	a = gc_5f1ff9bfaf9bc1cdb5d520bd056048ebe5467cc6580f03b9c0c29b7eb64c4d2b((i[0], -0.587933061415068, i[1],))
-	return (a[0],)
-
-
-def gc_9cf1c36c7c4ae68482022c18b991c15a6880c966a02269df378ebdb49c3f7080(i):
-	a = gc_102a4d1fc747c5f81b314937da02b830ca4a49a6010aa65fd478dd1bd68675e8((0.11018190536303107,))
-	return (a[0],)
-
-
-def gc_f3b86a75cf75f9dbe421702675d3f6483080f137d8aa418e698dca70ff0611cc(i):
-	a = gc_ee2cc4658d03ebb3ffbcdc44d31fa89b7644a654567d66b93bac5f6186899d4d((i[1], 0.0, i[0],))
-	return (a[0],)
-
-
-def gc_b7125d0bb73200f03a5cbf3514722e5e53db670908edadf3ab6b70352f7fe094(i):
+'''
+{'alpha_class': 1,
+ 'beta_class': -1,
+ 'code_depth': 2,
+ 'codon_depth': 1,
+ 'created': '2020-07-16T00:26:05.860803Z',
+ 'creator': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gca': '5f1ff9bfaf9bc1cdb5d520bd056048ebe5467cc6580f03b9c0c29b7eb64c4d2b',
+ 'gcb': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'generation': 2,
+ 'graph': {'A': [['C', 1], ['C', 0], ['C', 1]],
+           'C': [0.0, 0.0],
+           'O': [['A', 0]]},
+ 'meta_data': {'parents': [['cc7cfb52a4658ba440bd7691c5a3d6f736f94d3d795857725a2e400f9e3624a9']]},
+ 'num_codes': 1,
+ 'num_inputs': 0,
+ 'num_outputs': 1,
+ 'num_unique_codes': 1,
+ 'opt_num_codons': 0,
+ 'properties': {'binary_mutation': False,
+                'conditional': False,
+                'extended': False,
+                'logical': False,
+                'mathematical': False,
+                'unary_mutation': True},
+ 'raw_num_codons': 1,
+ 'reference_count': 0,
+ 'signature': '1d83336c23e184a7944854e7afb07a8107ae335f680d3cc4a86cfa27cc30ebd8'}
+'''
+def gc_1d83336c23e184a7944854e7afb07a8107ae335f680d3cc4a86cfa27cc30ebd8(i):
 	a = gc_5f1ff9bfaf9bc1cdb5d520bd056048ebe5467cc6580f03b9c0c29b7eb64c4d2b((0.0, 0.0, 0.0,))
 	return (a[0],)
 
 
-def gc_58d10990a0507772c5f31bc52ba67cdae9a90daef3a28a413376db56e90486e8(i):
-	a = gc_f131f1d7c087d2b567acec3f2a476de27b9110e0794c11b2c97098e878feed08((0.0, i[0], i[0],))
+'''
+{'alpha_class': 1,
+ 'beta_class': -1,
+ 'code_depth': 2,
+ 'codon_depth': 1,
+ 'created': '2020-07-16T00:26:05.517362Z',
+ 'creator': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gca': '81b5a567e50cf6fd71bfcfc3c5d23faa0f245fb0a71900fa9573eba1a94ee80d',
+ 'gcb': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'generation': 2,
+ 'graph': {'A': [['C', 0]], 'C': [0.0], 'O': [['A', 0]]},
+ 'meta_data': {'parents': [['b98b16eb6649388de0a5294dcbde704470050a9c23850db69a1b239bd6788ee6']]},
+ 'num_codes': 1,
+ 'num_inputs': 0,
+ 'num_outputs': 1,
+ 'num_unique_codes': 1,
+ 'opt_num_codons': 0,
+ 'properties': {'binary_mutation': False,
+                'conditional': False,
+                'extended': False,
+                'logical': False,
+                'mathematical': False,
+                'unary_mutation': True},
+ 'raw_num_codons': 1,
+ 'reference_count': 0,
+ 'signature': '87d95699b95f73b0d9cd4b559dce51d13722fd143c7cc9b0b6be5430f0fdff56'}
+'''
+def gc_87d95699b95f73b0d9cd4b559dce51d13722fd143c7cc9b0b6be5430f0fdff56(i):
+	a = gc_81b5a567e50cf6fd71bfcfc3c5d23faa0f245fb0a71900fa9573eba1a94ee80d((0.0,))
 	return (a[0],)
 
 
-def gc_39e2dd9b16cc503767efd68f4519a649fc974e54e9830520eeb32e5a71914c81(i):
-	a = gc_102a4d1fc747c5f81b314937da02b830ca4a49a6010aa65fd478dd1bd68675e8((-0.06423809811868919,))
-	return (a[0],)
+'''
+{'alpha_class': 0,
+ 'beta_class': 0,
+ 'code_depth': 1,
+ 'codon_depth': 1,
+ 'created': '2020-07-16T00:25:44.234761Z',
+ 'creator': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gca': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'gcb': '0000000000000000000000000000000000000000000000000000000000000000',
+ 'generation': 1,
+ 'graph': {'A': [['I', 0], ['C', 0], ['C', 1]],
+           'C': [0.0, 0.0],
+           'O': [['A', 0]]},
+ 'meta_data': {'function': {'python3': {'0': {'inline': "connect({0[i0]}, 'A', "
+                                                        "'B', {0[c0]}, "
+                                                        '{0[c1]})'}}},
+               'name': 'GCB-GCA connection with constant fractional offsets'},
+ 'num_codes': 1,
+ 'num_inputs': 1,
+ 'num_outputs': 1,
+ 'num_unique_codes': 1,
+ 'opt_num_codons': 1,
+ 'properties': {'binary_mutation': False,
+                'conditional': False,
+                'extended': False,
+                'logical': False,
+                'mathematical': False,
+                'unary_mutation': True},
+ 'raw_num_codons': 1,
+ 'reference_count': 0,
+ 'signature': '23c441e967ef4b8637554409522bc07c1d0faac129bccf73473c098650a63957'}
+'''
+def gc_23c441e967ef4b8637554409522bc07c1d0faac129bccf73473c098650a63957(i):
+	return (connect(i[0], 'A', 'B', 0.0, 0.0),)
 
 
 meta_data = {
-	'ce4e58fcbe55e5caf14c456fd2603a7d81c19e89e61e63b0e56f8c1958ba3da1':{'num_inputs': 2,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': False, 'binary_mutation': True, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 0,'beta_class': 0, 'callable': gc_ce4e58fcbe55e5caf14c456fd2603a7d81c19e89e61e63b0e56f8c1958ba3da1 },
-	'4140f47e72adf3343c04c82d7766bf9e3bc71a6b606b7bc2e93f45a6349792e5':{'num_inputs': 2,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 0,'beta_class': 0, 'callable': gc_4140f47e72adf3343c04c82d7766bf9e3bc71a6b606b7bc2e93f45a6349792e5 },
-	'fcba468768bf701a1234ea41739916b0655512c74c74e5930cae35d13b92925f':{'num_inputs': 2,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 0,'beta_class': 0, 'callable': gc_fcba468768bf701a1234ea41739916b0655512c74c74e5930cae35d13b92925f },
-	'ea549df0fcde3b6375528205fef6eea94b79a442fd8afa77905fbeab96c6bcea':{'num_inputs': 2,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 0,'beta_class': 0, 'callable': gc_ea549df0fcde3b6375528205fef6eea94b79a442fd8afa77905fbeab96c6bcea },
-	'bcf49ecb02279621bc1dd9d70265175f142ccfcc742ff07cf3983c830c4670fc':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 0,'beta_class': 0, 'callable': gc_bcf49ecb02279621bc1dd9d70265175f142ccfcc742ff07cf3983c830c4670fc },
-	'81b5a567e50cf6fd71bfcfc3c5d23faa0f245fb0a71900fa9573eba1a94ee80d':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 0,'beta_class': 0, 'callable': gc_81b5a567e50cf6fd71bfcfc3c5d23faa0f245fb0a71900fa9573eba1a94ee80d },
 	'7404cd51f0ff21ae1b51cd8e13b6bacf706cafde670c9ef05ae282fea9ff2364':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 0,'beta_class': 0, 'callable': gc_7404cd51f0ff21ae1b51cd8e13b6bacf706cafde670c9ef05ae282fea9ff2364 },
-	'7bb5eb204e326fbabe069fb824e88a6ca68ec34c39eaa05a4d271a3f92e4b4fd':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 0,'beta_class': 0, 'callable': gc_7bb5eb204e326fbabe069fb824e88a6ca68ec34c39eaa05a4d271a3f92e4b4fd },
-	'e279714512f0498ee888c84f1906de2a5e6bf082d60fdbb32de84a0c16f6f071':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 0,'beta_class': 0, 'callable': gc_e279714512f0498ee888c84f1906de2a5e6bf082d60fdbb32de84a0c16f6f071 },
-	'ee2cc4658d03ebb3ffbcdc44d31fa89b7644a654567d66b93bac5f6186899d4d':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 0,'beta_class': 0, 'callable': gc_ee2cc4658d03ebb3ffbcdc44d31fa89b7644a654567d66b93bac5f6186899d4d },
-	'f131f1d7c087d2b567acec3f2a476de27b9110e0794c11b2c97098e878feed08':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 0,'beta_class': 0, 'callable': gc_f131f1d7c087d2b567acec3f2a476de27b9110e0794c11b2c97098e878feed08 },
-	'b4dc32c9bc15e51d8070be7bf0ee9bfc344b73cc8ec857978ff72e71a3efb911':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 0,'beta_class': 0, 'callable': gc_b4dc32c9bc15e51d8070be7bf0ee9bfc344b73cc8ec857978ff72e71a3efb911 },
-	'c436ba9675317cfa2b5e32a3f00cf08b57295e06f28d5203fbaa1cd6b430e6d7':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 0,'beta_class': 0, 'callable': gc_c436ba9675317cfa2b5e32a3f00cf08b57295e06f28d5203fbaa1cd6b430e6d7 },
-	'23c441e967ef4b8637554409522bc07c1d0faac129bccf73473c098650a63957':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 0,'beta_class': 0, 'callable': gc_23c441e967ef4b8637554409522bc07c1d0faac129bccf73473c098650a63957 },
-	'5f1ff9bfaf9bc1cdb5d520bd056048ebe5467cc6580f03b9c0c29b7eb64c4d2b':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 0,'beta_class': 0, 'callable': gc_5f1ff9bfaf9bc1cdb5d520bd056048ebe5467cc6580f03b9c0c29b7eb64c4d2b },
-	'4f54b44dd522c044b41833089ca47ece6b280ff8c11324a5b8b6a957d92f6de8':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 0,'beta_class': 0, 'callable': gc_4f54b44dd522c044b41833089ca47ece6b280ff8c11324a5b8b6a957d92f6de8 },
-	'a95ea10e7327badf07045086c7e935f5cc66a9b47f323fcdf30d76f66a592829':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 0,'beta_class': 0, 'callable': gc_a95ea10e7327badf07045086c7e935f5cc66a9b47f323fcdf30d76f66a592829 },
-	'63971bfb77792f35cda0463d310e2724ae108354fb287df386ab88a752743fcc':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 0,'beta_class': 0, 'callable': gc_63971bfb77792f35cda0463d310e2724ae108354fb287df386ab88a752743fcc },
-	'4793e082e2462b3ed47a23c000e9e8165bf7b6dea9bde08182b7203a708f6214':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 0,'beta_class': 0, 'callable': gc_4793e082e2462b3ed47a23c000e9e8165bf7b6dea9bde08182b7203a708f6214 },
-	'6bba0589ed454784e75f8a184fb8fc8d59a3772e73a8414f2ba915ce211f6773':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 0,'beta_class': 0, 'callable': gc_6bba0589ed454784e75f8a184fb8fc8d59a3772e73a8414f2ba915ce211f6773 },
-	'278ddaaaa439429bad68df4b81f3b42ecdc7cf2d2ea8ad086a2ca185a3acbbb6':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 0,'beta_class': 0, 'callable': gc_278ddaaaa439429bad68df4b81f3b42ecdc7cf2d2ea8ad086a2ca185a3acbbb6 },
 	'b3426a0b5077c14d09c2eb091e8ba0ded68486890d5f0146cfdec34ebbe383d6':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 0,'beta_class': 0, 'callable': gc_b3426a0b5077c14d09c2eb091e8ba0ded68486890d5f0146cfdec34ebbe383d6 },
-	'81d83b6dfe8764bc32df13948a86e7721818e3648d8f916708f8d416b2b94370':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 0,'beta_class': 0, 'callable': gc_81d83b6dfe8764bc32df13948a86e7721818e3648d8f916708f8d416b2b94370 },
-	'102a4d1fc747c5f81b314937da02b830ca4a49a6010aa65fd478dd1bd68675e8':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 0,'beta_class': 0, 'callable': gc_102a4d1fc747c5f81b314937da02b830ca4a49a6010aa65fd478dd1bd68675e8 },
-	'4cde93184158819b805ef591641fad84f4c0ee4fdb2715d267cbbcce1a53f8a4':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 0,'beta_class': 0, 'callable': gc_4cde93184158819b805ef591641fad84f4c0ee4fdb2715d267cbbcce1a53f8a4 },
-	'15351a2e310bb0e2f6189d1728d5eee750c673dcb0b15c0f40302c6ef4e33535':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_15351a2e310bb0e2f6189d1728d5eee750c673dcb0b15c0f40302c6ef4e33535 },
-	'cf8cd9075b571cb5a59d37e378029ff54502df66779163ba058c01384f335c2c':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_cf8cd9075b571cb5a59d37e378029ff54502df66779163ba058c01384f335c2c },
-	'66ac33a3f469fe70a0c72886b61ccd32f2b9b4738c8dd22112ba9e47ebe4ff2b':{'num_inputs': 2,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': False, 'binary_mutation': True, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_66ac33a3f469fe70a0c72886b61ccd32f2b9b4738c8dd22112ba9e47ebe4ff2b },
-	'065c6b174b50d8682b49d71112febf3f052ad94f794cef68009887ae1bc09b69':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_065c6b174b50d8682b49d71112febf3f052ad94f794cef68009887ae1bc09b69 },
-	'aa177a51676b4ac9993b3491a70b5e6d53f2b26bde6e775c5a22fa1e22186c41':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_aa177a51676b4ac9993b3491a70b5e6d53f2b26bde6e775c5a22fa1e22186c41 },
-	'3669b2f53208e322423da38d8006444917940ddfedbf169eaf0212c0fe6f10b7':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_3669b2f53208e322423da38d8006444917940ddfedbf169eaf0212c0fe6f10b7 },
-	'7bf45529286677eb2266ff38b3c8a6a898ea41a3cbe831a2e60b1397faa8c106':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_7bf45529286677eb2266ff38b3c8a6a898ea41a3cbe831a2e60b1397faa8c106 },
-	'3af2281d4860011bb078e2a1c247e28fde86faba860f905eb5579380d2616559':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_3af2281d4860011bb078e2a1c247e28fde86faba860f905eb5579380d2616559 },
-	'a380199b1efb5e06e8bf0ba253f2250b665534df9402e9ba08405876a9d0911b':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_a380199b1efb5e06e8bf0ba253f2250b665534df9402e9ba08405876a9d0911b },
-	'46b77d4a61398a228ef0b64e465cc33ee6f4527980586ea4a40ab2e6d3aedec0':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_46b77d4a61398a228ef0b64e465cc33ee6f4527980586ea4a40ab2e6d3aedec0 },
 	'282424295de4addaa42b8117a6e53ce0136fcfba2b1cdfab61ac3c7e3a823516':{'num_inputs': 2,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_282424295de4addaa42b8117a6e53ce0136fcfba2b1cdfab61ac3c7e3a823516 },
 	'b98b16eb6649388de0a5294dcbde704470050a9c23850db69a1b239bd6788ee6':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_b98b16eb6649388de0a5294dcbde704470050a9c23850db69a1b239bd6788ee6 },
-	'562f9ffb473aade86537c9d78a94314f32cc0e1e6a5c71926777777c5fd35bbf':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_562f9ffb473aade86537c9d78a94314f32cc0e1e6a5c71926777777c5fd35bbf },
-	'65205972c2842865c3b8de9cd43d117c8bc0ff4fc05f27284d93416cd604dcf4':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_65205972c2842865c3b8de9cd43d117c8bc0ff4fc05f27284d93416cd604dcf4 },
-	'5d180795babcb82e7ea8b4357ae602a44666c60f0d2b851051c89e1149e72f97':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_5d180795babcb82e7ea8b4357ae602a44666c60f0d2b851051c89e1149e72f97 },
-	'64bf889a2002c7617f0b7b15e7cceaec029a54e17fc67c007767a05e55a5e65f':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_64bf889a2002c7617f0b7b15e7cceaec029a54e17fc67c007767a05e55a5e65f },
-	'0b71cf0dd17adf2126959c3712c97c25420a33cb71657225c3d76c127a2d3f8d':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_0b71cf0dd17adf2126959c3712c97c25420a33cb71657225c3d76c127a2d3f8d },
-	'8e63d58261949359d0c4f000d50406d5c5df57a1809ca623baa7940a1ac1c84a':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_8e63d58261949359d0c4f000d50406d5c5df57a1809ca623baa7940a1ac1c84a },
-	'572f3d56521fb576738b38239b46b1f2e4f881dbeb18ba57b3254a6dceb5782e':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_572f3d56521fb576738b38239b46b1f2e4f881dbeb18ba57b3254a6dceb5782e },
-	'42bdabf6208e9529f50a37386efafc88a45bdd1ed90be29c97a18041626dba9b':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_42bdabf6208e9529f50a37386efafc88a45bdd1ed90be29c97a18041626dba9b },
-	'e85a273594784a9e97619cb998fe8dd6f0cb52a4f283de654e0899b4b1c0d481':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_e85a273594784a9e97619cb998fe8dd6f0cb52a4f283de654e0899b4b1c0d481 },
 	'aab332740bb7b6730311c956b05c16d19814c2d752e1db38b65aa95c7b9209d7':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_aab332740bb7b6730311c956b05c16d19814c2d752e1db38b65aa95c7b9209d7 },
-	'830056fc717060a25cfa061faedab989fdbc7208958cac782cfddff53a9de65b':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_830056fc717060a25cfa061faedab989fdbc7208958cac782cfddff53a9de65b },
-	'31e4e3af86f9d2a46cdc37171097324bfe35d2459baa32d61f46fe95742ba07e':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_31e4e3af86f9d2a46cdc37171097324bfe35d2459baa32d61f46fe95742ba07e },
-	'57445022b9dc0d937721bb272de55001607f26c9b9cc9dd40cd4dead77da6366':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_57445022b9dc0d937721bb272de55001607f26c9b9cc9dd40cd4dead77da6366 },
-	'2cc43f4b661600a9cf288e4d34e7604fde5add19da18219cb4eb716500c70d11':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_2cc43f4b661600a9cf288e4d34e7604fde5add19da18219cb4eb716500c70d11 },
-	'ca8deda24130ae5dfb70aef9babcfac3074873dbe1613e31e6d4a5c1c88d8a41':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_ca8deda24130ae5dfb70aef9babcfac3074873dbe1613e31e6d4a5c1c88d8a41 },
-	'e563ee519dd1a462af0803bf71a68ed2761e0a287e10447e368a5bf471eb4f1e':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_e563ee519dd1a462af0803bf71a68ed2761e0a287e10447e368a5bf471eb4f1e },
-	'69f8bddf1ba8386b128c82b9e9d61bfbcd39a2adfb0f072e1c0edd6fc96c2b5e':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_69f8bddf1ba8386b128c82b9e9d61bfbcd39a2adfb0f072e1c0edd6fc96c2b5e },
-	'548c936adb05c438822541970d65a54a1a094c4c4a9b7921a52ef443b513e98b':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_548c936adb05c438822541970d65a54a1a094c4c4a9b7921a52ef443b513e98b },
-	'2dca664b598893d24cef3105ed6ca7b198ac2dc4ef494d8e1f6670c21390872e':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': False, 'binary_mutation': True, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_2dca664b598893d24cef3105ed6ca7b198ac2dc4ef494d8e1f6670c21390872e },
-	'db707d1e30841606ccbc7f7d349dcdadcf7b3b5e1e8d1a2e8cec17e1317bfd13':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_db707d1e30841606ccbc7f7d349dcdadcf7b3b5e1e8d1a2e8cec17e1317bfd13 },
-	'ae4e6d8dc8c8456491c0454fe55675261f80615f0d0f5c08b53ad56606abc7e4':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_ae4e6d8dc8c8456491c0454fe55675261f80615f0d0f5c08b53ad56606abc7e4 },
-	'7768bb71073ef4e7aaf1b15a957e49bf68d5bf744fb85c0be06fa205ddbda359':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_7768bb71073ef4e7aaf1b15a957e49bf68d5bf744fb85c0be06fa205ddbda359 },
-	'731f9ff5e9cfdb53f1944bf6962c32b21be104ef51b2fdb3db0244b077010af2':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_731f9ff5e9cfdb53f1944bf6962c32b21be104ef51b2fdb3db0244b077010af2 },
+	'3669b2f53208e322423da38d8006444917940ddfedbf169eaf0212c0fe6f10b7':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_3669b2f53208e322423da38d8006444917940ddfedbf169eaf0212c0fe6f10b7 },
 	'cc7cfb52a4658ba440bd7691c5a3d6f736f94d3d795857725a2e400f9e3624a9':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_cc7cfb52a4658ba440bd7691c5a3d6f736f94d3d795857725a2e400f9e3624a9 },
-	'edd8747214af1b5de59ed894a4425cadcf727466417d7f752e9c8e82f959efba':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_edd8747214af1b5de59ed894a4425cadcf727466417d7f752e9c8e82f959efba },
-	'7c81e32cacdeb941a0c6989d24d58a9591a9771cce66ec0752ebbd0b2e1f5eae':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_7c81e32cacdeb941a0c6989d24d58a9591a9771cce66ec0752ebbd0b2e1f5eae },
-	'7743aba320d9a6dd5f2b7a8e5777b997d61131f2a4db0f78fb4a881d40244898':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_7743aba320d9a6dd5f2b7a8e5777b997d61131f2a4db0f78fb4a881d40244898 },
-	'4e31cd46908623b5b0704e94d73ff37ed9babd444d896464559539e5c5d0f8db':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_4e31cd46908623b5b0704e94d73ff37ed9babd444d896464559539e5c5d0f8db },
-	'f269bf2281717b6c6d4cd1c4f6bdd61dd63f8501ed8a3846b79dca9c82387a51':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_f269bf2281717b6c6d4cd1c4f6bdd61dd63f8501ed8a3846b79dca9c82387a51 },
-	'56847c9cff84d51988f66580688885a9a0a104f4d749f8121af9c952d88085e3':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_56847c9cff84d51988f66580688885a9a0a104f4d749f8121af9c952d88085e3 },
-	'21ebcdab3d0ac3d6a4882e9fecaf691354ca2be9fff8f6bb2c96376d59d569b9':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_21ebcdab3d0ac3d6a4882e9fecaf691354ca2be9fff8f6bb2c96376d59d569b9 },
-	'962e18fd8e34fe127659346683f879366d1fe38d78bde2cae2c2ad67e79c0da1':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_962e18fd8e34fe127659346683f879366d1fe38d78bde2cae2c2ad67e79c0da1 },
-	'354073df22150907738f0aacb34c5257c9ab85c82610becd677b275a9eaa6b32':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_354073df22150907738f0aacb34c5257c9ab85c82610becd677b275a9eaa6b32 },
-	'e9feec3177d2a1de26b5d3d85ab6a372fc6bc1e0e4414a0f7a317ed2c582025f':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_e9feec3177d2a1de26b5d3d85ab6a372fc6bc1e0e4414a0f7a317ed2c582025f },
-	'287826f5c96000e18bf60b2499634d9fb01fc9d402fbcc2067f7ce5e54af6371':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_287826f5c96000e18bf60b2499634d9fb01fc9d402fbcc2067f7ce5e54af6371 },
-	'986ae757be6910ae3b92411b03d2f9feace48fe748d96a7933f98b0ca9d5e3c9':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_986ae757be6910ae3b92411b03d2f9feace48fe748d96a7933f98b0ca9d5e3c9 },
-	'0060c0a984babda61ba83e3ac857c0381376db9f844309bef789c726fd106cfd':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_0060c0a984babda61ba83e3ac857c0381376db9f844309bef789c726fd106cfd },
-	'37d1df4cd5eb71801f535485c55b30bd9147acf3a94f5c78e16ac8f65a172d38':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_37d1df4cd5eb71801f535485c55b30bd9147acf3a94f5c78e16ac8f65a172d38 },
-	'214d15161e2357e1ebf3de8e92fffee4e2ebefc0941adf9656998a06002687af':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_214d15161e2357e1ebf3de8e92fffee4e2ebefc0941adf9656998a06002687af },
-	'31285d892a552e09bb16f72e451cb90ce77cad98776303475f925a617460e83d':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_31285d892a552e09bb16f72e451cb90ce77cad98776303475f925a617460e83d },
-	'b39cb29be10e3f1a1020a92c916162366a444848dadcf6f360c7fe095c0cb7e9':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_b39cb29be10e3f1a1020a92c916162366a444848dadcf6f360c7fe095c0cb7e9 },
-	'5e518b6b4668611c3d1602f784ad410609d5657a5d5690f9abca54eb4b7c0f3a':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_5e518b6b4668611c3d1602f784ad410609d5657a5d5690f9abca54eb4b7c0f3a },
-	'7eb61a64d6aa1248cf7c1973ece726698b4d3b61964060a46a9789bda79d7c72':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_7eb61a64d6aa1248cf7c1973ece726698b4d3b61964060a46a9789bda79d7c72 },
-	'eb298e1bfc9d2bd2344a2dba0acc194f353cd55c44773c5d19c9f3e8c342bd3a':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_eb298e1bfc9d2bd2344a2dba0acc194f353cd55c44773c5d19c9f3e8c342bd3a },
-	'ed1deb5a3578f1cb74c983c3e72426ceb8fd6fc4df308ae1671645a27a3505fa':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_ed1deb5a3578f1cb74c983c3e72426ceb8fd6fc4df308ae1671645a27a3505fa },
-	'8017375ce50edad2756f1778baad4d320df2180b53defe5b239b23294cb3e6d3':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_8017375ce50edad2756f1778baad4d320df2180b53defe5b239b23294cb3e6d3 },
-	'4d21e118f75e0485cdddea9988ba7fa3e2e7092a4fab79800dd46a2197c1a437':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_4d21e118f75e0485cdddea9988ba7fa3e2e7092a4fab79800dd46a2197c1a437 },
-	'f2964c5f8028674c425bb7cc1610e940f3ccd873c284805f76085cfe332b5809':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_f2964c5f8028674c425bb7cc1610e940f3ccd873c284805f76085cfe332b5809 },
-	'cac707a22d85abde1d3c579599611957a8ef872125add801c70d78eea6173093':{'num_inputs': 2,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_cac707a22d85abde1d3c579599611957a8ef872125add801c70d78eea6173093 },
-	'd675555760668f9ba949b1d675049e0b6191ef3a2fbbf2adf6a7e46d6d7d1918':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_d675555760668f9ba949b1d675049e0b6191ef3a2fbbf2adf6a7e46d6d7d1918 },
-	'98c7bcfc10c5a9a4fd9116b48fe02d529d2f045500cc75f78f1deec64dcc7161':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_98c7bcfc10c5a9a4fd9116b48fe02d529d2f045500cc75f78f1deec64dcc7161 },
-	'28d42217d49eaddf16ebb2898bc258bc4682d8d14aa85ed6c8806336f44e6c06':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_28d42217d49eaddf16ebb2898bc258bc4682d8d14aa85ed6c8806336f44e6c06 },
-	'276e602cd7d50916f70beaf87aadcfafbe61bd99815e7f2b83899afac14b42c7':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_276e602cd7d50916f70beaf87aadcfafbe61bd99815e7f2b83899afac14b42c7 },
-	'1134b97d9b015581fc341b5928418da4dbf5d327c8b1eee0da84b3b179276115':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_1134b97d9b015581fc341b5928418da4dbf5d327c8b1eee0da84b3b179276115 },
-	'670a0aa12cc1491b80aa34adae09fa3a0e801f4b0d3cd47851fb452b736fbe1a':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_670a0aa12cc1491b80aa34adae09fa3a0e801f4b0d3cd47851fb452b736fbe1a },
-	'bf1500c41ce9bdf64e8696bf79dfb4a64653304f2d08a0c4ee170a2bdc3fea33':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_bf1500c41ce9bdf64e8696bf79dfb4a64653304f2d08a0c4ee170a2bdc3fea33 },
-	'bfd010ec1db290614a408872aa7e43640a50e11f035a47bd2d484cc080db8b8a':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_bfd010ec1db290614a408872aa7e43640a50e11f035a47bd2d484cc080db8b8a },
-	'36d84309ae559742b87876978de2304a030409a4bad25e63e1617d2e603049f9':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_36d84309ae559742b87876978de2304a030409a4bad25e63e1617d2e603049f9 },
-	'1e20d31505c2249121a5d3344551855a2e06d785624f4679b6f68b6e5f394bb2':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_1e20d31505c2249121a5d3344551855a2e06d785624f4679b6f68b6e5f394bb2 },
-	'af779f4a38ebac5e44f595533aa4e4b41565ae1426abeb3edfb883b940c00539':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': False, 'binary_mutation': True, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_af779f4a38ebac5e44f595533aa4e4b41565ae1426abeb3edfb883b940c00539 },
-	'bf3161b1d66c4f7b2c4d7c9901bd0044d3dcb0e2bc05dbe82e1feeeb40ef9931':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_bf3161b1d66c4f7b2c4d7c9901bd0044d3dcb0e2bc05dbe82e1feeeb40ef9931 },
-	'14a3f7694ecb8828de41cb4c8028533844d853f514e7e19d02209e81969bea45':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_14a3f7694ecb8828de41cb4c8028533844d853f514e7e19d02209e81969bea45 },
 	'f5b607832778f539c313b5dbe664e0cdbaf016bcdba4ac95d45c54f999e08a4f':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_f5b607832778f539c313b5dbe664e0cdbaf016bcdba4ac95d45c54f999e08a4f },
-	'f8b10edaff6ed9589b9fca0e879f4fe586848150ac629d136cc37f769d0bdd1d':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_f8b10edaff6ed9589b9fca0e879f4fe586848150ac629d136cc37f769d0bdd1d },
-	'8b123e29bd49d5010787c3622d13fdb327f57f015f49d65f55535aece4b5ae20':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_8b123e29bd49d5010787c3622d13fdb327f57f015f49d65f55535aece4b5ae20 },
-	'295b1bb9ef8d6ebb6924b067041cb9966b6696a5576aa1d3cc628b41343be2a7':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': False, 'binary_mutation': True, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_295b1bb9ef8d6ebb6924b067041cb9966b6696a5576aa1d3cc628b41343be2a7 },
-	'059d99393482efe9d7ef5a4dfe0824b336af5c471af92f56cbf53a0ba433d6c5':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_059d99393482efe9d7ef5a4dfe0824b336af5c471af92f56cbf53a0ba433d6c5 },
-	'cd3de5e6d4722a72bdd55203c51f7b616dd5f6a7db68158ff5148b2ef17ed6cb':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': False, 'binary_mutation': True, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_cd3de5e6d4722a72bdd55203c51f7b616dd5f6a7db68158ff5148b2ef17ed6cb },
-	'b33df5beef7cd7d5e49e74b229864ba0664bae07dbe6a28a3c9c11643518f37d':{'num_inputs': 2,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_b33df5beef7cd7d5e49e74b229864ba0664bae07dbe6a28a3c9c11643518f37d },
-	'8568fa49a69fc9c42c30d78866a45316976afca26ce6a75284546f07ad9f6aef':{'num_inputs': 2,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_8568fa49a69fc9c42c30d78866a45316976afca26ce6a75284546f07ad9f6aef },
-	'a427790d770b0fa722ca1ebae60ce603fbc45f0358ed7df37f88f0a042284a70':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_a427790d770b0fa722ca1ebae60ce603fbc45f0358ed7df37f88f0a042284a70 },
-	'67aa64f950ed976c1835461b09f7aee23a9ef5508d2a06d7b02e026b32f4134a':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_67aa64f950ed976c1835461b09f7aee23a9ef5508d2a06d7b02e026b32f4134a },
-	'fe499790c5cf7ffe0030c11ee70427270d37186fb429404eecba703b81f1d397':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_fe499790c5cf7ffe0030c11ee70427270d37186fb429404eecba703b81f1d397 },
-	'ce171d8207600a6c5b494439f1af004fb58b93f4051e75a05ef354e360cf2fe3':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_ce171d8207600a6c5b494439f1af004fb58b93f4051e75a05ef354e360cf2fe3 },
-	'1745bd810b62f97916ccde4247e74fb6b04fa3e07a0a2349d115daea3708c540':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_1745bd810b62f97916ccde4247e74fb6b04fa3e07a0a2349d115daea3708c540 },
-	'60d07bbabc49cd676d92a9b866a4e7e1364c10d6ef5b7f26852e5632308d0743':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_60d07bbabc49cd676d92a9b866a4e7e1364c10d6ef5b7f26852e5632308d0743 },
-	'67c58df6fe8472924d2bcac33a535abd5f7d125423461f2dc240ddf3281284d3':{'num_inputs': 2,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_67c58df6fe8472924d2bcac33a535abd5f7d125423461f2dc240ddf3281284d3 },
-	'7e62a64053de9defba501aca718fa54beab0db1ec0861845c7573f7c2feb122d':{'num_inputs': 2,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_7e62a64053de9defba501aca718fa54beab0db1ec0861845c7573f7c2feb122d },
 	'de16d05c96f141351c6e918906ad8565426b05c77a187edc20763c01f4d8db86':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_de16d05c96f141351c6e918906ad8565426b05c77a187edc20763c01f4d8db86 },
-	'8302f7ebfa7604701b0799d946b8c2c578d3a1f9723699b97cb4598d4a9ad955':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_8302f7ebfa7604701b0799d946b8c2c578d3a1f9723699b97cb4598d4a9ad955 },
-	'9d73cee6029fd4053ff88c76b7d183a9df3bfd83400f823be0d9c3c78798d486':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_9d73cee6029fd4053ff88c76b7d183a9df3bfd83400f823be0d9c3c78798d486 },
-	'0a355ff1670a8316c371872ba06dfd472d2ee8de91a33f828888f028a2ca8422':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': False, 'binary_mutation': True, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_0a355ff1670a8316c371872ba06dfd472d2ee8de91a33f828888f028a2ca8422 },
-	'f92604ef79344f03a694512685f7a7544caaf7ff00b2253c3905bf6638cbdfa8':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_f92604ef79344f03a694512685f7a7544caaf7ff00b2253c3905bf6638cbdfa8 },
-	'9dcafa5bcb06b9be5b3e3dfa2018a599223e0cc0abfabffe80a11cd44c3ba4a8':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_9dcafa5bcb06b9be5b3e3dfa2018a599223e0cc0abfabffe80a11cd44c3ba4a8 },
-	'bc8d48eeeebdf1447e710d27387e5f7791916def6af6f956342533f8f203ec9e':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_bc8d48eeeebdf1447e710d27387e5f7791916def6af6f956342533f8f203ec9e },
-	'fa0a4e1fb0614d291ab65eb8ffd07d4fcfcd42bd817385e32853f7a3f370b1f5':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_fa0a4e1fb0614d291ab65eb8ffd07d4fcfcd42bd817385e32853f7a3f370b1f5 },
-	'46fcfdcac7be9ed0895a1e2a68d5e032d6a4eae7f2e358b5e15df169657067a2':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_46fcfdcac7be9ed0895a1e2a68d5e032d6a4eae7f2e358b5e15df169657067a2 },
-	'3f05e42ce5eae26a0dcfeb3976aa0160c37d891bc4d7b7dd98136303d1a5fc0f':{'num_inputs': 2,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_3f05e42ce5eae26a0dcfeb3976aa0160c37d891bc4d7b7dd98136303d1a5fc0f },
-	'eeea0aa9c818b6a25decc0d5894b1b51b2c015d8991ad7f5d4365c0b69e88e1a':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_eeea0aa9c818b6a25decc0d5894b1b51b2c015d8991ad7f5d4365c0b69e88e1a },
-	'2c4518bcacc3cd0e79d85f61a07b316f009f7421cd5df23b100fb66dc1963a42':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_2c4518bcacc3cd0e79d85f61a07b316f009f7421cd5df23b100fb66dc1963a42 },
-	'ad935593af5277b9f4ba8c09335d9217246b19f86e59225a914ddc7bbb269cab':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_ad935593af5277b9f4ba8c09335d9217246b19f86e59225a914ddc7bbb269cab },
-	'ceb17738f60b3f0d3a292d80c6fd5d555d3fd7b012312b9e4503206d9feff0ce':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_ceb17738f60b3f0d3a292d80c6fd5d555d3fd7b012312b9e4503206d9feff0ce },
-	'30f394319fa21fbc05aaaf43955c66b906be723dd5f98555cba887a7bcefe726':{'num_inputs': 2,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_30f394319fa21fbc05aaaf43955c66b906be723dd5f98555cba887a7bcefe726 },
-	'ab28a63a19a2b0add66417c8f624eeecd4b719d85b22dca116097acb848fc95c':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_ab28a63a19a2b0add66417c8f624eeecd4b719d85b22dca116097acb848fc95c },
-	'696e86557ec25d3a51d32c3b5c0763e2d895f332c3387e18a6e1d8803381f81f':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_696e86557ec25d3a51d32c3b5c0763e2d895f332c3387e18a6e1d8803381f81f },
-	'24a4ea61ef5a700b5d116f3a63532d137510b2423fc194679847314894c29e12':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_24a4ea61ef5a700b5d116f3a63532d137510b2423fc194679847314894c29e12 },
-	'203ded6297b6689d1acb8250dfda1ef4d794ffd4e4a4ee2af963abda47b5f729':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_203ded6297b6689d1acb8250dfda1ef4d794ffd4e4a4ee2af963abda47b5f729 },
-	'415d15beb2420f13f7e82eea20c837f8c605f6d0ef7c44cd4c38241297069331':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_415d15beb2420f13f7e82eea20c837f8c605f6d0ef7c44cd4c38241297069331 },
-	'b9955c72d910773f069643abb44e1ba658b5c991f73a1ae3b2b4ca8309cff34b':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_b9955c72d910773f069643abb44e1ba658b5c991f73a1ae3b2b4ca8309cff34b },
-	'5a36c7f69c8ad54320041167d11b87d1138b6060e1ebd3e090e32d838b11890b':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_5a36c7f69c8ad54320041167d11b87d1138b6060e1ebd3e090e32d838b11890b },
-	'd583313ac7265d903f96aebefac338b54f234df8c3250552bea73f53de7b4cfa':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_d583313ac7265d903f96aebefac338b54f234df8c3250552bea73f53de7b4cfa },
-	'609668c68a2624af6f138934618b253074ee90207940afb6ee8643fca7662fdb':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_609668c68a2624af6f138934618b253074ee90207940afb6ee8643fca7662fdb },
-	'f7a9aed0049a8b640476298444082f927eec27ffdc95f27ea5bc345c45dd76bc':{'num_inputs': 2,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_f7a9aed0049a8b640476298444082f927eec27ffdc95f27ea5bc345c45dd76bc },
-	'50a50636739475822eb79cbe7b2aaee8eca0f9bfad64c53aa70cd0b2896021e1':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_50a50636739475822eb79cbe7b2aaee8eca0f9bfad64c53aa70cd0b2896021e1 },
-	'1174e37306a43ba5f963d4f655817c3f798b9d8e4546777ea63ff9198ab22004':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_1174e37306a43ba5f963d4f655817c3f798b9d8e4546777ea63ff9198ab22004 },
-	'0cb8e32db276e7b7464427dd2b7311b433314098f2451bb6ad02c1762d640f6d':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_0cb8e32db276e7b7464427dd2b7311b433314098f2451bb6ad02c1762d640f6d },
-	'42c677ca93c0fcc72f4c650505d7eb2867cef0c094241e6a9246504029bdff34':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_42c677ca93c0fcc72f4c650505d7eb2867cef0c094241e6a9246504029bdff34 },
-	'736c557a504026ef5d4acff2ab43259cf49273780a99f7bda23513b477e92091':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_736c557a504026ef5d4acff2ab43259cf49273780a99f7bda23513b477e92091 },
-	'685205c83d06aa7b8f9c6f034a73d712887481fa5c9eb7a503b6bfe34cf8cf89':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_685205c83d06aa7b8f9c6f034a73d712887481fa5c9eb7a503b6bfe34cf8cf89 },
-	'780ee513440048be8dade7f7430174b05921cccd20009a28ccbde894bc329788':{'num_inputs': 2,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_780ee513440048be8dade7f7430174b05921cccd20009a28ccbde894bc329788 },
-	'f4ba73e6970849794b753a6c2451aef5621bd2b892e94e15f1e96d027bfa629e':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_f4ba73e6970849794b753a6c2451aef5621bd2b892e94e15f1e96d027bfa629e },
 	'63f4c2177ea134118ee0d3b75c8a1e48a85dbb4214bcf0abf70b44241329f23c':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_63f4c2177ea134118ee0d3b75c8a1e48a85dbb4214bcf0abf70b44241329f23c },
-	'ea69bccc1973aaff350a95c2d8cc9b3b41832729d1a7492c05beb61f1f8bd79e':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_ea69bccc1973aaff350a95c2d8cc9b3b41832729d1a7492c05beb61f1f8bd79e },
-	'f5a37bdfb571237b8eb72e4740eb5566ad5a3a2b2308d2bb20cd797fad623f93':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_f5a37bdfb571237b8eb72e4740eb5566ad5a3a2b2308d2bb20cd797fad623f93 },
-	'2c77eca10e9d4b6166545f021b512aee2c7dc6b8c3e77bb6d2a56c923a98f73d':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_2c77eca10e9d4b6166545f021b512aee2c7dc6b8c3e77bb6d2a56c923a98f73d },
-	'a21ab2924c5f3532f06892ca04adb570122723368cd5f2ca74389da6b0384f7d':{'num_inputs': 2,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_a21ab2924c5f3532f06892ca04adb570122723368cd5f2ca74389da6b0384f7d },
-	'da97d5ee9da9e50f640023c4689fcf791be91b5396f7d82dafb7a6710ab64562':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_da97d5ee9da9e50f640023c4689fcf791be91b5396f7d82dafb7a6710ab64562 },
-	'bfbda3a0972e759ab662b7eb6a716b86299fa7488abd9634ae98adc5746f643f':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_bfbda3a0972e759ab662b7eb6a716b86299fa7488abd9634ae98adc5746f643f },
-	'5c71d5f7476b97d337046668b4d20d7e9657d1677fd216a76db5576e6902d31b':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_5c71d5f7476b97d337046668b4d20d7e9657d1677fd216a76db5576e6902d31b },
-	'd91aec2848d9b2a917bc2edbf315e5c015fd56e9b4d961d39eaf7bdc07228eb4':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_d91aec2848d9b2a917bc2edbf315e5c015fd56e9b4d961d39eaf7bdc07228eb4 },
-	'594d4fecf49ba673e352b34630cb34723db65c22c2de3f7b380d89b3ea2e91b6':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_594d4fecf49ba673e352b34630cb34723db65c22c2de3f7b380d89b3ea2e91b6 },
-	'7d5822650106683c1fcd908d1158c4812af087fac65cc2ecfe159378a7779d21':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_7d5822650106683c1fcd908d1158c4812af087fac65cc2ecfe159378a7779d21 },
-	'8cdc59519347b731b456141805655a9566f2cc7b579f183ca914389cb6fdbe97':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_8cdc59519347b731b456141805655a9566f2cc7b579f183ca914389cb6fdbe97 },
-	'7c8a5644e8760b4b932ab2aeed309ffc9959b725a1f9e30040bcec123cf4c120':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_7c8a5644e8760b4b932ab2aeed309ffc9959b725a1f9e30040bcec123cf4c120 },
-	'4a30b83252a92b1520be549254483be8398a7c342bc0d6900094b549900f9fe3':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_4a30b83252a92b1520be549254483be8398a7c342bc0d6900094b549900f9fe3 },
-	'1ed4cc41f784bda5b2f1920e8118ecd146ce23229cfffe13fc6dc622e40c1540':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_1ed4cc41f784bda5b2f1920e8118ecd146ce23229cfffe13fc6dc622e40c1540 },
-	'2e79268b02ef88094b57181d85c78e05bcd27d5868d22b7558293f0f6d6dc689':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_2e79268b02ef88094b57181d85c78e05bcd27d5868d22b7558293f0f6d6dc689 },
-	'4a7af51922bb87525abed064e5f820ebbc79c2802f06342d6aa0daa8653cb5d7':{'num_inputs': 2,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_4a7af51922bb87525abed064e5f820ebbc79c2802f06342d6aa0daa8653cb5d7 },
-	'869efd02bf40eef6ab29c0ad5387bce4a852f417c285b989e204932d3384418a':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_869efd02bf40eef6ab29c0ad5387bce4a852f417c285b989e204932d3384418a },
-	'fd2b9b334a25775b01ffbcfa3d51be1940ea26257275f58ed8d072c2e3c562e3':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_fd2b9b334a25775b01ffbcfa3d51be1940ea26257275f58ed8d072c2e3c562e3 },
-	'25345bc7f15998f42c66172678da46b0847a9ca2f723d3b9b72cdbaacf3fd8a3':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_25345bc7f15998f42c66172678da46b0847a9ca2f723d3b9b72cdbaacf3fd8a3 },
-	'88658c38ce763ae5bd877b7dcfc9c68d3056bc47465836a8e2de8915efa41fa1':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_88658c38ce763ae5bd877b7dcfc9c68d3056bc47465836a8e2de8915efa41fa1 },
-	'7ae090ce82e6a50a1278469424ac9934dd3e61ab61d8d72417e0bcbc1901fdc7':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_7ae090ce82e6a50a1278469424ac9934dd3e61ab61d8d72417e0bcbc1901fdc7 },
-	'bf9dea0e81d0d95de000006af40c6d9ffa713aefcfb21c6df80c7de5e5382c06':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_bf9dea0e81d0d95de000006af40c6d9ffa713aefcfb21c6df80c7de5e5382c06 },
-	'7522efd6a5871583f9754ab4fed5bce89c533e45c1b96a2cfbdbc2425e37471f':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_7522efd6a5871583f9754ab4fed5bce89c533e45c1b96a2cfbdbc2425e37471f },
-	'db7b67c6868db694fde553c689fdd1797d461419e6d7c3d5e857133b19dc5036':{'num_inputs': 2,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_db7b67c6868db694fde553c689fdd1797d461419e6d7c3d5e857133b19dc5036 },
-	'7d8ff68f10d8ad1ee760e4aa97e4521f691357857c73bbb9a0b64a720795bd36':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_7d8ff68f10d8ad1ee760e4aa97e4521f691357857c73bbb9a0b64a720795bd36 },
-	'51fa4191894a45e0f2c9f09dfb4ef07c13396fb60985cdd6452403290bbc0a86':{'num_inputs': 2,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_51fa4191894a45e0f2c9f09dfb4ef07c13396fb60985cdd6452403290bbc0a86 },
-	'27117522bd9676f93cf53570ffc4d45e48383df6a9342283ee02213336c7864d':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': False, 'binary_mutation': True, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_27117522bd9676f93cf53570ffc4d45e48383df6a9342283ee02213336c7864d },
-	'61b68ea57835c37b20ebac8b99694ff1ebd9f8bb9fa0f5002b687bbf13ee27e4':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_61b68ea57835c37b20ebac8b99694ff1ebd9f8bb9fa0f5002b687bbf13ee27e4 },
-	'315774e833d514d7ebcd50e83a42e91b93910f3590880100f0582c8734bdb919':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_315774e833d514d7ebcd50e83a42e91b93910f3590880100f0582c8734bdb919 },
-	'adee3971a38fb8601dddfb3d6472cfb65284ff38ea0a8bf1b557c076f12f9a54':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_adee3971a38fb8601dddfb3d6472cfb65284ff38ea0a8bf1b557c076f12f9a54 },
-	'c0aa3c77eaef8e33c38a853639874e3de27e4dda98c576c77b46bbd289b75f10':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_c0aa3c77eaef8e33c38a853639874e3de27e4dda98c576c77b46bbd289b75f10 },
-	'741dff48a79753267cf9a997d68aae53b6a993908c1e7d31f62112692fc39f54':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': False, 'binary_mutation': True, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_741dff48a79753267cf9a997d68aae53b6a993908c1e7d31f62112692fc39f54 },
-	'2bd8cd056e0ca77331c2a0ccbc073372b0e2ab5b4e5969d4f911019d4aadc2d6':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_2bd8cd056e0ca77331c2a0ccbc073372b0e2ab5b4e5969d4f911019d4aadc2d6 },
-	'ba2dba2e8e6e7b9bb382e0f6410237d36e4ec17908782801cdabf2dc5b793d9a':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_ba2dba2e8e6e7b9bb382e0f6410237d36e4ec17908782801cdabf2dc5b793d9a },
-	'62383808b1d6af3c94995e6372e7a59b20e7a1103746e380e67b4431d752be6c':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_62383808b1d6af3c94995e6372e7a59b20e7a1103746e380e67b4431d752be6c },
-	'ef2db2963e8995e6e0b358c7de17327c6f8ef96f5c0c9e8c1ccfba6fe5d36f0c':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_ef2db2963e8995e6e0b358c7de17327c6f8ef96f5c0c9e8c1ccfba6fe5d36f0c },
-	'fa1c7ed40d7c912f63dd164a0a70a1d8565f3fe61ba247c57f76542649dbedf7':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_fa1c7ed40d7c912f63dd164a0a70a1d8565f3fe61ba247c57f76542649dbedf7 },
-	'01cf4460b9950ec3e375a4aa4ac80492a8ce814f6026b51d7d22d4dd578e0ac2':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_01cf4460b9950ec3e375a4aa4ac80492a8ce814f6026b51d7d22d4dd578e0ac2 },
-	'0437ccbd2a063d08fd9c5bc8498cc21fb1368b9a653982b3a26a5b78a41824b2':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_0437ccbd2a063d08fd9c5bc8498cc21fb1368b9a653982b3a26a5b78a41824b2 },
-	'2a970d33e80eb8c520e4212e091fe4c0e30f337d783f8b776c81cff1a577c19e':{'num_inputs': 2,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_2a970d33e80eb8c520e4212e091fe4c0e30f337d783f8b776c81cff1a577c19e },
-	'41f2ab7ce23ba3f0e0eb3b8dd1ebba1c68ab00306099c247b98defdf205b2a1d':{'num_inputs': 2,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_41f2ab7ce23ba3f0e0eb3b8dd1ebba1c68ab00306099c247b98defdf205b2a1d },
-	'd849b50b3877bd437c27d41487f9c9836b6a470b1308738b1ef19a4c43cf007d':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_d849b50b3877bd437c27d41487f9c9836b6a470b1308738b1ef19a4c43cf007d },
+	'8568fa49a69fc9c42c30d78866a45316976afca26ce6a75284546f07ad9f6aef':{'num_inputs': 2,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_8568fa49a69fc9c42c30d78866a45316976afca26ce6a75284546f07ad9f6aef },
+	'0b71cf0dd17adf2126959c3712c97c25420a33cb71657225c3d76c127a2d3f8d':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_0b71cf0dd17adf2126959c3712c97c25420a33cb71657225c3d76c127a2d3f8d },
+	'065c6b174b50d8682b49d71112febf3f052ad94f794cef68009887ae1bc09b69':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_065c6b174b50d8682b49d71112febf3f052ad94f794cef68009887ae1bc09b69 },
+	'a380199b1efb5e06e8bf0ba253f2250b665534df9402e9ba08405876a9d0911b':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_a380199b1efb5e06e8bf0ba253f2250b665534df9402e9ba08405876a9d0911b },
+	'15351a2e310bb0e2f6189d1728d5eee750c673dcb0b15c0f40302c6ef4e33535':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_15351a2e310bb0e2f6189d1728d5eee750c673dcb0b15c0f40302c6ef4e33535 },
+	'8e63d58261949359d0c4f000d50406d5c5df57a1809ca623baa7940a1ac1c84a':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_8e63d58261949359d0c4f000d50406d5c5df57a1809ca623baa7940a1ac1c84a },
+	'66ac33a3f469fe70a0c72886b61ccd32f2b9b4738c8dd22112ba9e47ebe4ff2b':{'num_inputs': 2,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': False, 'binary_mutation': True, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_66ac33a3f469fe70a0c72886b61ccd32f2b9b4738c8dd22112ba9e47ebe4ff2b },
+	'69f8bddf1ba8386b128c82b9e9d61bfbcd39a2adfb0f072e1c0edd6fc96c2b5e':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_69f8bddf1ba8386b128c82b9e9d61bfbcd39a2adfb0f072e1c0edd6fc96c2b5e },
+	'572f3d56521fb576738b38239b46b1f2e4f881dbeb18ba57b3254a6dceb5782e':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_572f3d56521fb576738b38239b46b1f2e4f881dbeb18ba57b3254a6dceb5782e },
+	'b33df5beef7cd7d5e49e74b229864ba0664bae07dbe6a28a3c9c11643518f37d':{'num_inputs': 2,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_b33df5beef7cd7d5e49e74b229864ba0664bae07dbe6a28a3c9c11643518f37d },
+	'42bdabf6208e9529f50a37386efafc88a45bdd1ed90be29c97a18041626dba9b':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_42bdabf6208e9529f50a37386efafc88a45bdd1ed90be29c97a18041626dba9b },
+	'7c81e32cacdeb941a0c6989d24d58a9591a9771cce66ec0752ebbd0b2e1f5eae':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_7c81e32cacdeb941a0c6989d24d58a9591a9771cce66ec0752ebbd0b2e1f5eae },
+	'5e518b6b4668611c3d1602f784ad410609d5657a5d5690f9abca54eb4b7c0f3a':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_5e518b6b4668611c3d1602f784ad410609d5657a5d5690f9abca54eb4b7c0f3a },
+	'a0429192b8ead5be37fc2c644a9ed57cf4a9eaf2a10c9fe225a6e39a204b5e16':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_a0429192b8ead5be37fc2c644a9ed57cf4a9eaf2a10c9fe225a6e39a204b5e16 },
+	'bf3161b1d66c4f7b2c4d7c9901bd0044d3dcb0e2bc05dbe82e1feeeb40ef9931':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_bf3161b1d66c4f7b2c4d7c9901bd0044d3dcb0e2bc05dbe82e1feeeb40ef9931 },
+	'cf8cd9075b571cb5a59d37e378029ff54502df66779163ba058c01384f335c2c':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_cf8cd9075b571cb5a59d37e378029ff54502df66779163ba058c01384f335c2c },
+	'65205972c2842865c3b8de9cd43d117c8bc0ff4fc05f27284d93416cd604dcf4':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_65205972c2842865c3b8de9cd43d117c8bc0ff4fc05f27284d93416cd604dcf4 },
+	'7eb61a64d6aa1248cf7c1973ece726698b4d3b61964060a46a9789bda79d7c72':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_7eb61a64d6aa1248cf7c1973ece726698b4d3b61964060a46a9789bda79d7c72 },
+	'db707d1e30841606ccbc7f7d349dcdadcf7b3b5e1e8d1a2e8cec17e1317bfd13':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_db707d1e30841606ccbc7f7d349dcdadcf7b3b5e1e8d1a2e8cec17e1317bfd13 },
+	'afa54e4b4caac53b34964c353bec7a56c8f8a41a501e37afe3a2f0237968b97e':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_afa54e4b4caac53b34964c353bec7a56c8f8a41a501e37afe3a2f0237968b97e },
+	'562f9ffb473aade86537c9d78a94314f32cc0e1e6a5c71926777777c5fd35bbf':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_562f9ffb473aade86537c9d78a94314f32cc0e1e6a5c71926777777c5fd35bbf },
+	'67aa64f950ed976c1835461b09f7aee23a9ef5508d2a06d7b02e026b32f4134a':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_67aa64f950ed976c1835461b09f7aee23a9ef5508d2a06d7b02e026b32f4134a },
+	'102a4d1fc747c5f81b314937da02b830ca4a49a6010aa65fd478dd1bd68675e8':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 0,'beta_class': 0, 'callable': gc_102a4d1fc747c5f81b314937da02b830ca4a49a6010aa65fd478dd1bd68675e8 },
+	'81d83b6dfe8764bc32df13948a86e7721818e3648d8f916708f8d416b2b94370':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 0,'beta_class': 0, 'callable': gc_81d83b6dfe8764bc32df13948a86e7721818e3648d8f916708f8d416b2b94370 },
+	'6bba0589ed454784e75f8a184fb8fc8d59a3772e73a8414f2ba915ce211f6773':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 0,'beta_class': 0, 'callable': gc_6bba0589ed454784e75f8a184fb8fc8d59a3772e73a8414f2ba915ce211f6773 },
+	'4793e082e2462b3ed47a23c000e9e8165bf7b6dea9bde08182b7203a708f6214':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 0,'beta_class': 0, 'callable': gc_4793e082e2462b3ed47a23c000e9e8165bf7b6dea9bde08182b7203a708f6214 },
+	'63971bfb77792f35cda0463d310e2724ae108354fb287df386ab88a752743fcc':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 0,'beta_class': 0, 'callable': gc_63971bfb77792f35cda0463d310e2724ae108354fb287df386ab88a752743fcc },
+	'a95ea10e7327badf07045086c7e935f5cc66a9b47f323fcdf30d76f66a592829':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 0,'beta_class': 0, 'callable': gc_a95ea10e7327badf07045086c7e935f5cc66a9b47f323fcdf30d76f66a592829 },
+	'4f54b44dd522c044b41833089ca47ece6b280ff8c11324a5b8b6a957d92f6de8':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 0,'beta_class': 0, 'callable': gc_4f54b44dd522c044b41833089ca47ece6b280ff8c11324a5b8b6a957d92f6de8 },
+	'c436ba9675317cfa2b5e32a3f00cf08b57295e06f28d5203fbaa1cd6b430e6d7':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 0,'beta_class': 0, 'callable': gc_c436ba9675317cfa2b5e32a3f00cf08b57295e06f28d5203fbaa1cd6b430e6d7 },
+	'b4dc32c9bc15e51d8070be7bf0ee9bfc344b73cc8ec857978ff72e71a3efb911':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 0,'beta_class': 0, 'callable': gc_b4dc32c9bc15e51d8070be7bf0ee9bfc344b73cc8ec857978ff72e71a3efb911 },
+	'f131f1d7c087d2b567acec3f2a476de27b9110e0794c11b2c97098e878feed08':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 0,'beta_class': 0, 'callable': gc_f131f1d7c087d2b567acec3f2a476de27b9110e0794c11b2c97098e878feed08 },
+	'ee2cc4658d03ebb3ffbcdc44d31fa89b7644a654567d66b93bac5f6186899d4d':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 0,'beta_class': 0, 'callable': gc_ee2cc4658d03ebb3ffbcdc44d31fa89b7644a654567d66b93bac5f6186899d4d },
+	'e279714512f0498ee888c84f1906de2a5e6bf082d60fdbb32de84a0c16f6f071':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 0,'beta_class': 0, 'callable': gc_e279714512f0498ee888c84f1906de2a5e6bf082d60fdbb32de84a0c16f6f071 },
+	'7bb5eb204e326fbabe069fb824e88a6ca68ec34c39eaa05a4d271a3f92e4b4fd':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 0,'beta_class': 0, 'callable': gc_7bb5eb204e326fbabe069fb824e88a6ca68ec34c39eaa05a4d271a3f92e4b4fd },
+	'bcf49ecb02279621bc1dd9d70265175f142ccfcc742ff07cf3983c830c4670fc':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 0,'beta_class': 0, 'callable': gc_bcf49ecb02279621bc1dd9d70265175f142ccfcc742ff07cf3983c830c4670fc },
+	'ea549df0fcde3b6375528205fef6eea94b79a442fd8afa77905fbeab96c6bcea':{'num_inputs': 2,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 0,'beta_class': 0, 'callable': gc_ea549df0fcde3b6375528205fef6eea94b79a442fd8afa77905fbeab96c6bcea },
+	'fcba468768bf701a1234ea41739916b0655512c74c74e5930cae35d13b92925f':{'num_inputs': 2,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 0,'beta_class': 0, 'callable': gc_fcba468768bf701a1234ea41739916b0655512c74c74e5930cae35d13b92925f },
+	'4140f47e72adf3343c04c82d7766bf9e3bc71a6b606b7bc2e93f45a6349792e5':{'num_inputs': 2,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 0,'beta_class': 0, 'callable': gc_4140f47e72adf3343c04c82d7766bf9e3bc71a6b606b7bc2e93f45a6349792e5 },
+	'ce4e58fcbe55e5caf14c456fd2603a7d81c19e89e61e63b0e56f8c1958ba3da1':{'num_inputs': 2,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': False, 'binary_mutation': True, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 0,'beta_class': 0, 'callable': gc_ce4e58fcbe55e5caf14c456fd2603a7d81c19e89e61e63b0e56f8c1958ba3da1 },
+	'ce171d8207600a6c5b494439f1af004fb58b93f4051e75a05ef354e360cf2fe3':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_ce171d8207600a6c5b494439f1af004fb58b93f4051e75a05ef354e360cf2fe3 },
 	'aa04da1966f1433e73396dd5c16b8deb59e0104cdbc1f0a41aa021a3aad22268':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_aa04da1966f1433e73396dd5c16b8deb59e0104cdbc1f0a41aa021a3aad22268 },
+	'75ff6e5392d8ac373c8b0445027b904ffd1a62b19774a2326aa1e596049ca132':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_75ff6e5392d8ac373c8b0445027b904ffd1a62b19774a2326aa1e596049ca132 },
+	'986ae757be6910ae3b92411b03d2f9feace48fe748d96a7933f98b0ca9d5e3c9':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_986ae757be6910ae3b92411b03d2f9feace48fe748d96a7933f98b0ca9d5e3c9 },
+	'81b5a567e50cf6fd71bfcfc3c5d23faa0f245fb0a71900fa9573eba1a94ee80d':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 0,'beta_class': 0, 'callable': gc_81b5a567e50cf6fd71bfcfc3c5d23faa0f245fb0a71900fa9573eba1a94ee80d },
+	'6583b66e7cb73e5c773e7700cb4485a2b81d4ce942220fbc65ef67b99589ca08':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_6583b66e7cb73e5c773e7700cb4485a2b81d4ce942220fbc65ef67b99589ca08 },
+	'0377050cd3534281ac885213d141494d2ea6ce8b50f787f224a6dc65ecb90e10':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_0377050cd3534281ac885213d141494d2ea6ce8b50f787f224a6dc65ecb90e10 },
+	'731f9ff5e9cfdb53f1944bf6962c32b21be104ef51b2fdb3db0244b077010af2':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_731f9ff5e9cfdb53f1944bf6962c32b21be104ef51b2fdb3db0244b077010af2 },
+	'18aefb88a3ddaf2056601643afd03be838c5c77317ca3b89c700e219db26e18c':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_18aefb88a3ddaf2056601643afd03be838c5c77317ca3b89c700e219db26e18c },
+	'5d180795babcb82e7ea8b4357ae602a44666c60f0d2b851051c89e1149e72f97':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_5d180795babcb82e7ea8b4357ae602a44666c60f0d2b851051c89e1149e72f97 },
+	'7743aba320d9a6dd5f2b7a8e5777b997d61131f2a4db0f78fb4a881d40244898':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_7743aba320d9a6dd5f2b7a8e5777b997d61131f2a4db0f78fb4a881d40244898 },
+	'13b3b21f4b1e53f66075fa59d78dccab619d1f8e65a22bb82d9a68c347a212c6':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_13b3b21f4b1e53f66075fa59d78dccab619d1f8e65a22bb82d9a68c347a212c6 },
+	'cb159d2420f0a661bcdd192ab4cfac4363d652f0ec3ac8ab69e84e33768b97ec':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_cb159d2420f0a661bcdd192ab4cfac4363d652f0ec3ac8ab69e84e33768b97ec },
+	'278ddaaaa439429bad68df4b81f3b42ecdc7cf2d2ea8ad086a2ca185a3acbbb6':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 0,'beta_class': 0, 'callable': gc_278ddaaaa439429bad68df4b81f3b42ecdc7cf2d2ea8ad086a2ca185a3acbbb6 },
+	'd583313ac7265d903f96aebefac338b54f234df8c3250552bea73f53de7b4cfa':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_d583313ac7265d903f96aebefac338b54f234df8c3250552bea73f53de7b4cfa },
+	'f269bf2281717b6c6d4cd1c4f6bdd61dd63f8501ed8a3846b79dca9c82387a51':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_f269bf2281717b6c6d4cd1c4f6bdd61dd63f8501ed8a3846b79dca9c82387a51 },
 	'2a1a7136267b40ddef2589b706851cadea6ea3617c681bca44d915ca2c48c865':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_2a1a7136267b40ddef2589b706851cadea6ea3617c681bca44d915ca2c48c865 },
-	'5eefc37d6f5112ec0fb69fd734e54cd93e4be341579adce265a6f0994c082f6a':{'num_inputs': 2,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_5eefc37d6f5112ec0fb69fd734e54cd93e4be341579adce265a6f0994c082f6a },
-	'93f145b91fb5c4ac6103e84632f3df852e0d128f54f67519484d80172ee51ad2':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_93f145b91fb5c4ac6103e84632f3df852e0d128f54f67519484d80172ee51ad2 },
-	'91846aeaaad2448aa0b561291172b80797bee466c6cc5c4e655ba507bfdf4685':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_91846aeaaad2448aa0b561291172b80797bee466c6cc5c4e655ba507bfdf4685 },
-	'c5165a4e8042b8a389c90e67d5dfb4ddb0cdac672c89eb0e5bdf16a04f755f4f':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_c5165a4e8042b8a389c90e67d5dfb4ddb0cdac672c89eb0e5bdf16a04f755f4f },
-	'133ba72b11aa12e85e170902cbd5d931f8f7c81e79fac4db6b3b39f2c8a97fef':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_133ba72b11aa12e85e170902cbd5d931f8f7c81e79fac4db6b3b39f2c8a97fef },
-	'a60a3238b878f2f13259b96cc2265c3f226fc70044c6c1d9060318953d53c4a8':{'num_inputs': 2,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_a60a3238b878f2f13259b96cc2265c3f226fc70044c6c1d9060318953d53c4a8 },
-	'66d588f256485907d2dcc512b0693560cf58207a03e5dfa5a215a9a700ef1377':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_66d588f256485907d2dcc512b0693560cf58207a03e5dfa5a215a9a700ef1377 },
-	'759297cf0c108b77ad38d6128401b28c222be3b0f701e7e87ba4d1dc80966965':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_759297cf0c108b77ad38d6128401b28c222be3b0f701e7e87ba4d1dc80966965 },
-	'f54f31ebc1029e296ad87a7d20a51d49425a00c5a1e59e65bd75d7ec462fc81e':{'num_inputs': 2,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_f54f31ebc1029e296ad87a7d20a51d49425a00c5a1e59e65bd75d7ec462fc81e },
-	'156c100ef6051ec6ce488689060385a1469c08780d5e4c63da10885f012cdd35':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_156c100ef6051ec6ce488689060385a1469c08780d5e4c63da10885f012cdd35 },
-	'bd65251cfdc66f4e3219df4d99004b7c350621db7119743c1da05092f70e4a5c':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_bd65251cfdc66f4e3219df4d99004b7c350621db7119743c1da05092f70e4a5c },
-	'ac2b3ea71d9908ebd68d81016d0c50d8416e09b1a193ef8927f40d76057ee186':{'num_inputs': 2,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_ac2b3ea71d9908ebd68d81016d0c50d8416e09b1a193ef8927f40d76057ee186 },
-	'dddd92c2fd40ccda944d399946804fa361912ea833902d2fc6fa2a53c5bd2d8c':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_dddd92c2fd40ccda944d399946804fa361912ea833902d2fc6fa2a53c5bd2d8c },
-	'486ca6dacc46f872694e821172b3a1e098c451b0c157b51d5641bf3744305cf2':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_486ca6dacc46f872694e821172b3a1e098c451b0c157b51d5641bf3744305cf2 },
-	'6d727686576d1d664fad5a375402b4be26c669d94c45e0a5d54ca4a7e57c6a17':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_6d727686576d1d664fad5a375402b4be26c669d94c45e0a5d54ca4a7e57c6a17 },
-	'a6f622c192645ccb862acbee4ffa56b595d196cca2814ca7a253808b69f4e8d6':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_a6f622c192645ccb862acbee4ffa56b595d196cca2814ca7a253808b69f4e8d6 },
-	'aa22c210b2e5c8e6780171f785675da254542e5dd587a904b6c5f8260fa544fe':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_aa22c210b2e5c8e6780171f785675da254542e5dd587a904b6c5f8260fa544fe },
-	'e06f500f88052940d7d207ee503325c123872974f8f3dc72bf625e36bc7cdbcb':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_e06f500f88052940d7d207ee503325c123872974f8f3dc72bf625e36bc7cdbcb },
-	'17cad858a92f3bb247ab6f1fef9b2535dd570d7ead2732ed05a98ac3ce87d01a':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_17cad858a92f3bb247ab6f1fef9b2535dd570d7ead2732ed05a98ac3ce87d01a },
-	'4324d087675bc1969de8667a4a0eca3646008094cae495b63683ab2a499715b5':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_4324d087675bc1969de8667a4a0eca3646008094cae495b63683ab2a499715b5 },
-	'f083d617080c81bfedc5f3dcc377d69103d3fd32680f2a13a2a664808eda5601':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_f083d617080c81bfedc5f3dcc377d69103d3fd32680f2a13a2a664808eda5601 },
-	'd03dc69058702930c081e74d9b62fdbe068fda297c62e1b2be5f5faf37a19b8c':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_d03dc69058702930c081e74d9b62fdbe068fda297c62e1b2be5f5faf37a19b8c },
-	'c8e1d86b16a6d7c155e6adbd53121b6be173492c8df59a2ec7358c3a9ed0241f':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_c8e1d86b16a6d7c155e6adbd53121b6be173492c8df59a2ec7358c3a9ed0241f },
-	'ed240ca2ba21f136e18e66e1d57538567626c897a8256db599d499f66f117271':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_ed240ca2ba21f136e18e66e1d57538567626c897a8256db599d499f66f117271 },
-	'8c4b5e94417106622e5cf40c08583f1706b2a7f2167b03e94df79976e7f2542f':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_8c4b5e94417106622e5cf40c08583f1706b2a7f2167b03e94df79976e7f2542f },
-	'c7434185f04c20a26fb1acdaa4ba340657d5d0535b29d98d2cfbdd96782c1c69':{'num_inputs': 2,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_c7434185f04c20a26fb1acdaa4ba340657d5d0535b29d98d2cfbdd96782c1c69 },
-	'8ed38c8ed8c40acf695a25aa1f0781560f73c00152329a617df1d3be61fe7535':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_8ed38c8ed8c40acf695a25aa1f0781560f73c00152329a617df1d3be61fe7535 },
-	'1baf935af32a6a0c0b8ef3e970e611ad71a4b83a53643f73d16d70c73f9e9f8f':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_1baf935af32a6a0c0b8ef3e970e611ad71a4b83a53643f73d16d70c73f9e9f8f },
-	'354aa2cd45db2402322a68816f7387d4f8cde867c558a335af293b069fa420d3':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': False, 'binary_mutation': True, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_354aa2cd45db2402322a68816f7387d4f8cde867c558a335af293b069fa420d3 },
-	'53adbe5e171e51916d2a048ddd54580e48531e171b81f7fc13ef2e309769ac4a':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_53adbe5e171e51916d2a048ddd54580e48531e171b81f7fc13ef2e309769ac4a },
-	'77ae182a67474814f085334bc43eb4b9574ad507c9fe0ed9801d81e3a922522e':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_77ae182a67474814f085334bc43eb4b9574ad507c9fe0ed9801d81e3a922522e },
-	'1e9089ec5f3a29820630c4a857b42511fea0a74e8e722e49538e2acb0fdb5c24':{'num_inputs': 2,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_1e9089ec5f3a29820630c4a857b42511fea0a74e8e722e49538e2acb0fdb5c24 },
-	'a3632ea07fbc2bc411b5f2c8fe66baabdd6cd88364a1884e33e402110d852fc8':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_a3632ea07fbc2bc411b5f2c8fe66baabdd6cd88364a1884e33e402110d852fc8 },
-	'89962c4987d6b75688f6d21657ed07a60d34d56f7e4d464804b0e2d5f86c7df9':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_89962c4987d6b75688f6d21657ed07a60d34d56f7e4d464804b0e2d5f86c7df9 },
-	'9bfeb16a97d34a632160a0757c4b6841c500c74b702af0c81969e68744cec2ad':{'num_inputs': 2,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_9bfeb16a97d34a632160a0757c4b6841c500c74b702af0c81969e68744cec2ad },
-	'81c39d6d3834048a4d1b0b2fee40ececb7fa9535c0acf3c89e3263eac1a5b4ae':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_81c39d6d3834048a4d1b0b2fee40ececb7fa9535c0acf3c89e3263eac1a5b4ae },
-	'e0bf571ad57686ce87463c79374558a16b6168fdc3f374ddd411a4a8b4a8722c':{'num_inputs': 2,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_e0bf571ad57686ce87463c79374558a16b6168fdc3f374ddd411a4a8b4a8722c },
-	'f1183ba071275a871039235c9c5b347f66f836864dba9cbb07363358c853f393':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_f1183ba071275a871039235c9c5b347f66f836864dba9cbb07363358c853f393 },
-	'ab331fd2bd4954ea7182250959614572b6584ce99ca1bbf4486e02e5124fccf5':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': False, 'binary_mutation': True, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_ab331fd2bd4954ea7182250959614572b6584ce99ca1bbf4486e02e5124fccf5 },
-	'5f389a7c3b4a7dc78ac7f31aa2739e22ad43ea10e7723fa1444cb95e0953a14f':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_5f389a7c3b4a7dc78ac7f31aa2739e22ad43ea10e7723fa1444cb95e0953a14f },
-	'680d118644077298a193b75aa60abd05063f6892893c6dc4f02660352eee472b':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_680d118644077298a193b75aa60abd05063f6892893c6dc4f02660352eee472b },
-	'1a7516e16734b13ddfacc734e5568ebf503e95ab3016eee8c41d5b358619c2c5':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_1a7516e16734b13ddfacc734e5568ebf503e95ab3016eee8c41d5b358619c2c5 },
-	'eab2a97a6e443c64d02233ef7d4f36aad480209cc485249a4bae8e30fdb01afd':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_eab2a97a6e443c64d02233ef7d4f36aad480209cc485249a4bae8e30fdb01afd },
-	'97929f0d08c99e39b602d667adc186f4aa328b959519de5c0a706257f54c1afd':{'num_inputs': 2,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_97929f0d08c99e39b602d667adc186f4aa328b959519de5c0a706257f54c1afd },
-	'fa27c16f8342827be245d4fcd9aef7771f0877b9c595efb2f2564b953678d9f3':{'num_inputs': 2,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_fa27c16f8342827be245d4fcd9aef7771f0877b9c595efb2f2564b953678d9f3 },
-	'31cfe93748d007c06a18549d9c4e75b75323ca2d23a23ad531e816b34c7be805':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_31cfe93748d007c06a18549d9c4e75b75323ca2d23a23ad531e816b34c7be805 },
-	'dc908bcae02d486c77e1f79690acf229794fbc77c4803bfc7eecd752c3d814ee':{'num_inputs': 2,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_dc908bcae02d486c77e1f79690acf229794fbc77c4803bfc7eecd752c3d814ee },
-	'9cf1c36c7c4ae68482022c18b991c15a6880c966a02269df378ebdb49c3f7080':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_9cf1c36c7c4ae68482022c18b991c15a6880c966a02269df378ebdb49c3f7080 },
-	'f3b86a75cf75f9dbe421702675d3f6483080f137d8aa418e698dca70ff0611cc':{'num_inputs': 2,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_f3b86a75cf75f9dbe421702675d3f6483080f137d8aa418e698dca70ff0611cc },
-	'b7125d0bb73200f03a5cbf3514722e5e53db670908edadf3ab6b70352f7fe094':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_b7125d0bb73200f03a5cbf3514722e5e53db670908edadf3ab6b70352f7fe094 },
-	'58d10990a0507772c5f31bc52ba67cdae9a90daef3a28a413376db56e90486e8':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_58d10990a0507772c5f31bc52ba67cdae9a90daef3a28a413376db56e90486e8 },
-	'39e2dd9b16cc503767efd68f4519a649fc974e54e9830520eeb32e5a71914c81':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_39e2dd9b16cc503767efd68f4519a649fc974e54e9830520eeb32e5a71914c81 }
+	'57445022b9dc0d937721bb272de55001607f26c9b9cc9dd40cd4dead77da6366':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_57445022b9dc0d937721bb272de55001607f26c9b9cc9dd40cd4dead77da6366 },
+	'5f1ff9bfaf9bc1cdb5d520bd056048ebe5467cc6580f03b9c0c29b7eb64c4d2b':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 0,'beta_class': 0, 'callable': gc_5f1ff9bfaf9bc1cdb5d520bd056048ebe5467cc6580f03b9c0c29b7eb64c4d2b },
+	'd990e3a0af629cd2048c76bdc4dbfe12a93eb16e35ccf71818050b1a9c915ae2':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_d990e3a0af629cd2048c76bdc4dbfe12a93eb16e35ccf71818050b1a9c915ae2 },
+	'315774e833d514d7ebcd50e83a42e91b93910f3590880100f0582c8734bdb919':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_315774e833d514d7ebcd50e83a42e91b93910f3590880100f0582c8734bdb919 },
+	'aa177a51676b4ac9993b3491a70b5e6d53f2b26bde6e775c5a22fa1e22186c41':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_aa177a51676b4ac9993b3491a70b5e6d53f2b26bde6e775c5a22fa1e22186c41 },
+	'ea69bccc1973aaff350a95c2d8cc9b3b41832729d1a7492c05beb61f1f8bd79e':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_ea69bccc1973aaff350a95c2d8cc9b3b41832729d1a7492c05beb61f1f8bd79e },
+	'cd3de5e6d4722a72bdd55203c51f7b616dd5f6a7db68158ff5148b2ef17ed6cb':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': False, 'binary_mutation': True, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_cd3de5e6d4722a72bdd55203c51f7b616dd5f6a7db68158ff5148b2ef17ed6cb },
+	'325fe4a0507140bc1587cb40eb3f8dcb256226f6395341db9a7f6112ca0f858e':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_325fe4a0507140bc1587cb40eb3f8dcb256226f6395341db9a7f6112ca0f858e },
+	'd849b50b3877bd437c27d41487f9c9836b6a470b1308738b1ef19a4c43cf007d':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_d849b50b3877bd437c27d41487f9c9836b6a470b1308738b1ef19a4c43cf007d },
+	'1d83336c23e184a7944854e7afb07a8107ae335f680d3cc4a86cfa27cc30ebd8':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_1d83336c23e184a7944854e7afb07a8107ae335f680d3cc4a86cfa27cc30ebd8 },
+	'87d95699b95f73b0d9cd4b559dce51d13722fd143c7cc9b0b6be5430f0fdff56':{'num_inputs': 0,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 1,'beta_class': -1, 'callable': gc_87d95699b95f73b0d9cd4b559dce51d13722fd143c7cc9b0b6be5430f0fdff56 },
+	'23c441e967ef4b8637554409522bc07c1d0faac129bccf73473c098650a63957':{'num_inputs': 1,'num_outputs': 1,'properties': {'extended': False, 'unary_mutation': True, 'binary_mutation': False, 'mathematical': False, 'logical': False, 'conditional': False},'alpha_class': 0,'beta_class': 0, 'callable': gc_23c441e967ef4b8637554409522bc07c1d0faac129bccf73473c098650a63957 }
 }

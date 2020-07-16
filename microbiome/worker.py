@@ -8,6 +8,7 @@ Copyright (c) 2020 Your Company
 '''
 
 import sys
+import tracemalloc
 from traceback import format_exc
 from .genetics import mutations as gm
 from .genetics.mutations import meta_data
@@ -46,6 +47,7 @@ class worker():
     # func() takes a numpy.array(dtype=numpy.float32) and returns a numpy.array(dtype=numpy.float32)
     # TODO: Decide what to do with fitness_function
     def __init__(self, worker_config, fitness_function):
+        #tracemalloc.start()
         self.config = worker_config
         worker.__work_log_validator = work_log_validator(get_config()['tables']['work_log_template']['schema'])
         self.registration_document = { "platform": get_platform_info()['signature'], "work": worker_config['work'], "creator": worker_config['creator'] }
@@ -120,7 +122,7 @@ class worker():
                     if 'mutations' in self.gene_pool[mutation]['meta_data']:
                         mutation_queue.append((self.gene_pool[mutation]['meta_data']['mutations'], shared_fitness))
 
-        self.gene_pool.update(gcs)
+        self.gene_pool.add(gcs)
         return f_pop
 
 
@@ -208,6 +210,7 @@ class worker():
                 ngc['meta_data']['mutations'].append(mutation)
             ngc['alpha_class'] = 1
 
+        #if 'name' in self.gene_pool[mutation]['meta_data'] and self.gene_pool[mutation]['meta_data']['name'] == "Stack": worker.__logger.debug("barf")
         return ngc
 
 
@@ -233,6 +236,8 @@ class worker():
         max_fitness = 1.0 if not len(population) else max((max(population.values()), 1.0))
         cull_list = [(k, max_fitness - v + 0.01) for k, v in population.items()]
         cull_list.sort(key=lambda x:x[1])
+        culled_list = []
+
         # Determine how many were still born
         self.__log_data['culled'] = 0
         if len(cull_list) > self.work['population_limit']:
@@ -246,8 +251,10 @@ class worker():
                 victim = cull_list[victim_idx][0]
                 worker.__logger.debug("Cull victim: %s", victim)
                 del population[victim]
+                culled_list.append(victim)
                 weights[victim_idx] = 0.0
         self.__log_data['population'] = len(population)
+        self.gene_pool.remove(culled_list)
         return population
 
 
@@ -363,7 +370,6 @@ class worker():
 
         # Loop
         epoch = 0
-        invalid_population = []
         while not self.__stop_criteria_met(self.work['population_dict']):
             epoch += 1
             worker.__logger.info("Starting epoch %d.", epoch)
@@ -394,4 +400,15 @@ class worker():
 
             self.__log_work()
             worker.__logger.debug("Epoch %d. Statistics logged and epoch completed.", epoch)
-            #if epoch == 2: barf()
+
+
+            """
+            snapshot = tracemalloc.take_snapshot()
+            top_stats = snapshot.statistics('lineno')
+
+            print("\n[ Top 10 ]")
+            for stat in top_stats[:10]:
+                print(stat)
+
+            if epoch == 20: import pdb; pdb.set_trace()
+            """

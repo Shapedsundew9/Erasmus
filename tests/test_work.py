@@ -8,8 +8,8 @@ Author: Shapedsundew9
 Copyright (c) 2020 Your Company
 '''
 
-from logging import getLogger, basicConfig, DEBUG, INFO
-basicConfig(filename='erasmus.log', filemode='w', format='%(asctime)s %(levelname)s %(name)s.%(funcName)s: %(message)s', level=INFO)
+from logging import getLogger, basicConfig, DEBUG, INFO, ERROR
+basicConfig(filename='erasmus.log', filemode='w', format='%(asctime)s %(levelname)s %(name)s.%(funcName)s: %(message)s', level=ERROR)
 
 import pytest
 from os.path import join, dirname
@@ -38,7 +38,7 @@ def test_work():
     work = {
         'name': 'Meta Evolution',
         'description': 'Evolving the evolver',
-        'population_limit': 1000,
+        'population_limit': 200,
         'gene_pool': 'microbiome/genetics/mutations.py',
         'initial_query': [
             {'gca': NULL_GC, 'gcb': NULL_GC, 'properties': {'unary_mutation': True}},
