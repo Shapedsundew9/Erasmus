@@ -11,73 +11,46 @@
             "compressed": true,
             "description": "Defines the sub-codes of the genetic code and how they are connected together."
         },
-        "type": "dict",
+        "type": "list",
         "required": true,
-        "allowed": ["A", "B", "C", "O"],
         "check_with": "valid_graph",
         "schema": {
-            "A": {
-                "type": "list",
-                "required": true,
-                "schema": {
+            "type": "list",
+            "minlength": 6,
+            "maxlength": 7,
+            "items": [
+                {
+                    "type": "boolean"
+                },
+                {
+                    "type": "string",
+                    "allowed": ["I", "C", "A", "B", "O"]
+                },
+                {
+                    "type": "string",
+                    "allowed": ["i", "f", "n", "s", "c", "gc"]
+                },
+                {
                     "type": "list",
-                    "minlength": 2,
-                    "maxlength": 2,
-                    "items": [
-                        {
-                            "type": "string",
-                            "allowed": ["I", "C"]
-                        },
-                        {
-                            "type": "integer",
-                            "min": 0
-                        }
-                    ]
-                }
-            },
-            "B": {
-                "type": "list",
-                "schema": {
+                    "schema": {
+                        "minlength": 1,
+                        "type": "integer",
+                        "min": 0
+                    }
+                },
+                {
+                    "type": "integer",
+                    "min": 0
+                },
+                {
                     "type": "list",
-                    "minlength": 2,
-                    "maxlength": 2,
-                    "items": [
-                        {
-                            "type": "string",
-                            "allowed": ["I", "C", "A"]
-                        },
-                        {
-                            "type": "integer",
-                            "min": 0
-                        }
-                    ]
+                    "schema": {
+                        "minlength": 1,
+                        "type": "integer",
+                        "min": 0
+                    }
                 }
-            },
-            "C": {
-                "type": "list",
-                "schema": {
-                    "type": "float"
-                }
-            },
-            "O": {
-                "type": "list",
-                "required": true,
-                "schema": {
-                    "type": "list",
-                    "minlength": 2,
-                    "maxlength": 2,
-                    "items": [
-                        {
-                            "type": "string",
-                            "allowed": ["I", "C", "A", "B"]
-                        },
-                        {
-                            "type": "integer",
-                            "min": 0
-                        }
-                    ]
-                }
-            }
+            ]
         }
     },
     "signature": {
@@ -325,14 +298,19 @@
                 "location": ["BIOME"],
                 "immutable": false
             },
-            "description": "The properties for the genetic code.",
+            "description": "The properties of the inputs & outputs",
             "codec": {
                 "extended": 0,
-                "unary_mutation": 1,
-                "binary_mutation": 2,
-                "mathematical": 8,
-                "logical": 9,
-                "conditional": 10
+                "i_integer": 8,
+                "i_float": 9,
+                "i_character": 10,
+                "i_string": 11,
+                "i_genetic_code": 12,
+                "o_integer": 40,
+                "o_float": 41,
+                "o_character": 42,
+                "o_string": 43,
+                "o_genetic_code": 44
             }
         },
         "type": "dict",
@@ -341,23 +319,43 @@
                 "type": "boolean",
                 "default": false
             },
-            "mathematical": {
+            "i_integer": {
                 "type": "boolean",
                 "default": false                
             },
-            "logical": {
+            "i_float": {
                 "type": "boolean",
                 "default": false                
             },
-            "conditional": {
+            "i_character": {
                 "type": "boolean",
                 "default": false                
             },
-            "unary_mutation": {
+            "i_string": {
                 "type": "boolean",
                 "default": false                
             },
-            "binary_mutation": {
+            "i_genetic_code": {
+                "type": "boolean",
+                "default": false                
+            },
+            "o_integer": {
+                "type": "boolean",
+                "default": false                
+            },
+            "o_float": {
+                "type": "boolean",
+                "default": false                
+            },
+            "o_character": {
+                "type": "boolean",
+                "default": false                
+            },
+            "o_string": {
+                "type": "boolean",
+                "default": false                
+            },
+            "o_genetic_code": {
                 "type": "boolean",
                 "default": false                
             }

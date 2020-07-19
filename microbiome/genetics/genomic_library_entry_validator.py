@@ -10,9 +10,11 @@ Copyright (c) 2020 Your Company
 from cerberus import Validator
 from datetime import datetime
 from os.path import dirname, join
-from json import load
+from json import load, loads
 from hashlib import sha256
 from logging import getLogger
+from pprint import pformat
+from .gc_graph_tools import validate
 
 
 NULL_GC = "0" * 64
@@ -30,65 +32,8 @@ class genomic_library_entry_validator(Validator):
 
 
     def _check_with_valid_graph(self, field, value):
-        # If "B" does not exist there must be no references to it.
-        if not "B" in value:
-            for r, i in value["O"]:
-                if r == "B": self._error(field, "B referenced from O but does not exist: [{},{}]".format(r, i))
+        for e in validate(value): self._error(field, e)            
 
-        # If "C" does not exist there must be no references to it.
-        if not "C" in value:
-            for pr in value.values():
-                for r, i in pr:
-                    if r == "C": self._error(field, "C referenced from {} but does not exist: [{},{}]".format(pr, r, i))
-
-        # There must be at least one output from A
-        found_a_output = False
-        keys = ('B', 'O') if 'B' in value else ('O')
-        for pr in keys:
-            for r, i in value[pr]: found_a_output = found_a_output or r == "A" 
-        if not found_a_output: self._error(field, "Missing at least one reference to A output")
-
-        # If B exists there must be at least one output
-        if "B" in value:
-            found_b_output = False
-            for r, i in value['O']: found_b_output = found_b_output or r == "B" 
-            if not found_b_output: self._error(field, "Missing at least one reference to B output")
-
-        # If C does exist index references must be in range
-        if "C" in value:
-            c_len = len(value["C"])
-            for pr in value.keys():
-                if pr != "C":
-                    for r, i in value[pr]:
-                        if r == "C" and i >= c_len:
-                            self._error(field, "Reference into C from {} out of bounds. Max index = {}: [{},{}]".format(pr, c_len, r, i))
-
-        # All values in "C" must be referenced at least once
-        if "C" in value:
-            actual_indices = set()
-            for pr in value.keys():
-                if pr != "C":
-                    for r, i in value[pr]:
-                        if r == "C": actual_indices.add(i)
-            expected_indices = set(range(len(value["C"])))
-            for i in actual_indices - expected_indices: self._error(field, "Index {} is out of range for 'C'".format(i))
-            for i in expected_indices - actual_indices: self._error(field, "Index {} was expected in 'C'".format(i))
-
-        # References to I must start at 0 and be contiguous
-        actual_indices = set()
-        for pr in value.keys():
-            if pr != "C":
-                for r, i in value[pr]:
-                    if r == "I": actual_indices.add(i)
-        expected_indices = set(range(max(actual_indices))) if len(actual_indices) > 0 else set()
-        for i in expected_indices - actual_indices: self._error(field, "Index {} was expected in 'I'".format(i))
-
-        # 'D's mark deleted references that were not fixed.
-        for pr in value.keys():
-            if pr != "C":
-                for idx, (r, _) in enumerate(value[pr]):
-                    if r == "D": self._error(field, "Field: '{}' Index: {} was deleted.".format(pr, idx))
-            
 
     # Checks for a valid codon or non-codon
     def _check_with_valid_alpha_class(self, field, value):
@@ -170,3 +115,4 @@ class genomic_library_entry_validator(Validator):
 
     def _normalize_default_setter_set_created(self, document):
         return datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%S.%fZ")
+
