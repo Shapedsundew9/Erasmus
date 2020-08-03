@@ -59,7 +59,7 @@ def __select_dest(gc, field, f_offset):
 # f_offset = fractional offset 0.0 <= offset <= 1.0)
 # Index into the gc['graph'] member lists 
 def __select_src(gc, field, f_offset):
-    if field == 'I': return round((__count_references_to(gc, 'I') - 1) * f_offset)
+    if field == 'I': return round((gc['num_inputs'] - 1) * f_offset)
     if field == 'C': return round((len(gc['graph']['C']) - 1) * f_offset)
     if field == 'A': return __select_dest(gc['__gca'], 'O', f_offset)
     return __select_dest(gc['__gcb'], 'O', f_offset)

@@ -1,0 +1,41 @@
+{
+    "RESERVED": {
+        "required": true,
+        "type": "integer",
+        "allowed": [0]
+    },
+    "base_type": {
+        "required": true,
+        "type": "dict",
+        "check_with": "valid_base_type",
+        "schema": {
+            "object": {
+                "required": true,
+                "type": "integer",
+                "allowed": [0, 1]
+            },
+            "integer": {
+                "required": true,
+                "type": "integer",
+                "allowed": [0, 1]
+            },
+            "floating_point": {
+                "required": true,
+                "type": "integer",
+                "allowed": [0, 1]
+            }
+        }
+    },
+    "parameters": {
+        "required": true,
+        "type": "dict",
+        "check_with": "valid_parameters",
+        "schema": {
+            "t_idx": {
+                "type": "integer",
+                "min": 0,
+                "max": 3
+            }
+        }
+    }
+}
