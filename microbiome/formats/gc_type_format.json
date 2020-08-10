@@ -19,7 +19,7 @@
                 "type": "integer",
                 "allowed": [0, 1]
             },
-            "floating_point": {
+            "float": {
                 "required": true,
                 "type": "integer",
                 "allowed": [0, 1]
@@ -29,13 +29,6 @@
     "parameters": {
         "required": true,
         "type": "dict",
-        "check_with": "valid_parameters",
-        "schema": {
-            "t_idx": {
-                "type": "integer",
-                "min": 0,
-                "max": 3
-            }
-        }
+        "check_with": "valid_parameters"
     }
 }

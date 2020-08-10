@@ -12,7 +12,7 @@ Before getting in to the 'what' and 'how' the 'why' is needed for context. Erasm
 have an interest in AI, evolution and intelligence and have been in the SW industry so long I do not get to write code anymore. The architecture
 and technologies used are influenced by things outside of the goals of Erasmus .i.e. what my real world teams use so I can understand what they
 are doing better. The flexibility in the problem or solution space, or lack there of, is a direct reflection of my areas of interest
-in the domain and my naivity of previous work. If you are reading this then maybe I have done something worthing looking at oryou are a like minded
+in the domain and my naivity of previous work. If you are reading this then maybe I have done something worthing looking at or you are a like minded
 soul. I am not closed to new directions or contributions please feel free to feedback, comment or constructively criticise.
 
 ## What
@@ -49,12 +49,20 @@ randomly combined - you cannot cross-breed a fish with a cat. There are complex 
 chemistry level up. It is just physics but layer upon layer of it restricting the options, constraining the solution space, evolving the evolution
 mechanims. 
 
+So what does Erasmus GP do that others before have not? Well, nothing really. My sorties into the academic space find that all of the concepts
+I use here are not new, just unfashionable.
+
+Two features drive much of Erasumus novelty:
+
+1. Meta-evolution: Erasmus does not have a set of fixed mutation operators. Mutation operators evolve themselves as well as the general population.
+2. Inclusion: Erasmus does not discard programs based on a target fitness function. All unique, viable, programs are kept, at least for a time,
+giving the opportunity to be used again without having to be evolved from scratch.
+
 Erasmus GP wraps this all up with 4 features:
 
 1. A common genomic library: Every instance uses and contributes to the same gene pool<sup>3</sup>.
 2. A classification system for genes identifying the evolutionary mechanisms it is most suited too.
-3. A common library for evolutionary mechanisms.
-4. An infinitely scalable architecture.
+3. An infinitely scalable architecture.
 
 This all sounds very grand but the plan is to start (very) simply and see where we go.
 

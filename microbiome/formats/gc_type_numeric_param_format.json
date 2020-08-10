@@ -25,5 +25,10 @@
         "required": true,
         "type": "integer",
         "allowed": [0]
+    },
+    "t_idx": {
+        "type": "integer",
+        "min": 0,
+        "max": 3
     }
 }

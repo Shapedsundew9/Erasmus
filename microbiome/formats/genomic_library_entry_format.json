@@ -245,6 +245,134 @@
         "min": 0,
         "default_setter": "set_num_inputs"
     },
+    "input0_type": {
+        "meta": {
+            "database": {
+                "type": "SMALLINT"
+            },
+            "definition": {
+                "location": ["WORKER"],
+                "immutable": true
+            },
+            "description": "The Genetic Code Type Definition for input 0."
+        },
+        "type": "integer",
+        "min": -32768,
+        "max": 32767,
+        "check_with": "valid_gc_type"
+    },
+    "input1_type": {
+        "meta": {
+            "database": {
+                "type": "SMALLINT"
+            },
+            "definition": {
+                "location": ["WORKER"],
+                "immutable": true
+            },
+            "description": "The Genetic Code Type Definition for input 1."
+        },
+        "type": "integer",
+        "min": -32768,
+        "max": 32767,
+        "check_with": "valid_gc_type"
+    },
+    "input2_type": {
+        "meta": {
+            "database": {
+                "type": "SMALLINT"
+            },
+            "definition": {
+                "location": ["WORKER"],
+                "immutable": true
+            },
+            "description": "The Genetic Code Type Definition for input 2."
+        },
+        "type": "integer",
+        "min": -32768,
+        "max": 32767,
+        "check_with": "valid_gc_type"
+    },
+    "input3_type": {
+        "meta": {
+            "database": {
+                "type": "SMALLINT"
+            },
+            "definition": {
+                "location": ["WORKER"],
+                "immutable": true
+            },
+            "description": "The Genetic Code Type Definition for input 3."
+        },
+        "type": "integer",
+        "min": -32768,
+        "max": 32767,
+        "check_with": "valid_gc_type"
+    },
+    "input4_type": {
+        "meta": {
+            "database": {
+                "type": "SMALLINT"
+            },
+            "definition": {
+                "location": ["WORKER"],
+                "immutable": true
+            },
+            "description": "The Genetic Code Type Definition for input 4."
+        },
+        "type": "integer",
+        "min": -32768,
+        "max": 32767,
+        "check_with": "valid_gc_type"
+    },
+    "input5_type": {
+        "meta": {
+            "database": {
+                "type": "SMALLINT"
+            },
+            "definition": {
+                "location": ["WORKER"],
+                "immutable": true
+            },
+            "description": "The Genetic Code Type Definition for input 5."
+        },
+        "type": "integer",
+        "min": -32768,
+        "max": 32767,
+        "check_with": "valid_gc_type"
+    },
+    "input6_type": {
+        "meta": {
+            "database": {
+                "type": "SMALLINT"
+            },
+            "definition": {
+                "location": ["WORKER"],
+                "immutable": true
+            },
+            "description": "The Genetic Code Type Definition for input 6."
+        },
+        "type": "integer",
+        "min": -32768,
+        "max": 32767,
+        "check_with": "valid_gc_type"
+    },
+    "input7_type": {
+        "meta": {
+            "database": {
+                "type": "SMALLINT"
+            },
+            "definition": {
+                "location": ["WORKER"],
+                "immutable": true
+            },
+            "description": "The Genetic Code Type Definition for input 7."
+        },
+        "type": "integer",
+        "min": -32768,
+        "max": 32767,
+        "check_with": "valid_gc_type"
+    },
     "num_outputs": {
         "meta": {
             "database": {
@@ -259,6 +387,70 @@
         "type": "integer",
         "min": 1,
         "default_setter": "set_num_outputs"
+    },
+    "output0_type": {
+        "meta": {
+            "database": {
+                "type": "SMALLINT"
+            },
+            "definition": {
+                "location": ["WORKER"],
+                "immutable": true
+            },
+            "description": "The Genetic Code Type Definition for output 0."
+        },
+        "type": "integer",
+        "min": -32768,
+        "max": 32767,
+        "check_with": "valid_gc_type"
+    },
+    "output1_type": {
+        "meta": {
+            "database": {
+                "type": "SMALLINT"
+            },
+            "definition": {
+                "location": ["WORKER"],
+                "immutable": true
+            },
+            "description": "The Genetic Code Type Definition for output 1."
+        },
+        "type": "integer",
+        "min": -32768,
+        "max": 32767,
+        "check_with": "valid_gc_type"
+    },
+    "output2_type": {
+        "meta": {
+            "database": {
+                "type": "SMALLINT"
+            },
+            "definition": {
+                "location": ["WORKER"],
+                "immutable": true
+            },
+            "description": "The Genetic Code Type Definition for output 2."
+        },
+        "type": "integer",
+        "min": -32768,
+        "max": 32767,
+        "check_with": "valid_gc_type"
+    },
+    "output3_type": {
+        "meta": {
+            "database": {
+                "type": "SMALLINT"
+            },
+            "definition": {
+                "location": ["WORKER"],
+                "immutable": true
+            },
+            "description": "The Genetic Code Type Definition for output 3."
+        },
+        "type": "integer",
+        "min": -32768,
+        "max": 32767,
+        "check_with": "valid_gc_type"
     },
     "alpha_class": {
         "meta": {
@@ -301,16 +493,12 @@
             "description": "The properties of the inputs & outputs",
             "codec": {
                 "extended": 0,
-                "i_integer": 8,
+                "i_int": 8,
                 "i_float": 9,
-                "i_character": 10,
-                "i_string": 11,
-                "i_genetic_code": 12,
-                "o_integer": 40,
-                "o_float": 41,
-                "o_character": 42,
-                "o_string": 43,
-                "o_genetic_code": 44
+                "i_obj": 10,
+                "o_int": 11,
+                "o_float": 12,
+                "o_obj": 13
             }
         },
         "type": "dict",
@@ -319,7 +507,7 @@
                 "type": "boolean",
                 "default": false
             },
-            "i_integer": {
+            "i_intr": {
                 "type": "boolean",
                 "default": false                
             },
@@ -327,19 +515,11 @@
                 "type": "boolean",
                 "default": false                
             },
-            "i_character": {
+            "i_obj": {
                 "type": "boolean",
                 "default": false                
             },
-            "i_string": {
-                "type": "boolean",
-                "default": false                
-            },
-            "i_genetic_code": {
-                "type": "boolean",
-                "default": false                
-            },
-            "o_integer": {
+            "o_int": {
                 "type": "boolean",
                 "default": false                
             },
@@ -347,15 +527,7 @@
                 "type": "boolean",
                 "default": false                
             },
-            "o_character": {
-                "type": "boolean",
-                "default": false                
-            },
-            "o_string": {
-                "type": "boolean",
-                "default": false                
-            },
-            "o_genetic_code": {
+            "o_obj": {
                 "type": "boolean",
                 "default": false                
             }
@@ -433,6 +605,19 @@
                         "minlength": 64,
                         "maxlength": 64,
                         "regex": "[0-9a-f]{64}"
+                    }
+                }
+            },
+            "output_rules": {
+                "type": "dict",
+                "schema": {
+                    "keys": {
+                        "type": "integer",
+                        "min": 0,
+                        "max": 256
+                    },
+                    "values": {
+                        "allowed": ["c_type_promotion"]
                     }
                 }
             },
