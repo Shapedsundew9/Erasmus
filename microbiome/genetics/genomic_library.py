@@ -11,6 +11,7 @@ Copyright (c) 2020 Your Company
 from ..database_table import database_table
 from logging import getLogger
 from .genomic_library_entry_validator import genomic_library_entry_validator
+from .codon_validator import codon_validator
 from ..query_validator import query_validator
 from pprint import pformat
 from ..config import get_config
@@ -29,6 +30,7 @@ class genomic_library():
 
 
     __store = None
+    __codon_validator = None
     __entry_validator = None
     __query_validator = None
     __logger = getLogger(__name__)
@@ -38,6 +40,7 @@ class genomic_library():
         if genomic_library.__store is None:
             table_name = get_config()['genomic_library']['table']
             genomic_library.__store = database_table(genomic_library.__logger, table_name)
+            genomic_library.__codon_validator = codon_validator(load(open(join(dirname(__file__), "../formats/codon_format.json"), "r")))
             genomic_library.__entry_validator = genomic_library_entry_validator(get_config()['tables'][table_name]['schema'], purge_unknown=True)
             genomic_library.__query_validator = query_validator(genomic_library.__entry_validator.schema)
             genomic_library.__query_validator.table_name = table_name
@@ -48,13 +51,27 @@ class genomic_library():
         # TODO: Look for the biome first
         self.__entry_zero()
         genomic_library.__logger.info("Loading codon library")
-        if not self.store(load(open(join(dirname(__file__), "codon_library.json"), "r"))):
+        if not self.__load_codons("codon_library.json"):
             genomic_library.__logger.error("Codon library failed validation. Unable to initialise genomic library.")
             exit(1)
-        genomic_library.__logger.info("Loading mutation primitive library")
-        if not self.store(load(open(join(dirname(__file__), "gc_mutation_library.json"), "r"))):
+        genomic_library.__logger.info("Loading mutation primitive codon library")
+        if not self.__load_codons("gc_mutation_library.json"):
             genomic_library.__logger.error("GC mutation library failed validation. Unable to initialise genomic library.")
             exit(1)
+        genomic_library.__logger.info("Loading query primitive codon library")
+        if not self.__load_codons("gc_query_library.json"):
+            genomic_library.__logger.error("GC query library failed validation. Unable to initialise genomic library.")
+            exit(1)
+        
+
+    def __load_codons(self, src_file_name):
+        codons = []
+        for raw_codon in load(open(join(dirname(__file__), "codon_library.json"), "r")):
+            if not genomic_library.__codon_validator.validate(raw_codon):
+                genomic_library.__logger.error("Codon invalid.\n%s\n%s", pformat(raw_codon), pformat(genomic_library.__codon_validator.errors))
+                return False
+            codons.append(genomic_library.__codon_validator.normalized(raw_codon))
+        return self.store(codons)
 
 
     def __len__(self):

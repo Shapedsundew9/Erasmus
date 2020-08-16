@@ -11,47 +11,9 @@
             "compressed": true,
             "description": "Defines the sub-codes of the genetic code and how they are connected together."
         },
-        "type": "list",
+        "type": "dict",
         "required": true,
-        "check_with": "valid_graph",
-        "schema": {
-            "type": "list",
-            "minlength": 6,
-            "maxlength": 7,
-            "items": [
-                {
-                    "type": "boolean"
-                },
-                {
-                    "type": "string",
-                    "allowed": ["I", "C", "A", "B", "O"]
-                },
-                {
-                    "type": "string",
-                    "allowed": ["i", "f", "n", "s", "c", "gc"]
-                },
-                {
-                    "type": "list",
-                    "schema": {
-                        "minlength": 1,
-                        "type": "integer",
-                        "min": 0
-                    }
-                },
-                {
-                    "type": "integer",
-                    "min": 0
-                },
-                {
-                    "type": "list",
-                    "schema": {
-                        "minlength": 1,
-                        "type": "integer",
-                        "min": 0
-                    }
-                }
-            ]
-        }
+        "check_with": "valid_graph"
     },
     "signature": {
         "meta": {

@@ -54,3 +54,4 @@ class gc_type_validator(Validator):
                         self._error(field, "Numeric types must have sign == 1.")
                     if bt['float'] and not bt['integer'] and not value['sign']:
                         self._error(field, "Floating point types must have sign == 1.")
+

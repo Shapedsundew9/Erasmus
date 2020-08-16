@@ -1,0 +1,34 @@
+[
+    {
+        "graph": {
+            "A": [["I", 0, "obj9"]],
+            "O": [["A", 0, "obj0"]]
+        },
+        "meta_data": {
+            "name": "Query gene pool returning a single GC randomly selected from query result.",
+            "function": {
+                "python3": {
+                    "0": {
+                        "inline": "query(GENE_POOL, {0[i0]})"
+                    }
+                }
+            }
+        }
+    },
+    {
+        "graph": {
+            "A": [["I", 0, "obj10"]],
+            "O": [["A", 0, "obj0"]]
+        },
+        "meta_data": {
+            "name": "Query microbiome returning a single GC randomly selected from query result.",
+            "function": {
+                "python3": {
+                    "0": {
+                        "inline": "query(MICROBIOME, {0[i0]})"
+                    }
+                }
+            }
+        }
+    }
+]

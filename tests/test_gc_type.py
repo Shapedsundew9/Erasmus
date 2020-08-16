@@ -42,7 +42,7 @@ def __write_results():
         f1.write(dumps(results[-1]) + linesep + ']'+ linesep)
 
 
-__write_results()
+#__write_results()
 
 
 @pytest.mark.parametrize("i, case", enumerate(load(open(__TEST_RESULTS_JSON, "r"))))

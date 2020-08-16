@@ -260,11 +260,25 @@ def is_user_obj(gc_type):
     return asdict(gc_type)['parameters']['obj_id'] > 895
 
 
-def __affinity_idx(gc_type_a, gc_type_b):
-    a, b = asint(gc_type_a), asint(gc_type_b)
+def is_GC(gc_type):
+    """Genetic Code Type Definition GC object test.
+    
+    Args
+    ----
+        gc_type (int/str/dict): A Genetic Code Type Definition (see ref).
+
+    Returns
+    -------
+        bool: True if the type is any of the GC types.
+    """
+    if not is_object(gc_type): return False
+    return asdict(gc_type)['parameters']['obj_id'] < 8
+
+
+def __affinity_idx(gc_type):
+    a = asint(gc_type)
     mask_a = 0x7FFC if is_object(a) else 0x7FF0
-    mask_b = 0x7FFC if is_object(b) else 0x7FF0
-    return (a & mask_a) + ((b & mask_b) << 16)
+    return a & mask_a
 
 
 def __load_affinities():
@@ -287,7 +301,12 @@ def __load_affinities():
                 __logger.warning("GCTD 0x{:04x}/{} at entry {} ({}) specifies a RESERVED object. Ignoring.".format(gc_type, gc_type, i, affinity))
                 ok = False
         if ok and not(affinity[0] == affinity[1] and affinity[2] == 1.0):
-            affinities[__affinity_idx(affinity[0], affinity[1])] = float32(affinity[2])
+            idx = __affinity_idx(affinity[0])
+            if idx in affinities:
+                affinities[idx][__affinity_idx(affinity[0])] = float32(affinity[2])
+            else:
+                affinities[idx] = {__affinity_idx(affinity[0]): float32(affinity[2])}
+
 
     # RESERVED type affinities are last to prevent any accidental overrides by user definitions
     pass
@@ -312,4 +331,25 @@ def affinity(gc_type_a, gc_type_b):
         numpy.float32: The affinity of gc_type_a to gc_type_b.
     """
     if gc_type_a == gc_type_b: return float32(1.0)
-    return __affinities[__affinity_idx(gc_type_a, gc_type_b)]
+    a_idx = __affinity_idx(gc_type_a)
+    if a_idx in __affinities:
+        b_idx = __affinity_idx(gc_type_b)
+        if b_idx in __affinities[a_indx]: return __affinities[a_idx][b_idx]
+    return float32(0.0)
+
+
+def compatible_types(gc_type):
+    """Return a list of all gc_types that have a non-zero affinity with gc_type.
+
+    Args
+    ----
+        gc_type (int/str/dict): A Genetic Code Type Definition value.
+
+    Returns
+    -------
+        (list): A list of compatible gc_types including gc_type itself.
+    """
+    retval = [gc_type]
+    idx = __affinity_idx(gc_type)
+    if idx in __affinities: retval.extend(__affinities[idx].keys())
+    return retval 
