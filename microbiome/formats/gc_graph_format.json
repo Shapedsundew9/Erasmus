@@ -66,11 +66,11 @@
                     "type": ["integer", "string"],
                     "min": -32768,
                     "max": 32767,
-                    "check_with": "valid_type"
+                    "check_with": "valid_constant_type"
                 },
                 {
                     "type": "string",
-                    "check_with": "valid_json"
+                    "check_with": "valid_value"
                 }
             ]
         }
@@ -85,7 +85,34 @@
             "items": [
                 {
                     "type": "string",
-                    "allowed": ["I", "C", "A", "B", "F"]
+                    "allowed": ["I", "C", "A", "B"]
+                },
+                {
+                    "type": "integer",
+                    "min": 0,
+                    "max": 256,
+                    "check_with": "valid_index"
+                },
+                {
+                    "type": ["integer", "string"],
+                    "min": -32768,
+                    "max": 32767,
+                    "check_with": "valid_type"
+                }
+            ]
+        }
+    },
+    "P": {
+        "required": false,
+        "type": "list",
+        "schema": {
+            "type": "list",
+            "minlength": 3,
+            "maxlength": 3,
+            "items": [
+                {
+                    "type": "string",
+                    "allowed": ["I", "C", "A", "B"]
                 },
                 {
                     "type": "integer",
@@ -105,6 +132,8 @@
     "F": {
         "required": false,
         "type": "list",
+        "minlength": 1,
+        "maxlength": 1,
         "schema": {
             "type": "list",
             "minlength": 3,

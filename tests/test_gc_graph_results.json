@@ -1,0 +1,191 @@
+[
+    {
+        "graph": {
+            "O": [["A", 0, "int"]] 
+        },
+        "valid": true,
+        "errors": []
+    },
+    {
+        "graph": {
+            "A": [["I", 0, "int"]],
+            "O": [["A", 0, "int"]] 
+        },
+        "valid": true,
+        "errors": []
+    },
+    {
+        "graph": {
+            "A": [["I", 0, "int"]],
+            "B": [["A", 0, "int"]], 
+            "O": [["B", 0, "int"]] 
+        },
+        "valid": true,
+        "errors": []
+    },
+    {
+        "graph": {
+            "C": [[7, "int"]],
+            "A": [["I", 0, "int"], ["C", 0, "int"]],
+            "B": [["A", 0, "int"]], 
+            "O": [["B", 0, "int"]] 
+        },
+        "valid": true,
+        "errors": []
+    },
+    {
+        "graph": {
+            "C": [[7, "int"]],
+            "A": [["I", 0, "int"], ["C", 0, "int"]],
+            "B": [["A", 0, "int"], ["C", 0, "int"]], 
+            "O": [["B", 0, "int"]] 
+        },
+        "valid": true,
+        "errors": []
+    },
+    {
+        "graph": {
+            "C": [[7, "int"]],
+            "A": [["I", 0, "int"], ["C", 0, "int"]],
+            "B": [["A", 0, "int"], ["C", 0, "int"], ["I", 1, "int"]], 
+            "O": [["B", 0, "int"]] 
+        },
+        "valid": true,
+        "errors": []
+    },
+    {
+        "graph": {
+            "F": [["I", 2, "obj129"]],
+            "C": [[7, "int"]],
+            "A": [["I", 0, "int"], ["C", 0, "int"]],
+            "B": [["C", 0, "int"], ["I", 1, "int"]], 
+            "O": [["A", 0, "int"]], 
+            "P": [["B", 0, "int"]] 
+        },
+        "valid": true,
+        "errors": []
+    },
+    {
+        "graph": {
+            "F": [["I", 2, "obj129"]],
+            "C": [["uint(7)", "uint"]],
+            "A": [["I", 0, "int"], ["C", 0, "int"]],
+            "B": [["C", 0, "int"], ["I", 1, "int"]], 
+            "O": [["A", 0, "int"]], 
+            "P": [["B", 0, "int"]] 
+        },
+        "valid": true,
+        "errors": []
+    },
+    {
+        "graph": {
+            "A": [["I", 0, "int"]],
+            "O": [] 
+        },
+        "valid": false,
+        "errors": ["E01000"]
+    },
+    {
+        "graph": {
+            "A": [["I", 0, "int"]],
+            "C": [[0, "int"]],
+            "O": [["A", 0, "int"]] 
+        },
+        "valid": false,
+        "errors": ["E01001"]
+    },
+    {
+        "graph": {
+            "A": [["I", 0, "invalid type"]],
+            "O": [["A", 0, "int"]] 
+        },
+        "valid": false,
+        "errors": ["E01002"]
+    },
+    {
+        "graph": {
+            "A": [["I", 1, "int"]],
+            "O": [["A", 0, "int"]] 
+        },
+        "valid": false,
+        "errors": ["E01003", "E01004"]
+    },
+    {
+        "graph": {
+            "A": [["I", 0, "int"]],
+            "C": [["invalid value", "int"]],
+            "O": [["A", 0, "int"], ["C", 0, "int"]] 
+        },
+        "valid": false,
+        "errors": ["E01005"]
+    },
+    {
+        "graph": {
+            "A": [["I", 0, "int"]],
+            "O": [["A", 0, "int"]], 
+            "P": [["I", 0, "int"]] 
+        },
+        "valid": false,
+        "errors": ["E01006"]
+    },
+    {
+        "graph": {
+            "F": [["I", 1, "obj129"]],
+            "C": [[7, "int"]],
+            "A": [["I", 0, "int"], ["C", 0, "int"]],
+            "B": [["A", 0, "int"]], 
+            "O": [["A", 0, "int"]], 
+            "P": [["B", 0, "int"]] 
+        },
+        "valid": false,
+        "errors": ["E01011"]
+    },
+    {
+        "graph": {
+            "F": [["I", 1, "obj129"]],
+            "C": [[7, "int"]],
+            "A": [["I", 0, "int"], ["C", 0, "int"]],
+            "B": [["I", 0, "int"]], 
+            "O": [["B", 0, "int"]], 
+            "P": [["B", 0, "int"]] 
+        },
+        "valid": false,
+        "errors": ["E01012"]
+    },
+    {
+        "graph": {
+            "F": [["I", 2, "obj129"]],
+            "C": [["7", "uint"]],
+            "A": [["I", 0, "int"], ["C", 0, "int"]],
+            "B": [["C", 0, "int"], ["I", 1, "int"]], 
+            "O": [["A", 0, "int"]], 
+            "P": [["B", 0, "int"]] 
+        },
+        "valid": false,
+        "errors": ["E01005"]
+    },
+    {
+        "graph": {
+            "F": [["I", 1, "obj129"]],
+            "C": [[7, "int"]],
+            "A": [["I", 0, "int"], ["C", 0, "int"]],
+            "B": [["I", 0, "int"]], 
+            "O": [["A", 0, "int"]], 
+            "P": [["B", 0, "int"], ["I", 0, "int"]] 
+        },
+        "valid": false,
+        "errors": ["E01013"]
+    },
+    {
+        "graph": {
+            "F": [["I", 2, "obj129"]],
+            "C": [["obj128('string')", "obj128"]],
+            "A": [["I", 0, "int"], ["C", 0, "int"]],
+            "B": [["C", 0, "int"], ["I", 1, "int"]], 
+            "O": [["A", 0, "int"]], 
+            "P": [["B", 0, "int"]] 
+        },
+        "valid": false,
+        "errors": ["E01009", "E01009"]
+    }
+]

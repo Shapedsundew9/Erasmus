@@ -19,10 +19,10 @@ class gc_type_validator(Validator):
     # https://docs.python-cerberus.org/en/stable/customize.html#validator-error
 
     __logger = getLogger(__name__)
-    __object_validator = Validator(
-        load(open(join(dirname(__file__), "../formats/gc_type_object_param_format.json"), "r")))
-    __numeric_validator = Validator(
-        load(open(join(dirname(__file__), "../formats/gc_type_numeric_param_format.json"), "r")))
+    with open(join(dirname(__file__), "../formats/gc_type_object_param_format.json"), "r") as format_file:
+        __object_validator = Validator(load(format_file))
+    with open(join(dirname(__file__), "../formats/gc_type_numeric_param_format.json"), "r") as format_file:
+        __numeric_validator = Validator(load(format_file))
 
 
     def _check_with_valid_base_type(self, field, value):

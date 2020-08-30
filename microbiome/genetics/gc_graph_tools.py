@@ -1,35 +1,67 @@
-"""Tools for managing genetic code graphs
+"""Tools for managing genetic code graphs.
 
 Created Date: Sunday, July 19th 2020, 2:56:11 pm
 Author: Shapedsundew9
+
 Description: Genetic code graphs define how genetic codes are connected together. The gc_graph_tools module
-defines the rules of the connectivity (the "physics") i.e. what is possible to observe or occur. 
+defines the rules of the connectivity (the "physics") i.e. what is possible to observe or occur.
 """
 
 from collections import Counter
-from enum import Enum
-from gc_type import asint, compatible_types
+from enum import IntEnum
+from .gc_type import asstr, asint, compatible_types, validate, last_validation_error, affinity
+from pprint import pformat
+from copy import deepcopy
+from ..text_token import text_token, register_token_code
+from logging import getLogger
+from .gc_type_definitions import *
 
 
-class conn_idx(Enum):
-    """Genomic Library entry graph connection format index.
-    """
+_logger = getLogger(__name__)
+
+
+register_token_code('E01000', 'A graph must have at least one output.')
+register_token_code('E01001', '{ep_type} endpoint {ref} is not connected to anything.')
+register_token_code('E01002', '{ep_type} endpoint {ref} does not have a valid type: {type_errors}.')
+register_token_code('E01003', 'Row {row} does not have contiguous indices starting at 0: {indices}.')
+register_token_code('E01004', 'The references to row {row} are not contiguous indices starting at 0: {indices}.')
+register_token_code('E01005', 'Constant {ref} does not have a valid value ({value}) for type {type}.')
+register_token_code('E01006', 'If row "F" is defined then row "P" must be defined.')
+register_token_code('E01007', 'Endpoint {ref} must be a source.')
+register_token_code('E01008', 'Endpoint {ref} must be a destination.')
+register_token_code('E01009', 'Source endpoint {ref1} type {type1} is not compatible with destination endpoint {ref2} type {type2}.')
+register_token_code('E01010', 'Destination endpoint {ref1} cannot be connected to source endpoint {ref2}.')
+register_token_code('E01011', 'Destination endpoint {ref1} cannot be connected to source endpoint {ref2} when row "F" exists.')
+register_token_code('E01012', 'Endpoint {ref1} cannot reference row B {ref2} if "F" is defined.')
+register_token_code('E01013', 'Row "P" length ({len_p}) must be the same as row "O" length ({len_o}) when "F" is defined.')
+
+
+class conn_idx(IntEnum):
+    """Genomic library entry graph connection format index."""
+
     ROW = 0
     INDEX = 1
     TYPE = 2
 
 
-class ref_idx(Enum):
-    """REFERENCED_BY format index.
-    """
+class const_idx(IntEnum):
+    """Genomic library entry graph constant row format index."""
+
+    VALUE = 0
+    TYPE = 1
+
+
+class ref_idx(IntEnum):
+    """REFERENCED_BY format index."""
+
     ROW = 0
     INDEX = 1
 
 
-class row_idx(Enum):
-    """gc_graph internal graph row format index.
-    """
-    ENDPOINT = 0
+class ep_idx(IntEnum):
+    """gc_graph internal graph endpoint format index."""
+
+    EP_TYPE = 0
     ROW = 1
     INDEX = 2
     TYPE = 3
@@ -37,55 +69,41 @@ class row_idx(Enum):
     VALUE = 5
 
 
-class gc_row():
-    """Row manipulation and analysis.
-    FIXME: What is this all about
+def validate_value(value_str, gc_type):
+    """Validate the executable string is a valid gc_type value.
+
+    Args
+    ----
+        value_str (str): As string that when executed as the RHS of an assignment returns a value of gc_type
+        gc_type (int/str/dict): A Genetic Code Type Definition (see ref).
+
+    Returns
+    -------
+        bool: True if valid else False
     """
-
-
-    def __init__(self, ds_list):
-        self.ds_list = ds_list
-
-
-    def __ref_nums(self):
-        return [ds[row_idx.INDEX][ref_idx.NUM] for ds in filter(lambda x: x[row_idx.ENDPOINT], self.ds_list)]
-
-
-    def dest_type_list(self):
-        return [ds[row_idx.TYPE] for ds in filter(lambda x: x[row_idx.ENDPOINT], self.ds_list)]
-
-
-    def src_type_list(self):
-        return [ds[row_idx.TYPE] for ds in filter(lambda x: not x[row_idx.ENDPOINT], self.ds_list)]
-
-
-    def next_ref_num(self):
-        ref_nums = set(self.__ref_nums())
-        return min(set(range(max(ref_nums) + 2)) - ref_nums) 
-
-
-    def validate(self):
-        row = self.ds_list[0][row_idx.INDEX[ref_idx.ROW]]
-        ref_num_counts = Counter(self.__ref_nums())
-        errors = ["Reference {} appears {} times in row {}. A reference must be unique.".format(k, v, row) for k, v in ref_num_counts.items() if v > 1]
-        return errors
+    _logger.debug("retval = isinstance({}, {})".format(value_str, asstr(gc_type)))
+    try:
+        retval = eval("isinstance({}, {})".format(value_str, asstr(gc_type)))
+    except:
+        return False
+    return retval 
 
 
 class gc_graph():
-    """Manipulating Genetic Code Graphs 
+    """Manipulating Genetic Code Graphs.
     
     Genetic Code graphs are internally stored with the following structure:
     [
-        [ENDPOINT, ROW, INDEX, TYPE, REFERENCED_BY, VALUE],
-        [ENDPOINT, ROW, INDEX, TYPE, REFERENCED_BY],
-        [ENDPOINT, ROW, INDEX, TYPE, REFERENCED_BY],
-        [ENDPOINT, ROW, INDEX, TYPE, REFERENCED_BY, VALUE],
+        [EP_TYPE, ROW, INDEX, TYPE, REFERENCED_BY, VALUE],
+        [EP_TYPE, ROW, INDEX, TYPE, REFERENCED_BY],
+        [EP_TYPE, ROW, INDEX, TYPE, REFERENCED_BY],
+        [EP_TYPE, ROW, INDEX, TYPE, REFERENCED_BY, VALUE],
         ...
     ]
     
-    where:
+    Each list element defines an endpoint where:
     
-        ENDPOINT (bool): True == source, False == Destination
+        EP_TYPE (bool): True == source, False == Destination
         TYPE (gc_type): The gc_type of the end point
         INDEX (int): The index of the endpoint in the row. Note that the indices do not need to be contiguous just unique.
         REFERENCED_BY ([[ROW, INDEX]...]): A list of endpoints that connect to this endpoint.
@@ -95,18 +113,21 @@ class gc_graph():
     in the genetic code 'graph' field.
     """
 
-
     """The sets of valid source rows for any given rows destinations"""
     src_rows = {
         'A': ('I', 'C'),
         'B': ('I', 'C', 'A'),
         'O': ('I', 'C', 'A', 'B'),
+        'P': ('I', 'C', 'B'),
         'F': ('I')
     }
 
 
     """All valid row letters"""
-    __rows = ('I', 'C', 'F', 'A', 'B', 'O')
+    rows = ('I', 'C', 'F', 'A', 'B', 'O', 'P')
+
+
+    _logger = getLogger(__name__)
 
 
     def __init__(self, graph):
@@ -116,14 +137,14 @@ class gc_graph():
         ----
             graph (list/dict): A Genetic Code graph.
         """
-        self.graph = self.__convert_to_rows(graph) if isinstance(graph, dict) else graph
+        self.graph = self.__convert_to_internal(graph) if isinstance(graph, dict) else graph
         self.errors = []
         
 
-    def __convert_to_rows(self, graph):
+    def __convert_to_internal(self, graph):
         """Convert graph to internal format.
 
-        The internal format allows quicker searching for parameters by type, endpoint etc.
+        The internal format allows quicker searching for parameters by type, endpoint type etc.
         It maintains bi-directional references for quick manipulation.
         Types are stored in integer format for efficiency.
 
@@ -136,34 +157,56 @@ class gc_graph():
             (list): A Geneic Code graph in gc_graph internal list format.
         """
         retval = {}
-        for row, parameters in graph:
+        for row, parameters in graph.items():
             for index, parameter in enumerate(parameters):
-                retval[row.join(str(index))][False, row, index, asint(parameter[conn_idx.TYPE]), [*parameter[0:2]]]
-                src = "".join(parameter[0:2])
-                if src in retval:
-                    retval[src][row_idx.REFERENCED_BY].append([row, index])
+                if row != 'C':
+                    retval[row + str(index) + 'd'] = [False, row, index, asint(parameter[conn_idx.TYPE]), [[*parameter[0:2]]]]
+                    src = "".join(map(str, parameter[0:2])) + 's'
+                    if src in retval:
+                        retval[src][ep_idx.REFERENCED_BY].append([row, index])
+                    else:
+                        retval[src] = [True, parameter[0], parameter[1], asint(parameter[conn_idx.TYPE]), [[row, index]]]
                 else:
-                    retval[src] = [True, parameter[0], parameter[1], asint(parameter[conn_idx.TYPE]), [row, index]]
-        return retval
+                    retval[row + str(index) + 's'] = [True, row, index, asint(parameter[const_idx.TYPE]), [], parameter[const_idx.VALUE]]
+        return list(retval.values())
+
+    
+    def application_graph(self):
+        """Convert graph to Genomic Library Application format.
+
+        Returns
+        -------
+            graph (dict): A Genetic Code graph in genomic library application format.
+        """
+        graph = {}
+        for ep in filter(self.dst_filter(), self.graph):
+            row = graph[ep[ep_idx.ROW]]
+            if not row in graph: graph[row] = []
+            graph[row].append([*row[ep_idx.REFERENCED_BY], row[ep_idx.TYPE]])
+        for ep in filter(self.row_filter('C'), self.graph):
+            if not 'C' in graph: graph['C'] = []
+            graph['C'].append([row[ep_idx.VALUE], row[ep_idx.TYPE]])
+        return graph
 
 
-    def endpoint_filter(self, endpoint, filter_func=lambda x: True):
-        """Define a filter that only returns rows which have endpoint == 'endpoint'.
+    def endpoint_filter(self, ep_type, filter_func=lambda x: True):
+        """Define a filter that only returns endpoints which have endpoint type == ep_type.
 
         Args
         ----
+            ep_type (bool): True == source, False == Destination
             filter_func (func): A second filter to be applied. This allows *_filter methods
             to be stacked.
 
         Returns
         -------
-            (func): A function for a filter() that will return only 'endpoint' rows.
+            (func): A function for a filter() that will return only endpoints with a type == ep_type.
         """
-        return lambda x: x[row_idx.ENDPOINT] == endpoint and filter_func(x)
+        return lambda x: x[ep_idx.EP_TYPE] == ep_type and filter_func(x)
 
 
     def src_filter(self, filter_func=lambda x: True):
-        """Define a filter that only returns rows for source endpoints.
+        """Define a filter that only returns endpoints of source type.
 
         Args
         ----
@@ -172,13 +215,13 @@ class gc_graph():
 
         Returns
         -------
-            (func): A function for a filter() that will return only source rows.
+            (func): A function for a filter() that will return only source endpoints.
         """
-        return lambda x: x[row_idx.ENDPOINT] and filter_func(x)
+        return lambda x: x[ep_idx.EP_TYPE] and filter_func(x)
 
 
     def dst_filter(self, filter_func=lambda x: True):
-        """Define a filter that only returns rows for destination endpoints.
+        """Define a filter that only returns endpoints of destination type.
 
         Args
         ----
@@ -187,48 +230,64 @@ class gc_graph():
 
         Returns
         -------
-            (func): A function for a filter() that will return only destination rows.
+            (func): A function for a filter() that will return only destination endpoints.
         """
-        return lambda x: not x[row_idx.ENDPOINT] and filter_func(x)
+        return lambda x: not x[ep_idx.EP_TYPE] and filter_func(x)
 
 
-    def row_filter(self, rows, filter_func=lambda x: True):
-        """Define a filter that only returns rows in 'rows'.
+    def rows_filter(self, rows, filter_func=lambda x: True):
+        """Define a filter that only returns endpoints in that are in a row in rows.
 
         Args
         ----
-            rows (iter): An iterable of valid row labels i.e. in gc_graph.__rows
+            rows (iter): An iterable of valid row labels i.e. in gc_graph.rows
             filter_func (func): A second filter to be applied. This allows *_filter methods
             to be stacked.
 
         Returns
         -------
-            (func): A function for a filter() that will return rows in 'rows'.
+            (func): A function for a filter() that will return endpoints in 'rows'.
         """
-        return lambda x: any(map(lambda p: p == x[row_idx.ROW], rows)) and filter_func(x)
+        return lambda x: any(map(lambda p: p == x[ep_idx.ROW], rows)) and filter_func(x)
+
+
+    def row_filter(self, row, filter_func=lambda x: True):
+        """Define a filter that only returns endpoints in that are in a specific row.
+
+        Args
+        ----
+            row (string): A string from rows.
+            filter_func (func): A second filter to be applied. This allows *_filter methods
+            to be stacked.
+
+        Returns
+        -------
+            (func): A function for a filter() that will return endpoints in 'row'.
+        """
+        return lambda x: x[ep_idx.ROW] == row and filter_func(x)
 
 
     def type_filter(self, gc_types, filter_func=lambda x: True, exact=True):
-        """Define a filter that only returns rows with a gc_type in 'gc_types'.
+        """Define a filter that only returns endpoints with a gc_type in 'gc_types'.
 
         Args
         ----
             gc_types (iter): An iterable of valid gc_types
             filter_func (func): A second filter to be applied. This allows *_filter methods
             to be stacked.
-            exact: If True only rows with types exactly matching 'gc_types'. If False types
+            exact: If True only endpoints with types exactly matching 'gc_types'. If False types
             that have a non-zero affinity will also be returned.
 
         Returns
         -------
-            (func): A function for a filter() that will return rows with qualifying 'gc_types'.
+            (func): A function for a filter() that will return endpoints with qualifying 'gc_types'.
         """
-        __types = types if exact else set([x for y in types for x in compatible_types(y)])
-        return lambda x: any(map(lambda p: p == x[row_idx.TYPE], __types)) and filter_func(x)
+        __types = gc_types if exact else set([x for y in gc_types for x in compatible_types(y)])
+        return lambda x: any(map(lambda p: p == x[ep_idx.TYPE], __types)) and filter_func(x)
 
 
     def ref_filter(self, ref):
-        """Define a filter that only returns the row with where ROW, INDEX == 'ref'.
+        """Define a filter that only returns the endpoint at ref.
 
         Args
         ----
@@ -236,38 +295,41 @@ class gc_graph():
 
         Returns
         -------
-            (func): A function for a filter() that will return the row 'ref'.
+            (func): A function for a filter() that will return the endpoint 'ref'.
         """
-        return lambda x: x[row_idx.ROW] == ref[ref_idx.ROW] and x[row_idx.INDEX] == ref[ref_idx.INDEX] 
+        return lambda x: x[ep_idx.ROW] == ref[ref_idx.ROW] and x[ep_idx.INDEX] == ref[ref_idx.INDEX] 
 
 
     def ref_by_filter(self, ref_by, filter_func=lambda x: True):
-        """Define a filter that only returns the rows referenced by 'ref_by'.
+        """Define a filter that only returns the endpoints referenced by ref_by.
 
         Args
         ----
-            ref_by (iter): An iterable of genetic code graph endpoint references.
+            ref_by (iter): An iterable of genetic code graph endpoint references [ROW, INDEX].
 
         Returns
         -------
-            (func): A function for a filter() that will return the rows referenced by 'ref_by'.
+            (func): A function for a filter() that will return the endpoints referenced by 'ref_by'.
         """
-        return lambda x: any(map(lambda p: p == ref_by, x[row_idx.REFERENCED_BY])) and filter_func(x)
+        return lambda x: any(map(lambda p: p == ref_by, x[ep_idx.REFERENCED_BY])) and filter_func(x)
 
 
-    def viable_endpoint_filter(self, row):
-        """For a given connection endpoint in the graph ('row') return a list of all viable connection endpoints.
+    def viable_endpoint_filter(self, endpoint):
+        """For a given connection endpoint in the graph row return a list of all viable connection endpoints.
+
+        Viable endpoints must be of the opposite end point type, have a compatible type and be in a row
+        that is permitted to connect.
 
         Args
         ----
-            row (row): A row in the graph.
+            endpoint (endpoint): An endpoint in the graph internal representation.
 
         Returns
         -------
-            (list): A list of viable endpoints (rows).
+            (list): A list of viable endpoints.
         """
-        return [n for n in filter(endpoint_filter(not row[row_idx.ENDPOINT], row_filter(gc_graph.src_rows(row[row_idx.ROW]),
-            type_filter(row[row_idx.TYPE]))), self.graph)]
+        return [n for n in filter(self.endpoint_filter(not endpoint[ep_idx.EP_TYPE], self.row_filter(gc_graph.src_rows[endpoint[ep_idx.ROW]],
+            self.type_filter(endpoint[ep_idx.TYPE]))), self.graph)]
 
 
     def has_c(self):
@@ -277,17 +339,27 @@ class gc_graph():
         -------
             (bool): True if at least one constant is defined.
         """
-        return 'C' in [x[row_idx.ROW] for x in self.graph]
+        return 'C' in [x[ep_idx.ROW] for x in self.graph]
 
 
-    def has_b(self):
-        """Test if GCB is defined in the graph.
+    def has_f(self):
+        """Test if this is a flow control graph.
 
         Returns
         -------
-            (bool): True if GCB is not the zero GC.
+            (bool): True if row 'F' is defined.
         """
-        return 'B' in [x[row_idx.ROW] for x in self.graph]
+        return 'F' in [x[ep_idx.ROW] for x in self.graph]
+
+
+    def has_b(self):
+        """Test if row B is defined in the graph.
+
+        Returns
+        -------
+            (bool): True if row B exists.
+        """
+        return 'B' in [x[ep_idx.ROW] for x in self.graph]
 
 
     def num_inputs(self):
@@ -297,7 +369,7 @@ class gc_graph():
         -------
             (int): The number of graph inputs.
         """
-        return len([n for n in filter(row_filter(('I',)), self.graph)])
+        return len(list(filter(self.row_filter('I'), self.graph)))
 
 
     def num_outputs(self):
@@ -307,7 +379,7 @@ class gc_graph():
         -------
             (int): The number of graph outputs.
         """
-        return len([n for n in filter(row_filter(('O',)), self.graph)])
+        return len(list(filter(self.row_filter('O'), self.graph)))
 
 
     def row_num_inputs(self, row):
@@ -318,13 +390,13 @@ class gc_graph():
 
         Args
         ----
-            row (string): A valid graph row i.e. in gc_graph.__rows
+            row (string): A valid graph row i.e. in gc_graph.rows
 
         Returns
         -------
             (int): The number of inputs to the speficied graph row.
         """
-        return len([n for n in filter(row_filter((row,), dst_filter()), self.graph)])
+        return len(list(filter(self.row_filter(row, self.dst_filter()), self.graph)))
 
 
     def row_num_outputs(self, row):
@@ -335,126 +407,133 @@ class gc_graph():
 
         Args
         ----
-            row (string): A valid graph row i.e. in gc_graph.__rows
+            row (string): A valid graph row i.e. in gc_graph.rows
             
         Returns
         -------
             (int): The number of outputs to the speficied graph row.
         """
-        return len([n for n in filter(row_filter((row,), src_filter()), self.graph)])
-
-
-    def next_index(self, row):
-        """Return the next valid index for the given row.
-        
-        Indices are only required to be unique. The next valid index is
-        the closest value to 0 that is not already an index in this row.
-
-        Args
-        ----
-            row (string): A valid graph row i.e. in gc_graph.__rows
-            
-        Returns
-        -------
-            (int): The next valid index for this row.
-        """
-        refs = set([x[row_idx.INDEX] for x in filter(self.row_filter((row,)))])
-        return min(set(range(max(refs) + 2)) - refs)
+        return len(list(filter(self.row_filter(row, self.src_filter()), self.graph)))
 
 
     def validate(self, codon=False):
         """Check if the graph is valid.
         
+        This function is not intended to be fast.
         Genetic code graphs MUST obey the following rules:
-            1. Have at least 1 output
-            2. All sources are connected
-            3. All destinations are connected
-            4. Types are valid
-            5. Indexes within a row are unique
-            6. Constant values are valid
-            7. Destinations only have one source if row 'F' is not defined
+            1. Have at least 1 output in 'O'.
+            2. All sources are connected.
+            3. All destinations are connected.
+            4. Types are valid.
+            5. Indexes within are contiguous and start at 0.
+            6. Constant values are valid.
+            7. Row "P" is only defined if "F" is defined.
             8. Row A is defined if the graph is not for a codon.
-            9. Row A is not defined if the graph is fopr a codon.
-            10. Rows destinations may only be connected to source rows as defined
+            9. Row A is not defined if the graph is for a codon.
+            10. All row 'I' endpoints are sources.
+            11. All row 'O' & 'P' endpoints are destinations.
+            12. Source types have a non-zero affinity to destination types.
+            13. Rows destinations may only be connected to source rows as defined
                 by gc_graph.src_rows.
-            11. If row 'F' is defined:
-                a. Row 'B' cannot reference row A
-                b. If 'B' is defined any Output row endpoints referenced by 'B' must
-                   also be referenced by one of 'A', 'I' or 'C'
-                c. If 'B' is not defined any Output row endpoints referenced by 'A' 
-                   must also be referenced by one of 'I' or 'C'
+            14. If row 'F' is defined:
+                a. Row 'B' cannot reference row A.
+                b. Row 'B' cannot be referenced in row 'O'.
+                c. Row 'P' must have the same number of elements as row 'O'.
 
         Args
         ----
-            row (string): A valid graph row i.e. in gc_graph.__rows
+            codon (bool): Set to True if the graph is for a codon genetic code.
             
         Returns
         -------
-            (int): The next valid index for this row.
+            (bool): True if the graph is valid else False.
+            If False is returned details of the errors found are in the errors member.
         """
-        destinations = [x[row_idx.ENDPOINT] for x in graph]
-        while destinations:
-            destination = destinations.pop()
-            for source_ref in destination[row_idx.REFERENCED_BY]:
-                source = next(filter(self.ref_filter(), self.ds_list))
-                if : error_list.append(
-                    "Nodes cannot be referenced by the same end point type, {} is referenced by {} and both are {}.".format(
-                        node_a[__REF_IDX], ref, ('destinations', 'sources')[node_a[__ENDPOINT_IDX]]))
-                src, dst = (node_a, node_b) if node_a[__ENDPOINT_IDX] else (node_b, node_a)
-                # FIXME: Walrus
-                if not src[__TYPE_IDX] in compatible_types(dst[__TYPE_IDX]): error_list.append(
-                    "Node {} type is '{}' but its source node {} is type '{}' which is not one of {}".format(
-                        dst[__REF_IDX], dst[__TYPE_IDX], src[__REF_IDX], src[__TYPE_IDX], compatible_types(dst[__TYPE_IDX])))
-                if not src[__REF_IDX] in [x[__REF_IDX] for x in filter(src_filter(shape_filter([dst[__SHAPE_IDX]], exact=False)),graph)]:
-                    error_list.append("Node {} has shape {} but its source {} has shape {} which will not fit.".format(
-                        dst[__REF_IDX], dst[__SHAPE_IDX], src[__REF_IDX], src[__SHAPE_IDX]))
-                # FIXME: Walrus
-                if not src[__ROW_IDX] in __viable_input_rows(dst[__ROW_IDX]):
-                    error_list.append("Source node {} is in row '{}' which is not valid for destination {} in row '{}'. Must be one of {}.".format(
-                        src[__REF_IDX], src[__ROW_IDX], dst[__REF_IDX], dst[__ROW_IDX], __viable_input_rows(dst[__ROW_IDX])))
+        self.errors = []
 
-        # Input errors
-        for node in filter(row_filter('I'), graph):
-            if not node[__ENDPOINT_IDX]: error_list.append("All row 'I' nodes must be sources: {} is a destination.".format(node[__REF_IDX]))
+        #1
+        if self.num_outputs() == 0: self.errors.append(text_token({'E01000': {}}))
 
-        # Output errors
-        has_output = False
-        for node in filter(row_filter('O'), graph):
-            if node[__ENDPOINT_IDX]: error_list.append("All row 'O' nodes must be destinations: {} is a source.".format(node[__REF_IDX]))
-            has_output = True
-        if not has_output: error_list.append("A graph must have at least one output node.")
+        #2 & #3
+        for row in filter(lambda x: not len(x[ep_idx.REFERENCED_BY]), self.graph):
+            self.errors.append(text_token({'E01001': {'ep_type': ['Destination', 'Source'][row[ep_idx.EP_TYPE]],
+                'ref': [row[ep_idx.ROW], row[ep_idx.INDEX]]}}))
 
-        return error_list
+        #4
+        for row in filter(lambda x: not validate(x[ep_idx.TYPE]), self.graph):
+            self.errors.append(text_token({'E01002': {'ep_type': ['Destination', 'Source'][row[ep_idx.EP_TYPE]],
+                'ref': [row[ep_idx.ROW], row[ep_idx.INDEX]], 'type_errors': last_validation_error()}}))
 
+        #5
+        ref_dict = {k: [] for k in gc_graph.rows}
+        ep_dict = deepcopy(ref_dict)
+        for row in self.graph:
+            for ref in row[ep_idx.REFERENCED_BY]: ref_dict[ref[ref_idx.ROW]].append(ref[ref_idx.INDEX])
+            ep_dict[row[ep_idx.ROW]].append(row[ep_idx.INDEX])
+        gc_graph._logger.debug("ref_dict: {}".format(ref_dict))
+        gc_graph._logger.debug("ep_dict: {}".format(ep_dict))
+        for k, v in ref_dict.items():
+            ep = ep_dict[k]
+            if ep:
+                if not (min(ep) == 0 and max(ep) == len(set(ep)) - 1):
+                    self.errors.append(text_token({'E01003': {'row': k, 'indices': sorted(ep)}}))
+            if v:
+                if not (min(v) == 0 and max(v) == len(set(v)) - 1):
+                    self.errors.append(text_token({'E01004': {'row': k, 'indices': sorted(v)}}))
+        
+        #6
+        for row in filter(lambda x: x[ep_idx.ROW] == 'C' and not validate_value(x[ep_idx.VALUE], x[ep_idx.TYPE]), self.graph):
+            self.errors.append(text_token({'E01005': {'ref': [row[ep_idx.ROW], row[ep_idx.INDEX]], 'value': row[ep_idx.VALUE],
+                'type': asstr(row[ep_idx.TYPE])}}))
 
-    # Coerce a graph into a row in a graph i.e. GCA or GCB
-    def __coerce(graph, row, offset=0):
-        new_graph = __filter(row_filter(('I', 'O')), graph)
-        for node in new_graph:
-            node[__ROW_IDX] = row
-            # FIXME: Walrus
-            node[__REF_IDX] = offset
-            offset += 1 
-        return new_graph
+        #7
+        if self.has_f() != bool(len(list(filter(self.row_filter('P'), self.graph)))):
+                self.errors.append(text_token({'E01006': {}}))
+    
+        # 8 & 9
+        # FIXME: It is not possible to tell from the graph whether this is a codon or not
 
+        #10
+        for row in filter(self.row_filter('I', self.dst_filter()), self.graph):
+            self.errors.append(text_token({'E01007': {'ref': [row[ep_idx.ROW], row[ep_idx.INDEX]]}}))
 
-    # This needs rethinking it is messy
-    def stack(graph_a, graph_b):
-        graph = __filter(row_filter('I'), graph_a)
-        for i, node in enumerate(graph): node[__REF_IDX] = i 
-        graph = __coerce(graph_a, 'A', len(graph))
-        graph.extend(__coerce(graph_b, 'B', len(graph)))
-        for node in filter(dst_filter(row_filter(['B'])), graph):
-            candidates = viable_src_filter(node, graph)
-            if candidates:
-                node[__REF_BY_IDX] = [candidate[0][__REF_IDX]]
-            else:
-                new_node = [
-                    True,
-                    'I',
-                    node[__TYPE_IDX],
-                    node[__SHAPE_IDX],
-                    next_reference(graph),
-                    [node[__REF_IDX]]
-                ]
-                graph.append(new_node)
+        #11
+        for row in filter(self.rows_filter(('O', 'P'), self.src_filter()), self.graph):
+            self.errors.append(text_token({'E01008': {'ref': [row[ep_idx.ROW], row[ep_idx.INDEX]]}}))
+
+        #12
+        for row in filter(self.dst_filter(), self.graph):
+            for ref in row[ep_idx.REFERENCED_BY]:
+                src = next(filter(self.ref_filter(ref), self.graph))
+                if affinity(src[ep_idx.TYPE], row[ep_idx.TYPE]) == 0.0:
+                    self.errors.append(text_token({'E01009': {'ref1': [src[ep_idx.ROW], src[ep_idx.INDEX]], 'type1': asstr(src[ep_idx.TYPE]),
+                        'ref2': [row[ep_idx.ROW], row[ep_idx.INDEX]], 'type2': asstr(row[ep_idx.TYPE])}}))
+
+        #13
+        for row in filter(self.dst_filter(), self.graph):
+            for ref in row[ep_idx.REFERENCED_BY]:
+                if ref[ref_idx.ROW] not in gc_graph.src_rows[row[ep_idx.ROW]]:
+                    self.errors.append(text_token({'E01010': {'ref1': [row[ep_idx.ROW], row[ep_idx.INDEX]],
+                        'ref2': [ref[ref_idx.ROW], ref[ref_idx.INDEX]]}}))
+
+        #14a
+        if self.has_f():
+            for row in filter(self.row_filter('B', self.dst_filter()), self.graph):
+                for ref in filter(lambda x: x[ref_idx.ROW] == 'A', row[ep_idx.REFERENCED_BY]):
+                    self.errors.append(text_token({'E01011': {'ref1': [row[ep_idx.ROW], row[ep_idx.INDEX]],
+                        'ref2': [ref[ref_idx.ROW], ref[ref_idx.INDEX]]}}))
+
+        #14b
+        if self.has_f() and self.has_b():
+            for row in filter(self.row_filter('O'), self.graph):
+                for ref in row[ep_idx.REFERENCED_BY]:
+                    if ref[ref_idx.ROW] == 'B':
+                        self.errors.append(text_token({'E01012': {'ref1': [row[ep_idx.ROW], row[ep_idx.INDEX]], 'ref2': ref}}))
+
+        #14c
+        if self.has_f():
+            len_row_p = len(list(filter(self.row_filter('P'), self.graph)))
+            if len_row_p != self.num_outputs():
+                self.errors.append(text_token({'E01013': {'len_p': len_row_p, 'len_o': self.num_outputs()}}))
+
+        return not self.errors

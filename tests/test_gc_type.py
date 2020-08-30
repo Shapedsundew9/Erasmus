@@ -3,12 +3,16 @@
 import pytest
 from os import linesep
 from os.path import dirname, join
-from tqdm import trange
+from tqdm import tqdm
 from json import load, dumps
+from microbiome.genetics.gc_type import __ALL_FLOATS, __ALL_OBJECTS, __ALL_SIGNED_INTEGERS, __ALL_UNSIGNED_INTEGERS
 from microbiome.genetics.gc_type import *
 
 
 __TEST_RESULTS_JSON = 'test_gc_type_results.json'
+test_cases = []
+for r in (__ALL_FLOATS, __ALL_OBJECTS, __ALL_SIGNED_INTEGERS, __ALL_UNSIGNED_INTEGERS):
+    test_cases.extend(list(r))
 
 
 def __write_results():
@@ -17,9 +21,10 @@ def __write_results():
     The resulting JSON file MUST be manually inspected to ensure it is correct.
     """
     results = []
-    for i in trange(0xFFFF):
+    for i in tqdm(test_cases):
         if validate(i):
             results.append([
+                i, 
                 hex(asint(i)),
                 asstr(i),
                 asdict(i),
@@ -35,19 +40,22 @@ def __write_results():
         else:
             results.append(last_validation_error())
 
-    with open(__TEST_RESULTS_JSON, "w") as f1:
+    with open(join(dirname(__file__), __TEST_RESULTS_JSON), "w") as f1:
         f1.write('[' + linesep)
         for r in results[:-1]:
             f1.write('\t' + dumps(r) + ',' + linesep)
-        f1.write(dumps(results[-1]) + linesep + ']'+ linesep)
+        f1.write('\t' + dumps(results[-1]) + linesep + ']'+ linesep)
 
 
 #__write_results()
 
 
-@pytest.mark.parametrize("i, case", enumerate(load(open(__TEST_RESULTS_JSON, "r"))))
-def test_all_types(i, case):
+with open(join(dirname(__file__), __TEST_RESULTS_JSON), "r") as results_file: results = load(results_file)
+@pytest.mark.parametrize("case", results)
+def test_all_types(case):
+    i = case[0]
     expected = str(last_validation_error()) if not validate(i) else str([
+        i,
         hex(asint(i)),
         asstr(i),
         asdict(i),
@@ -64,7 +72,7 @@ def test_all_types(i, case):
 
 
 
-@pytest.mark.parametrize("value", range(0x7FFF))
+@pytest.mark.parametrize("value", test_cases)
 def test_conversions(value):
     if validate(value): 
         value_as_dict = asdict(value)
