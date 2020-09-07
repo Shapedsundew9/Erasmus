@@ -34,6 +34,11 @@ from math import floor, log
 from .gc_type_validator import gc_type_validator
 
 
+# Constants
+UNKNOWN_TYPE = 0x400C
+
+
+# Internal constants
 __logger = getLogger(__name__)
 __affinities = {}
 with open(join(dirname(__file__), "../formats/gc_type_format.json"), "r") as format_file:
@@ -365,6 +370,9 @@ __load_affinities()
 def affinity(gc_type_a, gc_type_b):
     """Return the affinity of gc_type_a to gc_type_b.
 
+    Types always has an affinity of 1.0 with themselves and
+    the UNKNOWN type.
+    
     Args
     ----
         gc_type_a (int): A Genetic Code Type Definition value.
@@ -376,6 +384,7 @@ def affinity(gc_type_a, gc_type_b):
         numpy.float32: The affinity of gc_type_a to gc_type_b.
     """
     if gc_type_a == gc_type_b: return float32(1.0)
+    if gc_type_a == UNKNOWN_TYPE or gc_type_b == UNKNOWN_TYPE: return 1.0
     a_idx = __affinity_idx(gc_type_a)
     if a_idx in __affinities:
         b_idx = __affinity_idx(gc_type_b)
@@ -394,7 +403,7 @@ def compatible_types(gc_type):
     -------
         (list): A list of compatible gc_types including gc_type itself.
     """
-    retval = [gc_type]
+    retval = [gc_type, UNKNOWN_TYPE]
     idx = __affinity_idx(gc_type)
     if idx in __affinities: retval.extend(__affinities[idx].keys())
     return retval 
