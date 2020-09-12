@@ -75,6 +75,33 @@
             ]
         }
     },
+    "U": {
+        "required": false,
+        "type": "list",
+        "schema": {
+            "type": "list",
+            "minlength": 3,
+            "maxlength": 3,
+            "items": [
+                {
+                    "type": "string",
+                    "allowed": ["I", "C", "A", "B"]
+                },
+                {
+                    "type": "integer",
+                    "min": 0,
+                    "max": 256,
+                    "check_with": "valid_index"
+                },
+                {
+                    "type": ["integer", "string"],
+                    "min": -32768,
+                    "max": 32767,
+                    "check_with": "valid_type"
+                }
+            ]
+        }
+    },
     "O": {
         "required": true,
         "type": "list",
