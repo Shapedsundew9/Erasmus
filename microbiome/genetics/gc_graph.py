@@ -16,6 +16,11 @@ from ..text_token import text_token, register_token_code
 from logging import getLogger
 from .gc_type_definitions import *
 from random import choice
+from graph_tool import Graph, Vertex, Edge
+from graph_tool.draw import graph_draw
+from math import pi
+from cairo import FONT_WEIGHT_BOLD
+from numpy import max as npmax
 
 
 _logger = getLogger(__name__)
@@ -170,6 +175,7 @@ class gc_graph():
         self.status = []
 
 
+    #TODO: This function needs cleaning up. Maybe take an ep as an argument?
     def hash_ref(self, ref, ep_type):
         return ref[0] + str(ref[1]) + 'ds'[ep_type]
 
@@ -217,9 +223,9 @@ class gc_graph():
             ep (list): An endpoint list structure to be added to the internal graph.
         """
         ep_type, ep_row = ep[ep_idx.EP_TYPE], ep[ep_idx.ROW]
-        self.graph[ep_row + str(ep[ep_idx.INDEX]) + 'ds'[ep_type]] = ep
-        if not ep_row in self.rows[SRC_EP]: self.rows[ep_type][ep_row] = 0
+        if not ep_row in self.rows[ep_type]: self.rows[ep_type][ep_row] = 0
         ep[ep_idx.INDEX] = self.rows[ep_type][ep_row]
+        self.graph[ep_row + str(ep[ep_idx.INDEX]) + 'ds'[ep_type]] = ep
         self.rows[ep_type][ep_row] += 1
 
 
@@ -254,6 +260,80 @@ class gc_graph():
             if not 'C' in graph: graph['C'] = []
             graph['C'].append([ep[ep_idx.VALUE], ep[ep_idx.TYPE]])
         return graph
+
+
+    def __gt_graph(self):
+        """Create a graph_tool package graph."""
+        g = Graph()
+        vd = 60
+        fill = {'I': [1.0, 1.0, 1.0, 1.0],
+                'C': [0.5, 0.5, 0.5, 1.0],
+                'F': [0.0, 1.0, 1.0, 1.0],
+                'A': [1.0, 0.0, 0.0, 1.0],
+                'B': [0.0, 0.0, 1.0, 1.0],
+                'P': [0.0, 1.0, 0.0, 1.0],
+                'O': [0.0, 0.0, 0.0, 1.0]
+               }
+        p = {'label': g.new_vertex_property('string'),
+             'shape': g.new_vertex_property('string'),
+             'rotation': g.new_vertex_property('float'),
+             'text_rotation': g.new_vertex_property('float'),
+             'fill': g.new_vertex_property('vector<float>'),
+             'pos': g.new_vertex_property('vector<float>'),
+             'size': g.new_vertex_property('int'),
+             'font_size': g.new_vertex_property('int'),
+             'font_weight': g.new_vertex_property('int'),
+             'pen_width': g.new_edge_property('int'),
+             'marker_size': g.new_edge_property('int')
+            }
+        pos = {'I': (1, 1),
+               'C': (0, 1),
+               'F': (2, 2),
+               'A': (1, 2),
+               'B': (0, 3),
+               'P': (0, 4),
+               'O': (1, 4),
+              }
+        print(self.graph)
+        gtg = {k: {'max_idx': int(npmax([rep[ep_idx.INDEX] for rep in filter(self.row_filter(k), self.graph.values())], initial=0))} for k in gc_graph.rows}
+        width_0 = max((gtg['C']['max_idx'], gtg['B']['max_idx'], gtg['P']['max_idx']))
+        width_1 = max((gtg['I']['max_idx'], gtg['A']['max_idx'], gtg['O']['max_idx']))
+        for ep in self.graph.values():
+            if ep[ep_idx.ROW] != 'U' and not ep[ep_idx.INDEX] in gtg[ep[ep_idx.ROW]]:
+                v = g.add_vertex()
+                gtg[ep[ep_idx.ROW]]['max_idx'] = max((ep[ep_idx.INDEX], gtg[ep[ep_idx.ROW]]['max_idx']))
+                gtg[ep[ep_idx.ROW]][ep[ep_idx.INDEX]] = v
+                p['label'][v] = ep[ep_idx.ROW] + str(ep[ep_idx.INDEX])
+                p['fill'][v] = fill[ep[ep_idx.ROW]]
+                if ep[ep_idx.ROW] in ('C', 'B', 'P'): x = 1 + ep[ep_idx.INDEX]
+                if ep[ep_idx.ROW] in ('I', 'A', 'O'): x = width_0 + 2 + ep[ep_idx.INDEX]
+                if ep[ep_idx.ROW] == 'F' : x = width_0 + width_1 + 3 + ep[ep_idx.INDEX]
+                p['pos'][v] = [x, 2 * pos[ep[ep_idx.ROW]][1]]
+                p['font_size'][v] = 14
+                p['font_weight'][v] = FONT_WEIGHT_BOLD
+                if self.hash_ref(ep[1:3], ep[ep_idx.EP_TYPE]) in self.graph and self.hash_ref(ep[1:3], not ep[ep_idx.EP_TYPE]) in self.graph: 
+                    p['shape'][v], p['rotation'][v], p['text_rotation'][v], p['size'][v] = 'square', pi / 4, -pi / 4, vd
+                elif ep[ep_idx.EP_TYPE] == SRC_EP:
+                    p['shape'][v], p['rotation'][v], p['text_rotation'][v], p['size'][v] = 'triangle', pi, -pi, vd
+                else:
+                    p['shape'][v], p['rotation'][v], p['text_rotation'][v], p['size'][v] = 'triangle', 0.0, 0.0, vd
+                
+        print(gtg)
+        for ep in filter(self.src_filter(), self.graph.values()):
+            for ref in ep[ep_idx.REFERENCED_BY]:
+                e = g.add_edge(gtg[ep[ep_idx.ROW]][ep[ep_idx.INDEX]], gtg[ref[ref_idx.ROW]][ref[ref_idx.INDEX]])
+                p['pen_width'][e] = 4
+                p['marker_size'][e] = 24
+        return g, p, ((width_0 + width_1 + 5) * vd, vd * 5)
+
+
+    def draw(self, name="graph"):
+        """Draw the graph."""
+        g, p, os = self.__gt_graph()
+        graph_draw(g, pos=p['pos'], vertex_text=p['label'], vertex_shape=p['shape'], vertex_rotation=p['rotation'],
+            vertex_text_rotation=p['text_rotation'], vertex_fill_color=p['fill'],  vertex_size=p['size'],
+            vertex_font_weight=p['font_weight'], vertex_font_size=p['font_size'], edge_pen_width=p['pen_width'], output=name+".png", 
+            edge_marker_size=p['marker_size'], output_size=os)
 
 
     def endpoint_filter(self, ep_type, filter_func=lambda x: True):
@@ -556,9 +636,12 @@ class gc_graph():
         """
         #1
         row_u_list = list(filter(self.row_filter('U'), self.graph.values()))
+        print("Row U: ",row_u_list)
         for ep in row_u_list: self.__remove_ep(ep, check=False)
         unreferenced = list(filter(self.src_filter(self.unreferenced_filter()), self.graph.values()))
-        for i, ep in enumerate(unreferenced): self.__add_ep([DST_EP, 'U', i, ep[ep_idx.TYPE], [[*ep[1:3]]]])
+        for i, ep in enumerate(unreferenced):
+            print("i: ", i)
+            self.__add_ep([DST_EP, 'U', i, ep[ep_idx.TYPE], [[*ep[1:3]]]])
 
         #2
         self.app_graph.update(self.application_graph())
@@ -599,37 +682,37 @@ class gc_graph():
             (bool): True if the graph is valid else False.
             If False is returned details of the errors found are in the errors member.
         """
-        self.messages = []
+        self.status = []
 
         #1
-        if self.num_outputs() == 0: self.messages.append(text_token({'E01000': {}}))
+        if self.num_outputs() == 0: self.status.append(text_token({'E01000': {}}))
 
         #2a.
         for row in filter(self.src_filter(self.unreferenced_filter()), self.graph.values()):
             refs = [ep[ep_idx.REFERENCED_BY][0] for ep in filter(self.row_filter('U'), self.graph.values())]
             if not any([row[ep_idx.ROW] == r and row[ep_idx.INDEX] == i for r, i in refs]):
-                self.messages.append(text_token({'E01001': {'ep_type': ['Destination', 'Source'][row[ep_idx.EP_TYPE]],
+                self.status.append(text_token({'E01001': {'ep_type': ['Destination', 'Source'][row[ep_idx.EP_TYPE]],
                     'ref': [row[ep_idx.ROW], row[ep_idx.INDEX]]}}))
 
         #2b.
         for ep in filter(self.row_filter('U'), self.graph.values()):
             if len(ep[ep_idx.REFERENCED_BY]) > 1:
-                self.messages.append(text_token({'E01014': {'u_ep': [*ep[1:3]], 'refs': ep[ep_idx.REFERENCED_BY]}}))
+                self.status.append(text_token({'E01014': {'u_ep': [*ep[1:3]], 'refs': ep[ep_idx.REFERENCED_BY]}}))
 
         #2c.
         for ep in filter(self.row_filter('U'), self.graph.values()):
             if ep[ep_idx.REFERENCED_BY][0][ref_idx.ROW] == 'C':
                 if not 'C' in self.app_graph or ep[ep_idx.REFERENCED_BY][0][ref_idx.INDEX] >= len(self.app_graph['C']):
-                    self.messages.append(text_token({'E01015': {'u_ep': [*ep[1:3]], 'refs': ep[ep_idx.REFERENCED_BY]}}))
+                    self.status.append(text_token({'E01015': {'u_ep': [*ep[1:3]], 'refs': ep[ep_idx.REFERENCED_BY]}}))
 
         #3
         for row in filter(self.dst_filter(self.unreferenced_filter()), self.graph.values()):
-            self.messages.append(text_token({'E01001': {'ep_type': ['Destination', 'Source'][row[ep_idx.EP_TYPE]],
+            self.status.append(text_token({'E01001': {'ep_type': ['Destination', 'Source'][row[ep_idx.EP_TYPE]],
                 'ref': [row[ep_idx.ROW], row[ep_idx.INDEX]]}}))
 
         #4 - gc_type validate() is slow! 
         for row in filter(lambda x: not validate(x[ep_idx.TYPE]), self.graph.values()):
-            self.messages.append(text_token({'E01002': {'ep_type': ['Destination', 'Source'][row[ep_idx.EP_TYPE]],
+            self.status.append(text_token({'E01002': {'ep_type': ['Destination', 'Source'][row[ep_idx.EP_TYPE]],
                 'ref': [row[ep_idx.ROW], row[ep_idx.INDEX]], 'type_errors': last_validation_error()}}))
 
         #5
@@ -644,32 +727,32 @@ class gc_graph():
             ep = ep_dict[k]
             if ep:
                 if not (min(ep) == 0 and max(ep) == len(set(ep)) - 1):
-                    self.messages.append(text_token({'E01003': {'row': k, 'indices': sorted(ep)}}))
+                    self.status.append(text_token({'E01003': {'row': k, 'indices': sorted(ep)}}))
             if v:
                 if not (min(v) == 0 and max(v) == len(set(v)) - 1):
-                    self.messages.append(text_token({'E01004': {'row': k, 'indices': sorted(v)}}))
+                    self.status.append(text_token({'E01004': {'row': k, 'indices': sorted(v)}}))
         
         #6
         for row in filter(lambda x: x[ep_idx.ROW] == 'C' and not validate_value(x[ep_idx.VALUE], x[ep_idx.TYPE]), self.graph.values()):
-            self.messages.append(text_token({'E01005': {'ref': [row[ep_idx.ROW], row[ep_idx.INDEX]], 'value': row[ep_idx.VALUE],
+            self.status.append(text_token({'E01005': {'ref': [row[ep_idx.ROW], row[ep_idx.INDEX]], 'value': row[ep_idx.VALUE],
                 'type': asstr(row[ep_idx.TYPE])}}))
 
         #7
         if self.has_f() != bool(len(list(filter(self.row_filter('P'), self.graph.values())))):
                 print(list(filter(self.row_filter('P'), self.graph.values())))
                 print(self.has_f())
-                self.messages.append(text_token({'E01006': {}}))
+                self.status.append(text_token({'E01006': {}}))
     
         # 8 & 9
         # FIXME: It is not possible to tell from the graph whether this is a codon or not
 
         #10
         for row in filter(self.row_filter('I', self.dst_filter()), self.graph.values()):
-            self.messages.append(text_token({'E01007': {'ref': [row[ep_idx.ROW], row[ep_idx.INDEX]]}}))
+            self.status.append(text_token({'E01007': {'ref': [row[ep_idx.ROW], row[ep_idx.INDEX]]}}))
 
         #11
         for row in filter(self.rows_filter(('O', 'P'), self.src_filter()), self.graph.values()):
-            self.messages.append(text_token({'E01008': {'ref': [row[ep_idx.ROW], row[ep_idx.INDEX]]}}))
+            self.status.append(text_token({'E01008': {'ref': [row[ep_idx.ROW], row[ep_idx.INDEX]]}}))
 
         #12
         for row in filter(self.dst_filter(), self.graph.values()):
@@ -677,7 +760,7 @@ class gc_graph():
                 try:
                     src = next(filter(self.ref_filter(ref), self.graph.values()))
                     if affinity(src[ep_idx.TYPE], row[ep_idx.TYPE]) == 0.0:
-                        self.messages.append(text_token({'E01009': {'ref1': [src[ep_idx.ROW], src[ep_idx.INDEX]], 'type1': asstr(src[ep_idx.TYPE]),
+                        self.status.append(text_token({'E01009': {'ref1': [src[ep_idx.ROW], src[ep_idx.INDEX]], 'type1': asstr(src[ep_idx.TYPE]),
                             'ref2': [row[ep_idx.ROW], row[ep_idx.INDEX]], 'type2': asstr(row[ep_idx.TYPE])}}))
                 except StopIteration:
                     pass
@@ -686,14 +769,14 @@ class gc_graph():
         for row in filter(self.dst_filter(), self.graph.values()):
             for ref in row[ep_idx.REFERENCED_BY]:
                 if ref[ref_idx.ROW] not in gc_graph.src_rows[row[ep_idx.ROW]]:
-                    self.messages.append(text_token({'E01010': {'ref1': [row[ep_idx.ROW], row[ep_idx.INDEX]],
+                    self.status.append(text_token({'E01010': {'ref1': [row[ep_idx.ROW], row[ep_idx.INDEX]],
                         'ref2': [ref[ref_idx.ROW], ref[ref_idx.INDEX]]}}))
 
         #14a
         if self.has_f():
             for row in filter(self.row_filter('B', self.dst_filter()), self.graph.values()):
                 for ref in filter(lambda x: x[ref_idx.ROW] == 'A', row[ep_idx.REFERENCED_BY]):
-                    self.messages.append(text_token({'E01011': {'ref1': [row[ep_idx.ROW], row[ep_idx.INDEX]],
+                    self.status.append(text_token({'E01011': {'ref1': [row[ep_idx.ROW], row[ep_idx.INDEX]],
                         'ref2': [ref[ref_idx.ROW], ref[ref_idx.INDEX]]}}))
 
         #14b
@@ -701,16 +784,16 @@ class gc_graph():
             for row in filter(self.row_filter('O'), self.graph.values()):
                 for ref in row[ep_idx.REFERENCED_BY]:
                     if ref[ref_idx.ROW] == 'B':
-                        self.messages.append(text_token({'E01012': {'ref1': [row[ep_idx.ROW], row[ep_idx.INDEX]], 'ref2': ref}}))
+                        self.status.append(text_token({'E01012': {'ref1': [row[ep_idx.ROW], row[ep_idx.INDEX]], 'ref2': ref}}))
 
         #14c
         if self.has_f():
             len_row_p = len(list(filter(self.row_filter('P'), self.graph.values())))
             if len_row_p != self.num_outputs():
-                self.messages.append(text_token({'E01013': {'len_p': len_row_p, 'len_o': self.num_outputs()}}))
+                self.status.append(text_token({'E01013': {'len_p': len_row_p, 'len_o': self.num_outputs()}}))
 
-        for m in self.messages: gc_graph._logger.debug(m)
-        return not self.messages
+        for m in self.status: gc_graph._logger.debug(m)
+        return not self.status
 
 
     def random_mutation(self):
@@ -743,28 +826,6 @@ class gc_graph():
         choice(change_functions)()
         
 
-    def random_repair(self):
-        """Randomly choose an error to attempt to repair.
-
-        Repairs target specific errors and perform a single step repair attempt such as
-        connecting a destination to a source. Compound repairs e.g. making a connection
-        between an unconnected destination and unconnected source (which fixes two issues)
-        may only happen by chance.
-
-        Note that repairs in one graph may create issues in other graphs. For example adding
-        an 'I' row input would break any G.C. instanciating the current one.
-
-        Each possible repair to a graph error has the same probability:
-            1. E01000: Randomly choose a viable source
-            2. E01001: Randomly choose a viable source
-            3. E01001: Randomly choose a viable destination
-            4. 
-
-        NB: E01002, E01004 to E01008 inclusive should never occur.  
-        """
-        pass
-
-
     def random_add_src_ep(self):
         """Randomly choose a source row and add an endpoint of unknown type."""
         src_rows = ['I', 'C', 'A']
@@ -775,9 +836,9 @@ class gc_graph():
     def add_src_ep(self, row):
         """Add an endpoint to row of UNKNOWN type.""" 
         self.__add_ep([SRC_EP, row, None, UNKNOWN_TYPE, []])
-        if row == 'I': self.messages.append(text_token({'I01000': {}}))
-        elif row == 'A': self.messages.append(text_token({'I01100': {}}))
-        elif row == 'B': self.messages.append(text_token({'I01200': {}}))
+        if row == 'I': self.status.append(text_token({'I01000': {}}))
+        elif row == 'A': self.status.append(text_token({'I01100': {}}))
+        elif row == 'B': self.status.append(text_token({'I01200': {}}))
 
 
     def random_remove_src_ep(self):
@@ -793,11 +854,11 @@ class gc_graph():
             ep = ep_list[0]
             ep_row = ep[ep_idx.ROW]
             self.__remove_ep(ep)
-            if ep_row == 'I': self.messages.append(text_token({'I01001': {}}))
-            elif ep_row == 'A': self.messages.append(text_token({'I01101': {}}))
-            elif ep_row == 'B': self.messages.append(text_token({'I01201': {}}))
+            if ep_row == 'I': self.status.append(text_token({'I01001': {}}))
+            elif ep_row == 'A': self.status.append(text_token({'I01101': {}}))
+            elif ep_row == 'B': self.status.append(text_token({'I01201': {}}))
         else:
-            self.messages.append(text_token({'I01900': {}}))
+            self.status.append(text_token({'I01900': {}}))
 
 
     def random_add_dst_ep(self):
@@ -811,12 +872,12 @@ class gc_graph():
         """Add an endpoint to row of UNKNOWN type.""" 
         self.__add_ep([DST_EP, row, None, UNKNOWN_TYPE, []])
         if row == 'O':
-            self.messages.append(text_token({'I01302': {}}))
+            self.status.append(text_token({'I01302': {}}))
             if self.has_f():
                 self.__add_ep([DST_EP, 'P', None, UNKNOWN_TYPE, []])
-                self.messages.append(text_token({'I01402': {}}))
-        elif row == 'A': self.messages.append(text_token({'I01102': {}}))
-        elif row == 'B': self.messages.append(text_token({'I01202': {}}))
+                self.status.append(text_token({'I01402': {}}))
+        elif row == 'A': self.status.append(text_token({'I01102': {}}))
+        elif row == 'B': self.status.append(text_token({'I01202': {}}))
 
 
     def random_remove_dst_ep(self):
@@ -840,15 +901,15 @@ class gc_graph():
             ep_row = ep[ep_idx.ROW]
             self.__remove_ep(ep)
             if ep_row == 'O':
-                self.messages.append(text_token({'I01303': {}}))
+                self.status.append(text_token({'I01303': {}}))
                 if self.has_f():
                     ep[ep_idx.ROW] = 'P' 
                     self.__remove_ep(ep)
-                    self.messages.append(text_token({'I01403': {}}))
-            elif ep_row == 'A': self.messages.append(text_token({'I01103': {}}))
-            elif ep_row == 'B': self.messages.append(text_token({'I01203': {}}))
+                    self.status.append(text_token({'I01403': {}}))
+            elif ep_row == 'A': self.status.append(text_token({'I01103': {}}))
+            elif ep_row == 'B': self.status.append(text_token({'I01203': {}}))
         else:
-            self.messages.append(text_token({'I01900': {}}))
+            self.status.append(text_token({'I01900': {}}))
 
 
     def random_remove_connection(self):
@@ -893,7 +954,7 @@ class gc_graph():
         """
         dst_ep_list = list(filter(self.unreferenced_filter(self.dst_filter()), self.graph.values()))
         gc_graph._logger.debug("Selecting connection to add to destination endpoint list: {}".format(dst_ep_list))
-        self.add_connection([choice(dst_ep_list)])
+        if dst_ep_list: self.add_connection([choice(dst_ep_list)])
 
 
     def add_connection(self, dst_ep_list, src_ep_filter_func=lambda x: [choice(x)]):    

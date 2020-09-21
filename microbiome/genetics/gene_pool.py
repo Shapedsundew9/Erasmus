@@ -22,6 +22,14 @@ from importlib import import_module, reload
 from pprint import pformat
 
 
+def __reference():
+    """Generate infinite reference sequence."""
+    i = 0
+    while True:
+        yield i
+        i += 1
+
+
 # The gene_pool organises genetic codes for a worker. Each worker has its own gene pool.
 # The gene pool is responsbile for:
 #   1. Gathering an inital population of genetic codes from the genomic library based on the criteria provided by the worker.
@@ -61,8 +69,7 @@ class gene_pool():
     def __getitem__(self, signature):
         if signature not in self.__gene_pool:
             gcs = gene_pool.__gl.load([{'signature': signature}])
-            gcs[0]['__valid'] = True
-            self.add(gcs, push=False)
+            self.add(gcs)
         return self.__gene_pool[signature]
 
 
@@ -73,8 +80,7 @@ class gene_pool():
     # Any GCs pulled from the genomic library are by definition valid
     def __update(self):
         gcs = gene_pool.__gl.load(self.__query)
-        for gc in gcs: gc['__valid'] = True
-        self.add(gcs, push=False)
+        self.add(gcs)
 
 
     def __function_not_found(self, name):
@@ -149,75 +155,68 @@ class gene_pool():
     # Sub-codes will be added automatically if needed
     # GCA & GCB signatures will be replaced with references to the genetic code
     # A 'count' field is added counting the number of references to the GC within the gene pool
-    def add(self, gcs, push=True):
-        addition_queue = [gc for gc in gcs if gc['signature'] != NULL_GC]
-        signature_queue = [gc['signature'] for gc in addition_queue]
-        zero_count_list = []
+    def add(self, gcs):
+        addition_queue = [self.extended_genetic_code(gc) for gc in gcs if gc['signature'] != NULL_GC]
+        signature_queue = [xgc['signature'] for xgc in addition_queue]
 
         # Add to the gene pool
         # Link GCA & GCB directly to thier GC objects
         # Add a 'count' of how many references a GC has in the gene pool
         while addition_queue:
-            gc = addition_queue.pop()
+            xgc = addition_queue.pop()
             signature = signature_queue.pop()
             if not signature in self.__gene_pool:
-                self.__gene_pool[signature] = gc
-                if gc['__valid']:
-                    self.__push_queue.append(gc)
-                    if '__count' not in gc:
-                        gc['__count'] = 0
-                        zero_count_list.append(signature)
-                    for __ab, ab in (('__gca', 'gca'), ('__gcb', 'gcb')):
-                        if not gc[ab] in self.__gene_pool:
-                            if not gc[ab] in signature_queue:
-                                if  gc[ab] == NULL_GC:
-                                    gc[__ab] = None
-                                else:
-                                    gene_pool.__logger.debug("Loading GCAB %s from genomic library.", gc[ab])
-                                    addition_queue.append(gene_pool.__gl[gc[ab]])
-                                    signature_queue.append(addition_queue[-1]['signature'])
-                                    gc[__ab] = addition_queue[-1]
-                                    gc[__ab]['__count'] = 1
+                self.__gene_pool[signature] = xgc
+                self.__push_queue.append(xgc)
+                for __ab, ab in (('__gca', 'gca'), ('__gcb', 'gcb')):
+                    if  xgc[ab] != NULL_GC:
+                        if not xgc[ab] in self.__gene_pool:
+                            if not xgc[ab] in signature_queue:
+                                gene_pool.__logger.debug("Loading GCAB %s from genomic library.", xgc[ab])
+                                addition_queue.append(gene_pool.__gl[xgc[ab]])
+                                signature_queue.append(addition_queue[-1]['signature'])
+                                xgc[__ab] = addition_queue[-1]
+                                xgc[__ab]['__count'] = 1
                             else:
-                                gc[__ab] = addition_queue[signature_queue.index(gc[ab])]
-                                if not '__count' in gc[__ab]: gc[__ab]['__count'] = 0
-                                gc[__ab]['__count'] += 1
+                                xgc[__ab] = addition_queue[signature_queue.index(xgc[ab])]
+                                xgc[__ab]['__count'] += 1
                         else:
-                            if __ab not in gc: gc[__ab] = self.__gene_pool[gc[ab]]
-                            if '__count' not in gc[__ab]: gc[__ab]['__count'] = 0
-                            gc[__ab]['__count'] += 1
+                            xgc[__ab] = self.__gene_pool[xgc[ab]]
+                            xgc[__ab]['__count'] += 1
+        self.__create_callables(self.__gene_pool.values())
 
-        # Create a a genetic_code node tree for top level (0 gene pool reference count) GCs
-        for signature in zero_count_list:
-            # GC's put on the zero count list may not have zero count by the time we process the list
-            if not self.__gene_pool[signature]['__count']: self.__gene_pool[signature]['__genetic_code'] = genetic_code(self.__gene_pool[signature])
-        
-        # Update the genomic library
-        if push: self.push()
+    
+    def extended_genetic_code(self, gc, count=0):
+        """Extend the gc dictionary with gene pool specific fields.
 
-        # Re-create the callables file
-        self.__create_callables([gc for gc in filter(lambda x: x['__valid'], self.__gene_pool.values())])
+        The supplied genetic code dictionary, gc, is updated to include
+        the extended fields to reduce duplication and increase performance.
 
+        All xGC keys start with '__'.
+            '__valid' (bool): True if the xGC is a valid GC.
+            '__count' (int): The number of times this xGC is referenced by other xGCs.
+            '__gca' (xGC): The xGC of GCA or None if GCA is the NULL_GC.
+            '__gcb' (xGC): The xGC of GCB or None if GCB is the NULL_GC.
+            '__ref' (int): The gene pool unique reference.
+            '__fitness' (float): Value between 0.0 and 1.0.
+            '__previous_fitness' (float): The fitness from the previous evaluation.
+            '__mutated_by' (xGC): The GC that mutated this GC last. 
 
-    def validate(self, entry):
-        return gene_pool.__gl.validate(entry)
+        Args
+        ----
+            gc (dict): An application format genetic code.
 
+        Returns
+        -------
+            (dict): The extended genetic code dictionary.
+        """
+        gc['__valid'] = True
+        gc['__count'] = count
+        gc['__gca'] = None
+        gc['__gcb'] = None
+        gc['__ref'] = __reference()
+        gc['__fitness'] = 0.0
+        gc['__previous_fitness'] = 0.0
+        gc['__mutated_by'] = None
+        return gc
 
-    def normalize(self, entry):
-        return gene_pool.__gl.normalize(entry)
-
-
-    def draw(self, root=None):
-        dg = draw_graph()
-        node_list = [root] if not root is None else [gc['signature'] for gc in self.__gene_pool.values() if gc['count'] == 0]
-        for node in node_list: node['vertex'] = dg.add_vertex()
-
-        while node_list:
-            node = self.__gene_pool[node_list.pop()]
-            for gcab in ('gca', 'gcb'):
-                if not self.__gene_pool[gcab] is None:
-                    if not 'vertex' in self.__gene_pool[gcab]: self.__gene_pool[gcab]['vertex'] = dg.add_vertex()
-                    dg.add_edge(node['vertex'], self.__gene_pool[gcab]['vertex'])
-                    node_list.append(gcab)
-
-        dg.draw("gene_pool")

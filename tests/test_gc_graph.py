@@ -5,7 +5,7 @@ import pytest
 from os.path import dirname, join
 from json import load
 from random import choice, randint
-from microbiome.genetics.gc_graph_tools import gc_graph, conn_idx, const_idx, DST_EP, SRC_EP, DESTINATION_ROWS, SOURCE_ROWS
+from microbiome.genetics.gc_graph import gc_graph, conn_idx, const_idx, DST_EP, SRC_EP, DESTINATION_ROWS, SOURCE_ROWS
 from microbiome.genetics.gc_type import asint
 from logging import getLogger, basicConfig, DEBUG, INFO
 
@@ -49,7 +49,7 @@ def test_graph_validation(i, case):
     gcg = gc_graph(case['graph'])
     assert i == case['i']
     assert case['valid'] == gcg.validate()
-    if not case['valid']: assert all([e in [g.code for g in gcg.messages] for e in case['errors']])
+    if not case['valid']: assert all([e in [g.code for g in gcg.status] for e in case['errors']])
 
 
 @pytest.mark.parametrize("i, case", enumerate(results))
@@ -64,8 +64,8 @@ def test_graph_conversion(i, case):
         assert case['graph'] == gcg.application_graph()
 
 
-@pytest.mark.parametrize("i", range(10))
-def test_add_connection_simple(i):
+@pytest.mark.parametrize("test", range(1000))
+def test_add_connection_simple(test):
     """Verify adding connections makes valid graphs.
     
     Create a random graph with unconnected source and destination endpoints
@@ -89,7 +89,7 @@ def test_add_connection_simple(i):
                 for i in range(randint(1, 8)):
                     ep = [SRC_EP, row, i, 'int', []]
                     if row == 'C': ep.append(randint(-1000, 1000))
-                    graph.graph[graph.hash_ref([row, i], DST_EP)] = ep
+                    graph.graph[graph.hash_ref([row, i], SRC_EP)] = ep
 
     for _ in range(len(list(filter(graph.dst_filter(), graph.graph.values())))): graph.random_add_connection()
     graph.normalize()
@@ -97,8 +97,9 @@ def test_add_connection_simple(i):
 
     #TODO: Split this out into its own test case when the graphs are staticly defined in a JSON file.
     for _ in range(int(len(list(filter(graph.dst_filter(), graph.graph.values()))) / 2)): graph.random_remove_connection()
+    for _ in range(len(list(filter(graph.dst_filter(), graph.graph.values())))): graph.random_add_connection()
     graph.normalize()
     assert graph.validate()
-
+    #graph.draw('graph_' + str(test))
 
 
