@@ -52,7 +52,7 @@
     },
     "count": {
         "type": "integer",
-        "min": 1,
+        "min": 0,
         "max": 2147483647,
         "meta": {
             "database": {
@@ -65,6 +65,7 @@
             "compressed": false,
             "description": "Current population size."
         },
+        "default": 0,
         "check_with": "valid_population_count"
     },
     "dict": {

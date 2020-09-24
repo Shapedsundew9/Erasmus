@@ -201,6 +201,7 @@ class gene_pool():
             '__fitness' (float): Value between 0.0 and 1.0.
             '__previous_fitness' (float): The fitness from the previous evaluation.
             '__mutated_by' (xGC): The GC that mutated this GC last. 
+            '__func' (func): The executable code for this GC.
 
         Args
         ----
@@ -218,5 +219,6 @@ class gene_pool():
         gc['__fitness'] = 0.0
         gc['__previous_fitness'] = 0.0
         gc['__mutated_by'] = None
+        gc['__func'] = None
         return gc
 

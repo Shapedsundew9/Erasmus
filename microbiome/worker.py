@@ -60,33 +60,13 @@ class worker():
         if worker.__worker_registry is None: worker.__worker_registry = database_table(worker.__logger, 'worker_registry')
         worker.__worker_registry.store([self.registration_document])
         if worker.__work_registry is None:  worker.__work_registry = database_table(worker.__logger, 'work_registry', True)
-        self.__mutation_file_mtime = getmtime(gm.__file__)
-        self.__mutation_keys = list(meta_data.keys())
-        self.work = None
-        self.__fitness_function = fitness_function
         self.gene_pool = None
-        self.__work_log = None
-        self.__log_data = {}
 
 
     def __function_not_found(self, name):
         worker.__logger.error("The dynamically determined function %s cannot be found.", name)
 
 
-    def __valid_work(self, population):
-        count = 0
-        valid_population, _ = self.__calculate_fitness([self.gene_pool[signature] for signature in population.keys()])
-        for signature, fitness in valid_population.items():
-            if not isclose(population[signature], fitness):
-                worker.__logger.warning("Fitness score for GC %s cannot be reproduced: Work registry fitness score %f versus worker fitness %f score",
-                    signature, population[signature], fitness)
-                count += 1
-        if count:
-            worker.__logger.warning("%d of %d (%0.2f%%) worker registry recorded fitness scores could not be reproduced by the worker.",
-                count, len(population), 100.0 * count / len(self.work['population_dict']))
-            return False
-        worker.__logger.info("Worker was able to reproduce all of the registered work fitness scores.")
-        return True
 
 
     # GCs may be generated that are not valid to be put into the genomic library
