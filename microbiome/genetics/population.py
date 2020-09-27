@@ -7,7 +7,10 @@ Author: Shaped Sundew
 
 from hashlib import sha256
 from logging import getLogger
-from numpy import float32, array, amax, amin, mean, median
+from numpy import int32, float32, array, amax, amin, mean, median, count_nonzero
+from numpy import sum as npsum
+from numpy.random import choice
+from .gene_pool import gene_pool
 from ..config import get_config
 from ..database_table import database_table
 
@@ -38,70 +41,203 @@ class population():
         """
         self.__table = database_table(population.__logger, 'populations')
         self.__log_table = database_table(population.__logger, p_config.log_table)
-        self.definition = self.__table.load(['signature': p_config['signature']])
+        self.definition = self.__table.load([{'signature': p_config['signature']}])
         self.individuals = self.definition['population_dict']
 
 
-    def initialize(self, gene_pool, fitness_function=None):
+    def initialize(self, gene_pool, target_fitness_function=None):
         """Initialize the population.
 
         Before a population can be used all individuals must be brought into the gene_pool
-        and validated. If the individuals of the population are already defined they are scored
-        with the fitness_function and compared to the record in the population table. This
-        is to verify the fitness function is consistent with the previous work. A WARNING
+        and validated. If the individuals of the population are target individuals and
+        already have a target_fitness they are scored with the target_fitness_function 
+        and compared to the record in the population table. This
+        is to verify the target_fitness_function is consistent with the previous work. A WARNING
         is logged if there is a mismatch. If no individuals
         were defined the population initial query is used to define them.
 
         Args
         ----
         gene_pool (gene_pool): The gene pool from which this population will be drawn.
-        fitness_function (func): Takes a population individual GC as a single argument.
+        target_fitness_function (func): Takes a target individual GC as a single argument
+            retuning a fitness value >= 0.0 and <= 1.0.
         """
         if not self.individuals:
             initial_population = gene_pool.gl(self.definition['initial_query'], ['signature'])
-            self.individuals = {s['signature']: self.gene_pool[s['signature']]) for s in initial_population}
+            self.individuals = {s['signature']: self.gene_pool([s['signature']]) for s in initial_population}
             population.__logger.debug("Initial population: %s", self.individuals)
         else:
-            individuals_updated = {s['signature']: self.gene_pool[s['signature']]) for s in self.individuals.keys()}
-            for s in individuals_updated: individuals_updated[s]['__fitness': self.individuals[s]
+            individuals_updated = {s['signature']: self.gene_pool([s['signature']]) for s in self.individuals.keys()}
+            for s in individuals_updated: individuals_updated[s]['__target_fitness'] = self.individuals[s]
             self.individuals = individuals_updated
-            for gc in self.individuals.values():
-                fitness = fitness_function(gc)
-                if not isclose(gc['__fitness'], fitness):
+            for gc in self.individuals.values() if not gc['properties']['mutation']:
+                target_fitness = target_fitness_function(gc)
+                if not isclose(gc['__target_fitness'], target_fitness):
                     population.__logger.warning("Fitness score for GC %s cannot be reproduced: Population fitness score %f versus worker fitness %f score",
-                        signature, gc['__fitness'], fitness)
+                        signature, gc['__target_fitness'], target_fitness)
+
+
+    def __mmmm(self, key, data):
+        """Finds the min, max, mean and median of a numerical array data.
+
+        The results are returned as a dictionary with keys of the form
+        key + '_' + x where x is 'min', 'max', 'mean', 'median'.
+
+        Args
+        ----
+        key (str): The base key for each calaculated value.
+        data (array): A numerical array.
+
+        Returns
+        -------
+        (dict): The results dictionary.
+        """
+        return {
+            key + '_min': amin(data),
+            key + '_max': amax(data),
+            key + '_mean': mean(data),
+            key + '_median': median(data)
+        }
 
 
     def log(self):
         """Log the state of the population."""
 
-        fitness_data = array([v['__fitness'] for v in self.individuals.values()])
-        code_depth_data = array([k['code_depth'] for k in self.individuals.values()])
-        codon_depth_data = array([k['codon_depth'] for k in self.individuals.values()])
-        code_count_data = array([k['num_codes'] for k in self.individuals.values()])
-        codon_count_data = array([k['raw_num_codes'] for k in self.individuals.values()])
-        self.__log_table.store([{
-            'fitness_min': float(amin(fitness_data)),
-            'fitness_max': float(amax(fitness_data)),
-            'fitness_mean': float(mean(fitness_data)),
-            'fitness_median': float(median(fitness_data),
-            'code_depth_min': int(amin(code_depth_data)),
-            'code_depth_max': int(amax(code_depth_data)),
-            'code_depth_mean': float(mean(code_depth_data)),
-            'code_depth_median': int(median(code_depth_data)),
-            'codon_depth_min': int(amin(codon_depth_data)),
-            'codon_depth_max': int(amax(codon_depth_data)),
-            'codon_depth_mean': float(mean(codon_depth_data)),
-            'codon_depth_median': int(median(codon_depth_data)),
-            'code_count_min': int(amin(code_count_data)),
-            'code_count_max': int(amax(code_count_data)),
-            'code_count_mean': float(mean(code_count_data)),
-            'code_count_median': int(median(code_count_data)),
-            'codon_count_min': int(amin(codon_count_data)),
-            'codon_count_max': int(amax(codon_count_data)),
-            'codon_count_mean': float(mean(codon_count_data)),
-            'codon_count_median': int(median(codon_count_data))
-        }])
+        fitness_data = array([v['__target_fitness'] for v in self.individuals.values(), float32])
+        code_depth_data = array([k['code_depth'] for k in self.individuals.values(), int32])
+        codon_depth_data = array([k['codon_depth'] for k in self.individuals.values(), int32])
+        code_count_data = array([k['num_codes'] for k in self.individuals.values(), int32])
+        codon_count_data = array([k['raw_num_codes'] for k in self.individuals.values(), int32])
+        log_data = self.__mmmm('fitness', fitness_data)
+        log_data.update(self.__mmmm('code_depth', code_depth_data))
+        log_data.update(self.__mmmm('codon_depth', codon_depth_data))
+        log_data.update(self.__mmmm('code_count', code_count_data))
+        log_data.update(self.__mmmm('codon_count', codon_count_data))
+        self.__log_table.store([log_data])
+
+
+    def update_fitness(self, target_fitness_function):
+        """Update the fitness of each individual in the population.
+
+        Target fitness is calculated using the target_fitness_function for all target population
+        individuals and stored in the extended genetic code dictionary.
+        If a target individual is fitter than all of its parent(s).
+            Its fitness is increased by 1.
+            The mutation that created it fitness is increased by 1.
+            If a parasitic GC was inserted during mutation its fitness is increased by 1.
+        If a mutation individuals fitness increases.
+            If a parasitic GC was involved in the mutation operation its fitness is increased by 1.
+        There are no explicit penalties for individual offspring that are as or less suitable
+        than thier parent(s). The implicit penalty comes through the weighted selection algorithm
+        favouring those individuals with higher fitness and evolvability.
+
+        Args
+        ----
+        target_fitness_function (func): Takes a target individual GC as a single argument
+            returning a fitness value >= 0.0 and <= 1.0.
+        """
+        for gc in self.individuals if not i['properties']['mutation']:
+            i['__previous_fitness'] = i['__fitness']
+            i['__fitness'] = target_fitness_function(i)
+            if i['__fitness'] > i['__previous_fitness']:
+                self.__increment_fitness(i)
+                self.__increment_fitness(i['__mutated_by'])
+                for p in i['__parasites']: self.__increment_fitness(p)
+
+
+    def __increment_fitness(self, xGC):
+        """Increment the fitness of an individual.
+
+        Increasing the fitness of an individual increases the evolvability
+        of its parent(s).
+
+        Args
+        ----
+        xGC (xGC): The GC of which fitness will be incremented.
+        """
+        xGC['fitness'] += 1.0
+        for p in xGC['meta_data']['parents'][-1]:
+            self.__increase_evolvability(gene_pool[p], 1.0)
+
+
+    def __increase_evolvability(self, xGC, increase):
+        """Increase the evolvability of xGC by increase.
+
+        If an individuals evolvability increases the individuals parent(s) evolvability increase
+        by 50%% of the individuals evolvability increase.
+
+        NOTE: It is possible (likely) for a single ancestor to get multiple evolvability increases
+        from a single descendant if the family tree converges in the past.   
+
+        Args
+        ----
+        xGC: (xGC) The individual of which evolvability will be increased.
+        increase: (float) The amount of evolvability by which to increase.
+        """
+        evo_queue = [(xGC, increase)]
+        while evo_queue:
+            xGC, increase = evo_queue.pop()
+            xGC['evolvability'] += increase
+            for p in xGC['meta_data']['parents'][-1]:
+                evo_queue.append((gene_pool[p], increase / 2.0))
+
+
+    def cull(self):
+        """Remove individuals from the population until at the population size limit.
+
+        After breeding/mutation the population may be greater than the size limit.
+        If it is it is brought back down to the limit through a random weighted targeting
+        of individuals to cull based on their fitness and evolvability. The individual
+        with the highest fitness is exempt from the cull (or, in the event of a fitness tie,
+        the highest evolvability of the fittest, and if it is still a tie then randomly selected
+        from that group).
+
+        The weight of individual, i, eligible for culling is:
+            weight = 1.0 - (E(i) / E_max * F(i) / F_max)
+        where E(i) is the evolvability of i, E_max is the highest evolvability of any individual in
+        the eligible population, F(i) is the target fitness of i and F_max is the highest target
+        fitness in the eligible population.
+
+        This gives evolvability and target fitness equal weighting in the survival of eligible
+        individuals.
+        """
+        if len(self.individuals) > self.definition['limit']:
+            xGC, target_fitness, evolvability = [], [], []
+            for k, v in self.individuals: signature, target_fitness, evolvability = k, array(v['__fitness']), array(v['evolvability'])
+
+            # Idenify the individual to save in best_idx        
+            best_idx = argmax(target_fitness)
+            best_fitness_mask = target_fitness == target_fitness[best_idx]
+            if count_nonzero(best_fitness_mask) > 1:
+                best_evo = evolvability * best_fitness_mask
+                best_evo_idx = argmax(best_evo)
+                best_evo_mask = best_evo == best_evo[best_evo_idx]
+                if count_nonzero(best_evo_mask) > 1:
+                    best_idx = choice(len(best_evo), p=best_evo_mask / npsum(best_evo_mask))
+                else:
+                    best_idx = argmax(best_evo_mask)
+
+            # Calculate the probabilities for the cull
+            weights = target_fitness / npsum(target_fitness) * evolvability / npsum(evolvability)
+            weights[best_idx] = 1.0
+            probabilities = 1.0 - weights / npsum(weights)
+            num_victims = len(self.individuals) - self.definition['limit']
+            victims = choice(len(self.individuals), size=(num_victims), replace=False, p=probabilities)
+
+            # Cull!
+            for v in victims: del self.individuals[v]
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

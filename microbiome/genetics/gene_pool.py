@@ -191,6 +191,8 @@ class gene_pool():
 
         The supplied genetic code dictionary, gc, is updated to include
         the extended fields to reduce duplication and increase performance.
+        Keys of the format '__microbiome_.*' are used to snapshot fields that
+        may be altered in parallel by other workers.  
 
         All xGC keys start with '__'.
             '__valid' (bool): True if the xGC is a valid GC.
@@ -198,10 +200,13 @@ class gene_pool():
             '__gca' (xGC): The xGC of GCA or None if GCA is the NULL_GC.
             '__gcb' (xGC): The xGC of GCB or None if GCB is the NULL_GC.
             '__ref' (int): The gene pool unique reference.
-            '__fitness' (float): Value between 0.0 and 1.0.
+            '__target_fitness' (float): The target fitness (None if the GC is a mutation).
             '__previous_fitness' (float): The fitness from the previous evaluation.
-            '__mutated_by' (xGC): The GC that mutated this GC last. 
+            '__mutated_by' (xGC): The GC that mutated this GC last.
+            '__parasites' (list): List of xGCs having a parasitic role in mutation to create this GC.
             '__func' (func): The executable code for this GC.
+            '__microbiome_fitness': The fitness the GC had when it was last synchronised with the biome.
+            '__microbiome_evolvability': The evolvability the GC had when it was last synchronised with the biome.
 
         Args
         ----
@@ -216,9 +221,12 @@ class gene_pool():
         gc['__gca'] = None
         gc['__gcb'] = None
         gc['__ref'] = __reference()
-        gc['__fitness'] = 0.0
+        gc['__target_fitness'] = 0.0
         gc['__previous_fitness'] = 0.0
         gc['__mutated_by'] = None
+        gc['__parasites'] = []
         gc['__func'] = None
+        gc['__microbiome_fitness'] = gc['fitness']
+        gc['__microbiome_evolvability'] = gc['evolvability']
         return gc
 

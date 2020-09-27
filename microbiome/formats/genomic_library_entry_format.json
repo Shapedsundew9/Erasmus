@@ -455,12 +455,7 @@
             "description": "The properties of the inputs & outputs",
             "codec": {
                 "extended": 0,
-                "i_int": 8,
-                "i_float": 9,
-                "i_obj": 10,
-                "o_int": 11,
-                "o_float": 12,
-                "o_obj": 13
+                "mutation": 1
             }
         },
         "type": "dict",
@@ -469,32 +464,50 @@
                 "type": "boolean",
                 "default": false
             },
-            "i_intr": {
-                "type": "boolean",
-                "default": false                
-            },
-            "i_float": {
-                "type": "boolean",
-                "default": false                
-            },
-            "i_obj": {
-                "type": "boolean",
-                "default": false                
-            },
-            "o_int": {
-                "type": "boolean",
-                "default": false                
-            },
-            "o_float": {
-                "type": "boolean",
-                "default": false                
-            },
-            "o_obj": {
+            "mutation": {
                 "type": "boolean",
                 "default": false                
             }
         },
         "default": {}
+    },
+    "fitness": {
+        "meta": {
+            "database": {
+                "type": "DOUBLE PRECISION"
+            },
+            "definition": {
+                "location": ["WORKER"],
+                "immutable": false
+            },
+            "description": "A measure of success of the genetic code. The higher the better.",
+            "codec": {
+                "extended": 0,
+                "mutation": 1
+            }
+        },
+        "type": "float",
+        "min": 0.0, 
+        "default": 0.0
+    },
+    "evolvability": {
+        "meta": {
+            "database": {
+                "type": "DOUBLE PRECISION"
+            },
+            "definition": {
+                "location": ["WORKER"],
+                "immutable": false
+            },
+            "description": "A measure of success of the genetic codes descendants. The higher the better.",
+            "codec": {
+                "extended": 0,
+                "mutation": 1
+            }
+        },
+        "type": "float",
+        "min": 0.0, 
+        "default": 0.0
     },
     "creator": {
         "meta": {
