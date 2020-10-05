@@ -16,7 +16,7 @@ from pprint import pformat
 
 from cerberus import Validator
 
-from .gc_graph_tools import validate
+from .gc_graph import gc_graph
 
 NULL_GC = "0" * 64
 DEAD_GC_PREFIX = "deadbeef000000000000000000000000"
@@ -28,11 +28,13 @@ class genomic_library_entry_validator(Validator):
     # TODO: Make errors ValidationError types for full disclosure
     # https://docs.python-cerberus.org/en/stable/customize.html#validator-error
 
-    __logger = getLogger(__name__)
+    _logger = getLogger(__name__)
 
     def _check_with_valid_graph(self, field, value):
-        for e in validate(value):
-            self._error(field, e)
+        gcg = gc_graph(value)
+        gcg.validate()
+        for e in gcg.status: self._error(field, str(e))
+
 
     # Checks for a valid codon or non-codon
 

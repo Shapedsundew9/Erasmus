@@ -18,7 +18,7 @@ class codon_validator(Validator):
     # TODO: Make errors ValidationError types for full disclosure
     # https://docs.python-cerberus.org/en/stable/customize.html#validator-error
 
-    __logger = getLogger(__name__)
+    _logger = getLogger(__name__)
  
 
 

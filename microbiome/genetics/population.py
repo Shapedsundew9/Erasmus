@@ -7,7 +7,7 @@ Author: Shaped Sundew
 
 from hashlib import sha256
 from logging import getLogger
-from numpy import int32, float32, array, amax, amin, mean, median, count_nonzero
+from numpy import int32, float32, array, amax, amin, mean, median, count_nonzero, isclose, argmax
 from numpy import sum as npsum
 from numpy.random import choice
 from .gene_pool import gene_pool
@@ -26,7 +26,7 @@ class population():
     by other populations. The offspring of such interactions remain part of the population.
     """
 
-    __logger = getLogger(__name__)
+    _logger = getLogger(__name__)
 
     def __init__(self, p_config):
         """Configure population.
@@ -39,9 +39,9 @@ class population():
             signature (str): SHA256 of the population definition.
             log_table (str): A DB table used for tracking the generational changes in the population.
         """
-        self.__table = database_table(population.__logger, 'populations')
-        self.__log_table = database_table(population.__logger, p_config.log_table)
-        self.definition = self.__table.load([{'signature': p_config['signature']}])
+        self._table = database_table(population._logger, 'populations')
+        self._log_table = database_table(population._logger, p_config.log_table)
+        self.definition = self._table.load([{'signature': p_config['signature']}])[0]
         self.individuals = self.definition['population_dict']
 
 
@@ -64,21 +64,21 @@ class population():
         """
         if not self.individuals:
             initial_population = gene_pool.gl(self.definition['initial_query'], ['signature'])
-            self.individuals = {s['signature']: self.gene_pool([s['signature']]) for s in initial_population}
-            population.__logger.debug("Initial population: %s", self.individuals)
+            self.individuals = {s['signature']: gene_pool([s['signature']]) for s in initial_population}
+            population._logger.debug("Initial population: %s", self.individuals)
         else:
-            individuals_updated = {s['signature']: self.gene_pool([s['signature']]) for s in self.individuals.keys()}
-            for s in individuals_updated: individuals_updated[s]['__target_fitness'] = self.individuals[s]
+            individuals_updated = {s['signature']: gene_pool([s['signature']]) for s in self.individuals.keys()}
+            for s in individuals_updated: individuals_updated[s]['_target_fitness'] = self.individuals[s]
             self.individuals = individuals_updated
-            for gc in self.individuals.values() if not gc['properties']['mutation']:
+            for gc in filter(lambda x: not x['properties']['mutation'], self.individuals.values()):
                 target_fitness = target_fitness_function(gc)
-                if not isclose(gc['__target_fitness'], target_fitness):
-                    population.__logger.warning("Fitness score for GC %s cannot be reproduced: Population fitness score %f versus worker fitness %f score",
-                        signature, gc['__target_fitness'], target_fitness)
+                if not isclose(gc['_target_fitness'], target_fitness):
+                    population._logger.warning("Fitness score for GC %s cannot be reproduced: Population fitness score %f versus worker fitness %f score",
+                        gc['signature'], gc['_target_fitness'], target_fitness)
 
 
-    def __mmmm(self, key, data):
-        """Finds the min, max, mean and median of a numerical array data.
+    def _mmmm(self, key, data):
+        """Find the min, max, mean and median of a numerical array data.
 
         The results are returned as a dictionary with keys of the form
         key + '_' + x where x is 'min', 'max', 'mean', 'median'.
@@ -102,18 +102,17 @@ class population():
 
     def log(self):
         """Log the state of the population."""
-
-        fitness_data = array([v['__target_fitness'] for v in self.individuals.values(), float32])
-        code_depth_data = array([k['code_depth'] for k in self.individuals.values(), int32])
-        codon_depth_data = array([k['codon_depth'] for k in self.individuals.values(), int32])
-        code_count_data = array([k['num_codes'] for k in self.individuals.values(), int32])
-        codon_count_data = array([k['raw_num_codes'] for k in self.individuals.values(), int32])
-        log_data = self.__mmmm('fitness', fitness_data)
-        log_data.update(self.__mmmm('code_depth', code_depth_data))
-        log_data.update(self.__mmmm('codon_depth', codon_depth_data))
-        log_data.update(self.__mmmm('code_count', code_count_data))
-        log_data.update(self.__mmmm('codon_count', codon_count_data))
-        self.__log_table.store([log_data])
+        fitness_data = array([v['_target_fitness'] for v in self.individuals.values()], float32)
+        code_depth_data = array([k['code_depth'] for k in self.individuals.values()], int32)
+        codon_depth_data = array([k['codon_depth'] for k in self.individuals.values()], int32)
+        code_count_data = array([k['num_codes'] for k in self.individuals.values()], int32)
+        codon_count_data = array([k['raw_num_codes'] for k in self.individuals.values()], int32)
+        log_data = self._mmmm('fitness', fitness_data)
+        log_data.update(self._mmmm('code_depth', code_depth_data))
+        log_data.update(self._mmmm('codon_depth', codon_depth_data))
+        log_data.update(self._mmmm('code_count', code_count_data))
+        log_data.update(self._mmmm('codon_count', codon_count_data))
+        self._log_table.store([log_data])
 
 
     def update_fitness(self, target_fitness_function):
@@ -136,16 +135,16 @@ class population():
         target_fitness_function (func): Takes a target individual GC as a single argument
             returning a fitness value >= 0.0 and <= 1.0.
         """
-        for gc in self.individuals if not i['properties']['mutation']:
-            i['__previous_fitness'] = i['__fitness']
-            i['__fitness'] = target_fitness_function(i)
-            if i['__fitness'] > i['__previous_fitness']:
-                self.__increment_fitness(i)
-                self.__increment_fitness(i['__mutated_by'])
-                for p in i['__parasites']: self.__increment_fitness(p)
+        for i in filter(lambda x: not x['properties']['mutation'], self.individuals.values()):
+            i['_previous_fitness'] = i['_fitness']
+            i['_fitness'] = target_fitness_function(i)
+            if i['_fitness'] > i['_previous_fitness']:
+                self._increment_fitness(i)
+                self._increment_fitness(i['_mutated_by'])
+                for p in i['_parasites']: self._increment_fitness(p)
 
 
-    def __increment_fitness(self, xGC):
+    def _increment_fitness(self, xGC):
         """Increment the fitness of an individual.
 
         Increasing the fitness of an individual increases the evolvability
@@ -157,10 +156,10 @@ class population():
         """
         xGC['fitness'] += 1.0
         for p in xGC['meta_data']['parents'][-1]:
-            self.__increase_evolvability(gene_pool[p], 1.0)
+            self._increase_evolvability(gene_pool[p], 1.0)
 
 
-    def __increase_evolvability(self, xGC, increase):
+    def _increase_evolvability(self, xGC, increase):
         """Increase the evolvability of xGC by increase.
 
         If an individuals evolvability increases the individuals parent(s) evolvability increase
@@ -202,10 +201,15 @@ class population():
         individuals.
         """
         if len(self.individuals) > self.definition['limit']:
-            xGC, target_fitness, evolvability = [], [], []
-            for k, v in self.individuals: signature, target_fitness, evolvability = k, array(v['__fitness']), array(v['evolvability'])
+            signature, target_fitness, evolvability = [], [], []
+            for k, v in self.individuals.items():
+                signature.append(k)
+                target_fitness.append(v['_fitness'])
+                evolvability.append(v['evolvability'])
+            target_fitness = array(target_fitness)
+            evolvability = array(evolvability)
 
-            # Idenify the individual to save in best_idx        
+            # Identify the individual to save in best_idx        
             best_idx = argmax(target_fitness)
             best_fitness_mask = target_fitness == target_fitness[best_idx]
             if count_nonzero(best_fitness_mask) > 1:
@@ -222,10 +226,10 @@ class population():
             weights[best_idx] = 1.0
             probabilities = 1.0 - weights / npsum(weights)
             num_victims = len(self.individuals) - self.definition['limit']
-            victims = choice(len(self.individuals), size=(num_victims), replace=False, p=probabilities)
+            victims = choice(len(probabilities), size=(num_victims), replace=False, p=probabilities)
 
             # Cull!
-            for v in victims: del self.individuals[v]
+            for v in victims: del self.individuals[signature[v]]
 
 
 

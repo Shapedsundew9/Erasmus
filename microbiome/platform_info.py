@@ -16,12 +16,12 @@ from .database_table import database_table
 from .platform_info_validator import platform_info_validator
 
 
-__logger = getLogger(__name__)
+_logger = getLogger(__name__)
 platform_info = None
 
 
 # TODO: Implemented EGPOps
-def __get_platform_info():
+def _get_platform_info():
     # TODO: Replace these with an Erasmus benchmark.
     # The metric needs to be stable on a system to 1 unit as it is used in the SHA256 signature to
     # identify the platform.
@@ -41,17 +41,17 @@ def __get_platform_info():
 def get_platform_info():
     global platform_info
     if platform_info is None:
-        platform_info = __get_platform_info()
+        platform_info = _get_platform_info()
         validator = platform_info_validator(get_config()['tables']['platform_info']['schema'])
         if not validator.validate(platform_info):
-            __logger.error("Platform information validation failed: %s", validator.errors)
+            _logger.error("Platform information validation failed: %s", validator.errors)
             exit(1)
         platform_info = validator.normalized(platform_info)
-        pi_table = database_table(__logger, 'platform_info')
-        __logger.info("Platform information: %s", str(platform_info))
+        pi_table = database_table(_logger, 'platform_info')
+        _logger.info("Platform information: %s", str(platform_info))
         if not pi_table.load([{'signature': platform_info['signature']}]):
-            __logger.info("New platform registered.")
+            _logger.info("New platform registered.")
             pi_table.store([platform_info])
         else:
-            __logger.info("Platform already registered.")
+            _logger.info("Platform already registered.")
     return platform_info

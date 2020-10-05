@@ -1,1 +1,1 @@
-__all__ = ["logic_land"]
+_all_ = ["logic_land"]

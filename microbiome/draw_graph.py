@@ -15,27 +15,27 @@ from graph_tool.draw import graph_draw, sfdp_layout
 class draw_graph:
 
     def __init__(self):
-        self.__graph = Graph()
-        self.__vlabel = self.__graph.new_vertex_property("string")
-        self.__vsize = self.__graph.new_vertex_property("float")
-        self.__vcolour = self.__graph.new_vertex_property("float")
-        self.__eweight = self.__graph.new_edge_property("float")
-        self.__elabel = self.__graph.new_vertex_property("string")
+        self._graph = Graph()
+        self._vlabel = self._graph.new_vertex_property("string")
+        self._vsize = self._graph.new_vertex_property("float")
+        self._vcolour = self._graph.new_vertex_property("float")
+        self._eweight = self._graph.new_edge_property("float")
+        self._elabel = self._graph.new_vertex_property("string")
 
 
     def add_vertex(self, label="None", size=0, colour=0):
-        v = self.__graph.add_vertex()
-        self.__vlabel[v] = label
-        self.__vsize[v] = size
-        self.__vcolour[v] = colour
+        v = self._graph.add_vertex()
+        self._vlabel[v] = label
+        self._vsize[v] = size
+        self._vcolour[v] = colour
         return v
 
 
     def add_edge(self, v1, v2, label="None", weight=0):
-        e = self.__graph.add_edge(v1, v2)
-        self.__elabel[e] = label
-        self.__eweight[e] = weight
+        e = self._graph.add_edge(v1, v2)
+        self._elabel[e] = label
+        self._eweight[e] = weight
 
 
     def draw(self, base_name, vlabels=True, vsize=True, vcolour=True, elabel=False, eweight=False):
-        graph_draw(self.__graph, output_size=(1000, 1000), output=base_name + '.png')
+        graph_draw(self._graph, output_size=(1000, 1000), output=base_name + '.png')

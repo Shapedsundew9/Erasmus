@@ -11,8 +11,8 @@ from logging import getLogger, basicConfig, DEBUG, INFO
 
 
 basicConfig(filename='erasmus.log', level=INFO)
-__TEST_RESULTS_JSON = 'test_gc_graph_results.json'
-__VALID_STRUCTURES = (
+_TEST_RESULTS_JSON = 'data/test_gc_graph_results.json'
+_VALID_STRUCTURES = (
         ('A', 'O'),
         ('C', 'O'),
         ('I', 'O'),
@@ -42,7 +42,7 @@ __VALID_STRUCTURES = (
     )
 
 
-with open(join(dirname(__file__), __TEST_RESULTS_JSON), "r") as results_file: results = load(results_file)
+with open(join(dirname(__file__), _TEST_RESULTS_JSON), "r") as results_file: results = load(results_file)
 @pytest.mark.parametrize("i, case", enumerate(results))
 def test_graph_validation(i, case):
     """Verification the validate() method correctly functions."""
@@ -75,7 +75,7 @@ def test_add_connection_simple(test):
     # TODO: These random test cases need to be made static when we are confident in them.
     # Generate them into a JSON file.
     graph = gc_graph()
-    structure = choice(__VALID_STRUCTURES)
+    structure = choice(_VALID_STRUCTURES)
     for row in structure:
         graph.app_graph[row] = []
         if not row in ('U', 'P'):

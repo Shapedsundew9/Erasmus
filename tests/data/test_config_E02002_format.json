@@ -1,0 +1,14 @@
+{
+    "fitness": {
+        "meta": {
+            "definition": {
+                "location": ["WORKER"],
+                "immutable": false
+            },
+            "description": "A measure of success of the genetic code. The higher the better."
+        },
+        "type": "float",
+        "min": 0.0, 
+        "default": 0.0
+    }
+}

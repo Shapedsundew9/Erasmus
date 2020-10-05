@@ -18,11 +18,11 @@ class gc_type_validator(Validator):
     # TODO: Make errors ValidationError types for full disclosure
     # https://docs.python-cerberus.org/en/stable/customize.html#validator-error
 
-    __logger = getLogger(__name__)
+    _logger = getLogger(__name__)
     with open(join(dirname(__file__), "../formats/gc_type_object_param_format.json"), "r") as format_file:
-        __object_validator = Validator(load(format_file))
+        _object_validator = Validator(load(format_file))
     with open(join(dirname(__file__), "../formats/gc_type_numeric_param_format.json"), "r") as format_file:
-        __numeric_validator = Validator(load(format_file))
+        _numeric_validator = Validator(load(format_file))
 
 
     def _check_with_valid_base_type(self, field, value):
@@ -38,18 +38,18 @@ class gc_type_validator(Validator):
             bt = self.document['base_type']
             if not(bt['object'] and (bt['integer'] or bt['float'])):
                 if bt['object']:
-                    if not gc_type_validator.__object_validator(value):
-                        self._error(field, str(gc_type_validator.__object_validator.errors))
+                    if not gc_type_validator._object_validator(value):
+                        self._error(field, str(gc_type_validator._object_validator.errors))
                     if value['obj_id'] < 128:
-                        gc_type_validator.__logger.debug(
+                        gc_type_validator._logger.debug(
                             "GCTD of RESERVED object type validated.")
                     if value['obj_id'] > 895:
-                        gc_type_validator.__logger.info(
+                        gc_type_validator._logger.info(
                             "GCTD of user defined object type validated.")
                 elif bt['integer'] or bt['float']:
-                    if not gc_type_validator.__numeric_validator(value):
+                    if not gc_type_validator._numeric_validator(value):
                         self._error(
-                            field, str(gc_type_validator.__numeric_validator.errors))
+                            field, str(gc_type_validator._numeric_validator.errors))
                     if bt['float'] and bt['integer'] and not value['sign']:
                         self._error(field, "Numeric types must have sign == 1.")
                     if bt['float'] and not bt['integer'] and not value['sign']:

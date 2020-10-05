@@ -480,11 +480,7 @@
                 "location": ["WORKER"],
                 "immutable": false
             },
-            "description": "A measure of success of the genetic code. The higher the better.",
-            "codec": {
-                "extended": 0,
-                "mutation": 1
-            }
+            "description": "A measure of success of the genetic code. The higher the better."
         },
         "type": "float",
         "min": 0.0, 
@@ -499,11 +495,7 @@
                 "location": ["WORKER"],
                 "immutable": false
             },
-            "description": "A measure of success of the genetic codes descendants. The higher the better.",
-            "codec": {
-                "extended": 0,
-                "mutation": 1
-            }
+            "description": "A measure of success of the genetic codes descendants. The higher the better."
         },
         "type": "float",
         "min": 0.0, 

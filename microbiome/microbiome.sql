@@ -8,11 +8,11 @@ CREATE OR REPLACE FUNCTION history_decimation_ait()
     LANGUAGE plpgsql
     AS $$
 	DECLARE
-		__phase RECORD;
-		__hdti_table TEXT := 'history_decimation_table_index';
-		__idx_name TEXT;
-		__table RECORD;
-		__idx BIGINT;
+		_phase RECORD;
+		_hdti_table TEXT := 'history_decimation_table_index';
+		_idx_name TEXT;
+		_table RECORD;
+		_idx BIGINT;
     BEGIN
 		-- How This Works
 		-- ==============
@@ -40,31 +40,31 @@ CREATE OR REPLACE FUNCTION history_decimation_ait()
 		-- which pushes the oldest row out of the bottom. If that row is a (1 << phase)th row then it is
 		-- pushed into the next stack, if it is not then it is deleted. Every row pushed out the bottom
 		-- of the last stack (phase) is deleted.
-		EXECUTE format ('SELECT * FROM history_decimation_table_index WHERE table_name = %L LIMIT 1', TG_ARGV[0]) INTO __table;
-		__idx := (hstore(NEW) -> __table.idx_name)::BIGINT;
+		EXECUTE format ('SELECT * FROM history_decimation_table_index WHERE table_name = %L LIMIT 1', TG_ARGV[0]) INTO _table;
+		_idx := (hstore(NEW) -> _table.idx_name)::BIGINT;
 		
 		-- Step through phase table.
 		-- For each phase check if the index pushed out of the previous stack should be
 		-- put into the next. If not we are done.
-		FOR __phase IN 0..(__table.num_phases - 1) LOOP 
-			IF __idx & ((1::BIGINT << __phase) - 1) = 0 THEN
-				__idx := __idx - (1::BIGINT << (__table.phase_size + __phase));
-				IF __idx < 0 THEN RETURN NULL; END IF;					
+		FOR _phase IN 0..(_table.num_phases - 1) LOOP 
+			IF _idx & ((1::BIGINT << _phase) - 1) = 0 THEN
+				_idx := _idx - (1::BIGINT << (_table.phase_size + _phase));
+				IF _idx < 0 THEN RETURN NULL; END IF;					
 			ELSE
-				EXECUTE 'DELETE FROM ' || TG_ARGV[0] || ' WHERE ' || __table.idx_name || ' = ' || __idx;
+				EXECUTE 'DELETE FROM ' || TG_ARGV[0] || ' WHERE ' || _table.idx_name || ' = ' || _idx;
 				RETURN NULL;
 			END IF;
 		END LOOP;
 
 		-- DELETE all rows dropping out the bottom of the last phase
-		EXECUTE 'DELETE FROM ' || TG_ARGV[0] || ' WHERE ' || __table.idx_name || ' = ' || __idx;
+		EXECUTE 'DELETE FROM ' || TG_ARGV[0] || ' WHERE ' || _table.idx_name || ' = ' || _idx;
 		RETURN NULL;
     END;
     $$;
 
 -- See https://dba.stackexchange.com/questions/90555/postgresql-select-primary-key-as-serial-or-bigserial/90567#90567
 -- Kudos https://dba.stackexchange.com/users/3684/erwin-brandstetter
-CREATE OR REPLACE FUNCTION elaborate_data_types(__table_name TEXT)
+CREATE OR REPLACE FUNCTION elaborate_data_types(_table_name TEXT)
     RETURNS TABLE (id TEXT, name TEXT, type TEXT)
     SET SCHEMA 'public'
 	SET client_min_messages = error
@@ -95,7 +95,7 @@ CREATE OR REPLACE FUNCTION elaborate_data_types(__table_name TEXT)
 		WHERE  a.attrelid = ''%I''::regclass  -- table name, optionally schema-qualified
 		AND    a.attnum > 0
 		AND    NOT a.attisdropped
-		ORDER  BY a.attnum;', __table_name);
+		ORDER  BY a.attnum;', _table_name);
 END;
 $body$;
 
@@ -105,78 +105,78 @@ CREATE TABLE IF NOT EXISTS history_decimation_table_index
 
 
 DROP FUNCTION IF EXISTS history_decimation_setup(text,integer,integer);
-CREATE OR REPLACE FUNCTION history_decimation_setup(__table_name TEXT, __phase_size INTEGER, __num_phases INTEGER)
+CREATE OR REPLACE FUNCTION history_decimation_setup(_table_name TEXT, _phase_size INTEGER, _num_phases INTEGER)
     RETURNS BOOLEAN
     SET SCHEMA 'public'
     LANGUAGE plpgsql
     AS $$
 	DECLARE
-	   	__phase INTEGER := 0;
-		__hdti_table TEXT := 'history_decimation_table_index';
-		__trigger TEXT := __table_name || '_ait';
-		__trigger_function TEXT := 'history_decimation_ait';
-		__idx_name TEXT;
+	   	_phase INTEGER := 0;
+		_hdti_table TEXT := 'history_decimation_table_index';
+		_trigger TEXT := _table_name || '_ait';
+		_trigger_function TEXT := 'history_decimation_ait';
+		_idx_name TEXT;
     BEGIN
 
 	-- No crazy numbers
 	-- TODO: This could be serial size aware & return a useful exception
-	IF (__num_phases < 1) OR (__num_phases > 8) OR (__phase_size < 1) OR (__phase_size > 23) THEN
+	IF (_num_phases < 1) OR (_num_phases > 8) OR (_phase_size < 1) OR (_phase_size > 23) THEN
 		RAISE EXCEPTION 'Number or size of phases out of range.' USING HINT = '0 < num_phases < 9 & 0 < phase_size < 24';
 		RETURN FALSE;
 	END IF; 
 
 	-- Table must exist
-	IF NOT EXISTS (SELECT 1 FROM information_schema.tables WHERE table_name = __table_name) THEN
-		RAISE EXCEPTION 'Table "%" does not exist.', __table_name;
+	IF NOT EXISTS (SELECT 1 FROM information_schema.tables WHERE table_name = _table_name) THEN
+		RAISE EXCEPTION 'Table "%" does not exist.', _table_name;
 		RETURN FALSE;
 	END IF;
 	
 	-- Must have at least one serial index. If there are multiple prefer longer sequences
 	-- and if there are multiple of those choose the first in alphabetical order of name
-	SELECT name INTO __idx_name FROM elaborate_data_types(__table_name) WHERE type IN ('smallserial', 'serial', 'bigserial')
+	SELECT name INTO _idx_name FROM elaborate_data_types(_table_name) WHERE type IN ('smallserial', 'serial', 'bigserial')
 		ORDER BY type ASC, name ASC LIMIT 1;
-	IF __idx_name IS NULL THEN
-		RAISE EXCEPTION 'No smallserial, serial or bigserial column was found in table "%"', __table_name;
+	IF _idx_name IS NULL THEN
+		RAISE EXCEPTION 'No smallserial, serial or bigserial column was found in table "%"', _table_name;
 		RETURN FALSE;
 	END IF;
 
-    EXECUTE format ('DELETE FROM history_decimation_table_index WHERE table_name = %L', __table_name);
+    EXECUTE format ('DELETE FROM history_decimation_table_index WHERE table_name = %L', _table_name);
 	
 	EXECUTE format ('INSERT INTO history_decimation_table_index ("table_name", "phase_size", "num_phases", "idx_name")
-					VALUES (%L, %L, %L, %L);', __table_name, __phase_size, __num_phases, __idx_name);
-	EXECUTE format ('DROP TRIGGER IF EXISTS %I on %I;', __trigger, __table_name);
+					VALUES (%L, %L, %L, %L);', _table_name, _phase_size, _num_phases, _idx_name);
+	EXECUTE format ('DROP TRIGGER IF EXISTS %I on %I;', _trigger, _table_name);
 	EXECUTE format ('CREATE TRIGGER %I AFTER INSERT ON %I FOR EACH ROW EXECUTE PROCEDURE %I(%L);',
-					__trigger, __table_name, __trigger_function, __table_name);
+					_trigger, _table_name, _trigger_function, _table_name);
 	RETURN TRUE;
 END;
 $$;
 
 
 DROP FUNCTION IF EXISTS cumsum_setup(text, text);
-CREATE OR REPLACE FUNCTION cumsum_setup(__table_name TEXT, __column_name TEXT)
+CREATE OR REPLACE FUNCTION cumsum_setup(_table_name TEXT, _column_name TEXT)
     RETURNS BOOLEAN
     SET SCHEMA 'public'
     LANGUAGE plpgsql
     AS $$
 	DECLARE
-		__cumsum_trigger TEXT := __table_name || '_' || __column_name || '_cumsum_bit';
-		__cumsum_trigger_function TEXT := __table_name || '_' || __column_name || '_cumsum_bit';
-		__last_insert_trigger TEXT := __table_name || '_last_insert_ait';
-		__last_insert_trigger_function TEXT := __table_name || '_last_insert_ait';
-		__last_record RECORD;
+		_cumsum_trigger TEXT := _table_name || '_' || _column_name || '_cumsum_bit';
+		_cumsum_trigger_function TEXT := _table_name || '_' || _column_name || '_cumsum_bit';
+		_last_insert_trigger TEXT := _table_name || '_last_insert_ait';
+		_last_insert_trigger_function TEXT := _table_name || '_last_insert_ait';
+		_last_record RECORD;
     BEGIN
 
 	-- Table must exist
-	IF NOT EXISTS (SELECT 1 FROM information_schema.tables WHERE table_name = __table_name) THEN
-		RAISE EXCEPTION 'Table "%" does not exist.', __table_name;
+	IF NOT EXISTS (SELECT 1 FROM information_schema.tables WHERE table_name = _table_name) THEN
+		RAISE EXCEPTION 'Table "%" does not exist.', _table_name;
 		RETURN FALSE;
 	END IF;
 
 	-- Create a table for the last row inserted, a trigger & trigger function to populate it
-	-- EXECUTE format ('DROP TABLE IF EXISTS %I', __table_name || '_last_insert');
-	-- EXECUTE format ('CREATE TABLE %I (LIKE %I INCLUDING ALL)', __table_name || '_last_insert', __table_name);
-	EXECUTE format ('INSERT INTO %I (%I) VALUES (0)', __table_name || '_last_insert', __column_name || '_cumsum');
-	EXECUTE format ('DROP TRIGGER IF EXISTS %I on %I;', __last_insert_trigger, __table_name);
+	-- EXECUTE format ('DROP TABLE IF EXISTS %I', _table_name || '_last_insert');
+	-- EXECUTE format ('CREATE TABLE %I (LIKE %I INCLUDING ALL)', _table_name || '_last_insert', _table_name);
+	EXECUTE format ('INSERT INTO %I (%I) VALUES (0)', _table_name || '_last_insert', _column_name || '_cumsum');
+	EXECUTE format ('DROP TRIGGER IF EXISTS %I on %I;', _last_insert_trigger, _table_name);
 	EXECUTE format ('CREATE OR REPLACE FUNCTION %I()
     				 RETURNS TRIGGER
     				 SET SCHEMA ''public''
@@ -188,12 +188,12 @@ CREATE OR REPLACE FUNCTION cumsum_setup(__table_name TEXT, __column_name TEXT)
 						INSERT INTO %I SELECT (NEW).*;
 					 	RETURN NULL;
     				 END;
-    				 $body$;', __last_insert_trigger_function, __table_name || '_last_insert', __table_name || '_last_insert');
+    				 $body$;', _last_insert_trigger_function, _table_name || '_last_insert', _table_name || '_last_insert');
 	EXECUTE format ('CREATE TRIGGER %I AFTER INSERT ON %I FOR EACH ROW EXECUTE PROCEDURE %I();',
-					__last_insert_trigger, __table_name, __last_insert_trigger_function);
+					_last_insert_trigger, _table_name, _last_insert_trigger_function);
 
 	-- Create a trigger & trigger function to do the cumulative summing
-	EXECUTE format ('DROP TRIGGER IF EXISTS %I on %I;', __cumsum_trigger, __table_name);
+	EXECUTE format ('DROP TRIGGER IF EXISTS %I on %I;', _cumsum_trigger, _table_name);
 	EXECUTE format ('CREATE OR REPLACE FUNCTION %I()
     				 RETURNS TRIGGER
     				 SET SCHEMA ''public''
@@ -201,15 +201,15 @@ CREATE OR REPLACE FUNCTION cumsum_setup(__table_name TEXT, __column_name TEXT)
     				 LANGUAGE plpgsql
     				 AS $body$
 					 DECLARE
-					 	__last_insert RECORD;
+					 	_last_insert RECORD;
     				 BEGIN
-					 	SELECT * FROM %I LIMIT 1 INTO __last_insert;
-					 	NEW.%I := __last_insert.%I + NEW.%I;
+					 	SELECT * FROM %I LIMIT 1 INTO _last_insert;
+					 	NEW.%I := _last_insert.%I + NEW.%I;
 					 	RETURN NEW;
     				 END;
-    				 $body$;', __cumsum_trigger_function, __table_name || '_last_insert', __column_name || '_cumsum', __column_name || '_cumsum', __column_name);
+    				 $body$;', _cumsum_trigger_function, _table_name || '_last_insert', _column_name || '_cumsum', _column_name || '_cumsum', _column_name);
 	EXECUTE format ('CREATE TRIGGER %I BEFORE INSERT ON %I FOR EACH ROW EXECUTE PROCEDURE %I();',
-					__cumsum_trigger, __table_name, __cumsum_trigger_function);
+					_cumsum_trigger, _table_name, _cumsum_trigger_function);
 	RETURN TRUE;
 END;
 $$;

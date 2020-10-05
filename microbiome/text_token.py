@@ -16,7 +16,7 @@ from logging import getLogger
     'F': Fatal
     'X': Unknown
 """
-__CODE_PREFIXES = ('I', 'W', 'E', 'F', 'X')
+_CODE_PREFIXES = ('I', 'W', 'E', 'F', 'X')
 
 
 """The token library maps token codes to formatted strings.
@@ -30,7 +30,7 @@ token_library = {
 }
 
 
-def __valid_code(code):
+def _valid_code(code):
     """Sanity of the token code.
 
     Args
@@ -41,7 +41,7 @@ def __valid_code(code):
     -------
         (bool): True if the code is valid else False
     """
-    if not code[0] in __CODE_PREFIXES: return False
+    if not code[0] in _CODE_PREFIXES: return False
     if len(code) != 6: return False
     code_num = int(code[1:])
     if code_num < 0 or code_num > 99999: return False
@@ -53,7 +53,7 @@ def register_token_code(code, fmt_str):
     """Register a token code and text in the token_library.
 
     The regsitered code can then be used to generate a human readable
-    string when the __str__() function is called on a token with that code.
+    string when the _str_() function is called on a token with that code.
 
     Args
     ----
@@ -64,7 +64,8 @@ def register_token_code(code, fmt_str):
     -------
         (bool): True if the token is valid else False
     """
-    assert __valid_code(code)
+    assert _valid_code(code)
+    assert code not in token_library
     token_library[code] = fmt_str
 
 

@@ -10,14 +10,14 @@ Copyright (c) 2020 Your Company
 import pytest
 from os.path import join, dirname
 from json import load
-from microbiome.genetics.query_validator import query_validator
-from microbiome.genetics.entry_column_meta_validator import entry_column_meta_validator
+from microbiome.query_validator import query_validator
+from microbiome.entry_column_meta_validator import entry_column_meta_validator
 from logging import getLogger, basicConfig, DEBUG
 
 
 basicConfig(filename='erasmus.log', level=DEBUG)
-queries = load(open(join(dirname(__file__), "test_entry_queries.json"), "r"))
-schema = load(open(join(dirname(__file__), "test_entry_format.json"), "r"))
+queries = load(open(join(dirname(__file__), "data/test_entry_queries.json"), "r"))
+schema = load(open(join(dirname(__file__), "data/test_entry_format.json"), "r"))
 for k, v in schema.items(): v['meta'] = entry_column_meta_validator.normalized(v['meta'])
 
 

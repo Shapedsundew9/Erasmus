@@ -5,7 +5,7 @@ Genetic code types are identified by a 16-bit value.
 Each type has an affinity to itself and all other types that is used to govern
 the "physics" of genetic code assembly.
 
-__affinity is a matrix of values 0.0 <= x <= 1.0 defining how attracted
+_affinity is a matrix of values 0.0 <= x <= 1.0 defining how attracted
 types are to each other. 0.0 being not at all, 1.0 being very much. The
 paradigm being physical interactions. Note that affinity is not symmetrical
 if type X has a high affinity to type Y it does not follow that type Y necessarily
@@ -39,30 +39,30 @@ UNKNOWN_TYPE = 0x400C
 
 
 # Internal constants
-__logger = getLogger(__name__)
-__affinities = {}
+_logger = getLogger(__name__)
+_affinities = {}
 with open(join(dirname(__file__), "../formats/gc_type_format.json"), "r") as format_file:
-    __gc_type_validator = gc_type_validator(load(format_file))
-__gc_type_validator.allow_unknown = True
-__BIT_FIELDS = {'fmt': 'b1u3u12', 'names': ('RESERVED', 'base_type', 'parameters')}
-__BASE_TYPE = {'fmt': 'p13b1b1b1', 'names': ('object', 'float', 'integer')}
-__NUMERIC_PARAM = {'fmt': 'p4b1u3u4b1b1u2', 'names': ('sign', 'log_size', 'n_dim', 'exact', 'RESERVED', 't_idx')}
-__OBJECT_PARAM = {'fmt': 'p4u10u2', 'names': ('obj_id', 't_idx')}
-__LOG_SIZE_POS = 8
-__INVALID_TYPE = 0x0000
-__ALL_UNSIGNED_INTEGERS = range(0x1000, 0x17F0, 16)
-__ALL_SIGNED_INTEGERS = range(0x1800, 0x1FF0, 16)
-__ALL_FLOATS = range(0x2800, 0x2FF0, 16)
-__ALL_OBJECTS = range(0x4000, 0x4FFC, 4)
-__OBJECT_MASK = 0x7FFC
-__NUMERIC_MASK = 0x7FF0
-__MAX_LOG_SIZE = 7
-__MAX_N_DIM = 15
-__MAX_OBJ_ID = 1023
-__OBJ = 0x4000
-__VALID_TYPE_PREFIXES = ('int', 'uint', 'float', 'numeric', 'obj')
-__VALID_SIZES = [8 << n for n in range(8)]
-__VALID_STR_TYPES = {
+    _gc_type_validator = gc_type_validator(load(format_file))
+_gc_type_validator.allow_unknown = True
+_BIT_FIELDS = {'fmt': 'b1u3u12', 'names': ('RESERVED', 'base_type', 'parameters')}
+_BASE_TYPE = {'fmt': 'p13b1b1b1', 'names': ('object', 'float', 'integer')}
+_NUMERIC_PARAM = {'fmt': 'p4b1u3u4b1b1u2', 'names': ('sign', 'log_size', 'n_dim', 'exact', 'RESERVED', 't_idx')}
+_OBJECT_PARAM = {'fmt': 'p4u10u2', 'names': ('obj_id', 't_idx')}
+_LOG_SIZE_POS = 8
+_INVALID_TYPE = 0x0000
+_ALL_UNSIGNED_INTEGERS = range(0x1000, 0x17F0, 16)
+_ALL_SIGNED_INTEGERS = range(0x1800, 0x1FF0, 16)
+_ALL_FLOATS = range(0x2800, 0x2FF0, 16)
+_ALL_OBJECTS = range(0x4000, 0x4FFC, 4)
+_OBJECT_MASK = 0x7FFC
+_NUMERIC_MASK = 0x7FF0
+_MAX_LOG_SIZE = 7
+_MAX_N_DIM = 15
+_MAX_OBJ_ID = 1023
+_OBJ = 0x4000
+_VALID_TYPE_PREFIXES = ('int', 'uint', 'float', 'numeric', 'obj')
+_VALID_SIZES = [8 << n for n in range(8)]
+_VALID_STR_TYPES = {
     'int': 0x1F00,
     'uint': 0x1700,
     'float': 0x2F00,
@@ -70,7 +70,7 @@ __VALID_STR_TYPES = {
     'str': 0x4200,
     'bool': 0x4204
 }
-__REVERSE_STR_LOOKUP = {v: k for k, v in __VALID_STR_TYPES.items()}
+_REVERSE_STR_LOOKUP = {v: k for k, v in _VALID_STR_TYPES.items()}
 
 
 def asint(gc_type):
@@ -87,24 +87,24 @@ def asint(gc_type):
     if isinstance(gc_type, int): return gc_type
     if isinstance(gc_type, str):
         tokens = split(r'(\d+)', gc_type)
-        if len(tokens) == 1: return __VALID_STR_TYPES.get(tokens[0], __INVALID_TYPE)
-        if len(tokens) != 3: return __INVALID_TYPE
-        if tokens[0] not in __VALID_TYPE_PREFIXES: return __INVALID_TYPE
+        if len(tokens) == 1: return _VALID_STR_TYPES.get(tokens[0], _INVALID_TYPE)
+        if len(tokens) != 3: return _INVALID_TYPE
+        if tokens[0] not in _VALID_TYPE_PREFIXES: return _INVALID_TYPE
         if tokens[0] == 'obj':
             obj_num = int(gc_type[3:])
-            return (obj_num << 2) + __OBJ if obj_num >= 0 and obj_num <= __MAX_OBJ_ID else __INVALID_TYPE
+            return (obj_num << 2) + _OBJ if obj_num >= 0 and obj_num <= _MAX_OBJ_ID else _INVALID_TYPE
         value = 0x2008 if tokens[0][0] == 'f' else 0x1008
         if tokens[0][0] != 'u': value += 0x800
         size = int(tokens[1])
-        if size not in __VALID_SIZES: return __INVALID_TYPE
-        return value + (int(log(size, 2) - 3) << __LOG_SIZE_POS)
+        if size not in _VALID_SIZES: return _INVALID_TYPE
+        return value + (int(log(size, 2) - 3) << _LOG_SIZE_POS)
 
     if 'asint' in gc_type: return gc_type['asint']
-    bit_fields = {'base_type': int.from_bytes(pack_dict(**__BASE_TYPE, data=gc_type['base_type']), byteorder='big', signed=False)}
-    param_def = __OBJECT_PARAM if gc_type['base_type']['object'] else __NUMERIC_PARAM
+    bit_fields = {'base_type': int.from_bytes(pack_dict(**_BASE_TYPE, data=gc_type['base_type']), byteorder='big', signed=False)}
+    param_def = _OBJECT_PARAM if gc_type['base_type']['object'] else _NUMERIC_PARAM
     bit_fields['parameters'] = int.from_bytes(pack_dict(**param_def, data=gc_type['parameters']), byteorder='big', signed=False)
     bit_fields['RESERVED'] = gc_type['RESERVED']
-    return int.from_bytes(pack_dict(**__BIT_FIELDS, data=bit_fields), byteorder='big', signed=False)
+    return int.from_bytes(pack_dict(**_BIT_FIELDS, data=bit_fields), byteorder='big', signed=False)
         
 
 def asdict(gc_type):
@@ -121,13 +121,13 @@ def asdict(gc_type):
     if isinstance(gc_type, dict): return gc_type
     if isinstance(gc_type, str): return asdict(asint(gc_type))
     gc_type = gc_type & 0xFFFF
-    definition = unpack_dict(**__BIT_FIELDS, data=gc_type.to_bytes(2, byteorder='big', signed=False))
-    retval = {'base_type': unpack_dict(**__BASE_TYPE, data=definition['base_type'].to_bytes(2, byteorder='big', signed=False))}
-    param_def = __OBJECT_PARAM if retval['base_type']['object'] else __NUMERIC_PARAM
+    definition = unpack_dict(**_BIT_FIELDS, data=gc_type.to_bytes(2, byteorder='big', signed=False))
+    retval = {'base_type': unpack_dict(**_BASE_TYPE, data=definition['base_type'].to_bytes(2, byteorder='big', signed=False))}
+    param_def = _OBJECT_PARAM if retval['base_type']['object'] else _NUMERIC_PARAM
     retval['parameters'] = unpack_dict(**param_def, data=definition['parameters'].to_bytes(2, byteorder='big', signed=False))
     retval['RESERVED'] = definition['RESERVED']
     retval['asint'] = gc_type
-    retval['valid'] = gc_type != __INVALID_TYPE
+    retval['valid'] = gc_type != _INVALID_TYPE
     return retval
 
 
@@ -149,7 +149,7 @@ def asstr(gc_type):
     if isinstance(gc_type, int): return asstr(asdict(gc_type))
     if not gc_type['valid']: return 'invalid'
     if gc_type['base_type']['object']:
-        if asint(gc_type) in __REVERSE_STR_LOOKUP: return __REVERSE_STR_LOOKUP[asint(gc_type)]
+        if asint(gc_type) in _REVERSE_STR_LOOKUP: return _REVERSE_STR_LOOKUP[asint(gc_type)]
         return 'obj' + str(gc_type['parameters']['obj_id'])
     idx = 2 * gc_type['base_type']['float'] + gc_type['base_type']['integer']
     type_str = ('int', 'float', 'numeric')[idx - 1]
@@ -171,8 +171,8 @@ def validate(gc_type):
     """
     # TODO: This is very slow. Can remove full on type validation with a list of valid ranges
     # See: https://stackoverflow.com/questions/4628333/converting-a-list-of-integers-into-range-in-python
-    retval = __gc_type_validator(asdict(gc_type))
-    if not retval: __logger.debug("GCTD 0x{:04x} invalid: {}".format(gc_type, pformat(__gc_type_validator.errors)))
+    retval = _gc_type_validator(asdict(gc_type))
+    if not retval: _logger.debug("GCTD 0x{:04x} invalid: {}".format(gc_type, pformat(_gc_type_validator.errors)))
     return retval
 
 
@@ -183,7 +183,7 @@ def last_validation_error():
     -------
         dict: Dictionary of errors from the lat call to validate() 
     """
-    return __gc_type_validator.errors
+    return _gc_type_validator.errors
 
 
 def is_int(gc_type):
@@ -323,50 +323,50 @@ def is_GC(gc_type):
     return asdict(gc_type)['parameters']['obj_id'] < 8
 
 
-def __affinity_idx(gc_type):
+def _affinity_idx(gc_type):
     a = asint(gc_type)
     mask_a = 0x7FFC if is_object(a) else 0x7FF0
     return a & mask_a
 
 
-def __add_affinity(from_type, to_type, affinity):
-    from_idx = __affinity_idx(from_type)
-    to_idx = __affinity_idx(to_type)
-    if not from_idx in __affinities: __affinities[from_idx] = {}
-    __affinities[from_idx][to_idx] = affinity
+def _add_affinity(from_type, to_type, affinity):
+    from_idx = _affinity_idx(from_type)
+    to_idx = _affinity_idx(to_type)
+    if not from_idx in _affinities: _affinities[from_idx] = {}
+    _affinities[from_idx][to_idx] = affinity
 
 
-def __load_affinities():
+def _load_affinities():
     with open(join(dirname(__file__), "gc_type_affinities.json"), "r") as user_affinities_file:
         user_defined_affinities = load(user_affinities_file)
 
     # Default affinities
     # All unsigned types have 100% affinity with wider signed integers (but not vice versa)
     one = float32(1.0)
-    signed_integer_types = list(map(asdict, __ALL_SIGNED_INTEGERS))
-    for u in map(asdict, __ALL_UNSIGNED_INTEGERS):
+    signed_integer_types = list(map(asdict, _ALL_SIGNED_INTEGERS))
+    for u in map(asdict, _ALL_UNSIGNED_INTEGERS):
         for s in signed_integer_types:
-            if s['parameters']['log_size'] == __MAX_LOG_SIZE or s['parameters']['log_size'] > u['parameters']['log_size']: __add_affinity(u, s, one)
+            if s['parameters']['log_size'] == _MAX_LOG_SIZE or s['parameters']['log_size'] > u['parameters']['log_size']: _add_affinity(u, s, one)
 
     # Add user defined affinities second as they may over-ride defaults.
     for i, affinity in enumerate(user_defined_affinities):
         if ok := affinity[2] < 0.0 or affinity > 1.0:
-            __logger.warning("Affinity {} at entry {} ({}) out of bounds. 0.0 <= affinity <= 1.0. Ignoring.".format(
+            _logger.warning("Affinity {} at entry {} ({}) out of bounds. 0.0 <= affinity <= 1.0. Ignoring.".format(
                 affinity[2], i, affinity))
         for gc_type in map(asdict, affinity[0:2]):
             if not validate(gc_type):
-                __logger.warning("GCTD 0x{:04x}/{} at entry {} ({}) is invalid. Ignoring.".format(gc_type, gc_type, i, affinity))
+                _logger.warning("GCTD 0x{:04x}/{} at entry {} ({}) is invalid. Ignoring.".format(gc_type, gc_type, i, affinity))
                 ok = False
             if is_reserved_obj(gc_type):
-                __logger.warning("GCTD 0x{:04x}/{} at entry {} ({}) specifies a RESERVED object. Ignoring.".format(gc_type, gc_type, i, affinity))
+                _logger.warning("GCTD 0x{:04x}/{} at entry {} ({}) specifies a RESERVED object. Ignoring.".format(gc_type, gc_type, i, affinity))
                 ok = False
-        if ok and not(affinity[0] == affinity[1] and affinity[2] == 1.0): __add_affinity(**affinity)
+        if ok and not(affinity[0] == affinity[1] and affinity[2] == 1.0): _add_affinity(**affinity)
 
     # RESERVED type affinities are last to prevent any accidental overrides by user definitions
     pass
 
 
-__load_affinities()
+_load_affinities()
 
 
 def affinity(gc_type_a, gc_type_b):
@@ -387,10 +387,10 @@ def affinity(gc_type_a, gc_type_b):
     """
     if gc_type_a == gc_type_b: return float32(1.0)
     if gc_type_a == UNKNOWN_TYPE or gc_type_b == UNKNOWN_TYPE: return 1.0
-    a_idx = __affinity_idx(gc_type_a)
-    if a_idx in __affinities:
-        b_idx = __affinity_idx(gc_type_b)
-        if b_idx in __affinities[a_idx]: return __affinities[a_idx][b_idx]
+    a_idx = _affinity_idx(gc_type_a)
+    if a_idx in _affinities:
+        b_idx = _affinity_idx(gc_type_b)
+        if b_idx in _affinities[a_idx]: return _affinities[a_idx][b_idx]
     return float32(0.0)
 
 
@@ -406,6 +406,6 @@ def compatible_types(gc_type):
         (list): A list of compatible gc_types including gc_type itself.
     """
     retval = [gc_type, UNKNOWN_TYPE]
-    idx = __affinity_idx(gc_type)
-    if idx in __affinities: retval.extend(__affinities[idx].keys())
+    idx = _affinity_idx(gc_type)
+    if idx in _affinities: retval.extend(_affinities[idx].keys())
     return retval 

@@ -29,9 +29,9 @@ class inputs(list):
 
     def __init__(self, *args, s=None):
         if s is None:
-            super().__init__(*args)
+            super()._init_(*args)
         else:
-            super().__init__([ref() for _ in range(s)])
+            super()._init_([ref() for _ in range(s)])
 
     def __str__(self):
         ref_str = '('
@@ -43,9 +43,9 @@ class outputs(list):
 
     def __init__(self, *args, s=None):
         if s is None:
-            super().__init__(*args)
+            super()._init_(*args)
         else:
-            super().__init__([float32(0)] * s)
+            super()._init_([float32(0)] * s)
 
     def __str__(self):
         val_str = '['

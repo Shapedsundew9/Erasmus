@@ -17,20 +17,20 @@ from os.path import dirname, abspath, basename, isfile
 from .genomic_library_entry_validator import NULL_GC
 
 
-__MUTATIONS_FILE = 'mutations.py'
-__MUTATION_PRIMITIVES_QUERY = [
+_MUTATIONS_FILE = 'mutations.py'
+_MUTATION_PRIMITIVES_QUERY = [
     {'gca': NULL_GC, 'gcb': NULL_GC, 'properties': {'unary_mutation': True}},
     {'gca': NULL_GC, 'gcb': NULL_GC, 'properties': {'binary_mutation': True}}
 ]
 
-__gp = gene_pool(__MUTATION_PRIMITIVES_QUERY, file_ptr=__MUTATIONS_FILE)
+_gp = gene_pool(_MUTATION_PRIMITIVES_QUERY, file_ptr=_MUTATIONS_FILE)
 
 
 def refresh_mutations():
     # I know - private function
-    __gp.__update()
-    __gp.__header = "mutations = (\n"
-    for gp in __gp.__gene_pool.values(): __gp.__header += "\t({}, {}),\n".format(gp['signature'], gp['properties']['binary_mutation'])
-    __gp.__header += ")"
-    __gp.__update() 
+    _gp._update()
+    _gp._header = "mutations = (\n"
+    for gp in _gp._gene_pool.values(): _gp._header += "\t({}, {}),\n".format(gp['signature'], gp['properties']['binary_mutation'])
+    _gp._header += ")"
+    _gp._update() 
 

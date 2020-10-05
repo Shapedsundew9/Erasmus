@@ -14,7 +14,7 @@ from numpy.random import randint
 class cull_r000(cull_base):
 
     def __init__(self, weight=1.0):
-        super().__init__('random', weight)
+        super()._init_('random', weight)
         self.code = 'r000'
 
 

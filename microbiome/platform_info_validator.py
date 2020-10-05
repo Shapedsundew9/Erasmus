@@ -39,17 +39,17 @@ class platform_info_validator(Validator):
         return datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%S.%fZ")
 
 
-    def __coerce_string(self, value, length):
+    def _coerce_string(self, value, length):
         return value[:length] if isinstance(value, str) and len(value) > length else value
         
 
     def _normalize_coerce_string_64(self, value):
-        return self.__coerce_string(value, 64)
+        return self._coerce_string(value, 64)
         
 
     def _normalize_coerce_string_128(self, value):
-        return self.__coerce_string(value, 128)
+        return self._coerce_string(value, 128)
         
 
     def _normalize_coerce_string_1024(self, value):
-        return self.__coerce_string(value, 1024)
+        return self._coerce_string(value, 1024)

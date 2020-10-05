@@ -15,15 +15,15 @@ from .work_registry_validator import work_registry_validator
 from logging import getLogger
 
 
-__logger = getLogger(__name__)
+_logger = getLogger(__name__)
 
 
 def register_work(work_config):
     validator = work_registry_validator(get_config()['tables']['work_registry']['schema'])
     if not validator.validate(work_config):
-        __logger.warning("Invalid work configuration: %s", validator.errors)
+        _logger.warning("Invalid work configuration: %s", validator.errors)
         exit(1)
     work_config = validator.normalized(work_config)
-    work_registry = database_table(__logger, 'work_registry')
+    work_registry = database_table(_logger, 'work_registry')
     work_registry.store([work_config])
     return work_config['signature']

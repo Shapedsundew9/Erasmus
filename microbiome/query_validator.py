@@ -17,7 +17,7 @@ from .entry_column_meta_validator import entry_column_meta_validator
 class query_validator():
 
 
-    __QUERY_BASE_SCHEMA = {
+    _QUERY_BASE_SCHEMA = {
         'order by': {
             'type': 'string'
         },
@@ -34,15 +34,15 @@ class query_validator():
 
     def __init__(self, table_schema, table_name=""):
         self.table_name = table_name
-        validation_schema = {k: self.__query_params(v) for k, v in filter(lambda kv: not kv[1]['meta']['compressed'], table_schema.items())}
-        validation_schema.update(query_validator.__QUERY_BASE_SCHEMA)
+        validation_schema = {k: self._query_params(v) for k, v in filter(lambda kv: not kv[1]['meta']['compressed'], table_schema.items())}
+        validation_schema.update(query_validator._QUERY_BASE_SCHEMA)
         validation_schema['order by']['allowed'] = [k for k, v in filter(lambda kv: kv[1]['meta']['database']['type'] != 'BYTEA', table_schema.items())]
-        self.__validator = Validator(validation_schema)
+        self._validator = Validator(validation_schema)
         self.errors = None
 
 
     # TODO: Why does this not draw on the entry_schema for rules on validation of the search terms
-    def __query_params(self, entry_schema):
+    def _query_params(self, entry_schema):
         if entry_schema['type'] == "integer" or entry_schema['type'] == "float" or entry_schema['meta']['database']['type'] == "TIMESTAMP":
             param_schema = {
                 'oneof': [
@@ -96,27 +96,27 @@ class query_validator():
     def validate(self, query):
         if isinstance(query, list):
             for q in query:
-                if not self.__validator(q):
-                    self.errors = self.__validator.errors
+                if not self._validator(q):
+                    self.errors = self._validator.errors
                     return False 
             return True
-        retval = self.__validator(query)
-        self.errors = self.__validator.errors
+        retval = self._validator(query)
+        self.errors = self._validator.errors
         return retval
 
 
     def normalized(self, query):
         if isinstance(query, list):
             if len(query) == 0: query = [{}]
-            for i in range(len(query)): query[i] = self.__validator.normalized(query[i])
+            for i in range(len(query)): query[i] = self._validator.normalized(query[i])
         else:
-            query = self.__validator.normalized(query)
+            query = self._validator.normalized(query)
         return query
 
 
     # This function is used in generating the package documentation
     def create_query_format_json(self):
-        json_obj = loads(str(self.__validator.schema).replace("'", '"').replace(" True", " true"). replace(" False", " false"))
+        json_obj = loads(str(self._validator.schema).replace("'", '"').replace(" True", " true"). replace(" False", " false"))
         with open(join(dirname(__file__), self.table_name + "_query_format.json"), "w") as file_ptr:
             dump(json_obj, file_ptr, indent=4, sort_keys=True)
 

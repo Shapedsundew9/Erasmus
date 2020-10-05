@@ -1,36 +1,47 @@
-'''
-Filename: /home/shapedsundew9/Projects/Erasmus/tests/test_database_table.py
-Path: /home/shapedsundew9/Projects/Erasmus/tests
-Created Date: Saturday, April 25th 2020, 6:10:10 pm
-Author: Shapedsundew9
-
-Copyright (c) 2020 Your Company
-'''
+"""Test the database tables."""
 
 
 import pytest
-from os.path import join, dirname
+from os.path import join, dirname, basename, splitext
+from logging import getLogger, basicConfig, DEBUG
 from json import load
 from microbiome.query_validator import query_validator
 from microbiome.config import set_config, get_config
 from microbiome.database_table import database_table
-from logging import getLogger, basicConfig, DEBUG
 
 
-test_config = load(open(join(dirname(__file__), "test_config.json"), "r"))
-queries = load(open(join(dirname(__file__), "test_entry_queries.json"), "r"))
-results = load(open(join(dirname(__file__), "test_entry_results.json"), "r"))
-schema = load(open(join(dirname(__file__), "test_entry_format.json"), "r"))
-basicConfig(filename='erasmus.log', level=DEBUG)
+with open(join(dirname(__file__), "data/test_config.json"), "r") as file_ptr:
+    test_config = load(file_ptr)
+test_config['tables']['test_history_decimation']['format_file_folder'] = join(
+    dirname(__file__), 'data')
+test_config['tables']['test_table']['format_file_folder'] = join(
+    dirname(__file__), 'data')
+with open(join(dirname(__file__), "data/test_entry_queries.json"), "r") as file_ptr:
+    queries = load(file_ptr)
+with open(join(dirname(__file__), "data/test_entry_results.json"), "r") as file_ptr:
+    results = load(file_ptr)
+with open(join(dirname(__file__), "data/test_entry_format.json"), "r") as file_ptr:
+    schema = load(file_ptr)
+
+
+basicConfig(
+    filename=join(
+        dirname(__file__),
+        'logs',
+        splitext(basename(__file__))[0] + '.log'),
+    filemode='w',
+    level=DEBUG)
 
 
 @pytest.fixture(scope="module")
 def test_table():
-    data = load(open(join(dirname(__file__), "test_entry_data.json"), "r"))
+    with open(join(dirname(__file__), "data/test_entry_data.json"), "r") as file_ptr:
+        data = load(file_ptr)
     set_config(test_config)
     table = database_table(getLogger(__file__), "test_table")
     table.store(data)
-    return table
+    yield table
+    table._delete_db()
 
 
 @pytest.mark.parametrize("index", list(range(len(queries))))

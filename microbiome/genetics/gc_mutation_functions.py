@@ -14,7 +14,7 @@ from logging import getLogger
 from pprint import pformat
 
 
-__logger = getLogger(__name__)
+_logger = getLogger(__name__)
 
 
 # GC arguments can be modified by mutation functions
@@ -29,7 +29,7 @@ __logger = getLogger(__name__)
 
 # field = 'I', 'C', 'A', 'B', 'O', 'D'
 # Return the number of times a field is referenced
-def __count_references_to(gc, field):
+def _count_references_to(gc, field):
     count = 0
     for f in ('A', 'B', 'O'):
         if f in gc['graph']:
@@ -40,7 +40,7 @@ def __count_references_to(gc, field):
 
 
 # Return a count of all the references
-def __total_references(gc):
+def _total_references(gc):
     count = 0
     for f in ('A', 'B', 'O'):
         if f in gc['graph']:
@@ -51,18 +51,18 @@ def __total_references(gc):
 # field = 'A', 'B', 'O'
 # f_offset = fractional offset 0.0 <= offset <= 1.0)
 # Index into the gc['graph'] member lists 
-def __select_dest(gc, field, f_offset):
+def _select_dest(gc, field, f_offset):
     return round((len(gc['graph'][field]) - 1) * f_offset)
 
 
 # field = 'I', 'C', 'A', 'B'
 # f_offset = fractional offset 0.0 <= offset <= 1.0)
 # Index into the gc['graph'] member lists 
-def __select_src(gc, field, f_offset):
+def _select_src(gc, field, f_offset):
     if field == 'I': return round((gc['num_inputs'] - 1) * f_offset)
     if field == 'C': return round((len(gc['graph']['C']) - 1) * f_offset)
-    if field == 'A': return __select_dest(gc['__gca'], 'O', f_offset)
-    return __select_dest(gc['__gcb'], 'O', f_offset)
+    if field == 'A': return _select_dest(gc['_gca'], 'O', f_offset)
+    return _select_dest(gc['_gcb'], 'O', f_offset)
 
 
 # src = 'I', 'C', 'A', 'B'
@@ -71,7 +71,7 @@ def __select_src(gc, field, f_offset):
 # dest_f_off = destination list fractional offset
 # Connect a source vertex in the gc['graph'] to a destination vertex
 def connect(gc, src, dest, src_f_off, dest_f_off):
-    gc['graph'][dest][__select_dest(gc, dest, src_f_off)] = [src, __select_src(gc, src, dest_f_off)]
+    gc['graph'][dest][_select_dest(gc, dest, src_f_off)] = [src, _select_src(gc, src, dest_f_off)]
     return gc
 
 
@@ -79,8 +79,8 @@ def connect(gc, src, dest, src_f_off, dest_f_off):
 # TODO: See if this can be speeded up by setting a flag rather than counting all the time
 def append_constant(gc, c):
     if 'C' in gc['graph']:
-        if __count_references_to(gc, 'C') <= len(gc['graph']['C']): 
-            if __total_references(gc) < len(gc['graph']['C']):
+        if _count_references_to(gc, 'C') <= len(gc['graph']['C']): 
+            if _total_references(gc) < len(gc['graph']['C']):
                 gc['graph']['C'].append(c)
     else:
         gc['graph']['C'] = [c]
@@ -95,7 +95,7 @@ def remove_constant(gc, offset):
         del gc['graph']['C']
         i = 0
     else:
-        i = int(__select_src(gc, 'C', offset))
+        i = int(_select_src(gc, 'C', offset))
         del gc['graph']['C'][i]
     for f in ('A', 'B', 'O'):
         if f in gc['graph']:
@@ -111,21 +111,21 @@ def remove_constant(gc, offset):
 # Remove an input into one of the fields below by replacing the reference with 'D'
 # field = 'A', 'B', 'O'
 def remove_input(gc, field, offset):
-    gc['graph']['field'][__select_dest(gc, field, offset)][0] = 'D'
+    gc['graph']['field'][_select_dest(gc, field, offset)][0] = 'D'
     return gc
 
 
 # f_offset = fractional offset in the gc['graph'] constsnt list
 # factor = factor by with to multiple the constant
 def mutate_constant(gc, f_offset, factor):
-    gc['graph']['C'][__select_src(gc, 'C', f_offset)] * factor
+    gc['graph']['C'][_select_src(gc, 'C', f_offset)] * factor
     return gc
 
 
 # Stack gca on gcb.
 def stack(gca, gcb):
-    __logger.debug("GCA: {}".format(pformat(gca)))
-    __logger.debug("GCB: {}".format(pformat(gcb)))
+    _logger.debug("GCA: {}".format(pformat(gca)))
+    _logger.debug("GCB: {}".format(pformat(gcb)))
     len_ai = len(gca['graph']['A'])
     len_ao = len(gca['graph']['O'])
     len_bi = len(gcb['graph']['A'])
@@ -146,8 +146,8 @@ def stack(gca, gcb):
         },
         "gca": gca['signature'],
         "gcb": gcb['signature'],
-        "__gca": gca,
-        "__gcb": gcb,
+        "_gca": gca,
+        "_gcb": gcb,
         "meta": {
             "parents": [[gca['signature'], gcb['signature']]]
         }

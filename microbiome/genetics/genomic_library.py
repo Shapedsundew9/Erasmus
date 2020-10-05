@@ -29,59 +29,59 @@ from json import load
 class genomic_library():
 
 
-    __store = None
-    __codon_validator = None
-    __entry_validator = None
-    __query_validator = None
-    __logger = getLogger(__name__)
+    _store = None
+    _codon_validator = None
+    _entry_validator = None
+    _query_validator = None
+    _logger = getLogger(__name__)
 
 
     def __init__(self):
-        if genomic_library.__store is None:
+        if genomic_library._store is None:
             table_name = get_config()['genomic_library']['table']
-            genomic_library.__store = database_table(genomic_library.__logger, table_name)
-            genomic_library.__codon_validator = codon_validator(load(open(join(dirname(__file__), "../formats/codon_format.json"), "r")))
-            genomic_library.__entry_validator = genomic_library_entry_validator(get_config()['tables'][table_name]['schema'], purge_unknown=True)
-            genomic_library.__query_validator = query_validator(genomic_library.__entry_validator.schema)
-            genomic_library.__query_validator.table_name = table_name
-            if not len(genomic_library.__store): self.__initialise()
+            genomic_library._store = database_table(genomic_library._logger, table_name)
+            genomic_library._codon_validator = codon_validator(load(open(join(dirname(__file__), "../formats/codon_format.json"), "r")))
+            genomic_library._entry_validator = genomic_library_entry_validator(get_config()['tables'][table_name]['schema'], purge_unknown=True)
+            genomic_library._query_validator = query_validator(genomic_library._entry_validator.schema)
+            genomic_library._query_validator.table_name = table_name
+            if not len(genomic_library._store): self._initialise()
 
 
-    def __initialise(self):
+    def _initialise(self):
         # TODO: Look for the biome first
-        self.__entry_zero()
-        genomic_library.__logger.info("Loading codon library")
-        if not self.__load_codons("codon_library.json"):
-            genomic_library.__logger.error("Codon library failed validation. Unable to initialise genomic library.")
+        self._entry_zero()
+        genomic_library._logger.info("Loading codon library")
+        if not self._load_codons("codon_library.json"):
+            genomic_library._logger.error("Codon library failed validation. Unable to initialise genomic library.")
             exit(1)
-        genomic_library.__logger.info("Loading mutation primitive codon library")
-        if not self.__load_codons("gc_mutation_library.json"):
-            genomic_library.__logger.error("GC mutation library failed validation. Unable to initialise genomic library.")
+        genomic_library._logger.info("Loading mutation primitive codon library")
+        if not self._load_codons("gc_mutation_library.json"):
+            genomic_library._logger.error("GC mutation library failed validation. Unable to initialise genomic library.")
             exit(1)
-        genomic_library.__logger.info("Loading query primitive codon library")
-        if not self.__load_codons("gc_query_library.json"):
-            genomic_library.__logger.error("GC query library failed validation. Unable to initialise genomic library.")
+        genomic_library._logger.info("Loading query primitive codon library")
+        if not self._load_codons("gc_query_library.json"):
+            genomic_library._logger.error("GC query library failed validation. Unable to initialise genomic library.")
             exit(1)
         
 
-    def __load_codons(self, src_file_name):
+    def _load_codons(self, src_file_name):
         codons = []
         for raw_codon in load(open(join(dirname(__file__), "codon_library.json"), "r")):
-            if not genomic_library.__codon_validator.validate(raw_codon):
-                genomic_library.__logger.error("Codon invalid.\n%s\n%s", pformat(raw_codon), pformat(genomic_library.__codon_validator.errors))
+            if not genomic_library._codon_validator.validate(raw_codon):
+                genomic_library._logger.error("Codon invalid.\n%s\n%s", pformat(raw_codon), pformat(genomic_library._codon_validator.errors))
                 return False
-            codons.append(genomic_library.__codon_validator.normalized(raw_codon))
+            codons.append(genomic_library._codon_validator.normalized(raw_codon))
         return self.store(codons)
 
 
-    def __len__(self):
-        return len(genomic_library.__store)
+    def _len_(self):
+        return len(genomic_library._store)
 
 
     # A zero entry is needed for genetic codes that do not have a GCA or GCB
-    def __entry_zero(self):
+    def _entry_zero(self):
         entry = {}
-        for k, v in genomic_library.__entry_validator.schema.items():
+        for k, v in genomic_library._entry_validator.schema.items():
             if v['meta']['database']['type'] == "BYTEA":
                 value = '0' * v['minlength'] if "minlength" in v else '00'
             elif v['meta']['database']['type'] == "INTEGER" or v['meta']['database']['type'] == "BIGINT":
@@ -94,65 +94,65 @@ class genomic_library():
                 value = "entry_zero"
             if 'codec' in v['meta']: value = {}
             entry[k] = value
-        genomic_library.__store.store([entry])
+        genomic_library._store.store([entry])
 
 
     # Return an application formatted entry from the store
     def __getitem__(self, signature):
-        value = genomic_library.__store.load([{"signature": signature}])
+        value = genomic_library._store.load([{"signature": signature}])
         return None if value is None else value[0]
 
 
     # Return a list of application formatted entries from the store that meet the query
     def load(self, query, fields=None):
-        if not genomic_library.__query_validator.validate(query):
-            genomic_library.__logger.warning("Query is not valid:\n%s\n%s", pformat(genomic_library.__query_validator.errors), pformat(query))
+        if not genomic_library._query_validator.validate(query):
+            genomic_library._logger.warning("Query is not valid:\n%s\n%s", pformat(genomic_library._query_validator.errors), pformat(query))
             return []
-        query = genomic_library.__query_validator.normalized(query)
-        return genomic_library.__store.load(query, fields)
+        query = genomic_library._query_validator.normalized(query)
+        return genomic_library._store.load(query, fields)
 
 
     def normalize(self, entries):
         if isinstance(entries, list):
             for i, entry in enumerate(entries):
                 if self.validate(entry)[0]:
-                    entries[i] = genomic_library.__entry_validator.normalized(entry)
-                    if not self.__calculate_fields(entries[i], entries): return False
+                    entries[i] = genomic_library._entry_validator.normalized(entry)
+                    if not self._calculate_fields(entries[i], entries): return False
                 else:
-                    genomic_library.__logger.debug("Entry %s is not valid. No entries will be stored.", entries[i])
+                    genomic_library._logger.debug("Entry %s is not valid. No entries will be stored.", entries[i])
                     return False
         else:
             if self.validate(entries)[0]:
-                entries.update(genomic_library.__entry_validator.normalized(entries))
-                if not self.__calculate_fields(entries, [entries]): return False
+                entries.update(genomic_library._entry_validator.normalized(entries))
+                if not self._calculate_fields(entries, [entries]): return False
             else:
-                genomic_library.__logger.debug("Entry %s is not valid. No entries will be stored.", entries)
+                genomic_library._logger.debug("Entry %s is not valid. No entries will be stored.", entries)
                 return False
         return True
 
 
     # Store a new application formatted entry.
     def store(self, entries):
-        return genomic_library.__store.store(entries) if self.normalize(entries) else False
+        return genomic_library._store.store(entries) if self.normalize(entries) else False
 
 
     # Validates an application format entry and populates fields that do not
     # require store lookups to calculate.
     def validate(self, entry):
-        if not genomic_library.__entry_validator(entry):
-            err_txt = genomic_library.__entry_validator.errors
-            genomic_library.__logger.debug("Entry is not valid:\n%s\n%s", pformat(err_txt), pformat({k: v for k, v in entry.items() if k[:2] != '__'}))
+        if not genomic_library._entry_validator(entry):
+            err_txt = genomic_library._entry_validator.errors
+            genomic_library._logger.debug("Entry is not valid:\n%s\n%s", pformat(err_txt), pformat({k: v for k, v in entry.items() if k[:2] != '_'}))
             return False, err_txt 
         return True, []
 
 
     # Some fields depend on GCA & GCB which must be defined in either the genomic library or the entries to be added.
-    def __calculate_fields(self, entry, entries=None):
+    def _calculate_fields(self, entry, entries=None):
         # TODO: Need to update gca & gcb if necessary.
         gca = self[entry['gca']] if entries is None or not entry['gca'] in entries else entries[entry['gca']]
-        if gca is None: genomic_library.__logger.warning("gca %s does not exist.",entry['gca'])
+        if gca is None: genomic_library._logger.warning("gca %s does not exist.",entry['gca'])
         gcb = self[entry['gcb']] if entries is None or not entry['gcb'] in entries else entries[entry['gcb']]
-        if gcb is None: genomic_library.__logger.warning("gcb %s does not exist.",entry['gcb'])
+        if gcb is None: genomic_library._logger.warning("gcb %s does not exist.",entry['gcb'])
         if gca is None or gcb is None: return False
         entry['code_depth'] = max((gca['code_depth'], gcb['code_depth'])) + 1
         entry['num_codes'] = max((gca['num_codes'] + gcb['num_codes'], 1))

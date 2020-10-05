@@ -17,7 +17,7 @@ from json import load
 from microbiome.genetics.genomic_library_entry_validator import genomic_library_entry_validator, NULL_GC
 from microbiome.config import set_config, get_config
 
-set_config(load(open(join(dirname(__file__), "test_config.json"), "r")))
+set_config(load(open(join(dirname(__file__), "data/test_config.json"), "r")))
 
 from microbiome.creator import register_creator
 from microbiome.work import register_work
@@ -25,12 +25,12 @@ from microbiome.worker import worker
 
 
 gc_validator = genomic_library_entry_validator(load(open('./microbiome/formats/genomic_library_entry_format.json', "r")), allow_unknown=True)
-__logger = getLogger(__name__)
+_logger = getLogger(__name__)
 
 
 def fitness_function(func, gc):
     if gc_validator(gc): return 1.0
-    __logger.debug("Test work fitness function GC validation failed with %s.", gc_validator.errors)
+    _logger.debug("Test work fitness function GC validation failed with %s.", gc_validator.errors)
     return 0.0
 
 

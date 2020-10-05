@@ -121,7 +121,7 @@ def validate_value(value_str, gc_type):
 # TODO: Consider caching calculated results.
 class gc_graph():
     """Manipulating Genetic Code Graphs.
-    
+
     Genetic Code graphs are internally stored with the following structure:
     [
         [EP_TYPE, ROW, INDEX, TYPE, REFERENCED_BY, VALUE],
@@ -130,12 +130,13 @@ class gc_graph():
         [EP_TYPE, ROW, INDEX, TYPE, REFERENCED_BY, VALUE],
         ...
     ]
-    
+
     Each list element defines an endpoint where:
-    
+
         EP_TYPE (bool): SRC_EP or DST_EP
         TYPE (gc_type): The gc_type of the end point
-        INDEX (int): The index of the endpoint in the row. Note that the indices do not need to be contiguous just unique.
+        INDEX (int): The index of the endpoint in the row. Note that the indices do not need to be 
+            contiguous just unique.
         REFERENCED_BY ([[ROW, INDEX]...]): A list of endpoints that connect to this endpoint.
         VALUE (obj): The value if the INDEX ROW is "C"
 
@@ -171,7 +172,7 @@ class gc_graph():
         if graph is None: graph = {}
         self.rows = ({k: len(v) for k, v in graph.items()}, {})
         self.app_graph = graph
-        self.graph = self.__convert_to_internal(graph)
+        self.graph = self._convert_to_internal(graph)
         self.status = []
 
 
@@ -180,7 +181,7 @@ class gc_graph():
         return ref[0] + str(ref[1]) + 'ds'[ep_type]
 
 
-    def __convert_to_internal(self, graph):
+    def _convert_to_internal(self, graph):
         """Convert graph to internal format.
 
         The internal format allows quicker searching for parameters by type, endpoint type etc.
@@ -215,7 +216,7 @@ class gc_graph():
         return retval
 
 
-    def __add_ep(self, ep):
+    def _add_ep(self, ep):
         """Add an endpoint to the internal graph format structure.
 
         Args
@@ -229,7 +230,7 @@ class gc_graph():
         self.rows[ep_type][ep_row] += 1
 
 
-    def __remove_ep(self, ep, check=True):
+    def _remove_ep(self, ep, check=True):
         """Remove an endpoint to the internal graph format structure.
 
         Only unreferenced endpoint can be removed.
@@ -262,7 +263,7 @@ class gc_graph():
         return graph
 
 
-    def __gt_graph(self):
+    def _gt_graph(self):
         """Create a graph_tool package graph."""
         g = Graph()
         vd = 60
@@ -329,7 +330,7 @@ class gc_graph():
 
     def draw(self, name="graph"):
         """Draw the graph."""
-        g, p, os = self.__gt_graph()
+        g, p, os = self._gt_graph()
         graph_draw(g, pos=p['pos'], vertex_text=p['label'], vertex_shape=p['shape'], vertex_rotation=p['rotation'],
             vertex_text_rotation=p['text_rotation'], vertex_fill_color=p['fill'],  vertex_size=p['size'],
             vertex_font_weight=p['font_weight'], vertex_font_size=p['font_size'], edge_pen_width=p['pen_width'], output=name+".png", 
@@ -451,8 +452,8 @@ class gc_graph():
         -------
             (func): A function for a filter() that will return endpoints with qualifying 'gc_types'.
         """
-        __types = gc_types if exact else set([x for y in gc_types for x in compatible_types(y)])
-        return lambda x: any(map(lambda p: p == x[ep_idx.TYPE], __types)) and filter_func(x)
+        _types = gc_types if exact else set([x for y in gc_types for x in compatible_types(y)])
+        return lambda x: any(map(lambda p: p == x[ep_idx.TYPE], _types)) and filter_func(x)
 
 
     def unreferenced_filter(self, filter_func=lambda x: True):
@@ -637,11 +638,11 @@ class gc_graph():
         #1
         row_u_list = list(filter(self.row_filter('U'), self.graph.values()))
         print("Row U: ",row_u_list)
-        for ep in row_u_list: self.__remove_ep(ep, check=False)
+        for ep in row_u_list: self._remove_ep(ep, check=False)
         unreferenced = list(filter(self.src_filter(self.unreferenced_filter()), self.graph.values()))
         for i, ep in enumerate(unreferenced):
             print("i: ", i)
-            self.__add_ep([DST_EP, 'U', i, ep[ep_idx.TYPE], [[*ep[1:3]]]])
+            self._add_ep([DST_EP, 'U', i, ep[ep_idx.TYPE], [[*ep[1:3]]]])
 
         #2
         self.app_graph.update(self.application_graph())
@@ -835,7 +836,7 @@ class gc_graph():
 
     def add_src_ep(self, row):
         """Add an endpoint to row of UNKNOWN type.""" 
-        self.__add_ep([SRC_EP, row, None, UNKNOWN_TYPE, []])
+        self._add_ep([SRC_EP, row, None, UNKNOWN_TYPE, []])
         if row == 'I': self.status.append(text_token({'I01000': {}}))
         elif row == 'A': self.status.append(text_token({'I01100': {}}))
         elif row == 'B': self.status.append(text_token({'I01200': {}}))
@@ -853,7 +854,7 @@ class gc_graph():
         if ep_list:
             ep = ep_list[0]
             ep_row = ep[ep_idx.ROW]
-            self.__remove_ep(ep)
+            self._remove_ep(ep)
             if ep_row == 'I': self.status.append(text_token({'I01001': {}}))
             elif ep_row == 'A': self.status.append(text_token({'I01101': {}}))
             elif ep_row == 'B': self.status.append(text_token({'I01201': {}}))
@@ -870,11 +871,11 @@ class gc_graph():
 
     def add_dst_ep(self, row):
         """Add an endpoint to row of UNKNOWN type.""" 
-        self.__add_ep([DST_EP, row, None, UNKNOWN_TYPE, []])
+        self._add_ep([DST_EP, row, None, UNKNOWN_TYPE, []])
         if row == 'O':
             self.status.append(text_token({'I01302': {}}))
             if self.has_f():
-                self.__add_ep([DST_EP, 'P', None, UNKNOWN_TYPE, []])
+                self._add_ep([DST_EP, 'P', None, UNKNOWN_TYPE, []])
                 self.status.append(text_token({'I01402': {}}))
         elif row == 'A': self.status.append(text_token({'I01102': {}}))
         elif row == 'B': self.status.append(text_token({'I01202': {}}))
@@ -899,12 +900,12 @@ class gc_graph():
         if ep_list:
             ep = ep_list[0]
             ep_row = ep[ep_idx.ROW]
-            self.__remove_ep(ep)
+            self._remove_ep(ep)
             if ep_row == 'O':
                 self.status.append(text_token({'I01303': {}}))
                 if self.has_f():
                     ep[ep_idx.ROW] = 'P' 
-                    self.__remove_ep(ep)
+                    self._remove_ep(ep)
                     self.status.append(text_token({'I01403': {}}))
             elif ep_row == 'A': self.status.append(text_token({'I01103': {}}))
             elif ep_row == 'B': self.status.append(text_token({'I01203': {}}))

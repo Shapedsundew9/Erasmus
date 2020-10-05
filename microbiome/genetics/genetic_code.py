@@ -15,10 +15,10 @@ from ..draw_graph import draw_graph
 
 class genetic_code():
 
-    __GC = 0
-    __PARENT = 1
-    __GCA = 2
-    __GCB = 3
+    _GC = 0
+    _PARENT = 1
+    _GCA = 2
+    _GCB = 3
 
 
     # A genetic code is created from a gene pool (so GCA & GCB are references to GC objects not signatures)
@@ -30,29 +30,29 @@ class genetic_code():
         addition_queue = [[gc, None, None, None]]
         self.root = addition_queue[0]
         self.node_list = [addition_queue[0]]
-        self.__depths, self.__generations = [gc['code_depth']], [gc['generation']]
+        self._depths, self._generations = [gc['code_depth']], [gc['generation']]
         while addition_queue:
             node = addition_queue.pop()
-            if not node[genetic_code.__GC]['__gca'] is None:
-                addition_queue.append([gc['__gca'], node, None, None])
-                node[genetic_code.__GCA] = addition_queue[-1]
+            if not node[genetic_code._GC]['_gca'] is None:
+                addition_queue.append([gc['_gca'], node, None, None])
+                node[genetic_code._GCA] = addition_queue[-1]
                 self.node_list.append(addition_queue[-1])
-                self.__depths.append(gc['__gca']['code_depth'])
-                self.__generations.append(gc['__gca']['generation'])
-            if not node[genetic_code.__GC]['__gcb'] is None:
-                addition_queue.append([gc['__gcb'], node, None, None])
-                node[genetic_code.__GCB] = addition_queue[-1]
+                self._depths.append(gc['_gca']['code_depth'])
+                self._generations.append(gc['_gca']['generation'])
+            if not node[genetic_code._GC]['_gcb'] is None:
+                addition_queue.append([gc['_gcb'], node, None, None])
+                node[genetic_code._GCB] = addition_queue[-1]
                 self.node_list.append(addition_queue[-1])
-                self.__depths.append(gc['__gca']['code_depth'])
-                self.__generations.append(gc['__gca']['generation'])
-        self.__generations = array(self.__generations, dtype=float32)
-        self.__depths = array(self.__depths, dtype=float32)
-        self.__generations = float32(1.0) + (float32(1.0) - self.__generations / amax(self.__generations))
-        self.__depths = float32(1.0) + (float32(1.0) - self.__depths / amax(self.__depths))
+                self._depths.append(gc['_gca']['code_depth'])
+                self._generations.append(gc['_gca']['generation'])
+        self._generations = array(self._generations, dtype=float32)
+        self._depths = array(self._depths, dtype=float32)
+        self._generations = float32(1.0) + (float32(1.0) - self._generations / amax(self._generations))
+        self._depths = float32(1.0) + (float32(1.0) - self._depths / amax(self._depths))
 
 
-    def __node(self, node):
-        return {'gc': node[genetic_code.__GC], 'parent': node[genetic_code.__PARENT], '__gca': node[genetic_code.__GCA], '__gcb': node[genetic_code.__GCB]}
+    def _node(self, node):
+        return {'gc': node[genetic_code._GC], 'parent': node[genetic_code._PARENT], '_gca': node[genetic_code._GCA], '_gcb': node[genetic_code._GCB]}
 
 
     # Return a randomly selected weighted node
@@ -60,7 +60,7 @@ class genetic_code():
     # Need to identify the instance of the a sub-GC to modifiy which is defined by the incoming
     # edge in the top level GC graph
     def select(self, gpm, dpm):
-        node = choices(self.node_list, self.__generations * gpm + self.__depths * dpm)
+        node = choices(self.node_list, self._generations * gpm + self._depths * dpm)
         return self.predecesors(node)
 
 
@@ -68,10 +68,10 @@ class genetic_code():
     # The list is in the order parent, grandparent, great grandparent...
     def predecesors(self, node):
         retval = []
-        parent = node[genetic_code.__PARENT]
+        parent = node[genetic_code._PARENT]
         while not parent is None:
-            retval.append(self.__node(parent))
-            parent = parent[genetic_code.__PARENT]
+            retval.append(self._node(parent))
+            parent = parent[genetic_code._PARENT]
         return retval
 
 
@@ -83,7 +83,7 @@ class genetic_code():
         node_list = [self.root]
         while node_list:
             node = node_list.pop()
-            for ab in (genetic_code.__GCA, genetic_code.__GCB):
+            for ab in (genetic_code._GCA, genetic_code._GCB):
                 if not node[ab] is None:
                     node[ab].append(dg.add_vertex())
                     dg.add_edge(node[-1], node[ab][-1])

@@ -16,7 +16,7 @@
                     "minlength": 1,
                     "maxlength": 64,
                     "regex": "[a-zA-Z0-9_-]+"
-                        },
+                },
                 "recreate": {
                     "type": "boolean",
                     "default": false
@@ -64,12 +64,15 @@
                     "type": "string",
                     "minlength": 1,
                     "maxlength": 64,
-                    "regex": "[a-zA-Z-_0-9]+"
+                    "regex": "[a-zA-Z-_0-9]+",
+                    "check_with": "valid_database"
                 },
                 "format_file_folder": {
                     "type": "string",
                     "minlength": 1,
-                    "maxlength": 1024
+                    "maxlength": 1024,
+                    "check_with": "valid_format_file_folder",
+                    "default_setter": "set_format_file_folder"
                 },
                 "format_file": {
                     "type": "string",
@@ -102,45 +105,6 @@
                     "meta":{
                         "description": "TBD"
                     }
-                }
-            }
-        }
-    },
-    "workers": {
-        "type": "dict",
-        "required": true,
-        "keysrules": {
-            "regex": "[a-zA-Z-0-9_]{,64}"
-        },
-        "valuesrules": {
-            "type": "dict",
-            "schema": {
-                "initial_query": {
-                    "type": "list",
-                    "nullable": true
-                },
-                "population_limit": {
-                    "type": "integer",
-                    "min": 1,
-                    "max": 2147483647
-                },
-                "delete_gene_pool": {
-                    "type": "boolean",
-                    "default": true
-                },
-                "gene_pool_prefix": {
-                    "type": "string",
-                    "default": "gp_",
-                    "minlength": 1,
-                    "maxlength": 32,
-                    "regex": "[a-zA-Z-_0-9]+"
-                },
-                "work": {
-                    "type": "string",
-                    "minlength": 64,
-                    "maxlength": 64,
-                    "regex": "[0-9a-f]{64}"
-                        
                 }
             }
         }

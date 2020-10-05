@@ -13,10 +13,11 @@ from os.path import dirname, join
 from json import load
 
 
-__ENTRY_COLUMN_META_SCHEMA = schema = load(open(join(dirname(__file__), "formats/entry_column_meta_format.json"), "r"))
+with open(join(dirname(__file__), "formats/entry_column_meta_format.json"), "r") as file_ptr:
+    _ENTRY_COLUMN_META_SCHEMA = schema = load(file_ptr)
 
 
-class __entry_column_meta_validator(Validator):
+class _entry_column_meta_validator(Validator):
 
 
     def _check_with_valid_immutable(self, field, value):
@@ -57,5 +58,5 @@ class __entry_column_meta_validator(Validator):
                 self._error(field, "To have a cumulative sum the type must be NUMERIC but not SERIAL.")
 
 
-entry_column_meta_validator = __entry_column_meta_validator(__ENTRY_COLUMN_META_SCHEMA)
+entry_column_meta_validator = _entry_column_meta_validator(_ENTRY_COLUMN_META_SCHEMA)
 entry_column_meta_validator.allow_unknown = True

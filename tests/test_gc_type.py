@@ -5,17 +5,17 @@ from os import linesep
 from os.path import dirname, join
 from tqdm import tqdm
 from json import load, dumps
-from microbiome.genetics.gc_type import __ALL_FLOATS, __ALL_OBJECTS, __ALL_SIGNED_INTEGERS, __ALL_UNSIGNED_INTEGERS
+from microbiome.genetics.gc_type import _ALL_FLOATS, _ALL_OBJECTS, _ALL_SIGNED_INTEGERS, _ALL_UNSIGNED_INTEGERS
 from microbiome.genetics.gc_type import *
 
 
-__TEST_RESULTS_JSON = 'test_gc_type_results.json'
+_TEST_RESULTS_JSON = 'data/test_gc_type_results.json'
 test_cases = []
-for r in (__ALL_FLOATS, __ALL_OBJECTS, __ALL_SIGNED_INTEGERS, __ALL_UNSIGNED_INTEGERS):
+for r in (_ALL_FLOATS, _ALL_OBJECTS, _ALL_SIGNED_INTEGERS, _ALL_UNSIGNED_INTEGERS):
     test_cases.extend(list(r))
 
 
-def __write_results():
+def _write_results():
     """ Utility function to write out the expected results for every possible type.
 
     The resulting JSON file MUST be manually inspected to ensure it is correct.
@@ -40,17 +40,17 @@ def __write_results():
         else:
             results.append(last_validation_error())
 
-    with open(join(dirname(__file__), __TEST_RESULTS_JSON), "w") as f1:
+    with open(join(dirname(__file__), _TEST_RESULTS_JSON), "w") as f1:
         f1.write('[' + linesep)
         for r in results[:-1]:
             f1.write('\t' + dumps(r) + ',' + linesep)
         f1.write('\t' + dumps(results[-1]) + linesep + ']'+ linesep)
 
 
-#__write_results()
+#_write_results()
 
 
-with open(join(dirname(__file__), __TEST_RESULTS_JSON), "r") as results_file: results = load(results_file)
+with open(join(dirname(__file__), _TEST_RESULTS_JSON), "r") as results_file: results = load(results_file)
 @pytest.mark.parametrize("case", results)
 def test_all_types(case):
     i = case[0]

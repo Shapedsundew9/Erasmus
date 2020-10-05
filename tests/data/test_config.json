@@ -12,7 +12,6 @@
     "tables": {
         "test_table": {
             "database": "test_database",
-            "format_file_folder": "tests",
             "format_file": "test_entry_format.json"
         },
         "genomic_library": {
@@ -42,7 +41,6 @@
         },
         "test_history_decimation": {
             "database": "test_database",
-            "format_file_folder": "tests",
             "format_file": "test_history_decimation_format.json",
             "history_decimation": {
                 "enabled": true,
@@ -53,12 +51,6 @@
         "platform_info": {
             "database": "test_database",
             "format_file": "platform_info_format.json"
-        }
-    },
-    "workers": {
-        "test_worker_1": {
-            "initial_query": null,
-            "population_limit": 100
         }
     }   
 }
