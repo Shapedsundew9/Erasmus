@@ -89,5 +89,15 @@
         {
             "created": "2020-04-25T17:11:34.000003Z"
         }
+    ],
+    [
+        {
+            "properties": 1
+        }
+    ],
+    [
+        {
+            "properties": {"extended": true}
+        }
     ]
 ]

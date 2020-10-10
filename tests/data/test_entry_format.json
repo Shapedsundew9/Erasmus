@@ -70,6 +70,34 @@
             "compressed": false
         }
     },
+    "properties": {
+        "meta": {
+            "database": {
+                "type": "BIGINT"
+            },
+            "definition": {
+                "location": ["BIOME"],
+                "immutable": false
+            },
+            "description": "The properties of the inputs & outputs",
+            "codec": {
+                "extended": 0,
+                "mutation": 1
+            }
+        },
+        "type": "dict",
+        "schema": {
+            "extended": {
+                "type": "boolean",
+                "default": false
+            },
+            "mutation": {
+                "type": "boolean",
+                "default": false                
+            }
+        },
+        "default": {}
+    },
     "created": {
         "meta": {
             "database": {

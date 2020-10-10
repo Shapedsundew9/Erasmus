@@ -4,6 +4,11 @@
             "recreate": true,
             "username": "erasmus",
             "password": "erasmus"
+        },
+        "test_broken_database": {
+            "recreate": true,
+            "username": "erasmus",
+            "password": "flubble"
         }
     },
     "genomic_library": {
@@ -12,6 +17,10 @@
     "tables": {
         "test_table": {
             "database": "test_database",
+            "format_file": "test_entry_format.json"
+        },
+        "test_broken_table": {
+            "database": "test_broken_database",
             "format_file": "test_entry_format.json"
         },
         "genomic_library": {

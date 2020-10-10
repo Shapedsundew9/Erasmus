@@ -7,7 +7,7 @@ Author: Shapedsundew9
 Copyright (c) 2020 Your Company
 '''
 
-from psycopg2 import connect, sql, DatabaseError
+from psycopg2 import connect, sql, DatabaseError, OperationalError
 from datetime import datetime
 from zlib import compress, decompress
 from pickle import dumps, loads
@@ -32,9 +32,10 @@ class database_table():
         c = config['databases'][self.dbname]
         if self.dbname not in database_table._conn:
             database_table._conn[self.dbname] = self._connection(self.dbname, c['username'], c['password'], c['host'], c['port'])
-        if c['recreate'] and not suppress_recreate: self._delete_table()
-        self._columns = self._create_table(config['tables'][table]['history_decimation'])
-        self._logger.info("%s table has %d entries.", self.table, len(self))
+        if not database_table._conn[self.dbname] is None:
+            if c['recreate'] and not suppress_recreate: self._delete_table()
+            self._columns = self._create_table(config['tables'][table]['history_decimation'])
+            self._logger.info("%s table has %d entries.", self.table, len(self))
             
 
     def __len__(self):
@@ -49,7 +50,11 @@ class database_table():
     # Create the database if it does not exist and return a connection to it.
     # If rc is True the table is deleted a recreated.
     def _connection(self, db, user, pwd, host, port):
-        conn = connect(host=host, port=port, user=user, password=pwd, dbname='postgres')
+        try:
+            conn = connect(host=host, port=port, user=user, password=pwd, dbname='postgres')
+        except OperationalError as e:
+            conn = None
+            self._logger.fatal("Unable to connect to database %s", e)
         if not conn is None:
             self._logger.info("Connected to postgresql.")
             conn.autocommit = True
@@ -73,9 +78,11 @@ class database_table():
         return conn
 
 
-    def _delete_db(self, db, user, pwd, host, port):
+    def _delete_db(self):
         database_table._conn[self.dbname].close()
-        conn = connect(host=host, port=port, user=user, password=pwd, dbname='postgres')
+        del database_table._conn[self.dbname]
+        c = get_config()['databases'][self.dbname]
+        conn = connect(dbname='postgres', user=c['username'], password=c['password'], host=c['host'], port=c['port'])
         dbcur = conn.cursor()
         conn.autocommit = True
         dbcur.execute(sql.SQL("DROP DATABASE {}").format(sql.Identifier(self.dbname)))
@@ -202,6 +209,10 @@ class database_table():
         return entry
 
 
+    def isconnected(self):
+        return not database_table._conn[self.dbname] is None
+
+
     def load(self, queries, fields=None, lock=False):
         if fields is None: fields = self._columns
         retval = []
@@ -230,16 +241,17 @@ class database_table():
         if self.schema[term]['compressed']: value = compress(dumps(value), 9)
         elif self.schema[term]['database']['type'] == "BYTEA": value = bytearray.fromhex(value)
         elif 'codec' in self.schema[term]:
-            bitfield = 0x0000000000000000
-            for k, v in value.items():
-                if v: bitfield |= 1 << self.schema[term]['codec'][k]
-            value = bitfield
+            if isinstance(value, dict):
+                bitfield = 0x0000000000000000
+                for k, v in value.items():
+                    if v: bitfield |= 1 << self.schema[term]['codec'][k]
+                value = bitfield
         return value
 
 
     def _cast_entry_to_store_type(self, e):
         entry = deepcopy(e)
-        for k, v in entry.items(): entry[k] = self._cast_term_to_store_type(k, v)
+        for k, v in filter(lambda x: x[0] in self.schema, entry.items()): entry[k] = self._cast_term_to_store_type(k, v)
         return entry
 
 

@@ -5,6 +5,7 @@ import pytest
 from os.path import join, dirname, basename, splitext
 from logging import getLogger, basicConfig, DEBUG
 from json import load
+from copy import deepcopy
 from microbiome.query_validator import query_validator
 from microbiome.config import set_config, get_config
 from microbiome.database_table import database_table
@@ -15,6 +16,8 @@ with open(join(dirname(__file__), "data/test_config.json"), "r") as file_ptr:
 test_config['tables']['test_history_decimation']['format_file_folder'] = join(
     dirname(__file__), 'data')
 test_config['tables']['test_table']['format_file_folder'] = join(
+    dirname(__file__), 'data')
+test_config['tables']['test_broken_table']['format_file_folder'] = join(
     dirname(__file__), 'data')
 with open(join(dirname(__file__), "data/test_entry_queries.json"), "r") as file_ptr:
     queries = load(file_ptr)
@@ -44,11 +47,33 @@ def test_table():
     table._delete_db()
 
 
+def test_connected(test_table):
+    assert test_table.isconnected()
+
+
+def test_not_connected():
+    table = database_table(getLogger(__file__), 'test_broken_table')
+    assert not table.isconnected()
+
+
 @pytest.mark.parametrize("index", list(range(len(queries))))
 def test_db_load(index, test_table):
     query = queries[index]
     result = results[index]
     assert test_table.load(query) == result
+
+
+def test_invalid_store(test_table):
+    row = test_table.load([{'age': 42}])
+    row[0]['age2']=21
+    assert not test_table.store(row)
+
+
+def test_update(test_table):
+    row = test_table.load([{'age': 42}])[0]
+    assert test_table.update([{'age': 21}], [{'id': row['id']}])
+    nrow = test_table.load([{'age': 21}])
+    assert len(nrow) == 1
 
 
 def test_history_decimation():
