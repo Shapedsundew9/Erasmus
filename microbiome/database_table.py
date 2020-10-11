@@ -1,32 +1,60 @@
-'''
-Filename: /home/shapedsundew9/Projects/Erasmus/microbiome/database_table.py
-Path: /home/shapedsundew9/Projects/Erasmus/microbiome
-Created Date: Friday, April 24th 2020, 6:10:25 pm
-Author: Shapedsundew9
+"""Simplified database table access."""
 
-Copyright (c) 2020 Your Company
-'''
 
-from psycopg2 import connect, sql, DatabaseError, OperationalError
 from datetime import datetime
 from zlib import compress, decompress
 from pickle import dumps, loads
 from copy import deepcopy
 from os.path import join, dirname
+from psycopg2 import connect, sql, DatabaseError, OperationalError
 from .entry_column_meta_validator import entry_column_meta_validator
 from .config import get_config
 
 
 class database_table():
+    """Connects to (or creates as needed) a postgres database & table.
 
-    # Just one connection to each database.
+    The intention of database_table is to provide a simple interface to instanciate, 
+    append, update & query a persistant data store.
+
+    Whilst database_table acts like it has complete control over the defined databases
+    it does not assume that it does. Once tables are created database_table users
+    need only have SELECT, INSERT & UPDATE priviliages.
+
+    The database connection details & table definition come from the global
+    configuration. Instanciation specifes only a logger and table name as a
+    key into the 'tables' section of the global configuration.
+    
+    Only one connection per database is maintained following the design principle
+    of a worker being a single threaded process.
+
+    Database connections are created at instanciation (if not already created) and
+    persisted as a key (database name): value (connection object) pair in the
+    _conn dictionary.
+    """
+
+    # TODO: Need to add retry logic and emergancy dump of SQL.
+    # TODO: Need to verify privilages.
+    #   1. database access as needed
+    #   2. postgres database read access
+    # TODO: A logger should not be mandatory.
     _conn = {}
 
 
     def __init__(self, logger, table, suppress_recreate=False):
+        """Connect or create all required objects. Verify access privilages.
+
+        Args
+        ----
+        logger (logger): Standard logger.
+        table (str): Table name. Must be defined in the global configuration.
+        suppress_recreate (bool): Will ignore the 'recreate' configuration flag if True.
+        """
+
         self._logger = logger
         self.table = table
         config = get_config()
+        # TODO: Need to me more defensive here. 'table' may not exist.
         self.dbname = config['tables'][table]['database']
         self.schema = {k: v['meta'] for k, v in config['tables'][table]['schema'].items()}
         c = config['databases'][self.dbname]
@@ -39,7 +67,7 @@ class database_table():
             
 
     def __len__(self):
-        # TODO: There must be a faster way
+        """Return the number of entries in the table."""
         dbcur = database_table._conn[self.dbname].cursor()
         dbcur.execute(sql.SQL("SELECT COUNT(*) FROM {}").format(sql.Identifier(self.table)))
         retval = dbcur.fetchone()[0]
@@ -47,9 +75,9 @@ class database_table():
         return retval  
 
 
-    # Create the database if it does not exist and return a connection to it.
-    # If rc is True the table is deleted a recreated.
+    # TODO: The parameters here should be associated with the connection in _conn.
     def _connection(self, db, user, pwd, host, port):
+        """Create a connection to the database."""
         try:
             conn = connect(host=host, port=port, user=user, password=pwd, dbname='postgres')
         except OperationalError as e:
@@ -149,6 +177,9 @@ class database_table():
     
             cur.close()
             database_table._conn[self.dbname].commit()
+        # else:
+        #   TODO: Should verify the schema matches the table definition.
+        #   TODO: Verify we can SELECT, INSERT, UPDATE & DELETE as needed. 
         return self._table_definition()
 
 

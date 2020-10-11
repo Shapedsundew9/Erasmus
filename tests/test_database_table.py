@@ -71,9 +71,15 @@ def test_invalid_store(test_table):
 
 def test_update(test_table):
     row = test_table.load([{'age': 42}])[0]
-    assert test_table.update([{'age': 21}], [{'id': row['id']}])
+    assert test_table.update([{'age': 21}], [{'idx': row['idx']}])
     nrow = test_table.load([{'age': 21}])
     assert len(nrow) == 1
+    assert test_table.update([{'age': 42}], [{'idx': row['idx']}])
+
+
+def test_invalid_update(test_table):
+    row = test_table.load([{'age': 42}])[0]
+    assert not test_table.update([{'age2': 21}], [{'idx': row['idx']}])
 
 
 def test_history_decimation():
