@@ -33,7 +33,7 @@ class database_table():
     _conn dictionary.
     """
 
-    # TODO: Need to add retry logic and emergancy dump of SQL.
+    # TODO: Need to add retry logic and emergency dump of SQL.
     # TODO: Need to verify privilages.
     #   1. database access as needed
     #   2. postgres database read access
