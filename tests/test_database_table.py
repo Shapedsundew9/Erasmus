@@ -7,7 +7,7 @@ data/test_config.json. The user requires database CREATE & DELETE rights.
 
 import pytest
 from os.path import join, dirname, basename, splitext
-from logging import getLogger, basicConfig, DEBUG
+from logging import basicConfig, DEBUG
 from json import load
 from copy import deepcopy
 from microbiome.query_validator import query_validator

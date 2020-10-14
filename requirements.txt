@@ -8,11 +8,15 @@
 #Mopidy-Dirble ~= 1.1        # Compatible release. Same as >= 1.1, == 1.*
 #
 # NOTE: pscopg2 requires sudo apt install posgresql libpq-dev
+# NOTE: Need sudo apt install graphviz
+# NOTE: Need python-graph-tool from https://git.skewed.de/count0/graph-tool/-/wikis/installation-instructions
 #
 pytest>=6.1.1
 numpy>=1.19.2
 cerberus>=1.3.2
 psycopg2>=2.8.6
+bitstruct>=8.11
+matplotlib>=3.3.2
 ###### Refer to other requirements files ######
 #-r other-requirements.txt
 #

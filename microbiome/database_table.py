@@ -34,6 +34,8 @@ class database_table():
     """
 
     # TODO: Need to add retry logic and emergency dump of SQL.
+    #   Wrap cur.execute() in retry logic with configurable back off.
+    #   Force a close() of the current connection, delete it & re-establish.
     # TODO: Need to verify privilages.
     #   1. database access as needed
     #   2. postgres database read access

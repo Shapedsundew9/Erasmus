@@ -103,6 +103,10 @@ class genomic_library():
         return None if value is None else value[0]
 
 
+    def isconnected(self):
+        return genomic_library._store.isconnected()
+        
+
     # Return a list of application formatted entries from the store that meet the query
     def load(self, query, fields=None):
         if not genomic_library._query_validator.validate(query):

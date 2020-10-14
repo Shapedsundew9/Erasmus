@@ -1,29 +1,46 @@
-'''
-Filename: /home/shapedsundew9/Projects/Erasmus/tests/test_genomic_library.py
-Path: /home/shapedsundew9/Projects/Erasmus/tests
-Created Date: Saturday, April 11th 2020, 2:51:52 pm
-Author: Shapedsundew9
+"""Test the genomic library.
 
-Copyright (c) 2020 Your Company
-'''
+This test module assumes it has access to a postgresql instance as configured in
+data/test_config.json. The user requires database CREATE & DELETE rights.
+"""
+
 
 import pytest
-from os.path import join, dirname
-from json import load, dump, dumps
+from os.path import join, dirname, basename, splitext
+from logging import basicConfig, DEBUG
+from json import load
+from copy import deepcopy
 from microbiome.config import set_config
 from microbiome.genetics.genomic_library import genomic_library
-from logging import getLogger, basicConfig, DEBUG
 
 
-basicConfig(filename='erasmus.log', level=DEBUG)
+# Load the test files.
+with open(join(dirname(__file__), "data/test_config.json"), "r") as file_ptr:
+    test_config = load(file_ptr)
 
 
-def test_genomic_library():
-    set_config(load(open(join(dirname(__file__), "test_config.json"), "r")))
-    reference = load(open(join(dirname(__file__), "test_codon_library.json"), "r"))
-    for r in reference: r['created'] = None
-    gl = genomic_library()
-    result = gl.load([])
-    for r in result: r['created'] = None
-    # with open("test_codon_library.json", "w") as file_ptr: dump(gl.load([]), file_ptr, indent=4, sort_keys=True)
-    assert dumps(result, indent=4, sort_keys=True) == dumps(reference, indent=4,sort_keys=True)
+basicConfig(
+    filename=join(
+        dirname(__file__),
+        'logs',
+        splitext(basename(__file__))[0] + '.log'),
+    filemode='w',
+    level=DEBUG)
+
+
+@pytest.fixture(scope="module")
+def genomic_library():
+    """Create a genomic library to be used in multiple test cases.
+
+    The database and tables created are used in multiple tests. The last test
+    will delete the database. data/test_config.json is configured to delete
+    any existing database of the same name prior to creation.
+    """
+    set_config(test_config)
+    yield (gl := genomic_library())
+    gl._store._delete_db()
+
+
+def test_initialise(genomic_library):
+    """Test construction & initialisation."""
+    assert genomic_library.isconnected()
