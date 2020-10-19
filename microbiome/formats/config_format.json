@@ -1,7 +1,33 @@
 {
+    "genomic_library_table": {
+        "type": "string",
+        "default": "genomic_library",
+        "minlength": 1,
+        "maxlength": 64,
+        "regex": "[a-zA-Z0-9_-]+",
+        "check_with": "valid_genomic_library_table",  
+        "dependencies": ["tables"]      
+    },
+    "default_database": {
+        "type": "string",
+        "default": "erasums_db",
+        "minlength": 1,
+        "maxlength": 64,
+        "regex": "[a-zA-Z0-9_-]+",
+        "check_with": "valid_default_database",        
+        "dependencies": ["databases"]      
+    },
     "databases": {
         "type": "dict",
-        "required": true,
+        "default": {
+            "erasmus_db": {
+                "recreate": false,
+                "host": "localhost",
+                "username": "postgres",
+                "password": "postgres",
+                "port": 5432                
+            }
+        },
         "keysrules": {
             "type": "string",
             "minlength": 1,
@@ -11,12 +37,6 @@
         "valuesrules": {
             "type": "dict",
             "schema": {
-                "dbname": {
-                    "type": "string",
-                    "minlength": 1,
-                    "maxlength": 64,
-                    "regex": "[a-zA-Z0-9_-]+"
-                },
                 "recreate": {
                     "type": "boolean",
                     "default": false
@@ -51,6 +71,7 @@
     },
     "tables": {
         "type": "dict",
+        "dependencies": ["default_database"],
         "keysrules": {
             "type": "string",
             "minlength": 1,
@@ -64,22 +85,43 @@
                     "type": "string",
                     "minlength": 1,
                     "maxlength": 64,
+                    "default_setter": "set_default_database",
                     "regex": "[a-zA-Z-_0-9]+",
-                    "check_with": "valid_database"
+                    "check_with": "valid_database",
+                    "dependencies": "^default_database"
                 },
                 "format_file_folder": {
                     "type": "string",
                     "minlength": 1,
                     "maxlength": 1024,
-                    "check_with": "valid_format_file_folder",
+                    "check_with": "valid_file_folder",
                     "default_setter": "set_format_file_folder"
+                },
+                "data_file_folder": {
+                    "type": "string",
+                    "minlength": 1,
+                    "maxlength": 1024,
+                    "check_with": "valid_file_folder",
+                    "default_setter": "set_data_file_folder"
                 },
                 "format_file": {
                     "type": "string",
                     "minlength": 1,
                     "maxlength": 1024,
                     "required": true,
-                    "check_with": "valid_format_file"
+                    "check_with": "valid_format_file",
+                    "dependencies": ["format_file_folder"]
+                },
+                "data_files": {
+                    "type": "list",
+                    "schema": {
+                        "type": "string",
+                        "minlength": 1,
+                        "maxlength": 1024,
+                        "required": false
+                    },
+                    "check_with": "valid_data_files",
+                    "dependencies": ["data_file_folder", "format_file"]
                 },
                 "history_decimation": {
                     "type": "dict",
@@ -104,6 +146,66 @@
                     },
                     "meta":{
                         "description": "TBD"
+                    }
+                }
+            }
+        },
+        "schema": {
+            "genomic_library": {
+                "type": "dict",
+                "schema": {
+                    "format_file": {
+                        "default": "genomic_library_entry_format.json"
+                    },
+                    "data_files": {
+                        "type": "list",
+                        "schema": {
+                            "default": [
+                                "codons_logical.json",
+                                "codons_arithmetic.json"
+                            ]
+                        }
+                    }
+                }
+            },
+            "work_registry": {
+                "type": "dict",
+                "schema": {
+                    "format_file": {
+                        "default": "work_registry_entry_format.json"
+                    }
+                }
+            },
+            "worker_registry": {
+                "type": "dict",
+                "schema": {
+                    "format_file": {
+                        "default": "worker_registry_entry_format.json"
+                    }
+                }
+            },
+            "work_log_template": {
+                "type": "dict",
+                "schema": {
+                    "format_file": {
+                        "default": "work_log_entry_format.json"
+                    },
+                    "history_decimation": {
+                        "type": "dict",
+                        "schema": {
+                            "enabled": {
+                                "type": "boolean",
+                                "default": true 
+                            }
+                        }
+                    }
+                }
+            },
+            "platform_info": {
+                "type": "dict",
+                "schema": {
+                    "format_file": {
+                        "default": "platform_info_entry_format.json"
                     }
                 }
             }

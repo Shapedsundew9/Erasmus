@@ -19,6 +19,12 @@ with open(join(dirname(__file__), "data/test_config.json"), "r") as file_ptr:
     test_config = load(file_ptr)
 
 
+# Update the format_folder_path to be where ever these tests run from.
+folder = join(dirname(__file__), 'data')
+for tbl in ('test_history_decimation', 'test_table', 'test_broken_table'):
+    test_config['tables'][tbl]['format_file_folder'] = folder
+
+
 basicConfig(
     filename=join(
         dirname(__file__),
@@ -29,7 +35,7 @@ basicConfig(
 
 
 @pytest.fixture(scope="module")
-def genomic_library():
+def glib():
     """Create a genomic library to be used in multiple test cases.
 
     The database and tables created are used in multiple tests. The last test
@@ -41,6 +47,6 @@ def genomic_library():
     gl._store._delete_db()
 
 
-def test_initialise(genomic_library):
+def test_initialise(glib):
     """Test construction & initialisation."""
-    assert genomic_library.isconnected()
+    assert glib.isconnected()

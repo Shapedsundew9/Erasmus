@@ -10,9 +10,15 @@ from json import load, dump
 from logging import getLogger
 from os.path import dirname, join
 from pprint import pformat
+from cerberus import Validator
 from .base_validator import BaseValidator
 from .entry_column_meta_validator import entry_column_meta_validator
+from .platform_info_validator import platform_info_validator
+from .work_registry_validator import work_registry_validator
+from .worker_registry_validator import worker_registry_validator
+from .work_log_validator import work_log_validator
 from .text_token import text_token, register_token_code
+from .genetics.genomic_library_entry_validator import genomic_library_entry_validator
 
 
 _DEFAULT_CONFIG_FILE = 'config/default_config.json'
@@ -26,10 +32,25 @@ register_token_code('E02000', 'Database "{database}" is not defined in the [data
 register_token_code('E02001', 'No "Meta" key found in schema field "{field}".')
 register_token_code('E02002', '"Meta" key value schema field "{field}" is invalid:\n{errors}.')
 register_token_code('E02003', 'Global configuration validation failed with errors:\n{errors}.')
+register_token_code('E02004', 'Initialisation data validation failed with errors:\n{errors}.')
+register_token_code('E02005', 'Table {table} does not exist. It must be defined in the "tables" section.')
+register_token_code('E02006', 'Database {database} does not exist. It must be defined in the "databases" section.')
 
 
 class _ConfigValidator(BaseValidator):
     """Extend the base Cerberus validator class to include custom checks."""
+
+    def _check_with_valid_genomic_library_table(self, field, value):
+        """Validate the table referenced is defined."""
+        if not value in self.document['tables']:
+            self._error(field, str(text_token({'E02005': {'table': value}})))
+
+
+    def _check_with_valid_default_database(self, field, value):
+        """Validate the database referenced is defined."""
+        if not value in self.document['databases']:
+            self._error(field, str(text_token({'E02006': {'database': value}})))
+
 
     def _check_with_valid_database(self, field, value):
         """Validate the database referenced is defined."""
@@ -37,7 +58,7 @@ class _ConfigValidator(BaseValidator):
             self._error(field, str(text_token({'E02000': {'database': value}})))
 
 
-    def _check_with_valid_format_file_folder(self, field, value):
+    def _check_with_valid_file_folder(self, field, value):
         """Validate a table format file.
 
         If the 'format_file_folder' field is defined it is used as the path to
@@ -67,12 +88,55 @@ class _ConfigValidator(BaseValidator):
                     'errors': pformat(entry_column_meta_validator.errors)
                 }})))
 
+
+    def _check_with_valid_data_files(self, field, value):
+        """Validate table initialisation data.
+
+        If the 'data_file_folder' field is defined it is used as the path to
+        the data file else it defaults to the 'data' sub-folder of this
+        source files folder.
+        The table data file is checked to see if it is readable, if it is
+        a decodable JSON format & valid.
+        """
+        if self.document['format_file'] == "genomic_library_entry_format.json": validator = genomic_library_entry_validator
+        elif self.document['format_file'] == "platform_info_entry_format.json": validator = platform_info_entry_validator
+        elif self.document['format_file'] == "work_registry_entry_format.json": validator = work_registry_entry_validator
+        elif self.document['format_file'] == "worker_registry_entry_format.json": validator = worker_registry_entry_validator
+        elif self.document['format_file'] == "work_log_entry_format.json": validator = work_log_entry_validator
+        else:
+            schema_path = join(self.document['format_file_folder'], self.document['format_file'])
+            with open(schema_path, "r") as schema_file:
+                validator = Validator(load(schema_file))
+
+        for filename in value:
+            abspath = join(self.document['data_file_folder'], filename)
+            for datum in self._isjsonfile(field, abspath):
+                if not validator(datum):
+                    self._error(field, str(text_token({'E02004': {'errors': pformat(validator.errors)}})))
+
+
     # pylint: disable=W0613, R0201
     # The parent class requires this function with a single argument and to get access
     # to the module scope.
     def _normalize_default_setter_set_format_file_folder(self, document):
         """Define the default 'format_file_folder'."""
         return join(dirname(__file__), 'formats')
+
+
+    # pylint: disable=W0613, R0201
+    # The parent class requires this function with a single argument and to get access
+    # to the module scope.
+    def _normalize_default_setter_set_data_file_folder(self, document):
+        """Define the default 'data_file_folder'."""
+        return join(dirname(__file__), 'data')
+
+
+    # pylint: disable=W0613, R0201
+    # The parent class requires this function with a single argument and to get access
+    # to the module scope.
+    def _normalize_default_setter_set_default_database(self, document):
+        """Define the default database."""
+        return self.root_document['default_database']
 
 
 def set_config(new_config):
@@ -111,6 +175,7 @@ def validate():
     with open(join(dirname(__file__), _CONFIG_FORMAT_FILE), "r") as file_ptr:
         validator = _ConfigValidator(load(file_ptr))
     validator.allow_unknown = True
+    _config = validator.normalized(_config)
 
     if not validator.validate(_config):
         _errors = validator.errors
@@ -118,7 +183,6 @@ def validate():
         return False
 
     _errors = {}
-    _config = validator.normalized(_config)
     for value in _config['tables'].values():
         with open(join(value['format_file_folder'], value['format_file']), "r") as file_ptr:
             value['schema'] = load(file_ptr)
@@ -131,7 +195,7 @@ def validate():
 def merge(dict_a, dict_b):
     """Merge nested dict_b into nested dict_a.
 
-    If a key indict_ b exists in dict_a it is over written in dict_a.
+    If a key in dict_ b exists in dict_a it is over written in dict_a.
 
     Args
     ----

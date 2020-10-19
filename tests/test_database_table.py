@@ -7,7 +7,7 @@ data/test_config.json. The user requires database CREATE & DELETE rights.
 
 import pytest
 from os.path import join, dirname, basename, splitext
-from logging import basicConfig, DEBUG
+from logging import getLogger, basicConfig, DEBUG
 from json import load
 from copy import deepcopy
 from microbiome.query_validator import query_validator
@@ -24,12 +24,6 @@ with open(join(dirname(__file__), "data/test_entry_results.json"), "r") as file_
     results = load(file_ptr)
 with open(join(dirname(__file__), "data/test_entry_format.json"), "r") as file_ptr:
     schema = load(file_ptr)
-
-
-# Update the format_folder_path to be where ever these tests run from.
-folder = join(dirname(__file__), 'data')
-for tbl in ('test_history_decimation', 'test_table', 'test_broken_table'):
-    test_config['tables'][tbl]['format_file_folder'] = folder
 
 
 basicConfig(
@@ -53,7 +47,7 @@ def test_table():
     """
     with open(join(dirname(__file__), "data/test_entry_data.json"), "r") as file_ptr:
         data = load(file_ptr)
-    set_config(test_config)
+    assert set_config(test_config)
     table = database_table(getLogger(__file__), "test_table")
     table.store(data)
     yield table
