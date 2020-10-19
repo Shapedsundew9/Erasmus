@@ -42,7 +42,7 @@ def glib():
     will delete the database. data/test_config.json is configured to delete
     any existing database of the same name prior to creation.
     """
-    set_config(test_config)
+    assert set_config(test_config)
     yield (gl := genomic_library())
     gl._store._delete_db()
 

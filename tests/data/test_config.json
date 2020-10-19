@@ -1,5 +1,4 @@
 {
-    "genomic_library_table": "genomic_library",
     "default_database": "test_database",
     "databases": {
         "test_database": {

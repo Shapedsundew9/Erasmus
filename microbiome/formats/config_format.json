@@ -10,7 +10,7 @@
     },
     "default_database": {
         "type": "string",
-        "default": "erasums_db",
+        "default": "erasmus_db",
         "minlength": 1,
         "maxlength": 64,
         "regex": "[a-zA-Z0-9_-]+",
@@ -20,13 +20,7 @@
     "databases": {
         "type": "dict",
         "default": {
-            "erasmus_db": {
-                "recreate": false,
-                "host": "localhost",
-                "username": "postgres",
-                "password": "postgres",
-                "port": 5432                
-            }
+            "erasmus_db": {}
         },
         "keysrules": {
             "type": "string",
@@ -71,6 +65,13 @@
     },
     "tables": {
         "type": "dict",
+        "default": {
+            "genomic_library": {},
+            "work_registry": {},
+            "worker_registry": {},
+            "work_log_template": {},
+            "platform_info": {}
+        },
         "dependencies": ["default_database"],
         "keysrules": {
             "type": "string",
@@ -153,24 +154,42 @@
         "schema": {
             "genomic_library": {
                 "type": "dict",
+                "default": {},
                 "schema": {
+                    "database": {
+                        "default_setter": "set_default_database"
+                    },
+                    "format_file_folder": {
+                        "default_setter": "set_format_file_folder"
+                    },
+                    "data_file_folder": {
+                        "default_setter": "set_data_file_folder"
+                    },
                     "format_file": {
                         "default": "genomic_library_entry_format.json"
                     },
                     "data_files": {
                         "type": "list",
-                        "schema": {
-                            "default": [
-                                "codons_logical.json",
-                                "codons_arithmetic.json"
-                            ]
-                        }
+                        "default": [
+                            "codons_logical.json",
+                            "codons_arithmetic.json"
+                        ]
                     }
                 }
             },
             "work_registry": {
                 "type": "dict",
+                "default": {},
                 "schema": {
+                    "database": {
+                        "default_setter": "set_default_database"
+                    },
+                    "format_file_folder": {
+                        "default_setter": "set_format_file_folder"
+                    },
+                    "data_file_folder": {
+                        "default_setter": "set_data_file_folder"
+                    },
                     "format_file": {
                         "default": "work_registry_entry_format.json"
                     }
@@ -178,7 +197,17 @@
             },
             "worker_registry": {
                 "type": "dict",
+                "default": {},
                 "schema": {
+                    "database": {
+                        "default_setter": "set_default_database"
+                    },
+                    "format_file_folder": {
+                        "default_setter": "set_format_file_folder"
+                    },
+                    "data_file_folder": {
+                        "default_setter": "set_data_file_folder"
+                    },
                     "format_file": {
                         "default": "worker_registry_entry_format.json"
                     }
@@ -186,7 +215,17 @@
             },
             "work_log_template": {
                 "type": "dict",
+                "default": {},
                 "schema": {
+                    "database": {
+                        "default_setter": "set_default_database"
+                    },
+                    "format_file_folder": {
+                        "default_setter": "set_format_file_folder"
+                    },
+                    "data_file_folder": {
+                        "default_setter": "set_data_file_folder"
+                    },
                     "format_file": {
                         "default": "work_log_entry_format.json"
                     },
@@ -203,8 +242,18 @@
             },
             "platform_info": {
                 "type": "dict",
+                "default": {},
                 "schema": {
-                    "format_file": {
+                    "database": {
+                        "default_setter": "set_default_database"
+                    },
+                    "format_file_folder": {
+                        "default_setter": "set_format_file_folder"
+                    },
+                    "data_file_folder": {
+                        "default_setter": "set_data_file_folder"
+                    },
+                   "format_file": {
                         "default": "platform_info_entry_format.json"
                     }
                 }

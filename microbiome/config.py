@@ -21,7 +21,6 @@ from .text_token import text_token, register_token_code
 from .genetics.genomic_library_entry_validator import genomic_library_entry_validator
 
 
-_DEFAULT_CONFIG_FILE = 'config/default_config.json'
 _CONFIG_FORMAT_FILE = 'formats/config_format.json'
 _config = {}
 _logger = getLogger(__name__)
@@ -139,7 +138,7 @@ class _ConfigValidator(BaseValidator):
         return self.root_document['default_database']
 
 
-def set_config(new_config):
+def set_config(new_config=None):
     """Set a new_config.
 
     The new_config is merged with the default configuration and validated.
@@ -154,10 +153,8 @@ def set_config(new_config):
     The new configuration.
     """
     global _config #pylint: disable=C0103, W0603
-    with open(join(dirname(__file__), _DEFAULT_CONFIG_FILE)) as file_ptr:
-        _config = merge(new_config, load(file_ptr))
-    validate()
-    return _config
+    _config = {} if new_config is None else new_config
+    return validate()
 
 
 def validate():
@@ -237,12 +234,4 @@ def get_errors():
     return _errors
 
 
-def reset_config():
-    """Reload the default_config."""
-    global _config #pylint: disable=C0103, W0603
-    with open(join(dirname(__file__), _DEFAULT_CONFIG_FILE)) as file_ptr:
-        _config = load(file_ptr)
-
-
-reset_config()
-validate()
+assert validate()
