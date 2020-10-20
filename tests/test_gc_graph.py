@@ -43,6 +43,9 @@ _VALID_STRUCTURES = (
 
 
 with open(join(dirname(__file__), _TEST_RESULTS_JSON), "r") as results_file: results = load(results_file)
+
+
+@pytest.mark.good
 @pytest.mark.parametrize("i, case", enumerate(results))
 def test_graph_validation(i, case):
     """Verification the validate() method correctly functions."""
@@ -52,6 +55,7 @@ def test_graph_validation(i, case):
     if not case['valid']: assert all([e in [g.code for g in gcg.status] for e in case['errors']])
 
 
+@pytest.mark.good
 @pytest.mark.parametrize("i, case", enumerate(results))
 def test_graph_conversion(i, case):
     """Verification that converting to internal format and back again is the identity operation."""
@@ -64,7 +68,8 @@ def test_graph_conversion(i, case):
         assert case['graph'] == gcg.application_graph()
 
 
-@pytest.mark.parametrize("test", range(1000))
+@pytest.mark.good
+@pytest.mark.parametrize("test", range(100))
 def test_add_connection_simple(test):
     """Verify adding connections makes valid graphs.
     

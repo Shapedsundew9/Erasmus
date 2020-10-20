@@ -1,11 +1,12 @@
 """Tests for config.py."""
 
 
+import pytest
 from os.path import join, dirname, basename, splitext
 from logging import basicConfig, DEBUG
 from json import load
 from microbiome.config import update_config, get_config, set_config
-from microbiome.config import get_errors, reset_config, save_config
+from microbiome.config import get_errors, save_config
 
 
 _E02001_FORMAT_FILE = 'test_config_E02001_format.json'
@@ -21,25 +22,28 @@ basicConfig(
     filemode='w',
     level=DEBUG)
 
-
+@pytest.mark.good
 def test_get_config():
     """Simple initialisation test."""
     get_config()
 
 
+@pytest.mark.good
 def test_set_config():
     """Set a new config."""
     with open(_TEST_CONFIG_FILE, 'r') as file_ptr:
         new_config = load(file_ptr)
-    reset_config()
+    set_config()
     set_config(new_config)
 
 
+@pytest.mark.good
 def test_save_config():
     """Save a config."""
-    save_config()
+    save_config('logs/test_config_save.json')
 
 
+@pytest.mark.good
 def test_E02000(): #pylint: disable=C0103
     """Generate E02000.
 
@@ -49,6 +53,7 @@ def test_E02000(): #pylint: disable=C0103
     assert 'E02000' in get_errors()['tables'][0]['genomic_library'][0]['database'][0]
 
 
+@pytest.mark.good
 def test_E02001(): #pylint: disable=C0103
     """Generate E02001.
 
@@ -59,11 +64,12 @@ def test_E02001(): #pylint: disable=C0103
         'format_file_folder': join(dirname(__file__), 'data'),
         'format_file': _E02001_FORMAT_FILE
     }}}
-    reset_config()
+    set_config()
     assert not update_config(broken_table_format)
     assert 'E02001' in get_errors()['tables'][0]['genomic_library'][0]['format_file'][0]
 
 
+@pytest.mark.good
 def test_E02002(): #pylint: disable=C0103
     """Generate E02002.
 
@@ -74,6 +80,6 @@ def test_E02002(): #pylint: disable=C0103
         'format_file_folder': join(dirname(__file__), 'data'),
         'format_file': _E02002_FORMAT_FILE
     }}}
-    reset_config()
+    set_config()
     assert not update_config(broken_table_format)
     assert 'E02002' in get_errors()['tables'][0]['genomic_library'][0]['format_file'][0]

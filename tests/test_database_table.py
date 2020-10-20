@@ -53,7 +53,7 @@ def test_table():
     yield table
     table._delete_db()
 
-
+@pytest.mark.good
 def test_connected(test_table):
     """Test that the database is connected.
 
@@ -66,6 +66,7 @@ def test_connected(test_table):
     assert test_table.isconnected()
 
 
+@pytest.mark.good
 def test_not_connected():
     """Test that a broken connection is correctly handled.
 
@@ -75,6 +76,7 @@ def test_not_connected():
     assert not table.isconnected()
 
 
+@pytest.mark.good
 @pytest.mark.parametrize("index", list(range(len(queries))))
 def test_db_load(index, test_table):
     """Multiple tests querying the database.
@@ -94,6 +96,7 @@ def test_db_load(index, test_table):
     assert test_table.load(query) == result
 
 
+@pytest.mark.good
 def test_invalid_store(test_table):
     """Test invalid store requests are properly handled.
 
@@ -109,6 +112,7 @@ def test_invalid_store(test_table):
     assert not test_table.store(row)
 
 
+@pytest.mark.good
 def test_update(test_table):
     """Test update requests are properly handled.
 
@@ -127,6 +131,7 @@ def test_update(test_table):
     assert test_table.update([{'age': 42}], [{'idx': row['idx']}])
 
 
+@pytest.mark.good
 def test_invalid_update(test_table):
     """Test invalid update requests are properly handled.
 
@@ -141,6 +146,7 @@ def test_invalid_update(test_table):
     assert not test_table.update([{'age2': 21}], [{'idx': row['idx']}])
 
 
+@pytest.mark.good
 def test_history_decimation():
     """Test history decimation produces the expected results.
 

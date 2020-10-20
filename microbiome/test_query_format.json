@@ -1,0 +1,127 @@
+{
+    "age": {
+        "oneof": [
+            {
+                "schema": {
+                    "type": "integer"
+                },
+                "type": "list"
+            },
+            {
+                "type": "integer"
+            },
+            {
+                "schema": {
+                    "max": {
+                        "required": true,
+                        "type": "integer"
+                    },
+                    "min": {
+                        "required": true,
+                        "type": "integer"
+                    }
+                },
+                "type": "dict"
+            }
+        ]
+    },
+    "created": {
+        "oneof": [
+            {
+                "schema": {
+                    "type": "string"
+                },
+                "type": "list"
+            },
+            {
+                "type": "string"
+            },
+            {
+                "schema": {
+                    "max": {
+                        "required": true,
+                        "type": "string"
+                    },
+                    "min": {
+                        "required": true,
+                        "type": "string"
+                    }
+                },
+                "type": "dict"
+            }
+        ]
+    },
+    "id": {
+        "oneof": [
+            {
+                "schema": {
+                    "type": "string"
+                },
+                "type": "list"
+            },
+            {
+                "type": "string"
+            }
+        ]
+    },
+    "idx": {
+        "oneof": [
+            {
+                "schema": {
+                    "type": "integer"
+                },
+                "type": "list"
+            },
+            {
+                "type": "integer"
+            },
+            {
+                "schema": {
+                    "max": {
+                        "required": true,
+                        "type": "integer"
+                    },
+                    "min": {
+                        "required": true,
+                        "type": "integer"
+                    }
+                },
+                "type": "dict"
+            }
+        ]
+    },
+    "limit": {
+        "min": 1,
+        "type": "integer"
+    },
+    "name": {
+        "oneof": [
+            {
+                "schema": {
+                    "type": "string"
+                },
+                "type": "list"
+            },
+            {
+                "type": "string"
+            }
+        ]
+    },
+    "order by": {
+        "allowed": [
+            "name",
+            "age",
+            "idx",
+            "properties",
+            "created"
+        ],
+        "type": "string"
+    },
+    "properties": {
+        "type": "dict"
+    },
+    "random": {
+        "default": false,
+        "type": "boolean"
+    }
+}

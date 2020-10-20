@@ -1,4 +1,19 @@
 {
+    "general": {
+        "type": "dict",
+        "default": {
+            "verify_consistency": false
+        },
+        "schema": {
+            "verify_consistency": {
+                "type": "boolean",
+                "default": false,
+                "meta": {
+                    "description": "Deep debugging feature. Verifies operations are consistent. This will make Erasmus run VERY slowly."
+                }
+            }
+        }
+    },
     "genomic_library_table": {
         "type": "string",
         "default": "genomic_library",

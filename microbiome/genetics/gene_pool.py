@@ -59,7 +59,6 @@ class _gene_pool():
         self._file_ptr.close()
         gene_pool._logger.info("Initial gene pool query: %s", str(query))
         self._gene_pool = {}
-        self._module = None
         path.insert(1, dirname(abspath(self._file_ptr.name)))
         self._module = import_module(basename(self._file_ptr.name)[:-3])
         self._push_queue = []
@@ -68,7 +67,7 @@ class _gene_pool():
 
     def __getitem__(self, signature):
         if signature not in self._gene_pool:
-            gcs = gene_pool._gl.load([{'signature': signature}])
+            gcs = self.extended_genetic_code(gene_pool._gl[signature], stored=True)
             self.add(gcs)
         return self._gene_pool[signature]
 
@@ -79,7 +78,7 @@ class _gene_pool():
 
     # Any GCs pulled from the genomic library are by definition valid
     def _update(self):
-        gcs = gene_pool._gl.load(self._query)
+        gcs = [self.extended_genetic_code(gc, stored=True) for gc in gene_pool._gl.load(self._query)]
         self.add(gcs)
 
 
@@ -121,8 +120,8 @@ class _gene_pool():
 
 
     # Get from the genomic library
-    def gl(self, queries, fields):
-        return gene_pool._gl.load(queries, fields)
+    def gl(self, queries):
+        return [self.extended_genetic_code(gc, stored=True) for gc in gene_pool._gl.load(queries, fields)]
 
 
     def push(self):
@@ -155,8 +154,8 @@ class _gene_pool():
     # Sub-codes will be added automatically if needed
     # GCA & GCB signatures will be replaced with references to the genetic code
     # A 'count' field is added counting the number of references to the GC within the gene pool
-    def add(self, gcs):
-        addition_queue = [self.extended_genetic_code(gc) for gc in gcs if gc['signature'] != NULL_GC]
+    def add(self, gcs, x=False):
+        addition_queue = [self.extended_genetic_code(gc) for gc in gcs if gc['signature'] != NULL_GC] if not x else gcs
         signature_queue = [xgc['signature'] for xgc in addition_queue]
 
         # Add to the gene pool
@@ -173,7 +172,7 @@ class _gene_pool():
                         if not xgc[ab] in self._gene_pool:
                             if not xgc[ab] in signature_queue:
                                 gene_pool._logger.debug("Loading GCAB %s from genomic library.", xgc[ab])
-                                addition_queue.append(gene_pool._gl[xgc[ab]])
+                                addition_queue.append(self.extended_genetic_code(gene_pool._gl[xgc[ab]], stored=True))
                                 signature_queue.append(addition_queue[-1]['signature'])
                                 xgc[_ab] = addition_queue[-1]
                                 xgc[_ab]['_count'] = 1
@@ -186,7 +185,7 @@ class _gene_pool():
         self._create_callables(self._gene_pool.values())
 
     
-    def extended_genetic_code(self, gc, count=0):
+    def extended_genetic_code(self, gc, count=0, stored=False):
         """Extend the gc dictionary with gene pool specific fields.
 
         The supplied genetic code dictionary, gc, is updated to include
@@ -207,6 +206,7 @@ class _gene_pool():
             '_func' (func): The executable code for this GC.
             '_microbiome_fitness': The fitness the GC had when it was last synchronised with the biome.
             '_microbiome_evolvability': The evolvability the GC had when it was last synchronised with the biome.
+            '_stored': The GC has been perisited in the Genomic Library storage. 
 
         Args
         ----
@@ -228,6 +228,7 @@ class _gene_pool():
         gc['_func'] = None
         gc['_microbiome_fitness'] = gc['fitness']
         gc['_microbiome_evolvability'] = gc['evolvability']
+        gc['_stored'] = stored
         return gc
 
 

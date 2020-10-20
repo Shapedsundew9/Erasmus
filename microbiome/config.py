@@ -10,6 +10,7 @@ from json import load, dump
 from logging import getLogger
 from os.path import dirname, join
 from pprint import pformat
+from copy import deepcopy
 from cerberus import Validator
 from .base_validator import BaseValidator
 from .entry_column_meta_validator import entry_column_meta_validator
@@ -220,8 +221,10 @@ def update_config(dict_c):
 
 def save_config(config_file_path='config.json'):
     """Dump the current global configuration to file."""
+    cfg = deepcopy(_config)
+    for table in cfg['tables'].values(): del table['schema']
     with open(config_file_path, 'w') as file_ptr:
-        dump(_config, file_ptr, indent=4, sort_keys=True)
+        dump(cfg, file_ptr, indent=4, sort_keys=True)
 
 
 def get_config():

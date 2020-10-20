@@ -51,6 +51,8 @@ def _write_results():
 
 
 with open(join(dirname(__file__), _TEST_RESULTS_JSON), "r") as results_file: results = load(results_file)
+
+@pytest.mark.good
 @pytest.mark.parametrize("case", results)
 def test_all_types(case):
     i = case[0]
@@ -72,6 +74,7 @@ def test_all_types(case):
 
 
 
+@pytest.mark.good
 @pytest.mark.parametrize("value", test_cases)
 def test_conversions(value):
     if validate(value): 
