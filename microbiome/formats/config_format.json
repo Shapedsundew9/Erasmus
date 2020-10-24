@@ -199,11 +199,8 @@
                     },
                     "history_decimation": {
                         "type": "dict",
-                        "schema": {
-                            "enabled": {
-                                "type": "boolean",
-                                "default": false 
-                            }
+                        "default": {
+                            "enabled": false 
                         }
                     }
                 }
@@ -226,11 +223,8 @@
                     },
                     "history_decimation": {
                         "type": "dict",
-                        "schema": {
-                            "enabled": {
-                                "type": "boolean",
-                                "default": false 
-                            }
+                        "default": {
+                            "enabled": false 
                         }
                     }
                 }
@@ -253,11 +247,8 @@
                     },
                     "history_decimation": {
                         "type": "dict",
-                        "schema": {
-                            "enabled": {
-                                "type": "boolean",
-                                "default": false 
-                            }
+                        "default": {
+                            "enabled": false 
                         }
                     }
                 }
@@ -280,11 +271,10 @@
                     },
                     "history_decimation": {
                         "type": "dict",
-                        "schema": {
-                            "enabled": {
-                                "type": "boolean",
-                                "default": true 
-                            }
+                        "default": {
+                            "enabled": true,
+                            "phase_size": 20,
+                            "num_phases": 8
                         }
                     }
                 }
@@ -307,11 +297,8 @@
                     },
                     "history_decimation": {
                         "type": "dict",
-                        "schema": {
-                            "enabled": {
-                                "type": "boolean",
-                                "default": false 
-                            }
+                        "default": {
+                            "enabled": false 
                         }
                     }
                 }
