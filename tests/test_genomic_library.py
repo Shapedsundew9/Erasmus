@@ -10,19 +10,13 @@ from os.path import join, dirname, basename, splitext
 from logging import basicConfig, DEBUG
 from json import load
 from copy import deepcopy
-from microbiome.config import set_config
+from microbiome.config import set_config, get_config
 from microbiome.genetics.genomic_library import genomic_library
 
 
 # Load the test files.
-with open(join(dirname(__file__), "data/test_config.json"), "r") as file_ptr:
+with open(join(dirname(__file__), "data/test_glib_config.json"), "r") as file_ptr:
     test_config = load(file_ptr)
-
-
-# Update the format_folder_path to be where ever these tests run from.
-folder = join(dirname(__file__), 'data')
-for tbl in ('test_history_decimation', 'test_table', 'test_broken_table'):
-    test_config['tables'][tbl]['format_file_folder'] = folder
 
 
 basicConfig(
@@ -51,3 +45,13 @@ def glib():
 def test_initialise(glib):
     """Test construction & initialisation."""
     assert glib.isconnected()
+
+
+@pytest.mark.good
+def test_len(glib):
+    """Test construction & initialisation."""
+    table = get_config()['tables']['test_genomic_library']
+    cea_path = join(table['data_file_folder'], table['data_files'][0])
+    with open(cea_path, "r") as cea_file:
+        num_cea = len(load(cea_file))
+    assert len(glib) == num_cea

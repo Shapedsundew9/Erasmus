@@ -21,10 +21,11 @@ from .gc_type import validate, last_validation_error, asint, UNKNOWN_TYPE
 
 NULL_GC = "0" * 64
 DEAD_GC_PREFIX = "deadbeef000000000000000000000000"
+with open(join(dirname(__file__), "../formats/genomic_library_entry_format.json"), "r") as file_ptr:
+    _GENOMIC_LIBRARY_ENTRY_SCHEMA = schema = load(file_ptr)
 
 
-# TODO: Add and entry format JSON validator for the meta data
-class genomic_library_entry_validator(Validator):
+class _genomic_library_entry_validator(Validator):
 
     # TODO: Make errors ValidationError types for full disclosure
     # https://docs.python-cerberus.org/en/stable/customize.html#validator-error
@@ -32,6 +33,7 @@ class genomic_library_entry_validator(Validator):
     _logger = getLogger(__name__)
 
     def _check_with_valid_graph(self, field, value):
+        print(field, value)
         gcg = gc_graph(value)
         gcg.validate()
         for e in gcg.status: self._error(field, str(e))
@@ -135,7 +137,7 @@ class genomic_library_entry_validator(Validator):
         return sha256("".join(string.split()).encode()).hexdigest()
 
 
-    def _get_gc_type(self, document, row, idx):
+    def _get_in_gc_type(self, document, row, idx):
         for pr in document["graph"].keys():
             if pr != 'C':
                 for r, i, t in document["graph"][pr]:
@@ -143,19 +145,25 @@ class genomic_library_entry_validator(Validator):
         return UNKNOWN_TYPE
 
 
-    def _normalize_default_setter_set_input0(self, document): return self._get_gc_type(document, 'I', 0)
-    def _normalize_default_setter_set_input1(self, document): return self._get_gc_type(document, 'I', 1)
-    def _normalize_default_setter_set_input2(self, document): return self._get_gc_type(document, 'I', 2)
-    def _normalize_default_setter_set_input3(self, document): return self._get_gc_type(document, 'I', 3)
-    def _normalize_default_setter_set_input4(self, document): return self._get_gc_type(document, 'I', 4)
-    def _normalize_default_setter_set_input5(self, document): return self._get_gc_type(document, 'I', 5)
-    def _normalize_default_setter_set_input6(self, document): return self._get_gc_type(document, 'I', 6)
-    def _normalize_default_setter_set_input7(self, document): return self._get_gc_type(document, 'I', 7)
+    def _get_out_gc_type(self, document, idx):
+        for r, i, t in document["graph"]["O"]:
+            if i == idx: return asint(t)
+        return UNKNOWN_TYPE
 
-    def _normalize_default_setter_set_output0(self, document): return self._get_gc_type(document, 'O', 0)
-    def _normalize_default_setter_set_output1(self, document): return self._get_gc_type(document, 'O', 1)
-    def _normalize_default_setter_set_output2(self, document): return self._get_gc_type(document, 'O', 2)
-    def _normalize_default_setter_set_output3(self, document): return self._get_gc_type(document, 'O', 3)
+
+    def _normalize_default_setter_set_input0(self, document): return self._get_in_gc_type(document, 'I', 0)
+    def _normalize_default_setter_set_input1(self, document): return self._get_in_gc_type(document, 'I', 1)
+    def _normalize_default_setter_set_input2(self, document): return self._get_in_gc_type(document, 'I', 2)
+    def _normalize_default_setter_set_input3(self, document): return self._get_in_gc_type(document, 'I', 3)
+    def _normalize_default_setter_set_input4(self, document): return self._get_in_gc_type(document, 'I', 4)
+    def _normalize_default_setter_set_input5(self, document): return self._get_in_gc_type(document, 'I', 5)
+    def _normalize_default_setter_set_input6(self, document): return self._get_in_gc_type(document, 'I', 6)
+    def _normalize_default_setter_set_input7(self, document): return self._get_in_gc_type(document, 'I', 7)
+
+    def _normalize_default_setter_set_output0(self, document): return self._get_out_gc_type(document, 0)
+    def _normalize_default_setter_set_output1(self, document): return self._get_out_gc_type(document, 1)
+    def _normalize_default_setter_set_output2(self, document): return self._get_out_gc_type(document, 2)
+    def _normalize_default_setter_set_output3(self, document): return self._get_out_gc_type(document, 3)
 
     def _normalize_default_setter_set_num_inputs(self, document):
         i_indices = set()
@@ -178,3 +186,5 @@ class genomic_library_entry_validator(Validator):
     def _normalize_default_setter_set_created(self, document):
         return datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%S.%fZ")
 
+
+genomic_library_entry_validator = _genomic_library_entry_validator(_GENOMIC_LIBRARY_ENTRY_SCHEMA)

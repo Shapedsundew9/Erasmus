@@ -7,6 +7,7 @@ from pickle import dumps, loads
 from copy import deepcopy
 from os.path import join, dirname
 from pprint import pformat
+from json import load
 from psycopg2 import connect, sql, DatabaseError, OperationalError
 from .entry_column_meta_validator import entry_column_meta_validator
 from .config import get_config
@@ -61,6 +62,7 @@ class database_table():
             self._logger.error('Table {} is not defined in the configuration "tables" section.'.format(table))
         else:  
             self._logger.debug('Instanciating table {} with configuration {}.'.format(table, pformat(config['tables'][table], width=180)))
+            self.config = deepcopy(config['tables'][table])
             self.dbname = config['tables'][table]['database']
             self.schema = {k: v['meta'] for k, v in config['tables'][table]['schema'].items()}
             c = config['databases'][self.dbname]
@@ -69,6 +71,11 @@ class database_table():
             if not database_table._conn[self.dbname] is None:
                 if c['recreate'] and not suppress_recreate: self._delete_table()
                 self._columns = self._create_table(config['tables'][table]['history_decimation'])
+                if not len(self):
+                    for data_file in self.config['data_files']:
+                        abspath = join(self.config['data_file_folder'], data_file)
+                        with open(abspath, "r") as datum:
+                            self.store(load(datum))
                 self._logger.info("%s table has %d entries.", self.table, len(self))
             
 
@@ -185,7 +192,8 @@ class database_table():
             database_table._conn[self.dbname].commit()
         # else:
         #   TODO: Should verify the schema matches the table definition.
-        #   TODO: Verify we can SELECT, INSERT, UPDATE & DELETE as needed. 
+        #   TODO: Verify we can SELECT, INSERT, UPDATE & DELETE as needed.
+
         return self._table_definition()
 
 
