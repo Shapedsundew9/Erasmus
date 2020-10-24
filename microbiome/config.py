@@ -85,7 +85,7 @@ class _ConfigValidator(BaseValidator):
             elif not entry_column_meta_validator(val['meta']):
                 self._error(field, str(text_token({'E02002': {
                     'field': key,
-                    'errors': pformat(entry_column_meta_validator.errors)
+                    'errors': pformat(entry_column_meta_validator.errors, width=180)
                 }})))
 
 
@@ -112,7 +112,7 @@ class _ConfigValidator(BaseValidator):
             abspath = join(self.document['data_file_folder'], filename)
             for datum in self._isjsonfile(field, abspath):
                 if not validator(datum):
-                    self._error(field, str(text_token({'E02004': {'errors': pformat(validator.errors)}})))
+                    self._error(field, str(text_token({'E02004': {'errors': pformat(validator.errors, width=180)}})))
 
 
     # pylint: disable=W0613, R0201
@@ -169,15 +169,17 @@ def validate():
     -------
     (bool): True if the configuration is valid else False.
     """
-    global _config, _errors #pylint: disable=C0103, W0603
+    global _config #pylint: disable=C0103, W0603
     with open(join(dirname(__file__), _CONFIG_FORMAT_FILE), "r") as file_ptr:
         validator = _ConfigValidator(load(file_ptr))
     validator.allow_unknown = True
     _config = validator.normalized(_config)
 
     if not validator.validate(_config):
+        global _errors #pylint: disable=C0103, W0603
         _errors = validator.errors
-        _logger.error(str(text_token({'E02003': {'errors': pformat(validator.errors)}})))
+        _logger.error(str(text_token({'E02003': {'errors': pformat(validator.errors, width=180)}})))
+        _logger.error('Configuration used:\n{}'.format(pformat(_config, width=180)))
         return False
 
     _errors = {}

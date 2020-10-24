@@ -206,7 +206,7 @@ class worker():
         for signature in population.keys():
             gc = self._mutate(signature, population_list, meta_data)
             if not gc is None: new_gcs.append(gc)
-        worker._logger.debug("%s", pformat(new_gcs))
+        worker._logger.debug("%s", pformat(new_gcs, width=180))
         self._log_data['born'] = len(new_gcs)
         return new_gcs
 

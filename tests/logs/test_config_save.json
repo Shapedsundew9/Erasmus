@@ -18,6 +18,9 @@
         }
     },
     "default_database": "test_database",
+    "general": {
+        "verify_consistency": false
+    },
     "genomic_library_table": "genomic_library",
     "tables": {
         "genomic_library": {

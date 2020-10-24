@@ -519,6 +519,24 @@
         "regex": "[0-9a-f]{64}",
         "default": "0000000000000000000000000000000000000000000000000000000000000000"
     },
+    "updated": {
+        "meta": {
+            "database": {
+                "type": "TIMESTAMP"
+            },
+            "definition": {
+                "location": ["WORKER"],
+                "immutable": false
+            },
+            "description": "The date and time of the last modification to this genetic code."
+        },
+        "type": "string",
+        "minlength": 27,
+        "maxlength": 27,
+        "regex": "20[2-9][0-9]-(1[0-2]|0[1-9])-([0-2][0-9]|3[01])T[0-2][0-9](:[0-5][0-9]){2}\\.[0-9]{6}Z",
+        "check_with": "valid_created",
+        "default_setter": "set_created"
+    },
     "created": {
         "meta": {
             "database": {

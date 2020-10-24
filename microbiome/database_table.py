@@ -6,6 +6,7 @@ from zlib import compress, decompress
 from pickle import dumps, loads
 from copy import deepcopy
 from os.path import join, dirname
+from pprint import pformat
 from psycopg2 import connect, sql, DatabaseError, OperationalError
 from .entry_column_meta_validator import entry_column_meta_validator
 from .config import get_config
@@ -56,16 +57,19 @@ class database_table():
         self._logger = logger
         self.table = table
         config = get_config()
-        # TODO: Need to me more defensive here. 'table' may not exist.
-        self.dbname = config['tables'][table]['database']
-        self.schema = {k: v['meta'] for k, v in config['tables'][table]['schema'].items()}
-        c = config['databases'][self.dbname]
-        if self.dbname not in database_table._conn:
-            database_table._conn[self.dbname] = self._connection(self.dbname, c['username'], c['password'], c['host'], c['port'])
-        if not database_table._conn[self.dbname] is None:
-            if c['recreate'] and not suppress_recreate: self._delete_table()
-            self._columns = self._create_table(config['tables'][table]['history_decimation'])
-            self._logger.info("%s table has %d entries.", self.table, len(self))
+        if table not in config['tables']:
+            self._logger.error('Table {} is not defined in the configuration "tables" section.'.format(table))
+        else:  
+            self._logger.debug('Instanciating table {} with configuration {}.'.format(table, pformat(config['tables'][table], width=180)))
+            self.dbname = config['tables'][table]['database']
+            self.schema = {k: v['meta'] for k, v in config['tables'][table]['schema'].items()}
+            c = config['databases'][self.dbname]
+            if self.dbname not in database_table._conn:
+                database_table._conn[self.dbname] = self._connection(self.dbname, c['username'], c['password'], c['host'], c['port'])
+            if not database_table._conn[self.dbname] is None:
+                if c['recreate'] and not suppress_recreate: self._delete_table()
+                self._columns = self._create_table(config['tables'][table]['history_decimation'])
+                self._logger.info("%s table has %d entries.", self.table, len(self))
             
 
     def __len__(self):

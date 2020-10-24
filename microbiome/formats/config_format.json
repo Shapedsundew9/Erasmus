@@ -35,7 +35,14 @@
     "databases": {
         "type": "dict",
         "default": {
-            "erasmus_db": {}
+            "erasmus_db": {
+                "recreate": false,
+                "temp": false,
+                "host": "localhost",
+                "username": "erasmus",
+                "password": "erasmus",
+                "port": 5432
+            }
         },
         "keysrules": {
             "type": "string",
@@ -189,6 +196,15 @@
                             "codons_logical.json",
                             "codons_arithmetic.json"
                         ]
+                    },
+                    "history_decimation": {
+                        "type": "dict",
+                        "schema": {
+                            "enabled": {
+                                "type": "boolean",
+                                "default": false 
+                            }
+                        }
                     }
                 }
             },
@@ -207,6 +223,15 @@
                     },
                     "format_file": {
                         "default": "work_registry_entry_format.json"
+                    },
+                    "history_decimation": {
+                        "type": "dict",
+                        "schema": {
+                            "enabled": {
+                                "type": "boolean",
+                                "default": false 
+                            }
+                        }
                     }
                 }
             },
@@ -225,6 +250,15 @@
                     },
                     "format_file": {
                         "default": "worker_registry_entry_format.json"
+                    },
+                    "history_decimation": {
+                        "type": "dict",
+                        "schema": {
+                            "enabled": {
+                                "type": "boolean",
+                                "default": false 
+                            }
+                        }
                     }
                 }
             },
@@ -270,6 +304,15 @@
                     },
                    "format_file": {
                         "default": "platform_info_entry_format.json"
+                    },
+                    "history_decimation": {
+                        "type": "dict",
+                        "schema": {
+                            "enabled": {
+                                "type": "boolean",
+                                "default": false 
+                            }
+                        }
                     }
                 }
             }

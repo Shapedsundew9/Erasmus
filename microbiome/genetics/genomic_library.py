@@ -52,6 +52,7 @@ class genomic_library():
         if genomic_library._store is None:
             self._verify_consistency = get_config()['general']['verify_consistency']
             table_name = get_config()['genomic_library_table']
+            genomic_library._logger.debug("Genomic library table name: {}".format(table_name))
             genomic_library._store = database_table(genomic_library._logger, table_name)
             schema = get_config()['tables'][table_name]['schema']
             genomic_library._entry_validator = genomic_library_entry_validator(schema)
@@ -129,8 +130,8 @@ class genomic_library():
         query = genomic_library._query_validator.normalized(query)
         if genomic_library._logger.level == DEBUG and not genomic_library._query_validator.validate(query):
             genomic_library._logger.error(str(text_token({'E03000': {
-                'errors': pformat(genomic_library._query_validator.errors),
-                'query': pformat(query)}})))
+                'errors': pformat(genomic_library._query_validator.errors, width=180),
+                'query': pformat(query, width=180)}})))
         return genomic_library._store.load(query, fields)
 
 
@@ -182,8 +183,8 @@ class genomic_library():
             for entry in normalized_entries:
                 if not genomic_library._entry_validator(entry):
                     genomic_library._logger.error(str(text_token({'E03001': {
-                        'errors': pformat(genomic_library._entry_validator.errors),
-                        'entry': pformat(entry)}})))
+                        'errors': pformat(genomic_library._entry_validator.errors, width=180),
+                        'entry': pformat(entry, width=180)}})))
         if self._verify_consistency:
             for entry in normalized_entries:
                 references = [entry['gca'], entry['gcb']]
@@ -193,7 +194,7 @@ class genomic_library():
             problem_reference = self._check_references(references, set([entry['signature'] for entry in normalized_entries]))
             if not problems is None:
                 genomic_library._logger.error(str(text_token({'E03002': {
-                    'entry': pformat(entry),
+                    'entry': pformat(entry, width=180),
                     'reference': problem_reference}})))
         return normalized_entries
 

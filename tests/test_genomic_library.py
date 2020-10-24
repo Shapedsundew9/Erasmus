@@ -47,6 +47,7 @@ def glib():
     gl._store._delete_db()
 
 
+@pytest.mark.good
 def test_initialise(glib):
     """Test construction & initialisation."""
     assert glib.isconnected()

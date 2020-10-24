@@ -17,6 +17,7 @@ from pprint import pformat
 from cerberus import Validator
 
 from .gc_graph import gc_graph
+from .gc_type import validate, last_validation_error
 
 NULL_GC = "0" * 64
 DEAD_GC_PREFIX = "deadbeef000000000000000000000000"
@@ -87,6 +88,7 @@ class genomic_library_entry_validator(Validator):
                 self._error(
                     field, "If alpha_class != 0 then there must be at least one parent.")
 
+
     def _check_with_valid_created(self, field, value):
         try:
             date_time_obj = datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%fZ")
@@ -97,6 +99,12 @@ class genomic_library_entry_validator(Validator):
 
         if date_time_obj > datetime.utcnow():
             self._error(field, "Created date-time cannot be in the future.")
+
+
+    def _check_with_valid_gc_type(self, field, value):
+        if not validate(value):
+            self._error(field, last_validation_error())
+
 
     def _check_with_valid_inline(self, field, value):
         # TODO: Check right number of return parameters and arguments
@@ -140,3 +148,4 @@ class genomic_library_entry_validator(Validator):
 
     def _normalize_default_setter_set_created(self, document):
         return datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%S.%fZ")
+

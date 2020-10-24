@@ -172,7 +172,7 @@ def validate(gc_type):
     # TODO: This is very slow. Can remove full on type validation with a list of valid ranges
     # See: https://stackoverflow.com/questions/4628333/converting-a-list-of-integers-into-range-in-python
     retval = _gc_type_validator(asdict(gc_type))
-    if not retval: _logger.debug("GCTD 0x{:04x} invalid: {}".format(gc_type, pformat(_gc_type_validator.errors)))
+    if not retval: _logger.debug("GCTD 0x{:04x} invalid: {}".format(gc_type, pformat(_gc_type_validator.errors, width=180)))
     return retval
 
 
