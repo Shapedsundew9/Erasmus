@@ -190,7 +190,7 @@
         },
         "type": "integer",
         "min": 0,
-        "default": 0
+        "default_setter": "set_opt_num_codons"
     },
     "num_inputs": {
         "meta": {
@@ -221,7 +221,8 @@
         "type": "integer",
         "min": -32768,
         "max": 32767,
-        "check_with": "valid_gc_type"
+        "check_with": "valid_gc_type",
+        "default_setter": "set_input0"
     },
     "input1_type": {
         "meta": {
@@ -237,7 +238,8 @@
         "type": "integer",
         "min": -32768,
         "max": 32767,
-        "check_with": "valid_gc_type"
+        "check_with": "valid_gc_type",
+        "default_setter": "set_input1"
     },
     "input2_type": {
         "meta": {
@@ -253,7 +255,8 @@
         "type": "integer",
         "min": -32768,
         "max": 32767,
-        "check_with": "valid_gc_type"
+        "check_with": "valid_gc_type",
+        "default_setter": "set_input2"
     },
     "input3_type": {
         "meta": {
@@ -269,7 +272,8 @@
         "type": "integer",
         "min": -32768,
         "max": 32767,
-        "check_with": "valid_gc_type"
+        "check_with": "valid_gc_type",
+        "default_setter": "set_input3"
     },
     "input4_type": {
         "meta": {
@@ -285,7 +289,8 @@
         "type": "integer",
         "min": -32768,
         "max": 32767,
-        "check_with": "valid_gc_type"
+        "check_with": "valid_gc_type",
+        "default_setter": "set_input4"
     },
     "input5_type": {
         "meta": {
@@ -301,7 +306,8 @@
         "type": "integer",
         "min": -32768,
         "max": 32767,
-        "check_with": "valid_gc_type"
+        "check_with": "valid_gc_type",
+        "default_setter": "set_input5"
     },
     "input6_type": {
         "meta": {
@@ -317,7 +323,8 @@
         "type": "integer",
         "min": -32768,
         "max": 32767,
-        "check_with": "valid_gc_type"
+        "check_with": "valid_gc_type",
+        "default_setter": "set_input6"
     },
     "input7_type": {
         "meta": {
@@ -333,7 +340,8 @@
         "type": "integer",
         "min": -32768,
         "max": 32767,
-        "check_with": "valid_gc_type"
+        "check_with": "valid_gc_type",
+        "default_setter": "set_input7"
     },
     "num_outputs": {
         "meta": {
@@ -364,7 +372,8 @@
         "type": "integer",
         "min": -32768,
         "max": 32767,
-        "check_with": "valid_gc_type"
+        "check_with": "valid_gc_type",
+        "default_setter": "set_output0"
     },
     "output1_type": {
         "meta": {
@@ -380,7 +389,8 @@
         "type": "integer",
         "min": -32768,
         "max": 32767,
-        "check_with": "valid_gc_type"
+        "check_with": "valid_gc_type",
+        "default_setter": "set_output1"
     },
     "output2_type": {
         "meta": {
@@ -396,7 +406,8 @@
         "type": "integer",
         "min": -32768,
         "max": 32767,
-        "check_with": "valid_gc_type"
+        "check_with": "valid_gc_type",
+        "default_setter": "set_output2"
     },
     "output3_type": {
         "meta": {
@@ -412,7 +423,8 @@
         "type": "integer",
         "min": -32768,
         "max": 32767,
-        "check_with": "valid_gc_type"
+        "check_with": "valid_gc_type",
+        "default_setter": "set_output3"
     },
     "alpha_class": {
         "meta": {
@@ -455,7 +467,7 @@
             "description": "The properties of the inputs & outputs",
             "codec": {
                 "extended": 0,
-                "mutation": 1
+                "arithmetic": 1
             }
         },
         "type": "dict",
@@ -464,7 +476,7 @@
                 "type": "boolean",
                 "default": false
             },
-            "mutation": {
+            "arithmetic": {
                 "type": "boolean",
                 "default": false                
             }

@@ -17,7 +17,7 @@ from pprint import pformat
 from cerberus import Validator
 
 from .gc_graph import gc_graph
-from .gc_type import validate, last_validation_error
+from .gc_type import validate, last_validation_error, asint, UNKNOWN_TYPE
 
 NULL_GC = "0" * 64
 DEAD_GC_PREFIX = "deadbeef000000000000000000000000"
@@ -134,17 +134,46 @@ class genomic_library_entry_validator(Validator):
         # not breaking the signature
         return sha256("".join(string.split()).encode()).hexdigest()
 
+
+    def _get_gc_type(self, document, row, idx):
+        for pr in document["graph"].keys():
+            if pr != 'C':
+                for r, i, t in document["graph"][pr]:
+                    if r == row and i == idx: return asint(t)
+        return UNKNOWN_TYPE
+
+
+    def _normalize_default_setter_set_input0(self, document): return self._get_gc_type(document, 'I', 0)
+    def _normalize_default_setter_set_input1(self, document): return self._get_gc_type(document, 'I', 1)
+    def _normalize_default_setter_set_input2(self, document): return self._get_gc_type(document, 'I', 2)
+    def _normalize_default_setter_set_input3(self, document): return self._get_gc_type(document, 'I', 3)
+    def _normalize_default_setter_set_input4(self, document): return self._get_gc_type(document, 'I', 4)
+    def _normalize_default_setter_set_input5(self, document): return self._get_gc_type(document, 'I', 5)
+    def _normalize_default_setter_set_input6(self, document): return self._get_gc_type(document, 'I', 6)
+    def _normalize_default_setter_set_input7(self, document): return self._get_gc_type(document, 'I', 7)
+
+    def _normalize_default_setter_set_output0(self, document): return self._get_gc_type(document, 'O', 0)
+    def _normalize_default_setter_set_output1(self, document): return self._get_gc_type(document, 'O', 1)
+    def _normalize_default_setter_set_output2(self, document): return self._get_gc_type(document, 'O', 2)
+    def _normalize_default_setter_set_output3(self, document): return self._get_gc_type(document, 'O', 3)
+
     def _normalize_default_setter_set_num_inputs(self, document):
         i_indices = set()
         for pr in document["graph"].keys():
             if pr != 'C':
-                for r, i in document["graph"][pr]:
+                for r, i, t in document["graph"][pr]:
                     if r == "I":
                         i_indices.add(i)
         return len(i_indices)
 
+
     def _normalize_default_setter_set_num_outputs(self, document):
         return len(document["graph"]["O"])
+
+
+    def _normalize_default_setter_set_opt_num_codons(self, document):
+        return 1 if document['gca'] == NULL_GC and document['gcb'] == NULL_GC else 0
+
 
     def _normalize_default_setter_set_created(self, document):
         return datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%S.%fZ")

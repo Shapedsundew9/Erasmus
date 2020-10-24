@@ -194,7 +194,7 @@
                         "type": "list",
                         "default": [
                             "codons_logical.json",
-                            "codons_arithmetic.json"
+                            "codons_elementary_arithmetic.json"
                         ]
                     },
                     "history_decimation": {

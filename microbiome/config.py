@@ -98,20 +98,21 @@ class _ConfigValidator(BaseValidator):
         The table data file is checked to see if it is readable, if it is
         a decodable JSON format & valid.
         """
+        _logger.debug("Loading validation schema {}.".format(self.document['format_file']))
         if self.document['format_file'] == "genomic_library_entry_format.json": validator = genomic_library_entry_validator
         elif self.document['format_file'] == "platform_info_entry_format.json": validator = platform_info_entry_validator
         elif self.document['format_file'] == "work_registry_entry_format.json": validator = work_registry_entry_validator
         elif self.document['format_file'] == "worker_registry_entry_format.json": validator = worker_registry_entry_validator
         elif self.document['format_file'] == "work_log_entry_format.json": validator = work_log_entry_validator
-        else:
-            schema_path = join(self.document['format_file_folder'], self.document['format_file'])
-            with open(schema_path, "r") as schema_file:
-                validator = Validator(load(schema_file))
+        else: validator = Validator
+        schema_path = join(self.document['format_file_folder'], self.document['format_file'])
+        with open(schema_path, "r") as schema_file:
+            validator = validator(load(schema_file))
 
         for filename in value:
             abspath = join(self.document['data_file_folder'], filename)
             for datum in self._isjsonfile(field, abspath):
-                if not validator(datum):
+                if not validator.validate(datum):
                     self._error(field, str(text_token({'E02004': {'errors': pformat(validator.errors, width=180)}})))
 
 
