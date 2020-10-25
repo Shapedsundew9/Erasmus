@@ -295,7 +295,6 @@ class gc_graph():
                'P': (0, 4),
                'O': (1, 4),
               }
-        print(self.graph)
         gtg = {k: {'max_idx': int(npmax([rep[ep_idx.INDEX] for rep in filter(self.row_filter(k), self.graph.values())], initial=0))} for k in gc_graph.rows}
         width_0 = max((gtg['C']['max_idx'], gtg['B']['max_idx'], gtg['P']['max_idx']))
         width_1 = max((gtg['I']['max_idx'], gtg['A']['max_idx'], gtg['O']['max_idx']))
@@ -319,7 +318,6 @@ class gc_graph():
                 else:
                     p['shape'][v], p['rotation'][v], p['text_rotation'][v], p['size'][v] = 'triangle', 0.0, 0.0, vd
                 
-        print(gtg)
         for ep in filter(self.src_filter(), self.graph.values()):
             for ref in ep[ep_idx.REFERENCED_BY]:
                 e = g.add_edge(gtg[ep[ep_idx.ROW]][ep[ep_idx.INDEX]], gtg[ref[ref_idx.ROW]][ref[ref_idx.INDEX]])
@@ -740,8 +738,6 @@ class gc_graph():
 
         #7
         if self.has_f() != bool(len(list(filter(self.row_filter('P'), self.graph.values())))):
-                print(list(filter(self.row_filter('P'), self.graph.values())))
-                print(self.has_f())
                 self.status.append(text_token({'E01006': {}}))
     
         # 8 & 9

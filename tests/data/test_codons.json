@@ -1,0 +1,178 @@
+[
+    {
+        "graph": {
+            "A": [["I", 0, "numeric"], ["I", 1, "numeric"]],
+            "O": [["A", 0, "bool"]]
+         },
+        "alpha_class": 0,
+        "beta_class": 0,
+        "opt_num_codons": 1,
+        "properties": {
+            "logical": true
+        },
+        "meta_data": {
+            "name": "less than",
+            "function": {
+                "python3": {
+                    "0": {
+                        "inline": "{0[i0]} < {0[i1]}"
+                    }
+                }
+            }
+        }
+    }, 
+    {
+        "graph": {
+            "A": [["I", 0, "numeric"], ["I", 1, "numeric"]],
+            "O": [["A", 0, "bool"]]
+         },
+        "alpha_class": 0,
+        "beta_class": 0,
+        "opt_num_codons": 1,
+        "properties": {
+            "logical": true
+        },
+        "meta_data": {
+            "name": "less than or equal to",
+            "function": {
+                "python3": {
+                    "0": {
+                        "inline": "{0[i0]} <= {0[i1]}"
+                    }
+                }
+            }
+        }
+    }, 
+    {
+        "graph": {
+            "A": [["I", 0, "numeric"], ["I", 1, "numeric"]],
+            "O": [["A", 0, "bool"]]
+         },
+        "alpha_class": 0,
+        "beta_class": 0,
+        "opt_num_codons": 1,
+        "properties": {
+            "logical": true
+        },
+        "meta_data": {
+            "name": "equal to",
+            "function": {
+                "python3": {
+                    "0": {
+                        "inline": "{0[i0]} == {0[i1]}"
+                    }
+                }
+            }
+        }
+    }, 
+    {
+        "graph": {
+            "A": [["I", 0, "numeric"], ["I", 1, "numeric"]],
+            "O": [["A", 0, "bool"]]
+         },
+        "alpha_class": 0,
+        "beta_class": 0,
+        "opt_num_codons": 1,
+        "properties": {
+            "logical": true
+        },
+        "meta_data": {
+            "name": "not equal to",
+            "function": {
+                "python3": {
+                    "0": {
+                        "inline": "{0[i0]} != {0[i1]}"
+                    }
+                }
+            }
+        }
+    }, 
+    {
+        "graph": {
+            "A": [["I", 0, "numeric"], ["I", 1, "numeric"]],
+            "O": [["A", 0, "bool"]]
+         },
+        "alpha_class": 0,
+        "beta_class": 0,
+        "opt_num_codons": 1,
+        "properties": {
+            "logical": true
+        },
+        "meta_data": {
+            "name": "greater than equal to",
+            "function": {
+                "python3": {
+                    "0": {
+                        "inline": "{0[i0]} >= {0[i1]}"
+                    }
+                }
+            }
+        }
+    }, 
+    {
+        "graph": {
+            "A": [["I", 0, "numeric"], ["I", 1, "numeric"]],
+            "O": [["A", 0, "bool"]]
+         },
+        "alpha_class": 0,
+        "beta_class": 0,
+        "opt_num_codons": 1,
+        "properties": {
+            "logical": true
+        },
+        "meta_data": {
+            "name": "greater than",
+            "function": {
+                "python3": {
+                    "0": {
+                        "inline": "{0[i0]} > {0[i1]}"
+                    }
+                }
+            }
+        }
+    }, 
+    {
+        "graph": {
+            "A": [["I", 0, "obj0"], ["I", 1, "obj0"]],
+            "O": [["A", 0, "bool"]]
+         },
+        "alpha_class": 0,
+        "beta_class": 0,
+        "opt_num_codons": 1,
+        "properties": {
+            "logical": true
+        },
+        "meta_data": {
+            "name": "is",
+            "function": {
+                "python3": {
+                    "0": {
+                        "inline": "{0[i0]} is {0[i1]}"
+                    }
+                }
+            }
+        }
+    },
+    {
+        "graph": {
+            "A": [["I", 0, "obj0"], ["I", 1, "obj0"]],
+            "O": [["A", 0, "bool"]]
+         },
+        "alpha_class": 0,
+        "beta_class": 0,
+        "opt_num_codons": 1,
+        "properties": {
+            "logical": true
+        },
+        "meta_data": {
+            "name": "is not",
+            "function": {
+                "python3": {
+                    "0": {
+                        "inline": "{0[i0]} is not {0[i1]}"
+                    }
+                }
+            }
+        }
+    }
+]

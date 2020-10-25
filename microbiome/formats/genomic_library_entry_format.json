@@ -467,7 +467,8 @@
             "description": "The properties of the inputs & outputs",
             "codec": {
                 "extended": 0,
-                "arithmetic": 1
+                "arithmetic": 1,
+                "logical": 2
             }
         },
         "type": "dict",
@@ -477,6 +478,10 @@
                 "default": false
             },
             "arithmetic": {
+                "type": "boolean",
+                "default": false                
+            },
+            "logical": {
                 "type": "boolean",
                 "default": false                
             }

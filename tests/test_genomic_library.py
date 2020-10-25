@@ -136,3 +136,10 @@ def test_load(glib):
 def test_load_bad_query(glib):
     """Load some genetic codes from the library using a query."""
     assert not glib.load([{'does_not_exist': {'max': 1}}])
+
+
+def test_store(glib):
+    """Store a set of tets codons."""
+    with open(join(dirname(__file__), "data/test_codons.json"), "r") as file_ptr:
+        test_codons = load(file_ptr)
+    glib.store(test_codons)

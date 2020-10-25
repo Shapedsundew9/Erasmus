@@ -22,6 +22,24 @@
                     }
                 },
                 "type": "dict"
+            },
+            {
+                "schema": {
+                    "min": {
+                        "required": true,
+                        "type": "integer"
+                    }
+                },
+                "type": "dict"
+            },
+            {
+                "schema": {
+                    "max": {
+                        "required": true,
+                        "type": "integer"
+                    }
+                },
+                "type": "dict"
             }
         ]
     },
@@ -43,6 +61,24 @@
                         "type": "string"
                     },
                     "min": {
+                        "required": true,
+                        "type": "string"
+                    }
+                },
+                "type": "dict"
+            },
+            {
+                "schema": {
+                    "min": {
+                        "required": true,
+                        "type": "string"
+                    }
+                },
+                "type": "dict"
+            },
+            {
+                "schema": {
+                    "max": {
                         "required": true,
                         "type": "string"
                     }
@@ -82,6 +118,24 @@
                         "type": "integer"
                     },
                     "min": {
+                        "required": true,
+                        "type": "integer"
+                    }
+                },
+                "type": "dict"
+            },
+            {
+                "schema": {
+                    "min": {
+                        "required": true,
+                        "type": "integer"
+                    }
+                },
+                "type": "dict"
+            },
+            {
+                "schema": {
+                    "max": {
                         "required": true,
                         "type": "integer"
                     }

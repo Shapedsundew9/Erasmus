@@ -23,7 +23,7 @@ _NULL_GC_DATA = {
 
 
 register_token_code('E03000', 'Query is not valid: {errors}: {query}')
-register_token_code('E03001', 'Entry is not valid: {errors}: {query}')
+register_token_code('E03001', 'Entry is not valid: {errors}: {entry}')
 register_token_code('E03002', 'Referenced GC(s) {references} do not exist. Entry:\n{entry}:')
 
 
@@ -159,6 +159,8 @@ class genomic_library():
 
         if entries is None or not entry['gcb'] in entries:
             gcb = self[entry['gcb']]
+        else:
+            gcb = entries[entry['gcb']]
             if not gcb['_stored']: self._calculate_fields(gcb, entries)
 
         if gca is None and entry['gca'] == NULL_GC: gca = _NULL_GC_DATA
@@ -178,8 +180,8 @@ class genomic_library():
         normalized_entries = []
         for entry in entries:
             normalized_entries.append(genomic_library_entry_validator.normalized(entry))
-            self._calculate_fields(normalized_entries[-1], normalised_entries)
-        if genomic_library._logger.level == DEBUG:
+            self._calculate_fields(normalized_entries[-1], normalized_entries)
+        if genomic_library._logger.getEffectiveLevel() == DEBUG:
             for entry in normalized_entries:
                 if not genomic_library_entry_validator(entry):
                     genomic_library._logger.error(str(text_token({'E03001': {
