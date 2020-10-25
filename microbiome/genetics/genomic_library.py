@@ -201,3 +201,7 @@ class genomic_library():
     # Store a new application formatted entry.
     def store(self, entries):
         return genomic_library._store.store(self._normalize(entries))
+
+
+    def update(self, entries, conditions):
+        return genomic_library._store.update(entries, conditions)

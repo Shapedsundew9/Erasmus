@@ -12,6 +12,7 @@ from json import load
 from copy import deepcopy
 from microbiome.config import set_config, get_config
 from microbiome.genetics.genomic_library import genomic_library
+from microbiome.genetics.genomic_library_entry_validator import NULL_GC
 
 
 # Load the test files.
@@ -20,6 +21,9 @@ with open(join(dirname(__file__), "data/test_glib_config.json"), "r") as file_pt
 
 
 NON_EXISTANT_SHA256 = "abcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcd"
+ANOTHER_NON_EXISTANT_SHA256 = "0123456789012345678901234567890123456789012345678901234567890123"
+KNOWN_GOOD_SIGNATURE = "1e3595731a3915c541b8b58eece28de636898e6d46193268570b39eb8ffb5e0c"
+KNOWN_GOOD_SIGNATURE_NAME = "negate"
 
 
 basicConfig(
@@ -72,8 +76,8 @@ def test_getitem_found(glib):
     
     Load the negate GC codon by its hash and chack the name is correct. 
     """
-    gc = glib["1e3595731a3915c541b8b58eece28de636898e6d46193268570b39eb8ffb5e0c"]
-    assert gc['meta_data']['name'] == 'negate'
+    gc = glib[KNOWN_GOOD_SIGNATURE]
+    assert gc['meta_data']['name'] == KNOWN_GOOD_SIGNATURE_NAME
 
 
 @pytest.mark.good
@@ -106,7 +110,24 @@ def test_check_references_good(glib):
 def test_check_references_bad(glib):
     """Test _check_references().
     
-    Vandalise a GCA reference 
+    Mix some non-existant signatures in with some valid ones.
     """
-    gcs = glib.load([{'raw_num_codons': {'min': 2}}], ['signature'])
-    assert not glib._check_references(gcs)
+    table = get_config()['tables']['test_genomic_library']
+    gcs = []
+    for data_file in table['data_files']:
+        cea_path = join(table['data_file_folder'], data_file)
+        with open(cea_path, "r") as cea_file:
+            for gc in load(cea_file):
+                gcs.append(gc['signature'])
+    gcs.append(NON_EXISTANT_SHA256)
+    gcs.insert(int(len(gcs) / 2), ANOTHER_NON_EXISTANT_SHA256)
+    naughty_list = glib._check_references(gcs)
+    assert len(naughty_list) == 2
+    assert NON_EXISTANT_SHA256 in naughty_list and ANOTHER_NON_EXISTANT_SHA256 in naughty_list
+
+
+@pytest.mark.good
+def test_load(glib):
+    """Load some genetic codes from the library using a query."""
+    assert glib.load([{'raw_num_codons': {'max': 1}}])
+
