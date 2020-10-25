@@ -1,3 +1,4 @@
+"""Normalise a genomic library entry JSON data file."""
 #!/usr/bin/env python3
 
 from json import load, dump

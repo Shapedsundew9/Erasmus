@@ -24,7 +24,7 @@ _NULL_GC_DATA = {
 
 register_token_code('E03000', 'Query is not valid: {errors}: {query}')
 register_token_code('E03001', 'Entry is not valid: {errors}: {query}')
-register_token_code('E03002', 'Referenced GC {reference} does not exist. Entry:\n{entry}:')
+register_token_code('E03002', 'Referenced GC(s) {references} do not exist. Entry:\n{entry}:')
 
 
 class genomic_library():
@@ -59,7 +59,7 @@ class genomic_library():
 
 
     def __len__(self):
-        """The number of entries in the library.
+        """Return the number of entries in the library.
         
         Returns
         -------
@@ -81,7 +81,7 @@ class genomic_library():
         (dict) Genetic code 
         """
         value = genomic_library._store.load([{"signature": signature}])
-        return None if value is None else value[0]
+        return None if not value else value[0]
 
 
     def _check_references(self, references, check_list=None):
@@ -97,15 +97,16 @@ class genomic_library():
 
         Returns
         -------
-        None if all references exist else the signature of the first missing reference.
+        Empty list if all references exist else the signatures of missing references.
         """
         if check_list is None: check_list = set([NULL_GC])
+        naughty_list = []
         for reference in references:
             if self[reference] is None and not reference in check_list:
-                return reference
+                naughty_list.append(reference)
             else:
                 check_list.add(reference)
-        return None
+        return naughty_list
 
 
     def isconnected(self):
@@ -189,11 +190,11 @@ class genomic_library():
                 if 'parents' in entry['meta_data']:
                     for parents in entry['meta_data']['parents']:
                         references.extend(parents)
-            problem_reference = self._check_references(references, set([entry['signature'] for entry in normalized_entries]))
-            if not problems is None:
+            problem_references = self._check_references(references, set([entry['signature'] for entry in normalized_entries]))
+            if problem_references:
                 genomic_library._logger.error(str(text_token({'E03002': {
                     'entry': pformat(entry, width=180),
-                    'reference': problem_reference}})))
+                    'references': problem_references}})))
         return normalized_entries
 
 
