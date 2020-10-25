@@ -100,10 +100,10 @@ class _ConfigValidator(BaseValidator):
         """
         _logger.debug("Loading validation schema {}.".format(self.document['format_file']))
         if self.document['format_file'] == "genomic_library_entry_format.json": validator = genomic_library_entry_validator
-        elif self.document['format_file'] == "platform_info_entry_format.json": validator = platform_info_entry_validator
-        elif self.document['format_file'] == "work_registry_entry_format.json": validator = work_registry_entry_validator
-        elif self.document['format_file'] == "worker_registry_entry_format.json": validator = worker_registry_entry_validator
-        elif self.document['format_file'] == "work_log_entry_format.json": validator = work_log_entry_validator
+        elif self.document['format_file'] == "platform_info_entry_format.json": validator = platform_info_validator
+        elif self.document['format_file'] == "work_registry_entry_format.json": validator = work_registry_validator
+        elif self.document['format_file'] == "worker_registry_entry_format.json": validator = worker_registry_validator
+        elif self.document['format_file'] == "work_log_entry_format.json": validator = work_log_validator
         else:
             validator = Validator
             schema_path = join(self.document['format_file_folder'], self.document['format_file'])

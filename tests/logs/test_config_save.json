@@ -27,20 +27,27 @@
             "data_file_folder": "/home/shapedsundew9/Projects/Erasmus/microbiome/data",
             "data_files": [
                 "codons_logical.json",
-                "codons_arithmetic.json"
+                "codons_elementary_arithmetic.json"
             ],
             "database": "test_database",
             "format_file": "genomic_library_entry_format.json",
-            "format_file_folder": "/home/shapedsundew9/Projects/Erasmus/microbiome/formats"
+            "format_file_folder": "/home/shapedsundew9/Projects/Erasmus/microbiome/formats",
+            "history_decimation": {
+                "enabled": false
+            }
         },
         "platform_info": {
             "data_file_folder": "/home/shapedsundew9/Projects/Erasmus/microbiome/data",
             "database": "test_database",
             "format_file": "platform_info_entry_format.json",
-            "format_file_folder": "/home/shapedsundew9/Projects/Erasmus/microbiome/formats"
+            "format_file_folder": "/home/shapedsundew9/Projects/Erasmus/microbiome/formats",
+            "history_decimation": {
+                "enabled": false
+            }
         },
         "test_broken_table": {
             "data_file_folder": "/home/shapedsundew9/Projects/Erasmus/microbiome/data",
+            "data_files": [],
             "database": "test_broken_database",
             "format_file": "test_entry_format.json",
             "format_file_folder": "./data/",
@@ -64,6 +71,7 @@
         },
         "test_history_decimation": {
             "data_file_folder": "/home/shapedsundew9/Projects/Erasmus/microbiome/data",
+            "data_files": [],
             "database": "test_database",
             "format_file": "test_history_decimation_format.json",
             "format_file_folder": "./data/",
@@ -75,6 +83,7 @@
         },
         "test_table": {
             "data_file_folder": "/home/shapedsundew9/Projects/Erasmus/microbiome/data",
+            "data_files": [],
             "database": "test_database",
             "format_file": "test_entry_format.json",
             "format_file_folder": "./data/",
@@ -88,19 +97,30 @@
             "data_file_folder": "/home/shapedsundew9/Projects/Erasmus/microbiome/data",
             "database": "test_database",
             "format_file": "work_log_entry_format.json",
-            "format_file_folder": "/home/shapedsundew9/Projects/Erasmus/microbiome/formats"
+            "format_file_folder": "/home/shapedsundew9/Projects/Erasmus/microbiome/formats",
+            "history_decimation": {
+                "enabled": true,
+                "num_phases": 8,
+                "phase_size": 20
+            }
         },
         "work_registry": {
             "data_file_folder": "/home/shapedsundew9/Projects/Erasmus/microbiome/data",
             "database": "test_database",
             "format_file": "work_registry_entry_format.json",
-            "format_file_folder": "/home/shapedsundew9/Projects/Erasmus/microbiome/formats"
+            "format_file_folder": "/home/shapedsundew9/Projects/Erasmus/microbiome/formats",
+            "history_decimation": {
+                "enabled": false
+            }
         },
         "worker_registry": {
             "data_file_folder": "/home/shapedsundew9/Projects/Erasmus/microbiome/data",
             "database": "test_database",
             "format_file": "worker_registry_entry_format.json",
-            "format_file_folder": "/home/shapedsundew9/Projects/Erasmus/microbiome/formats"
+            "format_file_folder": "/home/shapedsundew9/Projects/Erasmus/microbiome/formats",
+            "history_decimation": {
+                "enabled": false
+            }
         }
     }
 }
