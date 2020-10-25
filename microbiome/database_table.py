@@ -219,14 +219,12 @@ class database_table():
                 sql_list.append(sql.Literal(self._cast_term_to_store_type(term[0], term[1]['min'])))
                 sql_list.append(sql.SQL(" AND "))
                 sql_list.append(sql.Literal(self._cast_term_to_store_type(term[0], term[1]['max'])))
-            elif len(term[1]) == 1:
-                # Assume this is the upper or lower bound for a numeric type
-                if 'min' in term[1]:
-                    sql_list.append(sql.SQL(" >= "))
-                    sql_list.append(sql.Literal(self._cast_term_to_store_type(term[0], term[1]['min'])))
-                elif 'max' in term[1]:
-                    sql_list.append(sql.SQL(" <= "))
-                    sql_list.append(sql.Literal(self._cast_term_to_store_type(term[0], term[1]['max'])))
+            elif len(term[1]) == 1 and 'min' in term[1]:
+                sql_list.append(sql.SQL(" >= "))
+                sql_list.append(sql.Literal(self._cast_term_to_store_type(term[0], term[1]['min'])))
+            elif len(term[1]) == 1 and 'max' in term[1]:
+                sql_list.append(sql.SQL(" <= "))
+                sql_list.append(sql.Literal(self._cast_term_to_store_type(term[0], term[1]['max'])))
             else:
                 # Assume this field has a codec
                 # term[0] & mask = term[1]
