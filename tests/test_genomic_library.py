@@ -131,3 +131,8 @@ def test_load(glib):
     """Load some genetic codes from the library using a query."""
     assert glib.load([{'raw_num_codons': {'max': 1}}])
 
+
+@pytest.mark.good
+def test_load_bad_query(glib):
+    """Load some genetic codes from the library using a query."""
+    assert not glib.load([{'does_not_exist': {'max': 1}}])

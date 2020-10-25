@@ -67,6 +67,24 @@ class query_validator():
                                 'required': True
                             }
                         }
+                    },
+                    {
+                        'type': 'dict',
+                        'schema': {
+                            'min': {
+                                'type': entry_schema['type'],
+                                'required': True
+                            }
+                        }
+                    },
+                    {
+                        'type': 'dict',
+                        'schema': {
+                            'max': {
+                                'type': entry_schema['type'],
+                                'required': True
+                            }
+                        }
                     }
                 ]
             }

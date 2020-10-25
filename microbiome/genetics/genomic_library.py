@@ -127,10 +127,11 @@ class genomic_library():
         (list) A List of genetic code dictionaries.
         """
         query = genomic_library._query_validator.normalized(query)
-        if genomic_library._logger.level == DEBUG and not genomic_library._query_validator.validate(query):
+        if genomic_library._logger.getEffectiveLevel() == DEBUG and not genomic_library._query_validator.validate(query):
             genomic_library._logger.error(str(text_token({'E03000': {
                 'errors': pformat(genomic_library._query_validator.errors, width=180),
                 'query': pformat(query, width=180)}})))
+            return []
         return genomic_library._store.load(query, fields)
 
 
