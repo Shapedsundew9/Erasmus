@@ -170,7 +170,6 @@ class gc_graph():
         """
         # TODO: Uses self.rows where appropriate to reduce the need for calculated results.
         if graph is None: graph = {}
-        print(graph)
         self.rows = ({k: len(v) for k, v in graph.items()}, {})
         self.app_graph = graph
         self.graph = self._convert_to_internal(graph)

@@ -42,11 +42,10 @@ def get_platform_info():
     global platform_info
     if platform_info is None:
         platform_info = _get_platform_info()
-        validator = platform_info_validator(get_config()['tables']['platform_info']['schema'])
-        if not validator.validate(platform_info):
+        platform_info = platform_info_validator.normalized(platform_info)
+        if not platform_info_validator.validate(platform_info):
             _logger.error("Platform information validation failed: %s", validator.errors)
             exit(1)
-        platform_info = validator.normalized(platform_info)
         pi_table = database_table(_logger, 'platform_info')
         _logger.info("Platform information: %s", str(platform_info))
         if not pi_table.load([{'signature': platform_info['signature']}]):

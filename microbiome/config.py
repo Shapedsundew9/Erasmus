@@ -104,10 +104,11 @@ class _ConfigValidator(BaseValidator):
         elif self.document['format_file'] == "work_registry_entry_format.json": validator = work_registry_entry_validator
         elif self.document['format_file'] == "worker_registry_entry_format.json": validator = worker_registry_entry_validator
         elif self.document['format_file'] == "work_log_entry_format.json": validator = work_log_entry_validator
-        else: validator = Validator
-        schema_path = join(self.document['format_file_folder'], self.document['format_file'])
-        with open(schema_path, "r") as schema_file:
-            validator = validator(load(schema_file))
+        else:
+            validator = Validator
+            schema_path = join(self.document['format_file_folder'], self.document['format_file'])
+            with open(schema_path, "r") as schema_file:
+                validator = validator(load(schema_file))
 
         for filename in value:
             abspath = join(self.document['data_file_folder'], filename)

@@ -31,7 +31,7 @@ from bitstruct import pack_dict, unpack_dict
 from pprint import pformat
 from re import split
 from math import floor, log
-from .gc_type_validator import gc_type_validator
+from .gc_type_validator import gc_type_validator as _gc_type_validator
 
 
 # Constants
@@ -41,9 +41,6 @@ UNKNOWN_TYPE = 0x400C
 # Internal constants
 _logger = getLogger(__name__)
 _affinities = {}
-with open(join(dirname(__file__), "../formats/gc_type_format.json"), "r") as format_file:
-    _gc_type_validator = gc_type_validator(load(format_file))
-_gc_type_validator.allow_unknown = True
 _BIT_FIELDS = {'fmt': 'b1u3u12', 'names': ('RESERVED', 'base_type', 'parameters')}
 _BASE_TYPE = {'fmt': 'p13b1b1b1', 'names': ('object', 'float', 'integer')}
 _NUMERIC_PARAM = {'fmt': 'p4b1u3u4b1b1u2', 'names': ('sign', 'log_size', 'n_dim', 'exact', 'RESERVED', 't_idx')}

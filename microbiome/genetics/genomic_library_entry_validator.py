@@ -33,7 +33,6 @@ class _genomic_library_entry_validator(Validator):
     _logger = getLogger(__name__)
 
     def _check_with_valid_graph(self, field, value):
-        print(field, value)
         gcg = gc_graph(value)
         gcg.validate()
         for e in gcg.status: self._error(field, str(e))

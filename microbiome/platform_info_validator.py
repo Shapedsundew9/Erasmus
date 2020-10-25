@@ -11,9 +11,15 @@ Copyright (c) 2020 Your Company
 from cerberus import Validator
 from datetime import datetime
 from hashlib import sha256
+from json import load
+from os.path import dirname, join
 
 
-class platform_info_validator(Validator):
+with open(join(dirname(__file__), "formats/platform_info_entry_format.json"), "r") as file_ptr:
+    _PLATFORM_INFO_ENTRY_SCHEMA = schema = load(file_ptr)
+
+
+class _platform_info_validator(Validator):
 
     def _check_with_valid_created(self, field, value):
         try:
@@ -53,3 +59,6 @@ class platform_info_validator(Validator):
 
     def _normalize_coerce_string_1024(self, value):
         return self._coerce_string(value, 1024)
+
+
+platform_info_validator = _platform_info_validator(_PLATFORM_INFO_ENTRY_SCHEMA)

@@ -11,9 +11,15 @@ Copyright (c) 2020 Your Company
 from cerberus import Validator
 from datetime import datetime
 from hashlib import sha256
+from json import load
+from os.path import dirname, join
 
 
-class worker_registry_validator(Validator):
+with open(join(dirname(__file__), "formats/worker_registry_entry_format.json"), "r") as file_ptr:
+    _WORKER_REGISTRY_ENTRY_SCHEMA = schema = load(file_ptr)
+
+
+class _worker_registry_validator(Validator):
 
     def _check_with_valid_created(self, field, value):
         try:
@@ -36,3 +42,6 @@ class worker_registry_validator(Validator):
 
     def _normalize_default_setter_set_created(self, document):
         return datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%S.%fZ")
+
+
+worker_registry_validator = _worker_registry_validator(_WORKER_REGISTRY_ENTRY_SCHEMA)

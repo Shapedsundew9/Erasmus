@@ -42,7 +42,6 @@ class genomic_library():
     """
 
     _store = None
-    _entry_validator = None
     _query_validator = None
     _logger = getLogger(__name__)
 
@@ -55,7 +54,6 @@ class genomic_library():
             genomic_library._logger.debug("Genomic library table name: {}".format(table_name))
             genomic_library._store = database_table(genomic_library._logger, table_name)
             schema = get_config()['tables'][table_name]['schema']
-            genomic_library._entry_validator = genomic_library_entry_validator(schema)
             genomic_library._query_validator = query_validator(schema)
             genomic_library._query_validator.table_name = table_name
 
@@ -177,13 +175,13 @@ class genomic_library():
     def _normalize(self, entries):
         normalized_entries = []
         for entry in entries:
-            normalized_entries.append(genomic_library._entry_validator.normalized(entry))
+            normalized_entries.append(genomic_library_entry_validator.normalized(entry))
             self._calculate_fields(normalized_entries[-1], normalised_entries)
         if genomic_library._logger.level == DEBUG:
             for entry in normalized_entries:
-                if not genomic_library._entry_validator(entry):
+                if not genomic_library_entry_validator(entry):
                     genomic_library._logger.error(str(text_token({'E03001': {
-                        'errors': pformat(genomic_library._entry_validator.errors, width=180),
+                        'errors': pformat(genomic_library_entry_validator.errors, width=180),
                         'entry': pformat(entry, width=180)}})))
         if self._verify_consistency:
             for entry in normalized_entries:

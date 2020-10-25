@@ -12,7 +12,11 @@ from os.path import dirname, join
 from logging import getLogger
 
 
-class gc_type_validator(Validator):
+with open(join(dirname(__file__), "../formats/gc_type_format.json"), "r") as file_ptr:
+    _GC_TYPE_SCHEMA = schema = load(file_ptr)
+
+
+class _gc_type_validator(Validator):
     """Validation of GCTD dictionary."""
 
     # TODO: Make errors ValidationError types for full disclosure
@@ -55,3 +59,6 @@ class gc_type_validator(Validator):
                     if bt['float'] and not bt['integer'] and not value['sign']:
                         self._error(field, "Floating point types must have sign == 1.")
 
+
+gc_type_validator = _gc_type_validator(_GC_TYPE_SCHEMA)
+gc_type_validator.allow_unknown = True
