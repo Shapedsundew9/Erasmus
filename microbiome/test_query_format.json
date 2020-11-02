@@ -172,7 +172,14 @@
         "type": "string"
     },
     "properties": {
-        "type": "dict"
+        "oneof": [
+            {
+                "type": "dict"
+            },
+            {
+                "type": "integer"
+            }
+        ]
     },
     "random": {
         "default": false,

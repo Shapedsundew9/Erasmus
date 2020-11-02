@@ -90,7 +90,14 @@ class query_validator():
             }
         elif entry_schema['type'] == 'dict' and 'codec' in  entry_schema['meta']:
             param_schema = {
-                'type': entry_schema['type']
+                'oneof': [
+                    {
+                        'type': entry_schema['type']
+                    },
+                    {
+                        'type': 'integer'
+                    }
+                ]
             }
         else:            
             param_schema = {
