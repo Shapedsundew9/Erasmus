@@ -1,0 +1,25 @@
+{
+    "general": {
+        "verify_consistency": false
+    },
+    "default_database": "test_database",
+    "genomic_library_table": "test_genomic_library",
+    "databases": {
+        "test_database": {
+            "recreate": true,
+            "username": "erasmus",
+            "password": "erasmus"
+        }
+    },
+    "tables": {
+        "test_genomic_library": {
+            "database": "test_database",
+            "data_files": [
+                "codons_elementary_arithmetic.json",
+                "codons_elementary_mutations.json",
+                "codons_numeric_constant_mutations.json"
+            ],
+            "format_file": "genomic_library_entry_format.json"
+        }
+    }   
+}

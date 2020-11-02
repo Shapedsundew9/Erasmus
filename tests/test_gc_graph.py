@@ -4,7 +4,8 @@
 import pytest
 from os.path import join, dirname, basename, splitext
 from json import load
-from random import choice, randint
+from random import choice, randint, random
+from numpy.random import choice
 from microbiome.genetics.gc_graph import gc_graph, conn_idx, const_idx, DST_EP, SRC_EP, DESTINATION_ROWS, SOURCE_ROWS
 from microbiome.genetics.gc_type import asint
 from logging import getLogger, basicConfig, DEBUG, INFO
@@ -52,6 +53,66 @@ basicConfig(
         splitext(basename(__file__))[0] + '.log'),
     filemode='w',
     level=DEBUG)
+logger = getLogger(__file__)
+
+
+def random_type(p=0.0):
+    if random() < p: return choice(('obj131', 'int', 'float', 'bool', 'str'))
+    return 'int'
+
+
+def random_graph(p=0.0):
+    """Create a random graph.
+
+    The graph is not guaranteed to be valid when p > 0.0. If a destination row requires a type that
+    is not present in any valid source row the graph cannot be normalized.
+
+    Args
+    ----
+    p (float): 0.0 <= p <= 1.0 probability of choosing a random type on each type selection.
+
+    Returns
+    -------
+    graph 
+    """
+    graph = gc_graph()
+    structure = choice(_VALID_STRUCTURES)
+    valid = False
+    while not valid:
+        destinations = {row: randint(1, 10) for row in structure if row in DESTINATION_ROWS and not row in ('F', 'U', 'P')}
+        if 'F' in structure: destinations['F'] = 1
+        sources = {row: randint(1, 8) for row in structure if row in SOURCE_ROWS and not row in ('U', 'P')}
+        destination_types = [random_type(p) for row in destinations.values() for _ in range(row)]
+        type_set = set(destination_types)
+        valid = sum(sources.values()) >= len(type_set)
+        logger.info("Invalid random configuration for structrue {}. Retrying...".format(structure))
+    source_types = [random_type(p) for _ in range(sum(sources.values()))]
+    indices = choice(sum(sources.values()), len(type_set), replace=False)
+    for idx in indices: 
+        source_types[idx] = type_set.pop()
+    for _ in range(len(type_set)):
+        source_types[randint(len(source_types))] = type_set
+
+    for row in structure:
+        graph.app_graph[row] = []
+        if not row in ('U', 'P'):
+            if row in DESTINATION_ROWS and any([src_row in structure for src_row in gc_graph.src_rows[row]]):
+                for i in range(destinations[row]):
+                    rtype = destination_types.pop()
+                    graph.graph[graph.hash_ref([row, i], DST_EP)] = [DST_EP, row, i, rtype, []]
+                    if row == 'O' and 'P' in structure:
+                        graph.graph[graph.hash_ref(['P', i], DST_EP)] = [DST_EP, 'P', i, rtype, []]
+
+            if row in SOURCE_ROWS:
+                for i in range(sources[row]):
+                    ep = [SRC_EP, row, i, source_types.pop(), []]
+                    if row == 'C': ep.append(ep[3] + '(' + str(randint(-1000, 1000)) + ')')
+                    graph.graph[graph.hash_ref([row, i], SRC_EP)] = ep
+
+    for _ in range(len(list(filter(graph.dst_filter(), graph.graph.values())))): graph.random_add_connection()
+    graph.normalize()
+    return graph
+
 
 @pytest.mark.good
 @pytest.mark.parametrize("i, case", enumerate(results))
@@ -87,25 +148,7 @@ def test_add_connection_simple(test):
     """
     # TODO: These random test cases need to be made static when we are confident in them.
     # Generate them into a JSON file.
-    graph = gc_graph()
-    structure = choice(_VALID_STRUCTURES)
-    for row in structure:
-        graph.app_graph[row] = []
-        if not row in ('U', 'P'):
-            if row in DESTINATION_ROWS and any([src_row in structure for src_row in gc_graph.src_rows[row]]):
-                count = 1 if row == 'F' else randint(1, 10)
-                for i in range(count): graph.graph[graph.hash_ref([row, i], DST_EP)] = [DST_EP, row, i, 'int', []]
-                if row == 'O' and 'P' in structure:
-                    for i in range(count): graph.graph[graph.hash_ref(['P', i], DST_EP)] = [DST_EP, 'P', i, 'int', []]
-
-            if row in SOURCE_ROWS:
-                for i in range(randint(1, 8)):
-                    ep = [SRC_EP, row, i, 'int', []]
-                    if row == 'C': ep.append(randint(-1000, 1000))
-                    graph.graph[graph.hash_ref([row, i], SRC_EP)] = ep
-
-    for _ in range(len(list(filter(graph.dst_filter(), graph.graph.values())))): graph.random_add_connection()
-    graph.normalize()
+    graph = random_graph()
     assert graph.validate()
 
     #TODO: Split this out into its own test case when the graphs are staticly defined in a JSON file.
@@ -115,4 +158,21 @@ def test_add_connection_simple(test):
     assert graph.validate()
     #graph.draw('graph_' + str(test))
 
+
+@pytest.mark.good
+@pytest.mark.parametrize("test", range(100))
+def test_add_connection(test):
+    """Verify adding connections makes valid graphs.
+    
+    In this version multiple types endpoint types are used. This can lead to a legitimate invalid
+    graph with error codes E01001 or E01004.
+    """
+    # TODO: These random test cases need to be made static when we are confident in them.
+    # Generate them into a JSON file.
+    gc = random_graph(0.5)
+    if not gc.validate():
+        codes = set([t.code for t in gc.status])
+        codes.discard('E01001')
+        codes.discard('E01004')
+        assert not codes
 

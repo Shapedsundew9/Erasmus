@@ -256,7 +256,7 @@ class gc_graph():
         for ep in filter(self.dst_filter(), self.graph.values()):
             row = ep[ep_idx.ROW]
             if not row in graph: graph[row] = []
-            graph[row].append([*ep[ep_idx.REFERENCED_BY][0], ep[ep_idx.TYPE]])
+            if ep[ep_idx.REFERENCED_BY]: graph[row].append([*ep[ep_idx.REFERENCED_BY][0], ep[ep_idx.TYPE]])
         for ep in filter(self.row_filter('C'), self.graph.values()):
             if not 'C' in graph: graph['C'] = []
             graph['C'].append([ep[ep_idx.VALUE], ep[ep_idx.TYPE]])
@@ -641,6 +641,7 @@ class gc_graph():
             self._add_ep([DST_EP, 'U', i, ep[ep_idx.TYPE], [[*ep[1:3]]]])
 
         #2
+        #print(pformat(self.graph))
         self.app_graph.update(self.application_graph())
 
 
@@ -650,7 +651,7 @@ class gc_graph():
         This function is not intended to be fast.
         Genetic code graphs MUST obey the following rules:
             1. Have at least 1 output in 'O'.
-            2. a. All sources are connected or referenced bu the unconnected 'U' row.
+            2. a. All sources are connected or referenced by the unconnected 'U' row.
                b. 'U' row endpoints may only be referenced once
                c. 'U' row cannot reference a non-existent constant
             3. All destinations are connected.
@@ -753,7 +754,7 @@ class gc_graph():
         for row in filter(self.dst_filter(), self.graph.values()):
             for ref in row[ep_idx.REFERENCED_BY]:
                 try:
-                    src = next(filter(self.ref_filter(ref), self.graph.values()))
+                    src = next(filter(self.src_filter(self.ref_filter(ref)), self.graph.values()))
                     if affinity(src[ep_idx.TYPE], row[ep_idx.TYPE]) == 0.0:
                         self.status.append(text_token({'E01009': {'ref1': [src[ep_idx.ROW], src[ep_idx.INDEX]], 'type1': asstr(src[ep_idx.TYPE]),
                             'ref2': [row[ep_idx.ROW], row[ep_idx.INDEX]], 'type2': asstr(row[ep_idx.TYPE])}}))
@@ -933,12 +934,13 @@ class gc_graph():
         if src_ep_list:
             src_ep = src_ep_list[0]
             dst_ep_list = [self.graph[self.hash_ref(ref, DST_EP)] for ref in src_ep[ep_idx.REFERENCED_BY]]
-            dst_ep_list = dst_ep_filter_func(dst_ep_list) 
             if dst_ep_list:
-                dst_ep = dst_ep_list[0] 
-                dst_ep[ep_idx.REFERENCED_BY] = []
-                dst_row = dst_ep[ep_idx.ROW]
-                src_ep[ep_idx.REFERENCED_BY].remove([dst_row, dst_ep[ep_idx.INDEX]])
+                dst_ep_list = dst_ep_filter_func(dst_ep_list) 
+                if dst_ep_list:
+                    dst_ep = dst_ep_list[0] 
+                    dst_ep[ep_idx.REFERENCED_BY] = []
+                    dst_row = dst_ep[ep_idx.ROW]
+                    src_ep[ep_idx.REFERENCED_BY].remove([dst_row, dst_ep[ep_idx.INDEX]])
 
 
     def random_add_connection(self):
@@ -968,14 +970,16 @@ class gc_graph():
             gc_graph._logger.debug("The destination endpoint: {}".format(dst_ep))
             src_ep_list = list(filter(self.src_filter(self.src_row_filter(dst_ep[ep_idx.ROW],
                 self.type_filter([dst_ep[ep_idx.TYPE]], exact=False))), self.graph.values()))
-            src_ep_list = src_ep_filter_func(src_ep_list)
             if src_ep_list:
-                src_ep = src_ep_list[0]
-                gc_graph._logger.debug("The source endpoint: {}".format(src_ep))
-                dst_ep[ep_idx.REFERENCED_BY] = [src_ep[1:3]]
-                src_ep[ep_idx.REFERENCED_BY].append(dst_ep[1:3])
+                src_ep_list = src_ep_filter_func(src_ep_list)
+                if src_ep_list:
+                    src_ep = src_ep_list[0]
+                    gc_graph._logger.debug("The source endpoint: {}".format(src_ep))
+                    dst_ep[ep_idx.REFERENCED_BY] = [src_ep[1:3]]
+                    src_ep[ep_idx.REFERENCED_BY].append(dst_ep[1:3])
 
 
+    
      
 
 

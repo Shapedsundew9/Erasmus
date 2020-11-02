@@ -21,5 +21,6 @@ class float1024(float): pass
 
 class obj128(str): pass
 class obj129(int): pass
+class obj131(int): pass
 
 
