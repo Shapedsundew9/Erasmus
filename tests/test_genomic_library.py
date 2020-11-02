@@ -45,7 +45,7 @@ def glib():
     """
     assert set_config(test_config)
     yield (gl := genomic_library())
-    gl._store._delete_db()
+    #gl._store._delete_db()
 
 
 @pytest.mark.good
@@ -138,8 +138,16 @@ def test_load_bad_query(glib):
     assert not glib.load([{'does_not_exist': {'max': 1}}])
 
 
+@pytest.mark.good
 def test_store(glib):
     """Store a set of tets codons."""
     with open(join(dirname(__file__), "data/test_codons.json"), "r") as file_ptr:
         test_codons = load(file_ptr)
     glib.store(test_codons)
+
+
+def test_update(glib):
+    """Update an entry in the genomic library."""
+    glib.update([{'gca': NON_EXISTANT_SHA256}], [{'signature': KNOWN_GOOD_SIGNATURE}])
+    assert len(glib.load([{'gca': NON_EXISTANT_SHA256}])) == 1
+    glib.update([{'gca': NULL_GC}], [{'signature': KNOWN_GOOD_SIGNATURE}])

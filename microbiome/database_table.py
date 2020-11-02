@@ -333,14 +333,12 @@ class database_table():
 
 
     # TODO: This can be slow for a lot of values. Consider a multi-row insert.
-    def update(self, entries, keys):
+    def update(self, entries, queries):
         cur = database_table._conn[self.dbname].cursor()
-        for e, condition in zip(entries, keys):
+        for e, query in zip(entries, queries):
             entry = self._cast_entry_to_store_type(e) 
             fields = sql.SQL(", ").join([sql.SQL(" = ").join((sql.Identifier(k), sql.Literal(v))) for k, v in entry.items()])
-            pairs = [sql.SQL(" = ").join((sql.Identifier(k), sql.Literal(v))) for k,v in condition.items()]
-            conditions = pairs[0] if len(pairs) == 1 else sql.SQL(" AND ").join(pairs)
-            sql_str = sql.SQL("UPDATE {} SET {} WHERE {}").format(sql.Identifier(self.table), fields, conditions)
+            sql_str = sql.SQL("UPDATE {} SET {} {}").format(sql.Identifier(self.table), fields, self._query_to_sql(query))
             self._logger.debug(sql_str.as_string(database_table._conn[self.dbname]))
             try:
                 cur.execute(sql_str)
@@ -349,6 +347,8 @@ class database_table():
                 self._logger.info("All entries rolled back")
                 database_table._conn[self.dbname].rollback()
                 return False
+            if not cur.rowcount:
+                self._logger.warning("No rows updated: {}".format(sql_str.as_string(database_table._conn[self.dbname])))
         try:
             cur.close()
             database_table._conn[self.dbname].commit()

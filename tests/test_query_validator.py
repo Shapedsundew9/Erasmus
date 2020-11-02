@@ -16,8 +16,10 @@ from logging import getLogger, basicConfig, DEBUG
 
 
 basicConfig(filename='erasmus.log', level=DEBUG)
-queries = load(open(join(dirname(__file__), "data/test_entry_queries.json"), "r"))
-schema = load(open(join(dirname(__file__), "data/test_entry_format.json"), "r"))
+with open(join(dirname(__file__), "data/test_entry_queries.json"), "r") as fileptr:
+    queries = load(fileptr)
+with open(join(dirname(__file__), "data/test_entry_format.json"), "r") as fileptr:
+    schema = load(fileptr)
 for k, v in schema.items(): v['meta'] = entry_column_meta_validator.normalized(v['meta'])
 
 

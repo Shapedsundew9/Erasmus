@@ -1,4 +1,7 @@
 {
+    "general": {
+        "verify_consistency": true
+    },
     "default_database": "test_database",
     "genomic_library_table": "test_genomic_library",
     "databases": {

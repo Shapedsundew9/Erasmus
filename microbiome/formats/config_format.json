@@ -222,6 +222,10 @@
                     "format_file": {
                         "default": "work_registry_entry_format.json"
                     },
+                    "data_files": {
+                        "type": "list",
+                        "default": []
+                    },
                     "history_decimation": {
                         "type": "dict",
                         "default": {
@@ -246,6 +250,10 @@
                     "format_file": {
                         "default": "worker_registry_entry_format.json"
                     },
+                    "data_files": {
+                        "type": "list",
+                        "default": []
+                    },
                     "history_decimation": {
                         "type": "dict",
                         "default": {
@@ -269,6 +277,10 @@
                     },
                     "format_file": {
                         "default": "work_log_entry_format.json"
+                    },
+                    "data_files": {
+                        "type": "list",
+                        "default": []
                     },
                     "history_decimation": {
                         "type": "dict",
@@ -296,7 +308,11 @@
                    "format_file": {
                         "default": "platform_info_entry_format.json"
                     },
-                    "history_decimation": {
+                    "data_files": {
+                        "type": "list",
+                        "default": []
+                    },
+                   "history_decimation": {
                         "type": "dict",
                         "default": {
                             "enabled": false 

@@ -635,11 +635,9 @@ class gc_graph():
         """
         #1
         row_u_list = list(filter(self.row_filter('U'), self.graph.values()))
-        print("Row U: ",row_u_list)
         for ep in row_u_list: self._remove_ep(ep, check=False)
         unreferenced = list(filter(self.src_filter(self.unreferenced_filter()), self.graph.values()))
         for i, ep in enumerate(unreferenced):
-            print("i: ", i)
             self._add_ep([DST_EP, 'U', i, ep[ep_idx.TYPE], [[*ep[1:3]]]])
 
         #2
