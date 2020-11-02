@@ -146,6 +146,7 @@ def test_store(glib):
     glib.store(test_codons)
 
 
+@pytest.mark.good
 def test_update(glib):
     """Update an entry in the genomic library."""
     glib.update([{'gca': NON_EXISTANT_SHA256}], [{'signature': KNOWN_GOOD_SIGNATURE}])

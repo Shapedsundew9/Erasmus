@@ -2,9 +2,10 @@
 
 import pytest
 from os import linesep
-from os.path import dirname, join
+from os.path import join, dirname, basename, splitext
 from tqdm import tqdm
 from json import load, dumps
+from logging import getLogger, basicConfig, DEBUG
 from microbiome.genetics.gc_type import _ALL_FLOATS, _ALL_OBJECTS, _ALL_SIGNED_INTEGERS, _ALL_UNSIGNED_INTEGERS
 from microbiome.genetics.gc_type import *
 
@@ -13,6 +14,15 @@ _TEST_RESULTS_JSON = 'data/test_gc_type_results.json'
 test_cases = []
 for r in (_ALL_FLOATS, _ALL_OBJECTS, _ALL_SIGNED_INTEGERS, _ALL_UNSIGNED_INTEGERS):
     test_cases.extend(list(r))
+
+
+basicConfig(
+    filename=join(
+        dirname(__file__),
+        'logs',
+        splitext(basename(__file__))[0] + '.log'),
+    filemode='w',
+    level=DEBUG)
 
 
 def _write_results():

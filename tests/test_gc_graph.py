@@ -2,7 +2,7 @@
 
 
 import pytest
-from os.path import dirname, join
+from os.path import join, dirname, basename, splitext
 from json import load
 from random import choice, randint
 from microbiome.genetics.gc_graph import gc_graph, conn_idx, const_idx, DST_EP, SRC_EP, DESTINATION_ROWS, SOURCE_ROWS
@@ -10,7 +10,6 @@ from microbiome.genetics.gc_type import asint
 from logging import getLogger, basicConfig, DEBUG, INFO
 
 
-basicConfig(filename='erasmus.log', level=INFO)
 _TEST_RESULTS_JSON = 'data/test_gc_graph_results.json'
 _VALID_STRUCTURES = (
         ('A', 'O'),
@@ -42,8 +41,17 @@ _VALID_STRUCTURES = (
     )
 
 
-with open(join(dirname(__file__), _TEST_RESULTS_JSON), "r") as results_file: results = load(results_file)
+with open(join(dirname(__file__), _TEST_RESULTS_JSON), "r") as results_file:
+    results = load(results_file)
 
+
+basicConfig(
+    filename=join(
+        dirname(__file__),
+        'logs',
+        splitext(basename(__file__))[0] + '.log'),
+    filemode='w',
+    level=DEBUG)
 
 @pytest.mark.good
 @pytest.mark.parametrize("i, case", enumerate(results))
