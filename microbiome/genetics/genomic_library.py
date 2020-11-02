@@ -5,7 +5,6 @@ from json import load
 from os.path import dirname, join
 from logging import getLogger, DEBUG
 from .genomic_library_entry_validator import genomic_library_entry_validator, NULL_GC
-from .codon_validator import codon_validator
 from ..query_validator import query_validator
 from ..text_token import text_token, register_token_code
 from ..config import get_config
