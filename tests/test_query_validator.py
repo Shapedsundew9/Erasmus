@@ -1,7 +1,7 @@
 """Test query generation."""
 
 import pytest
-from os.path import join, dirname
+from os.path import join, dirname, splitext, basename
 from json import load
 from microbiome.query_validator import query_validator
 from microbiome.entry_column_meta_validator import entry_column_meta_validator
