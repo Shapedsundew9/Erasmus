@@ -10,7 +10,6 @@ Copyright (c) 2020 Your Company
 from logging import getLogger, DEBUG
 from .genomic_library import genomic_library
 from .genomic_library_entry_validator import NULL_GC, DEAD_GC_PREFIX
-from .genetic_code import genetic_code
 from tempfile import NamedTemporaryFile
 from graph_tool import Graph
 from numpy import int64, float32, zeros, ndarray, array
@@ -20,6 +19,7 @@ from sys import path
 from os.path import dirname, abspath, basename
 from importlib import import_module, reload
 from pprint import pformat
+from gc_graph import gc_graph
 
 
 def _reference():
@@ -206,7 +206,8 @@ class _gene_pool():
             '_func' (func): The executable code for this GC.
             '_microbiome_fitness': The fitness the GC had when it was last synchronised with the biome.
             '_microbiome_evolvability': The evolvability the GC had when it was last synchronised with the biome.
-            '_stored': The GC has been perisited in the Genomic Library storage. 
+            '_stored': The GC has been perisited in the Genomic Library storage.
+            '_graph': The gc_graph representation of the graph.
 
         Args
         ----
@@ -229,6 +230,7 @@ class _gene_pool():
         gc['_microbiome_fitness'] = gc['fitness']
         gc['_microbiome_evolvability'] = gc['evolvability']
         gc['_stored'] = stored
+        gc['_graph'] = gc_graph(gc['graph'])
         return gc
 
 

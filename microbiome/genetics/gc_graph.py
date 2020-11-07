@@ -11,7 +11,7 @@ from collections import Counter
 from enum import IntEnum
 from .gc_type import asstr, asint, compatible_types, validate, last_validation_error, affinity, UNKNOWN_TYPE
 from pprint import pformat
-from copy import deepcopy
+from copy import deepcopy, copy
 from ..text_token import text_token, register_token_code
 from logging import getLogger
 from .gc_type_definitions import *
@@ -123,13 +123,12 @@ class gc_graph():
     """Manipulating Genetic Code Graphs.
 
     Genetic Code graphs are internally stored with the following structure:
-    [
-        [EP_TYPE, ROW, INDEX, TYPE, REFERENCED_BY, VALUE],
-        [EP_TYPE, ROW, INDEX, TYPE, REFERENCED_BY],
-        [EP_TYPE, ROW, INDEX, TYPE, REFERENCED_BY],
-        [EP_TYPE, ROW, INDEX, TYPE, REFERENCED_BY, VALUE],
+    {   str(ROW) + STR(INDEX) + str(EP_TYPE): [EP_TYPE, ROW, INDEX, TYPE, REFERENCED_BY, VALUE],
+        str(ROW) + STR(INDEX) + str(EP_TYPE): [EP_TYPE, ROW, INDEX, TYPE, REFERENCED_BY],
+        str(ROW) + STR(INDEX) + str(EP_TYPE): [EP_TYPE, ROW, INDEX, TYPE, REFERENCED_BY],
+        str(ROW) + STR(INDEX) + str(EP_TYPE): [EP_TYPE, ROW, INDEX, TYPE, REFERENCED_BY, VALUE],
         ...
-    ]
+    }
 
     Each list element defines an endpoint where:
 
@@ -181,6 +180,11 @@ class gc_graph():
         return ref[0] + str(ref[1]) + 'ds'[ep_type]
 
 
+    def hash_ep(self, ep, ept=None):
+        ept = 'ds'[ep[ep_idx.EP_TYPE]] if ept is None else ept 
+        return ep[ep_idx.ROW] + str(ep[ep_idx.INDEX]) + ept
+
+
     def _convert_to_internal(self, graph):
         """Convert graph to internal format.
 
@@ -200,8 +204,10 @@ class gc_graph():
         for row, parameters in graph.items():
             for index, parameter in enumerate(parameters):
                 if row != 'C':
-                    retval[row + str(index) + 'd'] = [DST_EP, row, index, asint(parameter[conn_idx.TYPE]), [[*parameter[0:2]]]]
-                    src = "".join(map(str, parameter[0:2])) + 's'
+                    # TODO: Make 0:2 a slice() constant
+                    ep = [DST_EP, row, index, asint(parameter[conn_idx.TYPE]), [[*parameter[0:2]]]]
+                    retval[self.hash_ep(ep)] = ep
+                    src = self.hash_ref(ep[ep_idx.REFERENCED_BY][0], True)
                     if src in retval:
                         retval[src][ep_idx.REFERENCED_BY].append([row, index])
                     elif parameter[0] != 'C':
@@ -210,7 +216,8 @@ class gc_graph():
                         if not row in self.rows[SRC_EP]: self.rows[SRC_EP][row] = 0
                         self.rows[SRC_EP][row] = max((self.rows[SRC_EP][row], parameter[1]))
                 else:
-                    retval[row + str(index) + 's'] = [SRC_EP, row, index, asint(parameter[const_idx.TYPE]), [], parameter[const_idx.VALUE]]
+                    ep = [SRC_EP, row, index, asint(parameter[const_idx.TYPE]), [], parameter[const_idx.VALUE]]
+                    retval[self.hash_ep(ep)] = ep
                     if not row in self.rows[SRC_EP]: self.rows[SRC_EP][row] = 0
                     self.rows[SRC_EP][row] = max((self.rows[SRC_EP][row], index))
         return retval
@@ -630,17 +637,22 @@ class gc_graph():
         """Make the graph consistent.
 
         The make the graph consistent the following operations are performed:
-            1. Reference all unconnected sources in row 'U'
-            2. self.app_graph is regenerated
+            1. Connect all destinations to existing sources if possible
+            2. Reference all unconnected sources in row 'U'
+            3. self.app_graph is regenerated
         """
+
         #1
+        self.connect_all()
+        
+        #2
         row_u_list = list(filter(self.row_filter('U'), self.graph.values()))
         for ep in row_u_list: self._remove_ep(ep, check=False)
         unreferenced = list(filter(self.src_filter(self.unreferenced_filter()), self.graph.values()))
         for i, ep in enumerate(unreferenced):
             self._add_ep([DST_EP, 'U', i, ep[ep_idx.TYPE], [[*ep[1:3]]]])
 
-        #2
+        #3
         #print(pformat(self.graph))
         self.app_graph.update(self.application_graph())
 
@@ -954,6 +966,16 @@ class gc_graph():
         if dst_ep_list: self.add_connection([choice(dst_ep_list)])
 
 
+    def connect_all(self):
+        """Connect all unconnected destination endpoints.
+        
+        Find all the unreferenced destination endpoints and connect them to a random viable source.
+        If there is no viable source endpoint the destination endpoint will remain unconnected.
+        """
+        dst_ep_list = list(filter(self.unreferenced_filter(self.dst_filter()), self.graph.values()))
+        for dst_ep in dst_ep_list: self.add_connection([dst_ep])
+
+
     def add_connection(self, dst_ep_list, src_ep_filter_func=lambda x: [choice(x)]):    
         """Add a connection to source from destination specified by src_ep_filter.
 
@@ -977,12 +999,50 @@ class gc_graph():
                     gc_graph._logger.debug("The source endpoint: {}".format(src_ep))
                     dst_ep[ep_idx.REFERENCED_BY] = [src_ep[1:3]]
                     src_ep[ep_idx.REFERENCED_BY].append(dst_ep[1:3])
+                    return
+            gc_graph._logger.debug("No viable source endpoints for destination endpoint: {}".format(dst_ep))
+            
 
+    def stack(self, gB):
+        """Stack this graph on top of graph gB.
 
-    
-     
+        Graph gA (self) is stacked on gB to make gC by:
+            gB's inputs connect to gA's outputs
+            gC's inputs are gA's inputs
+            gB's outputs are gC's outputs
 
+        Stacking only works if gB's inputs can all be served by at least a
+        subset of gA's inputs & outputs.
 
+        Args
+        ----
+        gB (gc_graph): Graph to sit on top of.
+
+        Returns
+        -------
+        (gc_graph): gC
+        """
+        ep_list = []
+        for ep in self.graph.values():
+            row, idx, typ = ep[ep_idx.ROW], ep[ep_idx.INDEX], ep[ep_idx.TYPE]
+            if row == 'I':
+                ep_list.append([True, 'I', idx, typ, []])
+                ep_list.append([False, 'A', idx, typ, []])
+            elif row == 'O':
+                ep_list.append([True, 'A', idx, typ, []])
+
+        for ep in gB.graph.values():
+            row, idx, typ = ep[ep_idx.ROW], ep[ep_idx.INDEX], ep[ep_idx.TYPE]
+            if row == 'I':
+                ep_list.append([True, 'B', idx, typ, []])
+            elif row == 'O':
+                ep_list.append([False, 'B', idx, typ, []])
+                ep_list.append([True, 'O', idx, typ, []])
+
+        gC = gc_graph()
+        gC.graph = {self.hash_ep(ep): ep for ep in ep_list}
+        gC.normalize()
+        return gC 
 
 
         

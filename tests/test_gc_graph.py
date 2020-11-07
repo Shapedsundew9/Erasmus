@@ -153,7 +153,6 @@ def test_add_connection_simple(test):
 
     #TODO: Split this out into its own test case when the graphs are staticly defined in a JSON file.
     for _ in range(int(len(list(filter(graph.dst_filter(), graph.graph.values()))) / 2)): graph.random_remove_connection()
-    for _ in range(len(list(filter(graph.dst_filter(), graph.graph.values())))): graph.random_add_connection()
     graph.normalize()
     assert graph.validate()
     #graph.draw('graph_' + str(test))
