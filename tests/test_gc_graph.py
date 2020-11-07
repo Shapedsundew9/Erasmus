@@ -57,6 +57,19 @@ logger = getLogger(__file__)
 
 
 def random_type(p=0.0):
+    """Choose a random type.
+
+    If a random type is selected the probability of each type is even.
+    By default 'int' is returned.
+
+    Args
+    ----
+    p (float): Probablity that the type is random (otherwise it is an 'int')
+
+    Returns
+    -------
+    (str) The selected type string.
+    """
     if random() < p: return choice(('obj131', 'int', 'float', 'bool', 'str'))
     return 'int'
 
@@ -196,9 +209,12 @@ def test_stack_simple(test):
 
     assert gC is None or gC.validate()
     # if not gC is None:
+    #    print(gA) 
     #    gA.draw('gA')
+    #    print(gB) 
     #    gB.draw('gB')
-    #    gA.stack(gB).draw('gC')
+    #    print(gC) 
+    #    gC.draw('gC')
     #    barf()
 
 
@@ -219,6 +235,13 @@ def test_stack(test):
     gC = gA.stack(gB)
 
     assert gC is None or gC.validate()
-
+    # if not gC is None:
+    #    print(gA) 
+    #    gA.draw('gA')
+    #    print(gB) 
+    #    gB.draw('gB')
+    #    print(gC) 
+    #    gC.draw('gC')
+    #    barf()
 
 

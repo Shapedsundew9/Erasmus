@@ -648,21 +648,29 @@ class gc_graph():
 
         The make the graph consistent the following operations are performed:
             1. Connect all destinations to existing sources if possible
-            2. Reference all unconnected sources in row 'U'
-            3. self.app_graph is regenerated
+            2. Create new inputs for any destinations that are still unconnected.
+            3. Reference all unconnected sources in row 'U'
+            4. self.app_graph is regenerated
         """
 
         #1
         self.connect_all()
         
         #2
+        for ep in list(filter(self.dst_filter(self.unreferenced_filter()), self.graph.values())):
+            new_input_ep = [SRC_EP, 'I', self.num_inputs(), ep[ep_idx.TYPE], [[ep[ep_idx.ROW], ep[ep_idx.INDEX]]]]
+            new_key = self.hash_ep(new_input_ep)
+            self.graph[new_key] = new_input_ep
+            ep[ep_idx.REFERENCED_BY].append(['I', self.graph[new_key][ep_idx.INDEX]])
+
+        #3
         row_u_list = list(filter(self.row_filter('U'), self.graph.values()))
         for ep in row_u_list: self._remove_ep(ep, check=False)
         unreferenced = list(filter(self.src_filter(self.unreferenced_filter()), self.graph.values()))
         for i, ep in enumerate(unreferenced):
             self._add_ep([DST_EP, 'U', i, ep[ep_idx.TYPE], [[*ep[1:3]]]])
 
-        #3
+        #4
         #print(pformat(self.graph))
         self.app_graph.update(self.application_graph())
 
@@ -1019,11 +1027,11 @@ class gc_graph():
         Graph gA (self) is stacked on gB to make gC i.e. gC inputs are gA's inputs
         and gC's outputs are gB's outputs:
             1. gC's inputs directly connect to gA's inputs, 1:1 in order
-            2. gB's inputs preferentially connect to gA's outputs
-            3. gB's outputs directly connect to gC's outputs, 1:1 in order
+            2. gB's inputs preferentially connect to gA's outputs 1:1
+            3. Any gBs input that are not connected to gA outputs create new gC inputs
+            4. gB's outputs directly connect to gC's outputs, 1:1 in order
 
-        Stacking only works if gB's has inputs and they can all be served by at least a
-        subset of gA's inputs & outputs.
+        Stacking only works if there is at least 1 connection from gA's outputs to gB's inputs.
 
         Args
         ----
@@ -1031,12 +1039,11 @@ class gc_graph():
 
         Returns
         -------
-        (gc_graph): gC
+        (gc_graph): gC.
         """
 
         # Create all the end points
         ep_list = []
-        gB_has_I = False
         for ep in gB.graph.values():
             row, idx, typ = ep[ep_idx.ROW], ep[ep_idx.INDEX], ep[ep_idx.TYPE]
             if row == 'I':
@@ -1045,7 +1052,6 @@ class gc_graph():
             elif row == 'O':
                 ep_list.append([True, 'B', idx, typ, [['O', idx]]])
                 ep_list.append([False, 'O', idx, typ, [['B', idx]]])
-        if not gB_has_I: return None
 
         for ep in self.graph.values():
             row, idx, typ = ep[ep_idx.ROW], ep[ep_idx.INDEX], ep[ep_idx.TYPE]
@@ -1060,15 +1066,20 @@ class gc_graph():
         gC = gc_graph()
         gC.graph = {self.hash_ep(ep): ep for ep in ep_list}
 
-        # Preferentially connect A --> B
-        # and let normalise() mop up any remaining connections.
+        # Preferentially connect A --> B but only 1:1
         for ep in filter(gC.dst_filter(gC.row_filter('B')), gC.graph.values()):
-            gC.add_connection([ep], gC.row_filter('A'))
+            gC.add_connection([ep], gC.row_filter('A', gC.unreferenced_filter()))
+
+        # Normalise connects any unconnected destinations.
         gC.normalize()
 
-        # If all destinations could not be connected then the stacking failed
-        unconnected_dsts = filter(gC.dst_filter(gC.unreferenced_filter()), gC.graph.values())
-        return gC if not next(unconnected_dsts, False) else None
+        # Make sure there is at least one connection between gA and gB
+        gA_gB_connection = False
+        for ep in filter(gC.row_filter('B', self.dst_filter()), gC.graph.values()):
+            gA_gB_connection = gA_gB_connection or ep[ep_idx.REFERENCED_BY][0][ref_idx.ROW] == 'A'
+
+        return gC if gA_gB_connection else None
+
 
 
 
