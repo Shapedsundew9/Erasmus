@@ -61,7 +61,7 @@ def random_type(p=0.0):
     return 'int'
 
 
-def random_graph(p=0.0):
+def random_graph(p=0.0, must_be_valid=False):
     """Create a random graph.
 
     The graph is not guaranteed to be valid when p > 0.0. If a destination row requires a type that
@@ -75,42 +75,45 @@ def random_graph(p=0.0):
     -------
     graph 
     """
-    graph = gc_graph()
-    structure = choice(_VALID_STRUCTURES)
     valid = False
     while not valid:
-        destinations = {row: randint(1, 10) for row in structure if row in DESTINATION_ROWS and not row in ('F', 'U', 'P')}
-        if 'F' in structure: destinations['F'] = 1
-        sources = {row: randint(1, 8) for row in structure if row in SOURCE_ROWS and not row in ('U', 'P')}
-        destination_types = [random_type(p) for row in destinations.values() for _ in range(row)]
-        type_set = set(destination_types)
-        valid = sum(sources.values()) >= len(type_set)
-        logger.info("Invalid random configuration for structrue {}. Retrying...".format(structure))
-    source_types = [random_type(p) for _ in range(sum(sources.values()))]
-    indices = choice(sum(sources.values()), len(type_set), replace=False)
-    for idx in indices: 
-        source_types[idx] = type_set.pop()
-    for _ in range(len(type_set)):
-        source_types[randint(len(source_types))] = type_set
+        graph = gc_graph()
+        structure = choice(_VALID_STRUCTURES)
+        valid = False
+        while not valid:
+            destinations = {row: randint(1, 10) for row in structure if row in DESTINATION_ROWS and not row in ('F', 'U', 'P')}
+            if 'F' in structure: destinations['F'] = 1
+            sources = {row: randint(1, 8) for row in structure if row in SOURCE_ROWS and not row in ('U', 'P')}
+            destination_types = [random_type(p) for row in destinations.values() for _ in range(row)]
+            type_set = set(destination_types)
+            valid = sum(sources.values()) >= len(type_set)
+            logger.info("Invalid random configuration for structrue {}. Retrying...".format(structure))
+        source_types = [random_type(p) for _ in range(sum(sources.values()))]
+        indices = choice(sum(sources.values()), len(type_set), replace=False)
+        for idx in indices: 
+            source_types[idx] = type_set.pop()
+        for _ in range(len(type_set)):
+            source_types[randint(len(source_types))] = type_set
 
-    for row in structure:
-        graph.app_graph[row] = []
-        if not row in ('U', 'P'):
-            if row in DESTINATION_ROWS and any([src_row in structure for src_row in gc_graph.src_rows[row]]):
-                for i in range(destinations[row]):
-                    rtype = destination_types.pop()
-                    graph.graph[graph.hash_ref([row, i], DST_EP)] = [DST_EP, row, i, rtype, []]
-                    if row == 'O' and 'P' in structure:
-                        graph.graph[graph.hash_ref(['P', i], DST_EP)] = [DST_EP, 'P', i, rtype, []]
+        for row in structure:
+            graph.app_graph[row] = []
+            if not row in ('U', 'P'):
+                if row in DESTINATION_ROWS and any([src_row in structure for src_row in gc_graph.src_rows[row]]):
+                    for i in range(destinations[row]):
+                        rtype = destination_types.pop()
+                        graph.graph[graph.hash_ref([row, i], DST_EP)] = [DST_EP, row, i, rtype, []]
+                        if row == 'O' and 'P' in structure:
+                            graph.graph[graph.hash_ref(['P', i], DST_EP)] = [DST_EP, 'P', i, rtype, []]
 
-            if row in SOURCE_ROWS:
-                for i in range(sources[row]):
-                    ep = [SRC_EP, row, i, source_types.pop(), []]
-                    if row == 'C': ep.append(ep[3] + '(' + str(randint(-1000, 1000)) + ')')
-                    graph.graph[graph.hash_ref([row, i], SRC_EP)] = ep
+                if row in SOURCE_ROWS:
+                    for i in range(sources[row]):
+                        ep = [SRC_EP, row, i, source_types.pop(), []]
+                        if row == 'C': ep.append(ep[3] + '(' + str(randint(-1000, 1000)) + ')')
+                        graph.graph[graph.hash_ref([row, i], SRC_EP)] = ep
 
-    for _ in range(len(list(filter(graph.dst_filter(), graph.graph.values())))): graph.random_add_connection()
-    graph.normalize()
+        for _ in range(len(list(filter(graph.dst_filter(), graph.graph.values())))): graph.random_add_connection()
+        graph.normalize()
+        valid = graph.validate() or not must_be_valid
     return graph
 
 
@@ -197,6 +200,25 @@ def test_stack_simple(test):
     #    gB.draw('gB')
     #    gA.stack(gB).draw('gC')
     #    barf()
+
+
+@pytest.mark.good
+@pytest.mark.parametrize("test", range(100))
+def test_stack(test):
+    """Verify stacking valid graphs.
+    
+    Create two random graphs, gA & gB, and stack them.
+    If gB has no inputs it cannot be stacked and the stacking method returns None. 
+    In this version multiple types endpoint types are used. This can lead to a legitimate invalid
+    stacked graphs which also return as None.
+    """
+    # TODO: These random test cases need to be made static when we are confident in them.
+    # Generate them into a JSON file.
+    gA = random_graph(0.5, True)
+    gB = random_graph(0.5, True)
+    gC = gA.stack(gB)
+
+    assert gC is None or gC.validate()
 
 
 

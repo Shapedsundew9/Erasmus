@@ -811,6 +811,7 @@ class gc_graph():
             if len_row_p != self.num_outputs():
                 self.status.append(text_token({'E01013': {'len_p': len_row_p, 'len_o': self.num_outputs()}}))
 
+        if self.status: gc_graph._logger.debug("Graph internal format:\n{}".format(self))
         for m in self.status: gc_graph._logger.debug(m)
         return not self.status
 
@@ -1064,7 +1065,10 @@ class gc_graph():
         for ep in filter(gC.dst_filter(gC.row_filter('B')), gC.graph.values()):
             gC.add_connection([ep], gC.row_filter('A'))
         gC.normalize()
-        return gC 
+
+        # If all destinations could not be connected then the stacking failed
+        unconnected_dsts = filter(gC.dst_filter(gC.unreferenced_filter()), gC.graph.values())
+        return gC if not next(unconnected_dsts, False) else None
 
 
 
