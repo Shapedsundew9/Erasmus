@@ -139,12 +139,11 @@ def test_graph_conversion(i, case):
 
 @pytest.mark.good
 @pytest.mark.parametrize("test", range(100))
-def test_add_connection_simple(test):
+def test_remove_connection_simple(test):
     """Verify adding connections makes valid graphs.
     
-    Create a random graph with unconnected source and destination endpoints
-    then connect them together using the random_add_connection() method
-    of gc_graph. To keep it simple all the endpoints have the same type ("int"). 
+    Create a random graph remove some connections & re-normalise. 
+    To keep it simple all the endpoints have the same type ("int"). 
     """
     # TODO: These random test cases need to be made static when we are confident in them.
     # Generate them into a JSON file.
@@ -174,4 +173,30 @@ def test_add_connection(test):
         codes.discard('E01001')
         codes.discard('E01004')
         assert not codes
+
+
+@pytest.mark.good
+@pytest.mark.parametrize("test", range(100))
+def test_stack_simple(test):
+    """Verify stacking valid graphs.
+    
+    Create two random graphs, gA & gB, and stack them.
+    If gB has no inputs it cannot be stacked and the stacking method returns None. 
+    To keep it simple all the endpoints have the same type ("int"). This
+    ensures all validation criteria will be met.
+    """
+    # TODO: These random test cases need to be made static when we are confident in them.
+    # Generate them into a JSON file.
+    gA = random_graph()
+    gB = random_graph()
+    gC = gA.stack(gB)
+
+    assert gC is None or gC.validate()
+    # if not gC is None:
+    #    gA.draw('gA')
+    #    gB.draw('gB')
+    #    gA.stack(gB).draw('gC')
+    #    barf()
+
+
 

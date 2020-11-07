@@ -175,6 +175,16 @@ class gc_graph():
         self.status = []
 
 
+    def __repr__(self):
+        """Print the graph in row order sources then destinations in index order."""
+        str_list = []
+        for row in gc_graph.rows:
+            for ep_type in (False, True):
+                row_dict = {k: v for k, v in self.graph.items() if v[0] == ep_type and v[ep_idx.ROW] == row}
+                str_list.extend([k + ': ' + str(v) for k, v in sorted(row_dict.items(), key=lambda x:x[1][ep_idx.EP_TYPE])])
+        return ',\n'.join(str_list) + '\n'
+
+
     #TODO: This function needs cleaning up. Maybe take an ep as an argument?
     def hash_ref(self, ref, ep_type):
         return ref[0] + str(ref[1]) + 'ds'[ep_type]
@@ -729,7 +739,8 @@ class gc_graph():
         ref_dict = {k: [] for k in gc_graph.rows}
         ep_dict = deepcopy(ref_dict)
         for row in self.graph.values():
-            for ref in row[ep_idx.REFERENCED_BY]: ref_dict[ref[ref_idx.ROW]].append(ref[ref_idx.INDEX])
+            for ref in row[ep_idx.REFERENCED_BY]:
+                ref_dict[ref[ref_idx.ROW]].append(ref[ref_idx.INDEX])
             ep_dict[row[ep_idx.ROW]].append(row[ep_idx.INDEX])
         gc_graph._logger.debug("ref_dict: {}".format(ref_dict))
         gc_graph._logger.debug("ep_dict: {}".format(ep_dict))
@@ -976,7 +987,7 @@ class gc_graph():
         for dst_ep in dst_ep_list: self.add_connection([dst_ep])
 
 
-    def add_connection(self, dst_ep_list, src_ep_filter_func=lambda x: [choice(x)]):    
+    def add_connection(self, dst_ep_list, src_ep_filter_func=lambda x: True):    
         """Add a connection to source from destination specified by src_ep_filter.
 
         Args
@@ -984,34 +995,33 @@ class gc_graph():
             dst_ep_list (list): A list of destination endpoints. Only the first endpoint 
                 in the list that is unconnected will be connected.
             src_ep_filter_func (func): A function that takes an endpoint list as the
-                single argument and returns a filtered & sorted endpoint list. Only 
-                the first endpoint will be used.  
+                single argument and returns a filtered & sorted endpoint list from which
+                one source endpoint will be randomly chosen. 
         """
         if dst_ep_list:
             dst_ep = dst_ep_list[0]
             gc_graph._logger.debug("The destination endpoint: {}".format(dst_ep))
             src_ep_list = list(filter(self.src_filter(self.src_row_filter(dst_ep[ep_idx.ROW],
-                self.type_filter([dst_ep[ep_idx.TYPE]], exact=False))), self.graph.values()))
+                self.type_filter([dst_ep[ep_idx.TYPE]], src_ep_filter_func, exact=False))), self.graph.values()))
             if src_ep_list:
-                src_ep_list = src_ep_filter_func(src_ep_list)
-                if src_ep_list:
-                    src_ep = src_ep_list[0]
-                    gc_graph._logger.debug("The source endpoint: {}".format(src_ep))
-                    dst_ep[ep_idx.REFERENCED_BY] = [src_ep[1:3]]
-                    src_ep[ep_idx.REFERENCED_BY].append(dst_ep[1:3])
-                    return
-            gc_graph._logger.debug("No viable source endpoints for destination endpoint: {}".format(dst_ep))
+                src_ep = choice(src_ep_list)
+                gc_graph._logger.debug("The source endpoint: {}".format(src_ep))
+                dst_ep[ep_idx.REFERENCED_BY] = [src_ep[1:3]]
+                src_ep[ep_idx.REFERENCED_BY].append(dst_ep[1:3])
+            else:
+                gc_graph._logger.debug("No viable source endpoints for destination endpoint: {}".format(dst_ep))
             
 
     def stack(self, gB):
         """Stack this graph on top of graph gB.
 
-        Graph gA (self) is stacked on gB to make gC by:
-            gB's inputs connect to gA's outputs
-            gC's inputs are gA's inputs
-            gB's outputs are gC's outputs
+        Graph gA (self) is stacked on gB to make gC i.e. gC inputs are gA's inputs
+        and gC's outputs are gB's outputs:
+            1. gC's inputs directly connect to gA's inputs, 1:1 in order
+            2. gB's inputs preferentially connect to gA's outputs
+            3. gB's outputs directly connect to gC's outputs, 1:1 in order
 
-        Stacking only works if gB's inputs can all be served by at least a
+        Stacking only works if gB's has inputs and they can all be served by at least a
         subset of gA's inputs & outputs.
 
         Args
@@ -1022,27 +1032,40 @@ class gc_graph():
         -------
         (gc_graph): gC
         """
-        ep_list = []
-        for ep in self.graph.values():
-            row, idx, typ = ep[ep_idx.ROW], ep[ep_idx.INDEX], ep[ep_idx.TYPE]
-            if row == 'I':
-                ep_list.append([True, 'I', idx, typ, []])
-                ep_list.append([False, 'A', idx, typ, []])
-            elif row == 'O':
-                ep_list.append([True, 'A', idx, typ, []])
 
+        # Create all the end points
+        ep_list = []
+        gB_has_I = False
         for ep in gB.graph.values():
             row, idx, typ = ep[ep_idx.ROW], ep[ep_idx.INDEX], ep[ep_idx.TYPE]
             if row == 'I':
-                ep_list.append([True, 'B', idx, typ, []])
-            elif row == 'O':
                 ep_list.append([False, 'B', idx, typ, []])
-                ep_list.append([True, 'O', idx, typ, []])
+                gB_has_I = True
+            elif row == 'O':
+                ep_list.append([True, 'B', idx, typ, [['O', idx]]])
+                ep_list.append([False, 'O', idx, typ, [['B', idx]]])
+        if not gB_has_I: return None
 
+        for ep in self.graph.values():
+            row, idx, typ = ep[ep_idx.ROW], ep[ep_idx.INDEX], ep[ep_idx.TYPE]
+            if row == 'I':
+                ep_list.append([True, 'I', idx, typ, [['A', idx]]])
+                ep_list.append([False, 'A', idx, typ, [['I', idx]]])
+            elif row == 'O':
+                ep_list.append([True, 'A', idx, typ, []])
+
+
+        # Make a gC gc_graph object
         gC = gc_graph()
         gC.graph = {self.hash_ep(ep): ep for ep in ep_list}
+
+        # Preferentially connect A --> B
+        # and let normalise() mop up any remaining connections.
+        for ep in filter(gC.dst_filter(gC.row_filter('B')), gC.graph.values()):
+            gC.add_connection([ep], gC.row_filter('A'))
         gC.normalize()
         return gC 
+
 
 
         
