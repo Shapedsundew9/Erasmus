@@ -56,6 +56,9 @@ basicConfig(
 logger = getLogger(__file__)
 
 
+none_limit = None
+
+
 def random_type(p=0.0):
     """Choose a random type.
 
@@ -202,10 +205,15 @@ def test_stack_simple(test):
     """
     # TODO: These random test cases need to be made static when we are confident in them.
     # Generate them into a JSON file.
+    global none_limit
+    if not test: none_limit = 50
+
     gA = random_graph()
     gB = random_graph()
     gC = gA.stack(gB)
 
+    if gC is None: none_limit -= 1
+    assert none_limit
     assert gC is None or gC.validate()
     # if not gC is None:
     #    print(gA) 
@@ -229,10 +237,15 @@ def test_stack(test):
     """
     # TODO: These random test cases need to be made static when we are confident in them.
     # Generate them into a JSON file.
+    global none_limit
+    if not test: none_limit = 50
+
     gA = random_graph(0.5, True)
     gB = random_graph(0.5, True)
     gC = gA.stack(gB)
 
+    if gC is None: none_limit -= 1
+    assert none_limit
     assert gC is None or gC.validate()
     # if not gC is None:
     #    print(gA) 

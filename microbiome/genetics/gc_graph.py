@@ -1095,9 +1095,9 @@ class gc_graph():
         and gC's outputs are gB's outputs:
             1. gC's inputs directly connect to gA's inputs, 1:1 in order
             2. gB's inputs preferentially connect to gA's outputs 1:1
-            3. Any gBs input that are not connected to gA outputs create new gC inputs
-            4. gB's outputs directly connect to gC's outputs, 1:1 in order
-            5. Any gA's outputs that are not connected to gB inputs create new gC outputs
+            3. gB's outputs directly connect to gC's outputs, 1:1 in order
+            4. Any gA's outputs that are not connected to gB inputs create new gC outputs
+            5. Any gBs input that are not connected to gA outputs create new gC inputs
 
         Stacking only works if there is at least 1 connection from gA's outputs to gB's inputs.
 
@@ -1111,7 +1111,7 @@ class gc_graph():
         """
         # Create all the end points
         ep_list = []
-        for ep in filter(gB.rows_filter(('I', 'C')), gB.graph.values()):
+        for ep in filter(gB.rows_filter(('I', 'O')), gB.graph.values()):
             row, idx, typ = ep[ep_idx.ROW], ep[ep_idx.INDEX], ep[ep_idx.TYPE]
             if row == 'I':
                 ep_list.append([False, 'B', idx, typ, []])
@@ -1120,7 +1120,7 @@ class gc_graph():
                 ep_list.append([True, 'B', idx, typ, [['O', idx]]])
                 ep_list.append([False, 'O', idx, typ, [['B', idx]]])
 
-        for ep in filter(self.rows_filter(('I', 'C')), self.graph.values()):
+        for ep in filter(self.rows_filter(('I', 'O')), self.graph.values()):
             row, idx, typ = ep[ep_idx.ROW], ep[ep_idx.INDEX], ep[ep_idx.TYPE]
             if row == 'I':
                 ep_list.append([True, 'I', idx, typ, [['A', idx]]])
@@ -1138,12 +1138,19 @@ class gc_graph():
         for ep in filter(gC.dst_filter(gC.row_filter('B')), gC.graph.values()):
             gA_gB_connection = gA_gB_connection or gC.add_connection([ep], gC.row_filter('A', gC.unreferenced_filter()))
 
-        # Extend O with any remaining A src's
         if gA_gB_connection:
-            for ep in filter(gC.src_filter(gC.row_filter('A'), gC.unreferenced_filter()), gC.graph.values()):
+            # Extend O with any remaining A src's
+            for ep in tuple(filter(gC.src_filter(gC.row_filter('A', gC.unreferenced_filter())), gC.graph.values())):
                 idx = gC.num_outputs()
                 gC._add_ep([DST_EP, 'O', idx, ep[ep_idx.TYPE], [['A', ep[ep_idx.INDEX]]]])
                 ep[ep_idx.REFERENCED_BY].append(['O', idx])
+
+            # Extend I with any remaining B dst's
+            for ep in tuple(filter(gC.dst_filter(gC.row_filter('B', gC.unreferenced_filter())), gC.graph.values())):
+                idx = gC.num_inputs()
+                gC._add_ep([SRC_EP, 'I', idx, ep[ep_idx.TYPE], [['B', ep[ep_idx.INDEX]]]])
+                ep[ep_idx.REFERENCED_BY].append(['I', idx])
+
             return gC
         return None
 
