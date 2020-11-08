@@ -109,20 +109,19 @@ def random_graph(p=0.0, must_be_valid=False):
             source_types[randint(len(source_types))] = type_set
 
         for row in structure:
-            graph.app_graph[row] = []
             if not row in ('U', 'P'):
                 if row in DESTINATION_ROWS and any([src_row in structure for src_row in gc_graph.src_rows[row]]):
                     for i in range(destinations[row]):
                         rtype = destination_types.pop()
-                        graph.graph[graph.hash_ref([row, i], DST_EP)] = [DST_EP, row, i, rtype, []]
+                        graph._add_ep([DST_EP, row, i, rtype, []])
                         if row == 'O' and 'P' in structure:
-                            graph.graph[graph.hash_ref(['P', i], DST_EP)] = [DST_EP, 'P', i, rtype, []]
+                            graph._add_ep([DST_EP, 'P', i, rtype, []])
 
                 if row in SOURCE_ROWS:
                     for i in range(sources[row]):
                         ep = [SRC_EP, row, i, source_types.pop(), []]
                         if row == 'C': ep.append(ep[3] + '(' + str(randint(-1000, 1000)) + ')')
-                        graph.graph[graph.hash_ref([row, i], SRC_EP)] = ep
+                        graph._add_ep(ep)
 
         for _ in range(len(list(filter(graph.dst_filter(), graph.graph.values())))): graph.random_add_connection()
         graph.normalize()
