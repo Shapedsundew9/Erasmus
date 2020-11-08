@@ -162,6 +162,11 @@
                     "A",
                     0,
                     "numeric"
+                ],
+                [
+                    "A",
+                    1,
+                    "bool"
                 ]
             ]
         },
@@ -177,7 +182,7 @@
             "function": {
                 "python3": {
                     "0": {
-                        "inline": "{0[i0]} / {0[i1]}"
+                        "inline": "try:\n\t{o0} = {i0} / {i1}\nexcept ZeroDivisionError:\n\t{o1} = False\nelse:\n\t{o1} = True"
                     }
                 }
             },
@@ -189,7 +194,7 @@
         "num_unique_codes": 1,
         "opt_num_codons": 1,
         "output0_type": 16396,
-        "output1_type": 16396,
+        "output1_type": 16900,
         "output2_type": 16396,
         "output3_type": 16396,
         "properties": {
