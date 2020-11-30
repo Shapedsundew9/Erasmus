@@ -26,8 +26,7 @@
         "genomic_library": {
             "data_file_folder": "/home/shapedsundew9/Projects/Erasmus/microbiome/data",
             "data_files": [
-                "codons_logical.json",
-                "codons_elementary_arithmetic.json"
+                "gc_codons.json"
             ],
             "database": "test_database",
             "format_file": "genomic_library_entry_format.json",

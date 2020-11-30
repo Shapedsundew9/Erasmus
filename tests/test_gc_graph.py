@@ -73,7 +73,7 @@ def random_type(p=0.0):
     -------
     (str) The selected type string.
     """
-    if random() < p: return choice(('obj131', 'int', 'float', 'bool', 'str'))
+    if random() < p: return choice(('gc', 'int', 'float', 'bool', 'str'))
     return 'int'
 
 
@@ -206,7 +206,7 @@ def test_stack_simple(test):
     # TODO: These random test cases need to be made static when we are confident in them.
     # Generate them into a JSON file.
     global none_limit
-    if not test: none_limit = 50
+    if not test: none_limit = 5000
 
     gA = random_graph()
     gB = random_graph()

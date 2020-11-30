@@ -194,8 +194,7 @@
                     "data_files": {
                         "type": "list",
                         "default": [
-                            "codons_logical.json",
-                            "codons_elementary_arithmetic.json"
+                            "gc_codons.json"
                         ]
                     },
                     "history_decimation": {

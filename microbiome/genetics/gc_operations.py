@@ -22,8 +22,9 @@ def gc_stack(gca, gcb):
     (gc): C
     """
     stacked_graph = gc_graph(gca['graph']).stack(gcb['graph'])
-    return None if stacked_graph is None else gcc = {
+    return None if stacked_graph is None else {
         'graph': stacked_graph
         'gca': gca['signature']
         'gcb': gcb['signature']
     }
+

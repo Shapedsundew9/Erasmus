@@ -1,0 +1,926 @@
+[
+    {
+        "alpha_class": 0,
+        "beta_class": 0,
+        "code_depth": 1,
+        "codon_depth": 1,
+        "created": "2020-11-30T21:28:33.745767Z",
+        "creator": "0000000000000000000000000000000000000000000000000000000000000000",
+        "evolvability": 0.0,
+        "fitness": 0.0,
+        "gca": "0000000000000000000000000000000000000000000000000000000000000000",
+        "gcb": "0000000000000000000000000000000000000000000000000000000000000000",
+        "generation": 0,
+        "graph": {
+            "A": [
+                [
+                    "I",
+                    0,
+                    "numeric5"
+                ],
+                [
+                    "I",
+                    1,
+                    "numeric5"
+                ]
+            ],
+            "O": [
+                [
+                    "A",
+                    0,
+                    "translation10"
+                ]
+            ]
+        },
+        "input0_type": -134217723,
+        "input1_type": -134217723,
+        "input2_type": 262143,
+        "input3_type": 262143,
+        "input4_type": 262143,
+        "input5_type": 262143,
+        "input6_type": 262143,
+        "input7_type": 262143,
+        "meta_data": {
+            "function": {
+                "python3": {
+                    "0": {
+                        "inline": "{i0} >> {i1}"
+                    }
+                }
+            },
+            "name": "right shift"
+        },
+        "num_codes": 1,
+        "num_inputs": 2,
+        "num_outputs": 1,
+        "num_unique_codes": 1,
+        "opt_num_codons": 1,
+        "output0_type": -67108854,
+        "output1_type": 262143,
+        "output2_type": 262143,
+        "output3_type": 262143,
+        "properties": {
+            "arithmetic": false,
+            "bitwise": true,
+            "conditional": false,
+            "constant": false,
+            "deterministic": true,
+            "extended": false,
+            "logical": false,
+            "memory_modify": false,
+            "object_modify": false,
+            "physical": false
+        },
+        "raw_num_codons": 1,
+        "reference_count": 0,
+        "signature": "d6b77650ce17799265490e4897d550d3f856cc73f7b7e321a948e368a5d2ea7f",
+        "updated": "2020-11-30T21:28:33.745737Z"
+    },
+    {
+        "alpha_class": 0,
+        "beta_class": 0,
+        "code_depth": 1,
+        "codon_depth": 1,
+        "created": "2020-11-30T21:28:33.750085Z",
+        "creator": "0000000000000000000000000000000000000000000000000000000000000000",
+        "evolvability": 0.0,
+        "fitness": 0.0,
+        "gca": "0000000000000000000000000000000000000000000000000000000000000000",
+        "gcb": "0000000000000000000000000000000000000000000000000000000000000000",
+        "generation": 0,
+        "graph": {
+            "A": [
+                [
+                    "I",
+                    0,
+                    "numeric5"
+                ],
+                [
+                    "I",
+                    1,
+                    "numeric5"
+                ]
+            ],
+            "O": [
+                [
+                    "A",
+                    0,
+                    "translation10"
+                ]
+            ]
+        },
+        "input0_type": -134217723,
+        "input1_type": -134217723,
+        "input2_type": 262143,
+        "input3_type": 262143,
+        "input4_type": 262143,
+        "input5_type": 262143,
+        "input6_type": 262143,
+        "input7_type": 262143,
+        "meta_data": {
+            "function": {
+                "python3": {
+                    "0": {
+                        "inline": "{i0} << {i1}"
+                    }
+                }
+            },
+            "name": "left shift"
+        },
+        "num_codes": 1,
+        "num_inputs": 2,
+        "num_outputs": 1,
+        "num_unique_codes": 1,
+        "opt_num_codons": 1,
+        "output0_type": -67108854,
+        "output1_type": 262143,
+        "output2_type": 262143,
+        "output3_type": 262143,
+        "properties": {
+            "arithmetic": false,
+            "bitwise": true,
+            "conditional": false,
+            "constant": false,
+            "deterministic": true,
+            "extended": false,
+            "logical": false,
+            "memory_modify": false,
+            "object_modify": false,
+            "physical": false
+        },
+        "raw_num_codons": 1,
+        "reference_count": 0,
+        "signature": "dc8b82650784f06d76a30eb87abc706dfd285e8b5b8d51834d1160605b27cd19",
+        "updated": "2020-11-30T21:28:33.750071Z"
+    },
+    {
+        "alpha_class": 0,
+        "beta_class": 0,
+        "code_depth": 1,
+        "codon_depth": 1,
+        "created": "2020-11-30T21:28:33.754279Z",
+        "creator": "0000000000000000000000000000000000000000000000000000000000000000",
+        "evolvability": 0.0,
+        "fitness": 0.0,
+        "gca": "0000000000000000000000000000000000000000000000000000000000000000",
+        "gcb": "0000000000000000000000000000000000000000000000000000000000000000",
+        "generation": 0,
+        "graph": {
+            "A": [
+                [
+                    "I",
+                    0,
+                    "numeric5"
+                ],
+                [
+                    "I",
+                    1,
+                    "numeric5"
+                ]
+            ],
+            "O": [
+                [
+                    "A",
+                    0,
+                    "translation7"
+                ]
+            ]
+        },
+        "input0_type": -134217723,
+        "input1_type": -134217723,
+        "input2_type": 262143,
+        "input3_type": 262143,
+        "input4_type": 262143,
+        "input5_type": 262143,
+        "input6_type": 262143,
+        "input7_type": 262143,
+        "meta_data": {
+            "function": {
+                "python3": {
+                    "0": {
+                        "inline": "{i0} | {i1}"
+                    }
+                }
+            },
+            "name": "bitwise OR"
+        },
+        "num_codes": 1,
+        "num_inputs": 2,
+        "num_outputs": 1,
+        "num_unique_codes": 1,
+        "opt_num_codons": 1,
+        "output0_type": -67108857,
+        "output1_type": 262143,
+        "output2_type": 262143,
+        "output3_type": 262143,
+        "properties": {
+            "arithmetic": false,
+            "bitwise": true,
+            "conditional": false,
+            "constant": false,
+            "deterministic": true,
+            "extended": false,
+            "logical": false,
+            "memory_modify": false,
+            "object_modify": false,
+            "physical": false
+        },
+        "raw_num_codons": 1,
+        "reference_count": 0,
+        "signature": "ae1fe6d1676bb62bd35d1aa9d9b3e13dd48dbc65a3d3aae6a63f9d6ebc72655e",
+        "updated": "2020-11-30T21:28:33.754263Z"
+    },
+    {
+        "alpha_class": 0,
+        "beta_class": 0,
+        "code_depth": 1,
+        "codon_depth": 1,
+        "created": "2020-11-30T21:28:33.758156Z",
+        "creator": "0000000000000000000000000000000000000000000000000000000000000000",
+        "evolvability": 0.0,
+        "fitness": 0.0,
+        "gca": "0000000000000000000000000000000000000000000000000000000000000000",
+        "gcb": "0000000000000000000000000000000000000000000000000000000000000000",
+        "generation": 0,
+        "graph": {
+            "A": [
+                [
+                    "I",
+                    0,
+                    "numeric5"
+                ],
+                [
+                    "I",
+                    1,
+                    "numeric5"
+                ]
+            ],
+            "O": [
+                [
+                    "A",
+                    0,
+                    "translation7"
+                ]
+            ]
+        },
+        "input0_type": -134217723,
+        "input1_type": -134217723,
+        "input2_type": 262143,
+        "input3_type": 262143,
+        "input4_type": 262143,
+        "input5_type": 262143,
+        "input6_type": 262143,
+        "input7_type": 262143,
+        "meta_data": {
+            "function": {
+                "python3": {
+                    "0": {
+                        "inline": "{i0} & {i1}"
+                    }
+                }
+            },
+            "name": "bitwise AND"
+        },
+        "num_codes": 1,
+        "num_inputs": 2,
+        "num_outputs": 1,
+        "num_unique_codes": 1,
+        "opt_num_codons": 1,
+        "output0_type": -67108857,
+        "output1_type": 262143,
+        "output2_type": 262143,
+        "output3_type": 262143,
+        "properties": {
+            "arithmetic": false,
+            "bitwise": true,
+            "conditional": false,
+            "constant": false,
+            "deterministic": true,
+            "extended": false,
+            "logical": false,
+            "memory_modify": false,
+            "object_modify": false,
+            "physical": false
+        },
+        "raw_num_codons": 1,
+        "reference_count": 0,
+        "signature": "a5ef4befc6420240af5f4f8eedda1d30d48a9b205fc6b32573e0780affd86787",
+        "updated": "2020-11-30T21:28:33.758146Z"
+    },
+    {
+        "alpha_class": 0,
+        "beta_class": 0,
+        "code_depth": 1,
+        "codon_depth": 1,
+        "created": "2020-11-30T21:28:33.762111Z",
+        "creator": "0000000000000000000000000000000000000000000000000000000000000000",
+        "evolvability": 0.0,
+        "fitness": 0.0,
+        "gca": "0000000000000000000000000000000000000000000000000000000000000000",
+        "gcb": "0000000000000000000000000000000000000000000000000000000000000000",
+        "generation": 0,
+        "graph": {
+            "A": [
+                [
+                    "I",
+                    0,
+                    "numeric5"
+                ],
+                [
+                    "I",
+                    1,
+                    "numeric5"
+                ]
+            ],
+            "O": [
+                [
+                    "A",
+                    0,
+                    "translation7"
+                ]
+            ]
+        },
+        "input0_type": -134217723,
+        "input1_type": -134217723,
+        "input2_type": 262143,
+        "input3_type": 262143,
+        "input4_type": 262143,
+        "input5_type": 262143,
+        "input6_type": 262143,
+        "input7_type": 262143,
+        "meta_data": {
+            "function": {
+                "python3": {
+                    "0": {
+                        "inline": "{i0} ^ {i1}"
+                    }
+                }
+            },
+            "name": "bitwise XOR"
+        },
+        "num_codes": 1,
+        "num_inputs": 2,
+        "num_outputs": 1,
+        "num_unique_codes": 1,
+        "opt_num_codons": 1,
+        "output0_type": -67108857,
+        "output1_type": 262143,
+        "output2_type": 262143,
+        "output3_type": 262143,
+        "properties": {
+            "arithmetic": false,
+            "bitwise": true,
+            "conditional": false,
+            "constant": false,
+            "deterministic": true,
+            "extended": false,
+            "logical": false,
+            "memory_modify": false,
+            "object_modify": false,
+            "physical": false
+        },
+        "raw_num_codons": 1,
+        "reference_count": 0,
+        "signature": "80b69158e91f996f0ae6d92cd28417d80f4718c077c81ac8529f0259a32e5d22",
+        "updated": "2020-11-30T21:28:33.762100Z"
+    },
+    {
+        "alpha_class": 0,
+        "beta_class": 0,
+        "code_depth": 1,
+        "codon_depth": 1,
+        "created": "2020-11-30T21:28:33.765931Z",
+        "creator": "0000000000000000000000000000000000000000000000000000000000000000",
+        "evolvability": 0.0,
+        "fitness": 0.0,
+        "gca": "0000000000000000000000000000000000000000000000000000000000000000",
+        "gcb": "0000000000000000000000000000000000000000000000000000000000000000",
+        "generation": 0,
+        "graph": {
+            "A": [
+                [
+                    "I",
+                    0,
+                    "numeric0"
+                ],
+                [
+                    "I",
+                    1,
+                    "numeric0"
+                ]
+            ],
+            "O": [
+                [
+                    "A",
+                    0,
+                    "translation0"
+                ]
+            ]
+        },
+        "input0_type": -134217728,
+        "input1_type": -134217728,
+        "input2_type": 262143,
+        "input3_type": 262143,
+        "input4_type": 262143,
+        "input5_type": 262143,
+        "input6_type": 262143,
+        "input7_type": 262143,
+        "meta_data": {
+            "function": {
+                "python3": {
+                    "0": {
+                        "inline": "{i0} ** {i1}"
+                    }
+                }
+            },
+            "name": "power"
+        },
+        "num_codes": 1,
+        "num_inputs": 2,
+        "num_outputs": 1,
+        "num_unique_codes": 1,
+        "opt_num_codons": 1,
+        "output0_type": -67108864,
+        "output1_type": 262143,
+        "output2_type": 262143,
+        "output3_type": 262143,
+        "properties": {
+            "arithmetic": true,
+            "bitwise": false,
+            "conditional": false,
+            "constant": false,
+            "deterministic": true,
+            "extended": false,
+            "logical": false,
+            "memory_modify": false,
+            "object_modify": false,
+            "physical": false
+        },
+        "raw_num_codons": 1,
+        "reference_count": 0,
+        "signature": "8ea28c8dd38dc305b43f5ca41274218a654877e1fde9c1540203d9cfbdd8d814",
+        "updated": "2020-11-30T21:28:33.765921Z"
+    },
+    {
+        "alpha_class": 0,
+        "beta_class": 0,
+        "code_depth": 1,
+        "codon_depth": 1,
+        "created": "2020-11-30T21:28:33.770064Z",
+        "creator": "0000000000000000000000000000000000000000000000000000000000000000",
+        "evolvability": 0.0,
+        "fitness": 0.0,
+        "gca": "0000000000000000000000000000000000000000000000000000000000000000",
+        "gcb": "0000000000000000000000000000000000000000000000000000000000000000",
+        "generation": 0,
+        "graph": {
+            "A": [
+                [
+                    "I",
+                    0,
+                    "numeric3"
+                ],
+                [
+                    "I",
+                    1,
+                    "numeric3"
+                ]
+            ],
+            "O": [
+                [
+                    "A",
+                    0,
+                    "translation5"
+                ]
+            ]
+        },
+        "input0_type": -134217725,
+        "input1_type": -134217725,
+        "input2_type": 262143,
+        "input3_type": 262143,
+        "input4_type": 262143,
+        "input5_type": 262143,
+        "input6_type": 262143,
+        "input7_type": 262143,
+        "meta_data": {
+            "function": {
+                "python3": {
+                    "0": {
+                        "inline": "{i0} % {i1}"
+                    }
+                }
+            },
+            "name": "modulo"
+        },
+        "num_codes": 1,
+        "num_inputs": 2,
+        "num_outputs": 1,
+        "num_unique_codes": 1,
+        "opt_num_codons": 1,
+        "output0_type": -67108859,
+        "output1_type": 262143,
+        "output2_type": 262143,
+        "output3_type": 262143,
+        "properties": {
+            "arithmetic": true,
+            "bitwise": false,
+            "conditional": false,
+            "constant": false,
+            "deterministic": true,
+            "extended": false,
+            "logical": false,
+            "memory_modify": false,
+            "object_modify": false,
+            "physical": false
+        },
+        "raw_num_codons": 1,
+        "reference_count": 0,
+        "signature": "75899891589f83de970ec8a3d9d7fac08068e6b0871b6a5a65b15ccdf00f3185",
+        "updated": "2020-11-30T21:28:33.770052Z"
+    },
+    {
+        "alpha_class": 0,
+        "beta_class": 0,
+        "code_depth": 1,
+        "codon_depth": 1,
+        "created": "2020-11-30T21:28:33.773873Z",
+        "creator": "0000000000000000000000000000000000000000000000000000000000000000",
+        "evolvability": 0.0,
+        "fitness": 0.0,
+        "gca": "0000000000000000000000000000000000000000000000000000000000000000",
+        "gcb": "0000000000000000000000000000000000000000000000000000000000000000",
+        "generation": 0,
+        "graph": {
+            "A": [
+                [
+                    "I",
+                    0,
+                    "numeric0"
+                ],
+                [
+                    "I",
+                    1,
+                    "numeric0"
+                ]
+            ],
+            "O": [
+                [
+                    "A",
+                    0,
+                    "translation4"
+                ]
+            ]
+        },
+        "input0_type": -134217728,
+        "input1_type": -134217728,
+        "input2_type": 262143,
+        "input3_type": 262143,
+        "input4_type": 262143,
+        "input5_type": 262143,
+        "input6_type": 262143,
+        "input7_type": 262143,
+        "meta_data": {
+            "function": {
+                "python3": {
+                    "0": {
+                        "inline": "{i0} // {i1}"
+                    }
+                }
+            },
+            "name": "floor divide"
+        },
+        "num_codes": 1,
+        "num_inputs": 2,
+        "num_outputs": 1,
+        "num_unique_codes": 1,
+        "opt_num_codons": 1,
+        "output0_type": -67108860,
+        "output1_type": 262143,
+        "output2_type": 262143,
+        "output3_type": 262143,
+        "properties": {
+            "arithmetic": true,
+            "bitwise": false,
+            "conditional": false,
+            "constant": false,
+            "deterministic": true,
+            "extended": false,
+            "logical": false,
+            "memory_modify": false,
+            "object_modify": false,
+            "physical": false
+        },
+        "raw_num_codons": 1,
+        "reference_count": 0,
+        "signature": "589cd05a3c5632937f3754a56046759ab56e87ad55cf5ad2534c8134ba0703d6",
+        "updated": "2020-11-30T21:28:33.773863Z"
+    },
+    {
+        "alpha_class": 0,
+        "beta_class": 0,
+        "code_depth": 1,
+        "codon_depth": 1,
+        "created": "2020-11-30T21:28:33.777662Z",
+        "creator": "0000000000000000000000000000000000000000000000000000000000000000",
+        "evolvability": 0.0,
+        "fitness": 0.0,
+        "gca": "0000000000000000000000000000000000000000000000000000000000000000",
+        "gcb": "0000000000000000000000000000000000000000000000000000000000000000",
+        "generation": 0,
+        "graph": {
+            "A": [
+                [
+                    "I",
+                    0,
+                    "numeric0"
+                ],
+                [
+                    "I",
+                    1,
+                    "numeric0"
+                ]
+            ],
+            "O": [
+                [
+                    "A",
+                    0,
+                    "translation3"
+                ]
+            ]
+        },
+        "input0_type": -134217728,
+        "input1_type": -134217728,
+        "input2_type": 262143,
+        "input3_type": 262143,
+        "input4_type": 262143,
+        "input5_type": 262143,
+        "input6_type": 262143,
+        "input7_type": 262143,
+        "meta_data": {
+            "function": {
+                "python3": {
+                    "0": {
+                        "inline": "{i0} / {i1}"
+                    }
+                }
+            },
+            "name": "true divide"
+        },
+        "num_codes": 1,
+        "num_inputs": 2,
+        "num_outputs": 1,
+        "num_unique_codes": 1,
+        "opt_num_codons": 1,
+        "output0_type": -67108861,
+        "output1_type": 262143,
+        "output2_type": 262143,
+        "output3_type": 262143,
+        "properties": {
+            "arithmetic": true,
+            "bitwise": false,
+            "conditional": false,
+            "constant": false,
+            "deterministic": true,
+            "extended": false,
+            "logical": false,
+            "memory_modify": false,
+            "object_modify": false,
+            "physical": false
+        },
+        "raw_num_codons": 1,
+        "reference_count": 0,
+        "signature": "9f6a0add47f5eff3016f94320a636393b5fa26766987738130619fb0c4a2cd37",
+        "updated": "2020-11-30T21:28:33.777653Z"
+    },
+    {
+        "alpha_class": 0,
+        "beta_class": 0,
+        "code_depth": 1,
+        "codon_depth": 1,
+        "created": "2020-11-30T21:28:33.781591Z",
+        "creator": "0000000000000000000000000000000000000000000000000000000000000000",
+        "evolvability": 0.0,
+        "fitness": 0.0,
+        "gca": "0000000000000000000000000000000000000000000000000000000000000000",
+        "gcb": "0000000000000000000000000000000000000000000000000000000000000000",
+        "generation": 0,
+        "graph": {
+            "A": [
+                [
+                    "I",
+                    0,
+                    "numeric0"
+                ],
+                [
+                    "I",
+                    1,
+                    "numeric0"
+                ]
+            ],
+            "O": [
+                [
+                    "A",
+                    0,
+                    "translation0"
+                ]
+            ]
+        },
+        "input0_type": -134217728,
+        "input1_type": -134217728,
+        "input2_type": 262143,
+        "input3_type": 262143,
+        "input4_type": 262143,
+        "input5_type": 262143,
+        "input6_type": 262143,
+        "input7_type": 262143,
+        "meta_data": {
+            "function": {
+                "python3": {
+                    "0": {
+                        "inline": "{i0} * {i1}"
+                    }
+                }
+            },
+            "name": "multiply"
+        },
+        "num_codes": 1,
+        "num_inputs": 2,
+        "num_outputs": 1,
+        "num_unique_codes": 1,
+        "opt_num_codons": 1,
+        "output0_type": -67108864,
+        "output1_type": 262143,
+        "output2_type": 262143,
+        "output3_type": 262143,
+        "properties": {
+            "arithmetic": true,
+            "bitwise": false,
+            "conditional": false,
+            "constant": false,
+            "deterministic": true,
+            "extended": false,
+            "logical": false,
+            "memory_modify": false,
+            "object_modify": false,
+            "physical": false
+        },
+        "raw_num_codons": 1,
+        "reference_count": 0,
+        "signature": "d2263be018fa5503c2cd5e7733e9d8f4fa95dbd10a7c5e6bff80d7b0f8b040e8",
+        "updated": "2020-11-30T21:28:33.781580Z"
+    },
+    {
+        "alpha_class": 0,
+        "beta_class": 0,
+        "code_depth": 1,
+        "codon_depth": 1,
+        "created": "2020-11-30T21:28:33.785409Z",
+        "creator": "0000000000000000000000000000000000000000000000000000000000000000",
+        "evolvability": 0.0,
+        "fitness": 0.0,
+        "gca": "0000000000000000000000000000000000000000000000000000000000000000",
+        "gcb": "0000000000000000000000000000000000000000000000000000000000000000",
+        "generation": 0,
+        "graph": {
+            "A": [
+                [
+                    "I",
+                    0,
+                    "numeric0"
+                ],
+                [
+                    "I",
+                    1,
+                    "numeric0"
+                ]
+            ],
+            "O": [
+                [
+                    "A",
+                    0,
+                    "translation0"
+                ]
+            ]
+        },
+        "input0_type": -134217728,
+        "input1_type": -134217728,
+        "input2_type": 262143,
+        "input3_type": 262143,
+        "input4_type": 262143,
+        "input5_type": 262143,
+        "input6_type": 262143,
+        "input7_type": 262143,
+        "meta_data": {
+            "function": {
+                "python3": {
+                    "0": {
+                        "inline": "{i0} - {i1}"
+                    }
+                }
+            },
+            "name": "subtract"
+        },
+        "num_codes": 1,
+        "num_inputs": 2,
+        "num_outputs": 1,
+        "num_unique_codes": 1,
+        "opt_num_codons": 1,
+        "output0_type": -67108864,
+        "output1_type": 262143,
+        "output2_type": 262143,
+        "output3_type": 262143,
+        "properties": {
+            "arithmetic": true,
+            "bitwise": false,
+            "conditional": false,
+            "constant": false,
+            "deterministic": true,
+            "extended": false,
+            "logical": false,
+            "memory_modify": false,
+            "object_modify": false,
+            "physical": false
+        },
+        "raw_num_codons": 1,
+        "reference_count": 0,
+        "signature": "e10d362d1e3ed8b0c44ec73ed9d979ed74e4276e5ec153739842f1aca2fedbfe",
+        "updated": "2020-11-30T21:28:33.785396Z"
+    },
+    {
+        "alpha_class": 0,
+        "beta_class": 0,
+        "code_depth": 1,
+        "codon_depth": 1,
+        "created": "2020-11-30T21:28:33.789774Z",
+        "creator": "0000000000000000000000000000000000000000000000000000000000000000",
+        "evolvability": 0.0,
+        "fitness": 0.0,
+        "gca": "0000000000000000000000000000000000000000000000000000000000000000",
+        "gcb": "0000000000000000000000000000000000000000000000000000000000000000",
+        "generation": 0,
+        "graph": {
+            "A": [
+                [
+                    "I",
+                    0,
+                    "numeric0"
+                ],
+                [
+                    "I",
+                    1,
+                    "numeric0"
+                ]
+            ],
+            "O": [
+                [
+                    "A",
+                    0,
+                    "translation0"
+                ]
+            ]
+        },
+        "input0_type": -134217728,
+        "input1_type": -134217728,
+        "input2_type": 262143,
+        "input3_type": 262143,
+        "input4_type": 262143,
+        "input5_type": 262143,
+        "input6_type": 262143,
+        "input7_type": 262143,
+        "meta_data": {
+            "function": {
+                "python3": {
+                    "0": {
+                        "inline": "{i0} + {i1}"
+                    }
+                }
+            },
+            "name": "add"
+        },
+        "num_codes": 1,
+        "num_inputs": 2,
+        "num_outputs": 1,
+        "num_unique_codes": 1,
+        "opt_num_codons": 1,
+        "output0_type": -67108864,
+        "output1_type": 262143,
+        "output2_type": 262143,
+        "output3_type": 262143,
+        "properties": {
+            "arithmetic": true,
+            "bitwise": false,
+            "conditional": false,
+            "constant": false,
+            "deterministic": true,
+            "extended": false,
+            "logical": false,
+            "memory_modify": false,
+            "object_modify": false,
+            "physical": false
+        },
+        "raw_num_codons": 1,
+        "reference_count": 0,
+        "signature": "f863a21d1b01f4c8d3d5e4fcc3880e2890a8f44036dc66c4125afc32ac9c50f3",
+        "updated": "2020-11-30T21:28:33.789762Z"
+    }
+]

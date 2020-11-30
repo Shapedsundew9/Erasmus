@@ -226,7 +226,8 @@ def update_config(dict_c):
 def save_config(config_file_path='config.json'):
     """Dump the current global configuration to file."""
     cfg = deepcopy(_config)
-    for table in cfg['tables'].values(): del table['schema']
+    for table in cfg['tables'].values():
+        if 'schema' in table: del table['schema']
     with open(config_file_path, 'w') as file_ptr:
         dump(cfg, file_ptr, indent=4, sort_keys=True)
 

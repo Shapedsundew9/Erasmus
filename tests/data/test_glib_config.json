@@ -14,7 +14,7 @@
     "tables": {
         "test_genomic_library": {
             "database": "test_database",
-            "data_files": ["codons_elementary_arithmetic.json"],
+            "data_files": ["gc_codons.json"],
             "format_file": "genomic_library_entry_format.json"
         }
     }   

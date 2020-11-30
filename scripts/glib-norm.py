@@ -5,6 +5,7 @@ from json import load, dump
 from sys import exit
 from os import access, R_OK
 from os.path import isfile
+from pprint import pformat
 from argparse import ArgumentParser
 from microbiome.genetics.genomic_library_entry_validator import genomic_library_entry_validator
 
@@ -25,7 +26,11 @@ else:
         print("ERROR: Unable to read JSON file {} with error {}.".format(args.filename, str(e)))
     else:
         nentries = []
-        while data: nentries.append(genomic_library_entry_validator.normalized(data.pop()))
+        while data:
+            datum = data.pop()
+            nentries.append(genomic_library_entry_validator.normalized(datum))
+            if nentries[-1] is None:
+                print("ERROR: Unable to normalise GC:\n{}\n{}".format(pformat(datum), genomic_library_entry_validator.errors))
         try:
             with open(args.filename + ".norm", "w") as njsonfile:
                 dump(nentries, njsonfile, indent=4, sort_keys=True)

@@ -9,7 +9,7 @@ defines the rules of the connectivity (the "physics") i.e. what is possible to o
 
 from collections import Counter
 from enum import IntEnum
-from .gc_type import asstr, asint, compatible_types, validate, last_validation_error, affinity, UNKNOWN_TYPE
+from .gc_type import validate, asint, compatible, asstr, member_of
 from pprint import pformat
 from copy import deepcopy, copy
 from ..text_token import text_token, register_token_code
@@ -475,7 +475,7 @@ class gc_graph():
         -------
             (func): A function for a filter() that will return endpoints with qualifying 'gc_types'.
         """
-        _types = gc_types if exact else set([x for y in gc_types for x in compatible_types(y)])
+        _types = gc_types if exact else set([x for y in gc_types for x in member_of(y)])
         return lambda x: any(map(lambda p: p == x[ep_idx.TYPE], _types)) and filter_func(x)
 
 
@@ -755,7 +755,7 @@ class gc_graph():
             9. Row A is not defined if the graph is for a codon.
             10. All row 'I' endpoints are sources.
             11. All row 'O' & 'P' endpoints are destinations.
-            12. Source types have a non-zero affinity to destination types.
+            12. Source types are compatible with destination types.
             13. Rows destinations may only be connected to source rows as defined
                 by gc_graph.src_rows.
             14. If row 'F' is defined:
@@ -800,10 +800,10 @@ class gc_graph():
             self.status.append(text_token({'E01001': {'ep_type': ['Destination', 'Source'][row[ep_idx.EP_TYPE]],
                 'ref': [row[ep_idx.ROW], row[ep_idx.INDEX]]}}))
 
-        #4 - gc_type validate() is slow! 
+        #4
         for row in filter(lambda x: not validate(x[ep_idx.TYPE]), self.graph.values()):
             self.status.append(text_token({'E01002': {'ep_type': ['Destination', 'Source'][row[ep_idx.EP_TYPE]],
-                'ref': [row[ep_idx.ROW], row[ep_idx.INDEX]], 'type_errors': last_validation_error()}}))
+                'ref': [row[ep_idx.ROW], row[ep_idx.INDEX]], 'type_errors': 'Does not exist.'}}))
 
         #5
         ref_dict = {k: [] for k in gc_graph.rows}
@@ -848,7 +848,7 @@ class gc_graph():
             for ref in row[ep_idx.REFERENCED_BY]:
                 try:
                     src = next(filter(self.src_filter(self.ref_filter(ref)), self.graph.values()))
-                    if affinity(src[ep_idx.TYPE], row[ep_idx.TYPE]) == 0.0:
+                    if not compatible(asstr(src[ep_idx.TYPE]), asstr(row[ep_idx.TYPE])):
                         self.status.append(text_token({'E01009': {'ref1': [src[ep_idx.ROW], src[ep_idx.INDEX]], 'type1': asstr(src[ep_idx.TYPE]),
                             'ref2': [row[ep_idx.ROW], row[ep_idx.INDEX]], 'type2': asstr(row[ep_idx.TYPE])}}))
                 except StopIteration:

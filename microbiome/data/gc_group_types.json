@@ -1,0 +1,169 @@
+{
+    "any": {
+        "sub-groups": [
+            "any"
+        ],
+        "types": [
+            "any"
+        ]
+    },
+    "numeric0": {
+        "sub-groups": [
+            "numeric1",
+            "numeric2",
+            "numeric3",
+            "numeric4",
+            "numeric5",
+            "numeric6",
+            "numeric7"
+        ],
+        "types": [
+            "bool",
+            "complex",
+            "complex128",
+            "complex64",
+            "float",
+            "float32",
+            "float64",
+            "int",
+            "int16",
+            "int32",
+            "int64",
+            "int8",
+            "uint16",
+            "uint32",
+            "uint64",
+            "uint8"
+        ]
+    },
+    "numeric1": {
+        "sub-groups": [
+            "numeric2",
+            "numeric4",
+            "numeric6",
+            "numeric7"
+        ],
+        "types": [
+            "complex",
+            "complex128",
+            "complex64",
+            "float",
+            "float32",
+            "float64",
+            "int",
+            "int16",
+            "int32",
+            "int64",
+            "int8",
+            "uint16",
+            "uint32",
+            "uint64",
+            "uint8"
+        ]
+    },
+    "numeric2": {
+        "sub-groups": [
+            "numeric4",
+            "numeric6"
+        ],
+        "types": [
+            "complex128",
+            "complex64",
+            "float",
+            "float32",
+            "float64",
+            "int",
+            "int16",
+            "int32",
+            "int64",
+            "int8",
+            "uint16",
+            "uint32",
+            "uint64",
+            "uint8"
+        ]
+    },
+    "numeric3": {
+        "sub-groups": [
+            "numeric4",
+            "numeric5",
+            "numeric6"
+        ],
+        "types": [
+            "bool",
+            "float",
+            "float32",
+            "float64",
+            "int",
+            "int16",
+            "int32",
+            "int64",
+            "int8",
+            "uint16",
+            "uint32",
+            "uint64",
+            "uint8"
+        ]
+    },
+    "numeric4": {
+        "sub-groups": [
+            "numeric6"
+        ],
+        "types": [
+            "float",
+            "float32",
+            "float64",
+            "int",
+            "int16",
+            "int32",
+            "int64",
+            "int8",
+            "uint16",
+            "uint32",
+            "uint64",
+            "uint8"
+        ]
+    },
+    "numeric5": {
+        "sub-groups": [
+            "numeric6"
+        ],
+        "types": [
+            "bool",
+            "int",
+            "int16",
+            "int32",
+            "int64",
+            "int8",
+            "uint16",
+            "uint32",
+            "uint64",
+            "uint8"
+        ]
+    },
+    "numeric6": {
+        "sub-groups": [],
+        "types": [
+            "int",
+            "int16",
+            "int32",
+            "int64",
+            "int8",
+            "uint16",
+            "uint32",
+            "uint64",
+            "uint8"
+        ]
+    },
+    "numeric7": {
+        "sub-groups": [],
+        "types": [
+            "complex",
+            "complex128",
+            "complex64",
+            "float",
+            "float32",
+            "float64"
+        ]
+    }
+}

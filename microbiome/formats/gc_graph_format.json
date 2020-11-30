@@ -1,24 +1,44 @@
 
 {
     "A": {
+        "meta": {
+            "gc_type": "gc_graph_row_a",
+            "settable": true
+        },
         "required": false,
         "type": "list",
         "schema": {
+            "meta": {
+                "gc_type": "gc_graph_row_a_src_ep",
+                "settable": true
+            },
             "type": "list",
             "minlength": 3,
             "maxlength": 3,
             "items": [
                 {
+                    "meta": {
+                        "gc_type": "gc_graph_row_a_src_row",
+                        "settable": true
+                    },
                     "type": "string",
                     "allowed": ["I", "C"]
                 },
                 {
+                    "meta": {
+                        "gc_type": "ubyte",
+                        "settable": true
+                    },
                     "type": "integer",
                     "min": 0,
-                    "max": 256,
+                    "max": 255,
                     "check_with": "valid_index"
                 },
                 {
+                    "meta": {
+                        "gc_type": "gc_type",
+                        "settable": true
+                    },
                     "type": ["integer", "string"],
                     "min": -32768,
                     "max": 32767,
@@ -28,24 +48,44 @@
         }
     },
     "B": {
+        "meta": {
+            "gc_type": "gc_graph_row_b",
+            "settable": true
+        },
         "required": false,
         "type": "list",
         "schema": {
+            "meta": {
+                "gc_type": "gc_graph_row_b_src_ep",
+                "settable": true
+            },
             "type": "list",
             "minlength": 3,
             "maxlength": 3,
             "items": [
                 {
+                    "meta": {
+                        "gc_type": "gc_graph_row_b_src_ep",
+                        "settable": true
+                    },
                     "type": "string",
                     "allowed": ["I", "C", "A"]
                 },
                 {
+                    "meta": {
+                        "gc_type": "ubyte",
+                        "settable": true
+                    },
                     "type": "integer",
                     "min": 0,
-                    "max": 256,
+                    "max": 255,
                     "check_with": "valid_index"
                 },
                 {
+                    "meta": {
+                        "gc_type": "gc_type",
+                        "settable": true
+                    },
                     "type": ["integer", "string"],
                     "min": -32768,
                     "max": 32767,
@@ -55,20 +95,36 @@
         }
     },
     "C": {
+        "meta": {
+            "gc_type": "gc_graph_row_c",
+            "settable": true
+        },
         "required": false,
         "type": "list",
         "schema": {
+            "meta": {
+                "gc_type": "gc_graph_row_c_src_ep",
+                "settable": true
+            },
             "type": "list",
-            "minlength": 3,
-            "maxlength": 3,
+            "minlength": 2,
+            "maxlength": 2,
             "items": [
                 {
+                    "meta": {
+                        "gc_type": "gc_type",
+                        "settable": true
+                    },
                     "type": ["integer", "string"],
                     "min": -32768,
                     "max": 32767,
                     "check_with": "valid_constant_type"
                 },
                 {
+                    "meta": {
+                        "gc_type": "string",
+                        "settable": true
+                    },
                     "type": "string",
                     "check_with": "valid_value"
                 }
@@ -76,24 +132,44 @@
         }
     },
     "U": {
+        "meta": {
+            "gc_type": "gc_graph_row_u",
+            "settable": false
+        },
         "required": false,
         "type": "list",
         "schema": {
+            "meta": {
+                "gc_type": "gc_graph_row_u_src_ep",
+                "settable": true
+            },
             "type": "list",
             "minlength": 3,
             "maxlength": 3,
             "items": [
                 {
+                    "meta": {
+                        "gc_type": "gc_graph_row_u_src_ep",
+                        "settable": true
+                    },
                     "type": "string",
                     "allowed": ["I", "C", "A", "B"]
                 },
                 {
+                    "meta": {
+                        "gc_type": "ubyte",
+                        "settable": true
+                    },
                     "type": "integer",
                     "min": 0,
-                    "max": 256,
+                    "max": 255,
                     "check_with": "valid_index"
                 },
                 {
+                    "meta": {
+                        "gc_type": "gc_type",
+                        "settable": true
+                    },
                     "type": ["integer", "string"],
                     "min": -32768,
                     "max": 32767,
@@ -103,24 +179,44 @@
         }
     },
     "O": {
+        "meta": {
+            "gc_type": "gc_graph_row_o",
+            "settable": true
+        },
         "required": true,
         "type": "list",
         "schema": {
+            "meta": {
+                "gc_type": "gc_graph_row_op_src_ep",
+                "settable": true
+            },
             "type": "list",
             "minlength": 3,
             "maxlength": 3,
             "items": [
                 {
+                    "meta": {
+                        "gc_type": "gc_graph_row_op_src_ep",
+                        "settable": true
+                    },
                     "type": "string",
                     "allowed": ["I", "C", "A", "B"]
                 },
                 {
+                    "meta": {
+                        "gc_type": "ubyte",
+                        "settable": true
+                    },
                     "type": "integer",
                     "min": 0,
-                    "max": 256,
+                    "max": 255,
                     "check_with": "valid_index"
                 },
                 {
+                    "meta": {
+                        "gc_type": "gc_type",
+                        "settable": true
+                    },
                     "type": ["integer", "string"],
                     "min": -32768,
                     "max": 32767,
@@ -130,24 +226,44 @@
         }
     },
     "P": {
+        "meta": {
+            "gc_type": "gc_graph_row_p",
+            "settable": true
+        },
         "required": false,
         "type": "list",
         "schema": {
+            "meta": {
+                "gc_type": "gc_graph_row_op_src_ep",
+                "settable": true
+            },
             "type": "list",
             "minlength": 3,
             "maxlength": 3,
             "items": [
                 {
+                    "meta": {
+                        "gc_type": "gc_graph_row_op_src_ep",
+                        "settable": true
+                    },
                     "type": "string",
                     "allowed": ["I", "C", "A", "B"]
                 },
                 {
+                    "meta": {
+                        "gc_type": "ubyte",
+                        "settable": true
+                    },
                     "type": "integer",
                     "min": 0,
-                    "max": 256,
+                    "max": 255,
                     "check_with": "valid_index"
                 },
                 {
+                    "meta": {
+                        "gc_type": "gc_type",
+                        "settable": true
+                    },
                     "type": ["integer", "string"],
                     "min": -32768,
                     "max": 32767,
@@ -157,28 +273,48 @@
         }
     },
     "F": {
+        "meta": {
+            "gc_type": "gc_graph_row_f",
+            "settable": true
+        },
         "required": false,
         "type": "list",
         "minlength": 1,
         "maxlength": 1,
         "schema": {
+            "meta": {
+                "gc_type": "gc_graph_row_f_src_ep",
+                "settable": true
+            },
             "type": "list",
             "minlength": 3,
             "maxlength": 3,
             "items": [
                 {
+                    "meta": {
+                        "gc_type": "gc_graph_row_f_src_ep",
+                        "settable": true
+                    },
                     "type": "string",
                     "allowed": ["I"]
                 },
                 {
+                    "meta": {
+                        "gc_type": "ubyte",
+                        "settable": true
+                    },
                     "type": "integer",
                     "min": 0,
-                    "max": 256,
+                    "max": 255,
                     "check_with": "valid_index"
                 },
                 {
+                    "meta": {
+                        "gc_type": "bool",
+                        "settable": true
+                    },
                     "type": ["integer", "string"],
-                    "allowed": ["obj129", "16900"]
+                    "allowed": ["bool", "16900"]
                 }
             ]
         }

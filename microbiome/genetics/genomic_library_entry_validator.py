@@ -17,7 +17,7 @@ from pprint import pformat
 from cerberus import Validator
 
 from .gc_graph import gc_graph
-from .gc_type import validate, last_validation_error, asint, UNKNOWN_TYPE
+from .gc_type import validate, asint, INVALID_NAME, INVALID_VALUE
 
 NULL_GC = "0" * 64
 DEAD_GC_PREFIX = "deadbeef000000000000000000000000"
@@ -103,8 +103,8 @@ class _genomic_library_entry_validator(Validator):
 
 
     def _check_with_valid_gc_type(self, field, value):
-        if not validate(value):
-            self._error(field, last_validation_error())
+        if not validate(value) and value != INVALID_VALUE:
+            self._error(field, 'Does not exist')
 
 
     def _check_with_valid_inline(self, field, value):
@@ -141,13 +141,13 @@ class _genomic_library_entry_validator(Validator):
             if pr != 'C':
                 for r, i, t in document["graph"][pr]:
                     if r == row and i == idx: return asint(t)
-        return UNKNOWN_TYPE
+        return INVALID_VALUE
 
 
     def _get_out_gc_type(self, document, idx):
         for r, i, t in document["graph"]["O"]:
             if i == idx: return asint(t)
-        return UNKNOWN_TYPE
+        return INVALID_VALUE
 
 
     def _normalize_default_setter_set_input0(self, document): return self._get_in_gc_type(document, 'I', 0)

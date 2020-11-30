@@ -2,12 +2,15 @@
     "graph": {
         "meta": {
             "database": {
+                "null": true,
                 "type": "BYTEA"
             },
             "definition": {
                 "location": ["WORKER"],
                 "immutable": true
             },
+            "gc_type": "gc_graph",
+            "settable": true,
             "compressed": true,
             "description": "Defines the sub-codes of the genetic code and how they are connected together."
         },
@@ -25,6 +28,8 @@
                 "location": ["WORKER"],
                 "immutable": true
             },
+            "gc_type": "gc_signature",
+            "settable": false,
             "sha256": true,
             "description": "Unique identifier for this genetic code."
         },
@@ -37,17 +42,19 @@
     "gca": {
         "meta": {
             "database": {
+                "null": true,
                 "type": "BYTEA"
             },
             "definition": {
                 "location": ["WORKER"],
                 "immutable": true
             },
+            "gc_type": "gc_signature",
+            "settable": true,
             "sha256": true,
             "description": "The signature of Genetic Code A or the 'zero entry' if this genetic code is a codon. Its connectivity to the Inputs, Constants, genetic code B and outputs are defined in the 'graph'."
         },
         "type": "string",
-        "required": true,
         "minlength": 64,
         "maxlength": 64,
         "regex": "[0-9a-f]{64}",
@@ -56,17 +63,19 @@
     "gcb": {
         "meta": {
             "database": {
+                "null": true,
                 "type": "BYTEA"
             },
             "definition": {
                 "location": ["WORKER"],
                 "immutable": true
             },
+            "gc_type": "gc_signature",
+            "settable": true,
             "sha256": true,
             "description": "The signature of Genetic Code B or the 'zero entry' if it is not connected to anything. Connectivity to the Inputs, Constants, genetic code A and outputs are defined in the 'graph'."
         },
         "type": "string",
-        "required": true,
         "minlength": 64,
         "maxlength": 64,
         "regex": "[0-9a-f]{64}",
@@ -81,6 +90,8 @@
                 "location": ["WORKER"],
                 "immutable": false
             },
+            "gc_type": "int64",
+            "settable": false,
             "description": "The number of times this code is referenced in other codes. If this code is referenced by code A once and no other then the reference count is 1. If genetic code X is then referenced by genetic code Y this code is referenced by both X & Y (through X) and the count is 2."
         },
         "type": "integer",
@@ -90,12 +101,15 @@
     "generation": {
         "meta": {
             "database": {
+                "null": true,
                 "type": "BIGINT"
             },
             "definition": {
                 "location": ["WORKER"],
                 "immutable": false
             },
+            "gc_type": "int64",
+            "settable": false,
             "description": "The number of generations of genetic code evolved to create this code. A codon is generation always generation 1. This value may change if the creator changes."
         },
         "type": "integer",
@@ -105,12 +119,15 @@
     "code_depth": {
         "meta": {
             "database": {
+                "null": true,
                 "type": "INTEGER"
             },
             "definition": {
                 "location": ["WORKER"],
                 "immutable": true
             },
+            "gc_type": "int32",
+            "settable": false,
             "description": "The depth of the code vertex graph." 
         },
         "type": "integer",
@@ -120,12 +137,15 @@
     "codon_depth": {
         "meta": {
             "database": {
+                "null": true,
                 "type": "INTEGER"
             },
             "definition": {
                 "location": ["WORKER"],
                 "immutable": true
             },
+            "gc_type": "int32",
+            "settable": false,
             "description": "The depth of the graph after expansion to codon vertices."
         },
         "type": "integer",
@@ -135,12 +155,15 @@
     "num_codes": {
         "meta": {
             "database": {
+                "null": true,
                 "type": "INTEGER"
             },
             "definition": {
                 "location": ["WORKER"],
                 "immutable": true
             },
+            "gc_type": "int32",
+            "settable": false,
             "description": "The number of vertices in the code vertex graph."
         },
         "type": "integer",
@@ -150,12 +173,15 @@
     "num_unique_codes": {
         "meta": {
             "database": {
+                "null": true,
                 "type": "INTEGER"
             },
             "definition": {
                 "location": ["WORKER"],
                 "immutable": true
             },
+            "gc_type": "int32",
+            "settable": false,
             "description": "The number of unique codes in the code vertex graph."
         },
         "type": "integer",
@@ -165,12 +191,15 @@
     "raw_num_codons": {
         "meta": {
             "database": {
+                "null": true,
                 "type": "INTEGER"
             },
             "definition": {
                 "location": ["WORKER"],
                 "immutable": true
             },
+            "gc_type": "int32",
+            "settable": false,
             "description": "The number of verticies in the codon vertex graph."
         },
         "type": "integer",
@@ -180,12 +209,15 @@
     "opt_num_codons": {
         "meta": {
             "database": {
+                "null": true,
                 "type": "INTEGER"
             },
             "definition": {
                 "location": ["WORKER"],
                 "immutable": false
             },
+            "gc_type": "int32",
+            "settable": false,
             "description": "The number of verticies in the codon vertex graph after optimisation. As optimisations improve this value may change."
         },
         "type": "integer",
@@ -195,12 +227,15 @@
     "num_inputs": {
         "meta": {
             "database": {
-                "type": "INTEGER"
+                "null": true,
+                "type": "SMALLINT"
             },
             "definition": {
                 "location": ["WORKER"],
                 "immutable": true
             },
+            "gc_type": "int16",
+            "settable": false,
             "description": "The number of inputs to the code."
         },
         "type": "integer",
@@ -210,148 +245,175 @@
     "input0_type": {
         "meta": {
             "database": {
-                "type": "SMALLINT"
-            },
-            "definition": {
-                "location": ["WORKER"],
-                "immutable": true
-            },
-            "description": "The Genetic Code Type Definition for input 0."
-        },
-        "type": "integer",
-        "min": -32768,
-        "max": 32767,
-        "check_with": "valid_gc_type",
-        "default_setter": "set_input0"
-    },
-    "input1_type": {
-        "meta": {
-            "database": {
-                "type": "SMALLINT"
-            },
-            "definition": {
-                "location": ["WORKER"],
-                "immutable": true
-            },
-            "description": "The Genetic Code Type Definition for input 1."
-        },
-        "type": "integer",
-        "min": -32768,
-        "max": 32767,
-        "check_with": "valid_gc_type",
-        "default_setter": "set_input1"
-    },
-    "input2_type": {
-        "meta": {
-            "database": {
-                "type": "SMALLINT"
-            },
-            "definition": {
-                "location": ["WORKER"],
-                "immutable": true
-            },
-            "description": "The Genetic Code Type Definition for input 2."
-        },
-        "type": "integer",
-        "min": -32768,
-        "max": 32767,
-        "check_with": "valid_gc_type",
-        "default_setter": "set_input2"
-    },
-    "input3_type": {
-        "meta": {
-            "database": {
-                "type": "SMALLINT"
-            },
-            "definition": {
-                "location": ["WORKER"],
-                "immutable": true
-            },
-            "description": "The Genetic Code Type Definition for input 3."
-        },
-        "type": "integer",
-        "min": -32768,
-        "max": 32767,
-        "check_with": "valid_gc_type",
-        "default_setter": "set_input3"
-    },
-    "input4_type": {
-        "meta": {
-            "database": {
-                "type": "SMALLINT"
-            },
-            "definition": {
-                "location": ["WORKER"],
-                "immutable": true
-            },
-            "description": "The Genetic Code Type Definition for input 4."
-        },
-        "type": "integer",
-        "min": -32768,
-        "max": 32767,
-        "check_with": "valid_gc_type",
-        "default_setter": "set_input4"
-    },
-    "input5_type": {
-        "meta": {
-            "database": {
-                "type": "SMALLINT"
-            },
-            "definition": {
-                "location": ["WORKER"],
-                "immutable": true
-            },
-            "description": "The Genetic Code Type Definition for input 5."
-        },
-        "type": "integer",
-        "min": -32768,
-        "max": 32767,
-        "check_with": "valid_gc_type",
-        "default_setter": "set_input5"
-    },
-    "input6_type": {
-        "meta": {
-            "database": {
-                "type": "SMALLINT"
-            },
-            "definition": {
-                "location": ["WORKER"],
-                "immutable": true
-            },
-            "description": "The Genetic Code Type Definition for input 6."
-        },
-        "type": "integer",
-        "min": -32768,
-        "max": 32767,
-        "check_with": "valid_gc_type",
-        "default_setter": "set_input6"
-    },
-    "input7_type": {
-        "meta": {
-            "database": {
-                "type": "SMALLINT"
-            },
-            "definition": {
-                "location": ["WORKER"],
-                "immutable": true
-            },
-            "description": "The Genetic Code Type Definition for input 7."
-        },
-        "type": "integer",
-        "min": -32768,
-        "max": 32767,
-        "check_with": "valid_gc_type",
-        "default_setter": "set_input7"
-    },
-    "num_outputs": {
-        "meta": {
-            "database": {
+                "null": true,
                 "type": "INTEGER"
             },
             "definition": {
                 "location": ["WORKER"],
                 "immutable": true
             },
+            "gc_type": "int32",
+            "settable": false,
+            "description": "The Genetic Code Type Definition for input 0."
+        },
+        "type": "integer",
+        "min": -2147483648,
+        "max": 2147483647,
+        "check_with": "valid_gc_type",
+        "default_setter": "set_input0"
+    },
+    "input1_type": {
+        "meta": {
+            "database": {
+                "null": true,
+                "type": "INTEGER"
+            },
+            "definition": {
+                "location": ["WORKER"],
+                "immutable": true
+            },
+            "gc_type": "int32",
+            "settable": false,
+            "description": "The Genetic Code Type Definition for input 1."
+        },
+        "type": "integer",
+        "min": -2147483648,
+        "max": 2147483647,
+        "check_with": "valid_gc_type",
+        "default_setter": "set_input1"
+    },
+    "input2_type": {
+        "meta": {
+            "database": {
+                "null": true,
+                "type": "INTEGER"
+            },
+            "definition": {
+                "location": ["WORKER"],
+                "immutable": true
+            },
+            "gc_type": "int32",
+            "settable": false,
+            "description": "The Genetic Code Type Definition for input 2."
+        },
+        "type": "integer",
+        "min": -2147483648,
+        "max": 2147483647,
+        "check_with": "valid_gc_type",
+        "default_setter": "set_input2"
+    },
+    "input3_type": {
+        "meta": {
+            "database": {
+                "null": true,
+                "type": "INTEGER"
+            },
+            "definition": {
+                "location": ["WORKER"],
+                "immutable": true
+            },
+            "gc_type": "int32",
+            "settable": false,
+            "description": "The Genetic Code Type Definition for input 3."
+        },
+        "type": "integer",
+        "min": -2147483648,
+        "max": 2147483647,
+        "check_with": "valid_gc_type",
+        "default_setter": "set_input3"
+    },
+    "input4_type": {
+        "meta": {
+            "database": {
+                "null": true,
+                "type": "INTEGER"
+            },
+            "definition": {
+                "location": ["WORKER"],
+                "immutable": true
+            },
+            "gc_type": "int32",
+            "settable": false,
+            "description": "The Genetic Code Type Definition for input 4."
+        },
+        "type": "integer",
+        "min": -2147483648,
+        "max": 2147483647,
+        "check_with": "valid_gc_type",
+        "default_setter": "set_input4"
+    },
+    "input5_type": {
+        "meta": {
+            "database": {
+                "null": true,
+                "type": "INTEGER"
+            },
+            "definition": {
+                "location": ["WORKER"],
+                "immutable": true
+            },
+            "gc_type": "int32",
+            "settable": false,
+            "description": "The Genetic Code Type Definition for input 5."
+        },
+        "type": "integer",
+        "min": -2147483648,
+        "max": 2147483647,
+        "check_with": "valid_gc_type",
+        "default_setter": "set_input5"
+    },
+    "input6_type": {
+        "meta": {
+            "database": {
+                "null": true,
+                "type": "INTEGER"
+            },
+            "definition": {
+                "location": ["WORKER"],
+                "immutable": true
+            },
+            "gc_type": "int32",
+            "settable": false,
+            "description": "The Genetic Code Type Definition for input 6."
+        },
+        "type": "integer",
+        "min": -2147483648,
+        "max": 2147483647,
+        "check_with": "valid_gc_type",
+        "default_setter": "set_input6"
+    },
+    "input7_type": {
+        "meta": {
+            "database": {
+                "null": true,
+                "type": "INTEGER"
+            },
+            "definition": {
+                "location": ["WORKER"],
+                "immutable": true
+            },
+            "gc_type": "int32",
+            "settable": false,
+            "description": "The Genetic Code Type Definition for input 7."
+        },
+        "type": "integer",
+        "min": -2147483648,
+        "max": 2147483647,
+        "check_with": "valid_gc_type",
+        "default_setter": "set_input7"
+    },
+    "num_outputs": {
+        "meta": {
+            "database": {
+                "null": true,
+                "type": "SMALLINT"
+            },
+            "definition": {
+                "location": ["WORKER"],
+                "immutable": true
+            },
+            "gc_type": "int16",
+            "settable": false,
             "description": "The number of outputs to the code."
         },
         "type": "integer",
@@ -361,80 +423,95 @@
     "output0_type": {
         "meta": {
             "database": {
-                "type": "SMALLINT"
+                "null": true,
+                "type": "INTEGER"
             },
             "definition": {
                 "location": ["WORKER"],
                 "immutable": true
             },
+            "gc_type": "int32",
+            "settable": false,
             "description": "The Genetic Code Type Definition for output 0."
         },
         "type": "integer",
-        "min": -32768,
-        "max": 32767,
+        "min": -2147483648,
+        "max": 2147483647,
         "check_with": "valid_gc_type",
         "default_setter": "set_output0"
     },
     "output1_type": {
         "meta": {
             "database": {
-                "type": "SMALLINT"
+                "null": true,
+                "type": "INTEGER"
             },
             "definition": {
                 "location": ["WORKER"],
                 "immutable": true
             },
+            "gc_type": "int32",
+            "settable": false,
             "description": "The Genetic Code Type Definition for output 1."
         },
         "type": "integer",
-        "min": -32768,
-        "max": 32767,
+        "min": -2147483648,
+        "max": 2147483647,
         "check_with": "valid_gc_type",
         "default_setter": "set_output1"
     },
     "output2_type": {
         "meta": {
             "database": {
-                "type": "SMALLINT"
+                "null": true,
+                "type": "INTEGER"
             },
             "definition": {
                 "location": ["WORKER"],
                 "immutable": true
             },
+            "gc_type": "int32",
+            "settable": false,
             "description": "The Genetic Code Type Definition for output 2."
         },
         "type": "integer",
-        "min": -32768,
-        "max": 32767,
+        "min": -2147483648,
+        "max": 2147483647,
         "check_with": "valid_gc_type",
         "default_setter": "set_output2"
     },
     "output3_type": {
         "meta": {
             "database": {
-                "type": "SMALLINT"
+                "null": true,
+                "type": "INTEGER"
             },
             "definition": {
                 "location": ["WORKER"],
                 "immutable": true
             },
+            "gc_type": "int32",
+            "settable": false,
             "description": "The Genetic Code Type Definition for output 3."
         },
         "type": "integer",
-        "min": -32768,
-        "max": 32767,
+        "min": -2147483648,
+        "max": 2147483647,
         "check_with": "valid_gc_type",
         "default_setter": "set_output3"
     },
     "alpha_class": {
         "meta": {
             "database": {
+                "null": true,
                 "type": "BIGINT"
             },
             "definition": {
                 "location": ["WORKER"],
                 "immutable": false
             },
+            "gc_type": "int64",
+            "settable": true,
             "description": "The classification of the genetic code."
         },
         "type": "integer",
@@ -444,12 +521,15 @@
     "beta_class": {
         "meta": {
             "database": {
+                "null": true,
                 "type": "BIGINT"
             },
             "definition": {
                 "location": ["WORKER"],
                 "immutable": false
             },
+            "gc_type": "int64",
+            "settable": false,
             "description": "The classification of the genetic code."
         },
         "type": "integer",
@@ -464,24 +544,101 @@
                 "location": ["BIOME"],
                 "immutable": false
             },
+            "gc_type": "gc_properties",
+            "settable": false,
             "description": "The properties of the inputs & outputs",
             "codec": {
                 "extended": 0,
-                "arithmetic": 1,
-                "logical": 2
+                "constant": 1,
+                "conditional": 2,
+                "deterministic": 3,
+                "memory_modify": 4,
+                "object_modify": 5,
+                "physical": 6,
+                "arithmetic": 16,
+                "logical": 17,
+                "bitwise": 18
             }
         },
         "type": "dict",
         "schema": {
             "extended": {
+                "meta": {
+                    "gc_type": "bool",
+                    "settable": false
+                },
+                "type": "boolean",
+                "default": false
+            },
+            "constant": {
+                "meta": {
+                    "gc_type": "bool",
+                    "settable": false
+                },
+                "type": "boolean",
+                "default": false
+            },
+            "conditional": {
+                "meta": {
+                    "gc_type": "bool",
+                    "settable": false
+                },
+                "type": "boolean",
+                "default": false
+            },
+            "deterministic": {
+                "meta": {
+                    "gc_type": "bool",
+                    "settable": false
+                },
+                "type": "boolean",
+                "default": false
+            },
+            "memory_modify": {
+                "meta": {
+                    "gc_type": "bool",
+                    "settable": false
+                },
+                "type": "boolean",
+                "default": false
+            },
+            "object_modify": {
+                "meta": {
+                    "gc_type": "bool",
+                    "settable": false
+                },
+                "type": "boolean",
+                "default": false
+            },
+            "physical": {
+                "meta": {
+                    "gc_type": "bool",
+                    "settable": false
+                },
                 "type": "boolean",
                 "default": false
             },
             "arithmetic": {
+                "meta": {
+                    "gc_type": "bool",
+                    "settable": false
+                },
                 "type": "boolean",
                 "default": false                
             },
             "logical": {
+                "meta": {
+                    "gc_type": "bool",
+                    "settable": false
+                },
+                "type": "boolean",
+                "default": false                
+            },
+            "bitwise": {
+                "meta": {
+                    "gc_type": "bool",
+                    "settable": false
+                },
                 "type": "boolean",
                 "default": false                
             }
@@ -497,6 +654,8 @@
                 "location": ["WORKER"],
                 "immutable": false
             },
+            "gc_type": "double",
+            "settable": false,
             "description": "A measure of success of the genetic code. The higher the better."
         },
         "type": "float",
@@ -512,6 +671,8 @@
                 "location": ["WORKER"],
                 "immutable": false
             },
+            "gc_type": "double",
+            "settable": false,
             "description": "A measure of success of the genetic codes descendants. The higher the better."
         },
         "type": "float",
@@ -527,6 +688,8 @@
                 "location": ["BIOME"],
                 "immutable": false
             },
+            "gc_type": "gc_creator",
+            "settable": false,
             "sha256": true,
             "description": "The UUID identifying the creator. If the genetic code has been created in another microbiome at an earlier time then this field will be updated."
         },
@@ -545,6 +708,8 @@
                 "location": ["WORKER"],
                 "immutable": false
             },
+            "gc_type": "timestamp",
+            "settable": false,
             "description": "The date and time of the last modification to this genetic code."
         },
         "type": "string",
@@ -563,6 +728,8 @@
                 "location": ["WORKER"],
                 "immutable": true
             },
+            "gc_type": "timestamp",
+            "settable": false,
             "description": "The date and time of the codes creation. If the genetic code has been created in another microbiome at an earlier time then this field will be updated."
         },
         "type": "string",
@@ -607,19 +774,6 @@
                         "minlength": 64,
                         "maxlength": 64,
                         "regex": "[0-9a-f]{64}"
-                    }
-                }
-            },
-            "output_rules": {
-                "type": "dict",
-                "schema": {
-                    "keys": {
-                        "type": "integer",
-                        "min": 0,
-                        "max": 256
-                    },
-                    "values": {
-                        "allowed": ["c_type_promotion"]
                     }
                 }
             },
