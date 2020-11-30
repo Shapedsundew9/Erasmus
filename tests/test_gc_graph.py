@@ -73,7 +73,7 @@ def random_type(p=0.0):
     -------
     (str) The selected type string.
     """
-    if random() < p: return choice(('gc', 'int', 'float', 'bool', 'str'))
+    if random() < p: return choice(('gc', 'numeric0', 'numeric6', 'numeric7', 'numeric3'))
     return 'int'
 
 
@@ -123,7 +123,9 @@ def random_graph(p=0.0, must_be_valid=False):
                 if row in SOURCE_ROWS:
                     for i in range(sources[row]):
                         ep = [SRC_EP, row, i, source_types.pop(), []]
-                        if row == 'C': ep.append(ep[3] + '(' + str(randint(-1000, 1000)) + ')')
+                        if row == 'C': 
+                            ep.append('int(' + str(randint(-1000, 1000)) + ')')
+                            ep[3] = 'int'
                         graph._add_ep(ep)
 
         for _ in range(len(list(filter(graph.dst_filter(), graph.graph.values())))): graph.random_add_connection()
@@ -238,7 +240,7 @@ def test_stack(test):
     # TODO: These random test cases need to be made static when we are confident in them.
     # Generate them into a JSON file.
     global none_limit
-    if not test: none_limit = 50
+    if not test: none_limit = 500
 
     gA = random_graph(0.5, True)
     gB = random_graph(0.5, True)

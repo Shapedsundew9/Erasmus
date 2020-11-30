@@ -22,8 +22,8 @@ with open(join(dirname(__file__), "data/test_glib_config.json"), "r") as file_pt
 
 NON_EXISTANT_SHA256 = "abcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcd"
 ANOTHER_NON_EXISTANT_SHA256 = "0123456789012345678901234567890123456789012345678901234567890123"
-KNOWN_GOOD_SIGNATURE = "1e3595731a3915c541b8b58eece28de636898e6d46193268570b39eb8ffb5e0c"
-KNOWN_GOOD_SIGNATURE_NAME = "negate"
+KNOWN_GOOD_SIGNATURE = "d6b77650ce17799265490e4897d550d3f856cc73f7b7e321a948e368a5d2ea7f"
+KNOWN_GOOD_SIGNATURE_NAME = "right shift"
 
 
 basicConfig(
@@ -74,7 +74,7 @@ def test_len(glib):
 def test_getitem_found(glib):
     """Test __getitem__().
     
-    Load the negate GC codon by its hash and chack the name is correct. 
+    Load the negate GC codon by its hash and check the name is correct. 
     """
     gc = glib[KNOWN_GOOD_SIGNATURE]
     assert gc['meta_data']['name'] == KNOWN_GOOD_SIGNATURE_NAME
