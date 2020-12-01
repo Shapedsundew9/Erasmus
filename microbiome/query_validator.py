@@ -34,7 +34,8 @@ class query_validator():
 
     def __init__(self, table_schema, table_name=""):
         self.table_name = table_name
-        validation_schema = {k: self._query_params(v) for k, v in filter(lambda kv: not kv[1]['meta']['compressed'], table_schema.items())}
+        queriable_fields = filter(lambda kv: not 'compressed' in kv[1]['meta'] or not kv[1]['meta']['compressed'], table_schema.items())
+        validation_schema = {k: self._query_params(v) for k, v in queriable_fields}
         validation_schema.update(query_validator._QUERY_BASE_SCHEMA)
         validation_schema['order by']['allowed'] = [k for k, v in filter(lambda kv: kv[1]['meta']['database']['type'] != 'BYTEA', table_schema.items())]
         self._validator = Validator(validation_schema)

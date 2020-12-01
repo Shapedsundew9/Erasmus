@@ -36,7 +36,8 @@ GC_TYPE_GET_CODON = {
         ]
     },
     "properties": {
-        "physical": True
+        "physical": True,
+        "deterministic": True
     },
     "meta_data": {
         "name": "Get {} {} field.",
@@ -67,7 +68,8 @@ GC_TYPE_SET_CODON = {
     },
     "properties": {
         "physical": True,
-        "object_modify": True
+        "object_modify": True,
+        "deterministic": True
     },
     "meta_data": {
         "name": "Set {} {} field.",
@@ -128,7 +130,7 @@ def generate_list_codons(value, parent_type):
             codon_list.append(codon)
         if value['type'] == 'dict' and 'schema' in value:
             codon_list.extend(generate_dict_codons(value['schema'], value['meta']['gc_type']))
-        if value['type'] == 'list' and 'items' in value['schema']:
+        if value['type'] == 'list'  and 'schema' in value and 'items' in value['schema']:
             codon_list.extend(generate_list_codons(value['schema']['items'], value['meta']['gc_type']))
     return codon_list
 
@@ -178,9 +180,11 @@ for filename in map(lambda x: join(args.directory, x), REQUIRED_FILES):
     if error: exit()
     codon_list.extend(generate_dict_codons(data, 'gc'))
 
-with open(join(args.directory, REQUIRED_FILES[0]), 'r') as filename: qv = query_validator(load(filename))
-print(pformat(qv.validation_schema))
-codon_list.extend(generate_codons(data, 'gc_query'))
+with open(join(args.directory, REQUIRED_FILES[0]), 'r') as filename:
+    print(filename)
+    qv = query_validator(load(filename))
+print(pformat(qv._validator.schema))
+codon_list.extend(generate_dict_codons(qv._validator.schema, 'gc_query'))
     
 nentries = []
 while codon_list: nentries.append(genomic_library_entry_validator.normalized(codon_list.pop()))

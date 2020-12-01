@@ -30,6 +30,7 @@
             },
             "gc_type": "gc_signature",
             "settable": false,
+            "compressed": false,
             "sha256": true,
             "description": "Unique identifier for this genetic code."
         },
@@ -51,6 +52,7 @@
             },
             "gc_type": "gc_signature",
             "settable": true,
+            "compressed": false,
             "sha256": true,
             "description": "The signature of Genetic Code A or the 'zero entry' if this genetic code is a codon. Its connectivity to the Inputs, Constants, genetic code B and outputs are defined in the 'graph'."
         },
@@ -72,6 +74,7 @@
             },
             "gc_type": "gc_signature",
             "settable": true,
+            "compressed": false,
             "sha256": true,
             "description": "The signature of Genetic Code B or the 'zero entry' if it is not connected to anything. Connectivity to the Inputs, Constants, genetic code A and outputs are defined in the 'graph'."
         },
@@ -91,6 +94,7 @@
                 "immutable": false
             },
             "gc_type": "int64",
+            "compressed": false,
             "settable": false,
             "description": "The number of times this code is referenced in other codes. If this code is referenced by code A once and no other then the reference count is 1. If genetic code X is then referenced by genetic code Y this code is referenced by both X & Y (through X) and the count is 2."
         },
@@ -109,6 +113,7 @@
                 "immutable": false
             },
             "gc_type": "int64",
+            "compressed": false,
             "settable": false,
             "description": "The number of generations of genetic code evolved to create this code. A codon is generation always generation 1. This value may change if the creator changes."
         },
@@ -127,6 +132,7 @@
                 "immutable": true
             },
             "gc_type": "int32",
+            "compressed": false,
             "settable": false,
             "description": "The depth of the code vertex graph." 
         },
@@ -146,6 +152,7 @@
             },
             "gc_type": "int32",
             "settable": false,
+            "compressed": false,
             "description": "The depth of the graph after expansion to codon vertices."
         },
         "type": "integer",
@@ -182,6 +189,7 @@
             },
             "gc_type": "int32",
             "settable": false,
+            "compressed": false,
             "description": "The number of unique codes in the code vertex graph."
         },
         "type": "integer",
@@ -200,6 +208,7 @@
             },
             "gc_type": "int32",
             "settable": false,
+            "compressed": false,
             "description": "The number of verticies in the codon vertex graph."
         },
         "type": "integer",
@@ -218,6 +227,7 @@
             },
             "gc_type": "int32",
             "settable": false,
+            "compressed": false,
             "description": "The number of verticies in the codon vertex graph after optimisation. As optimisations improve this value may change."
         },
         "type": "integer",
@@ -236,6 +246,7 @@
             },
             "gc_type": "int16",
             "settable": false,
+            "compressed": false,
             "description": "The number of inputs to the code."
         },
         "type": "integer",
@@ -254,6 +265,7 @@
             },
             "gc_type": "int32",
             "settable": false,
+            "compressed": false,
             "description": "The Genetic Code Type Definition for input 0."
         },
         "type": "integer",
@@ -274,6 +286,7 @@
             },
             "gc_type": "int32",
             "settable": false,
+            "compressed": false,
             "description": "The Genetic Code Type Definition for input 1."
         },
         "type": "integer",
@@ -294,6 +307,7 @@
             },
             "gc_type": "int32",
             "settable": false,
+            "compressed": false,
             "description": "The Genetic Code Type Definition for input 2."
         },
         "type": "integer",
@@ -314,6 +328,7 @@
             },
             "gc_type": "int32",
             "settable": false,
+            "compressed": false,
             "description": "The Genetic Code Type Definition for input 3."
         },
         "type": "integer",
@@ -334,6 +349,7 @@
             },
             "gc_type": "int32",
             "settable": false,
+            "compressed": false,
             "description": "The Genetic Code Type Definition for input 4."
         },
         "type": "integer",
@@ -354,6 +370,7 @@
             },
             "gc_type": "int32",
             "settable": false,
+            "compressed": false,
             "description": "The Genetic Code Type Definition for input 5."
         },
         "type": "integer",
@@ -374,6 +391,7 @@
             },
             "gc_type": "int32",
             "settable": false,
+            "compressed": false,
             "description": "The Genetic Code Type Definition for input 6."
         },
         "type": "integer",
@@ -394,6 +412,7 @@
             },
             "gc_type": "int32",
             "settable": false,
+            "compressed": false,
             "description": "The Genetic Code Type Definition for input 7."
         },
         "type": "integer",
@@ -414,6 +433,7 @@
             },
             "gc_type": "int16",
             "settable": false,
+            "compressed": false,
             "description": "The number of outputs to the code."
         },
         "type": "integer",
@@ -432,6 +452,7 @@
             },
             "gc_type": "int32",
             "settable": false,
+            "compressed": false,
             "description": "The Genetic Code Type Definition for output 0."
         },
         "type": "integer",
@@ -452,6 +473,7 @@
             },
             "gc_type": "int32",
             "settable": false,
+            "compressed": false,
             "description": "The Genetic Code Type Definition for output 1."
         },
         "type": "integer",
@@ -472,6 +494,7 @@
             },
             "gc_type": "int32",
             "settable": false,
+            "compressed": false,
             "description": "The Genetic Code Type Definition for output 2."
         },
         "type": "integer",
@@ -492,6 +515,7 @@
             },
             "gc_type": "int32",
             "settable": false,
+            "compressed": false,
             "description": "The Genetic Code Type Definition for output 3."
         },
         "type": "integer",
@@ -512,6 +536,7 @@
             },
             "gc_type": "int64",
             "settable": true,
+            "compressed": false,
             "description": "The classification of the genetic code."
         },
         "type": "integer",
@@ -530,6 +555,7 @@
             },
             "gc_type": "int64",
             "settable": false,
+            "compressed": false,
             "description": "The classification of the genetic code."
         },
         "type": "integer",
@@ -546,6 +572,7 @@
             },
             "gc_type": "gc_properties",
             "settable": false,
+            "compressed": false,
             "description": "The properties of the inputs & outputs",
             "codec": {
                 "extended": 0,
@@ -656,6 +683,7 @@
             },
             "gc_type": "double",
             "settable": false,
+            "compressed": false,
             "description": "A measure of success of the genetic code. The higher the better."
         },
         "type": "float",
@@ -673,6 +701,7 @@
             },
             "gc_type": "double",
             "settable": false,
+            "compressed": false,
             "description": "A measure of success of the genetic codes descendants. The higher the better."
         },
         "type": "float",
@@ -691,6 +720,7 @@
             "gc_type": "gc_creator",
             "settable": false,
             "sha256": true,
+            "compressed": false,
             "description": "The UUID identifying the creator. If the genetic code has been created in another microbiome at an earlier time then this field will be updated."
         },
         "type": "string",
@@ -710,6 +740,7 @@
             },
             "gc_type": "timestamp",
             "settable": false,
+            "compressed": false,
             "description": "The date and time of the last modification to this genetic code."
         },
         "type": "string",
@@ -730,6 +761,7 @@
             },
             "gc_type": "timestamp",
             "settable": false,
+            "compressed": false,
             "description": "The date and time of the codes creation. If the genetic code has been created in another microbiome at an earlier time then this field will be updated."
         },
         "type": "string",
