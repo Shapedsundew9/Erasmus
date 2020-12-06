@@ -181,7 +181,6 @@ for filename in map(lambda x: join(args.directory, x), REQUIRED_FILES):
     codon_list.extend(generate_dict_codons(data, 'gc'))
 
 with open(join(args.directory, REQUIRED_FILES[0]), 'r') as filename:
-    print(filename)
     qv = query_validator(load(filename))
 print(pformat(qv._validator.schema))
 codon_list.extend(generate_dict_codons(qv._validator.schema, 'gc_query'))

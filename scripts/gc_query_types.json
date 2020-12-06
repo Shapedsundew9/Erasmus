@@ -1,0 +1,504 @@
+{
+    "gc_class_list": {
+        "maxlength": 256,
+        "minlength": 1,
+        "read-only": false,
+        "schema": {
+            "type": "gc_class"
+        },
+        "type": "list"
+    },
+    "gc_code_depth_list": {
+        "maxlength": 256,
+        "minlength": 1,
+        "read-only": false,
+        "schema": {
+            "type": "gc_code_depth"
+        },
+        "type": "list"
+    },
+    "gc_codon_depth_list": {
+        "maxlength": 256,
+        "minlength": 1,
+        "read-only": false,
+        "schema": {
+            "type": "gc_codon_depth"
+        },
+        "type": "list"
+    },
+    "gc_created_list": {
+        "maxlength": 256,
+        "minlength": 1,
+        "read-only": false,
+        "schema": {
+            "type": "gc_created"
+        },
+        "type": "list"
+    },
+    "gc_creator_list": {
+        "maxlength": 256,
+        "minlength": 1,
+        "read-only": false,
+        "schema": {
+            "type": "gc_creator"
+        },
+        "type": "list"
+    },
+    "gc_evolvability_list": {
+        "maxlength": 256,
+        "minlength": 1,
+        "read-only": false,
+        "schema": {
+            "type": "gc_evolvability"
+        },
+        "type": "list"
+    },
+    "gc_fitness_list": {
+        "maxlength": 256,
+        "minlength": 1,
+        "read-only": false,
+        "schema": {
+            "type": "gc_fitness"
+        },
+        "type": "list"
+    },
+    "gc_generation_list": {
+        "maxlength": 256,
+        "minlength": 1,
+        "read-only": false,
+        "schema": {
+            "type": "gc_generation"
+        },
+        "type": "list"
+    },
+    "gc_list": {
+        "schema": {
+            "minlength": 1,
+            "value_types": "gc"
+        },
+        "type": "list"
+    },
+    "gc_num_codes_list": {
+        "maxlength": 256,
+        "minlength": 1,
+        "read-only": false,
+        "schema": {
+            "type": "gc_num_codes"
+        },
+        "type": "list"
+    },
+    "gc_num_inputs_list": {
+        "maxlength": 256,
+        "minlength": 1,
+        "read-only": false,
+        "schema": {
+            "type": "gc_num_inputs"
+        },
+        "type": "list"
+    },
+    "gc_num_outputs_list": {
+        "maxlength": 256,
+        "minlength": 1,
+        "read-only": false,
+        "schema": {
+            "type": "gc_num_outputs"
+        },
+        "type": "list"
+    },
+    "gc_num_unique_codes_list": {
+        "maxlength": 256,
+        "minlength": 1,
+        "read-only": false,
+        "schema": {
+            "type": "gc_num_unique_codes"
+        },
+        "type": "list"
+    },
+    "gc_opt_num_codons_list": {
+        "maxlength": 256,
+        "minlength": 1,
+        "read-only": false,
+        "schema": {
+            "type": "gc_opt_num_codons"
+        },
+        "type": "list"
+    },
+    "gc_query": {
+        "read-only": false,
+        "schema": {
+            "alpha_class": {
+                "read-only": false,
+                "type": "gc_query_class"
+            },
+            "beta_class": {
+                "read-only": false,
+                "type": "gc_query_class"
+            },
+            "code_depth": {
+                "read-only": false,
+                "type": "gc_query_code_depth"
+            },
+            "codon_depth": {
+                "read-only": false,
+                "type": "gc_query_codon_depth"
+            },
+            "created": {
+                "read-only": false,
+                "type": "gc_query_created"
+            },
+            "creator": {
+                "read-only": false,
+                "type": "gc_query_creator"
+            },
+            "evolvability": {
+                "read-only": false,
+                "type": "gc_query_evolvability"
+            },
+            "fitness": {
+                "read-only": false,
+                "type": "gc_query_fitness"
+            },
+            "gca": {
+                "read-only": false,
+                "type": "gc_query_signature"
+            },
+            "gcb": {
+                "read-only": false,
+                "type": "gc_query_signature"
+            },
+            "generation": {
+                "read-only": false,
+                "type": "gc_query_generation"
+            },
+            "input0_type": {
+                "read-only": false,
+                "type": "gc_query_type"
+            },
+            "input1_type": {
+                "read-only": false,
+                "type": "gc_query_type"
+            },
+            "input2_type": {
+                "read-only": false,
+                "type": "gc_query_type"
+            },
+            "input3_type": {
+                "read-only": false,
+                "type": "gc_query_type"
+            },
+            "input4_type": {
+                "read-only": false,
+                "type": "gc_query_type"
+            },
+            "input5_type": {
+                "read-only": false,
+                "type": "gc_query_type"
+            },
+            "input6_type": {
+                "read-only": false,
+                "type": "gc_query_type"
+            },
+            "input7_type": {
+                "read-only": false,
+                "type": "gc_query_type"
+            },
+            "num_codes": {
+                "read-only": false,
+                "type": "gc_query_num_codes"
+            },
+            "num_inputs": {
+                "read-only": false,
+                "type": "gc_query_num_inputs"
+            },
+            "num_outputs": {
+                "read-only": false,
+                "type": "gc_query_num_outputs"
+            },
+            "num_unique_codes": {
+                "read-only": false,
+                "type": "gc_query_num_unique_codes"
+            },
+            "opt_num_codons": {
+                "read-only": false,
+                "type": "gc_query_opt_num_codons"
+            },
+            "order_by": {
+                "read-only": false,
+                "type": "gc_query_query_order_by"
+            },
+            "output0_type": {
+                "read-only": false,
+                "type": "gc_query_type"
+            },
+            "output1_type": {
+                "read-only": false,
+                "type": "gc_query_type"
+            },
+            "output2_type": {
+                "read-only": false,
+                "type": "gc_query_type"
+            },
+            "output3_type": {
+                "read-only": false,
+                "type": "gc_query_type"
+            },
+            "properties": {
+                "read-only": false,
+                "type": "gc_query_properties"
+            },
+            "raw_num_codons": {
+                "read-only": false,
+                "type": "gc_query_raw_num_codons"
+            },
+            "reference_count": {
+                "read-only": false,
+                "type": "gc_query_reference_count"
+            },
+            "signature": {
+                "read-only": false,
+                "type": "gc_query_signature"
+            },
+            "updated": {
+                "read-only": false,
+                "type": "gc_query_updated"
+            }
+        },
+        "type": "dict"
+    },
+    "gc_query_class": {
+        "read-only": false,
+        "type": [
+            "gc_class",
+            "gc_class_list"
+        ]
+    },
+    "gc_query_code_depth": {
+        "read-only": false,
+        "type": [
+            "gc_code_depth",
+            "gc_code_depth_list"
+        ]
+    },
+    "gc_query_codon_depth": {
+        "read-only": false,
+        "type": [
+            "gc_codon_depth",
+            "gc_codon_depth_list"
+        ]
+    },
+    "gc_query_created": {
+        "read-only": false,
+        "type": [
+            "gc_created",
+            "gc_created_list"
+        ]
+    },
+    "gc_query_creator": {
+        "read-only": false,
+        "type": [
+            "gc_creator",
+            "gc_creator_list"
+        ]
+    },
+    "gc_query_evolvability": {
+        "read-only": false,
+        "type": [
+            "gc_evolvability",
+            "gc_evolvability_list"
+        ]
+    },
+    "gc_query_fitness": {
+        "read-only": false,
+        "type": [
+            "gc_fitness",
+            "gc_fitness_list"
+        ]
+    },
+    "gc_query_generation": {
+        "read-only": false,
+        "type": [
+            "gc_generation",
+            "gc_generation_list"
+        ]
+    },
+    "gc_query_num_codes": {
+        "read-only": false,
+        "type": [
+            "gc_num_codes",
+            "gc_num_codes_list"
+        ]
+    },
+    "gc_query_num_inputs": {
+        "read-only": false,
+        "type": [
+            "gc_num_inputs",
+            "gc_num_inputs_list"
+        ]
+    },
+    "gc_query_num_outputs": {
+        "read-only": false,
+        "type": [
+            "gc_num_outputs",
+            "gc_num_outputs_list"
+        ]
+    },
+    "gc_query_num_unique_codes": {
+        "read-only": false,
+        "type": [
+            "gc_num_unique_codes",
+            "gc_num_unique_codes_list"
+        ]
+    },
+    "gc_query_opt_num_codons": {
+        "read-only": false,
+        "type": [
+            "gc_opt_num_codons",
+            "gc_opt_num_codons_list"
+        ]
+    },
+    "gc_query_order_by": {
+        "allowed": [
+            "signature",
+            "gca",
+            "gcb",
+            "reference_count",
+            "generation",
+            "code_depth",
+            "codon_depth",
+            "num_codes",
+            "num_unique_codes",
+            "raw_num_codons",
+            "opt_num_codons",
+            "num_inputs",
+            "input0_type",
+            "input1_type",
+            "input2_type",
+            "input3_type",
+            "input4_type",
+            "input5_type",
+            "input6_type",
+            "input7_type",
+            "num_outputs",
+            "output0_type",
+            "output1_type",
+            "output2_type",
+            "output3_type",
+            "alpha_class",
+            "beta_class",
+            "properties",
+            "fitness",
+            "evolvability",
+            "creator",
+            "updated",
+            "created",
+            "order_by",
+            "limit",
+            "random"
+        ],
+        "read-only": false,
+        "type": "string"
+    },
+    "gc_query_order_by_list": {
+        "maxlength": 256,
+        "minlength": 1,
+        "read-only": false,
+        "schema": {
+            "type": "gc_query_order_by"
+        },
+        "type": "list"
+    },
+    "gc_query_properties": {
+        "read-only": false,
+        "type": [
+            "gc_properties",
+            "int64"
+        ]
+    },
+    "gc_query_query_order_by": {
+        "read-only": false,
+        "type": [
+            "gc_query_order_by",
+            "gc_query_order_by_list"
+        ]
+    },
+    "gc_query_raw_num_codons": {
+        "read-only": false,
+        "type": [
+            "gc_raw_num_codons",
+            "gc_raw_num_codons_list"
+        ]
+    },
+    "gc_query_reference_count": {
+        "read-only": false,
+        "type": [
+            "gc_reference_count",
+            "gc_reference_count_list"
+        ]
+    },
+    "gc_query_signature": {
+        "read-only": false,
+        "type": [
+            "gc_signature",
+            "gc_signature_list"
+        ]
+    },
+    "gc_query_type": {
+        "read-only": false,
+        "type": [
+            "gc_type",
+            "gc_type_list"
+        ]
+    },
+    "gc_query_updated": {
+        "read-only": false,
+        "type": [
+            "gc_updated",
+            "gc_updated_list"
+        ]
+    },
+    "gc_raw_num_codons_list": {
+        "maxlength": 256,
+        "minlength": 1,
+        "read-only": false,
+        "schema": {
+            "type": "gc_raw_num_codons"
+        },
+        "type": "list"
+    },
+    "gc_reference_count_list": {
+        "maxlength": 256,
+        "minlength": 1,
+        "read-only": false,
+        "schema": {
+            "type": "gc_reference_count"
+        },
+        "type": "list"
+    },
+    "gc_signature_list": {
+        "maxlength": 256,
+        "minlength": 1,
+        "read-only": false,
+        "schema": {
+            "type": "gc_signature"
+        },
+        "type": "list"
+    },
+    "gc_type_list": {
+        "maxlength": 256,
+        "minlength": 1,
+        "read-only": false,
+        "schema": {
+            "type": "gc_type"
+        },
+        "type": "list"
+    },
+    "gc_updated_list": {
+        "maxlength": 256,
+        "minlength": 1,
+        "read-only": false,
+        "schema": {
+            "type": "gc_updated"
+        },
+        "type": "list"
+    }
+}

@@ -14,19 +14,19 @@ from logging import getLogger, basicConfig, DEBUG, INFO
 _TEST_RESULTS_JSON = 'data/test_gc_graph_results.json'
 _VALID_STRUCTURES = (
         ('A', 'O'),
-        ('C', 'O'),
-        ('I', 'O'),
+        ('C', 'O'),     # TODO: Is this valid?
+        ('I', 'O'),     # TODO: Is this valid?
         ('A', 'O', 'U'),
         ('C', 'O', 'U'),
-        ('I', 'O', 'U'),
+        ('I', 'O', 'U'),     # TODO: Is this valid?
         ('A', 'C', 'O'),
         ('A', 'I', 'O'),
         ('A', 'B', 'O'),
-        ('I', 'C', 'O'),
+        ('I', 'C', 'O'),     # TODO: Is this valid?
         ('A', 'C', 'O', 'U'),
         ('A', 'I', 'O', 'U'),
         ('A', 'B', 'O', 'U'),
-        ('I', 'C', 'O', 'U'),
+        ('I', 'C', 'O', 'U'),     # TODO: Is this valid?
         ('A', 'C', 'O', 'B'),
         ('A', 'I', 'O', 'B'),
         ('I', 'O', 'F', 'P'),

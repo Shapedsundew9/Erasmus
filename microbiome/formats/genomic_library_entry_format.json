@@ -738,7 +738,7 @@
                 "location": ["WORKER"],
                 "immutable": false
             },
-            "gc_type": "timestamp",
+            "gc_type": "timestamp_str",
             "settable": false,
             "compressed": false,
             "description": "The date and time of the last modification to this genetic code."
@@ -759,7 +759,7 @@
                 "location": ["WORKER"],
                 "immutable": true
             },
-            "gc_type": "timestamp",
+            "gc_type": "timestamp_str",
             "settable": false,
             "compressed": false,
             "description": "The date and time of the codes creation. If the genetic code has been created in another microbiome at an earlier time then this field will be updated."
@@ -787,7 +787,8 @@
         "required": true,
         "schema": {
             "name": {
-                "type": "string"
+                "type": "string",
+                "maxlength": 255
             },
             "extended_properties": {
                 "type": "dict"
