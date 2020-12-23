@@ -923,6 +923,9 @@
                 "type": "gc_graph_row_letter"
             },
             {
+                "allowed": [
+                    0
+                ],
                 "type": "uint8"
             },
             {
@@ -934,13 +937,12 @@
     "gc_srcs_AB": {
         "items": [
             {
-                "allowed": [
-                    "A",
-                    "B"
-                ],
-                "type": "gc_graph_row_letter"
+                "type": "gc_AB"
             },
             {
+                "allowed": [
+                    0
+                ],
                 "type": "uint8"
             },
             {
@@ -948,6 +950,13 @@
             }
         ],
         "type": "list"
+    },
+    "gc_AB": {
+        "allowed": [
+            "A",
+            "B"
+        ],
+        "type": "gc_graph_row_letter"
     },
     "gc_srcs_B": {
         "items": [
@@ -958,6 +967,9 @@
                 "type": "gc_graph_row_letter"
             },
             {
+                "allowed": [
+                    0
+                ],
                 "type": "uint8"
             },
             {
@@ -975,6 +987,9 @@
                 "type": "gc_graph_row_letter"
             },
             {
+                "allowed": [
+                    0
+                ],
                 "type": "uint8"
             },
             {
@@ -986,13 +1001,12 @@
     "gc_srcs_CA": {
         "items": [
             {
-                "allowed": [
-                    "C",
-                    "A"
-                ],
-                "type": "gc_graph_row_letter"
+                "type": "gc_CA"
             },
             {
+                "allowed": [
+                    0
+                ],
                 "type": "uint8"
             },
             {
@@ -1000,18 +1014,23 @@
             }
         ],
         "type": "list"
+    },
+    "gc_CA": {
+        "allowed": [
+            "C",
+            "A"
+        ],
+        "type": "gc_graph_row_letter"
     },
     "gc_srcs_CAB": {
         "items": [
             {
-                "allowed": [
-                    "C",
-                    "A",
-                    "B"
-                ],
-                "type": "gc_graph_row_letter"
+                "type": "gc_CAB"
             },
             {
+                "allowed": [
+                    0
+                ],
                 "type": "uint8"
             },
             {
@@ -1020,16 +1039,23 @@
         ],
         "type": "list"
     },
+    "gc_CAB": {
+        "allowed": [
+            "C",
+            "A",
+            "B"
+        ],
+        "type": "gc_graph_row_letter"
+    },
     "gc_srcs_CB": {
         "items": [
             {
-                "allowed": [
-                    "C",
-                    "B"
-                ],
-                "type": "gc_graph_row_letter"
+                "type": "gc_CB"
             },
             {
+                "allowed": [
+                    0
+                ],
                 "type": "uint8"
             },
             {
@@ -1037,6 +1063,13 @@
             }
         ],
         "type": "list"
+    },
+    "gc_IA": {
+        "allowed": [
+            "C",
+            "B"
+        ],
+        "type": "gc_graph_row_letter"
     },
     "gc_srcs_I": {
         "items": [
@@ -1047,6 +1080,9 @@
                 "type": "gc_graph_row_letter"
             },
             {
+                "allowed": [
+                    0
+                ],
                 "type": "uint8"
             },
             {
@@ -1058,13 +1094,12 @@
     "gc_srcs_IA": {
         "items": [
             {
-                "allowed": [
-                    "I",
-                    "A"
-                ],
-                "type": "gc_graph_row_letter"
+                "type": "gc_IA"
             },
             {
+                "allowed": [
+                    0
+                ],
                 "type": "uint8"
             },
             {
@@ -1072,18 +1107,23 @@
             }
         ],
         "type": "list"
+    },
+    "gc_IA": {
+        "allowed": [
+            "I",
+            "A"
+        ],
+        "type": "gc_graph_row_letter"
     },
     "gc_srcs_IAB": {
         "items": [
             {
-                "allowed": [
-                    "I",
-                    "A",
-                    "B"
-                ],
-                "type": "gc_graph_row_letter"
+                "type": "gc_IAB"
             },
             {
+                "allowed": [
+                    0
+                ],
                 "type": "uint8"
             },
             {
@@ -1091,17 +1131,24 @@
             }
         ],
         "type": "list"
+    },
+    "gc_IAB": {
+        "allowed": [
+            "I",
+            "A",
+            "B"
+        ],
+        "type": "gc_graph_row_letter"
     },
     "gc_srcs_IB": {
         "items": [
             {
-                "allowed": [
-                    "I",
-                    "B"
-                ],
-                "type": "gc_graph_row_letter"
+                "type": "gc_IB"
             },
             {
+                "allowed": [
+                    0
+                ],
                 "type": "uint8"
             },
             {
@@ -1109,17 +1156,23 @@
             }
         ],
         "type": "list"
+    },
+    "gc_IB": {
+        "allowed": [
+            "I",
+            "B"
+        ],
+        "type": "gc_graph_row_letter"
     },
     "gc_srcs_IC": {
         "items": [
             {
-                "allowed": [
-                    "I",
-                    "C"
-                ],
-                "type": "gc_graph_row_letter"
+                "type": "gc_IC"
             },
             {
+                "allowed": [
+                    0
+                ],
                 "type": "uint8"
             },
             {
@@ -1127,18 +1180,23 @@
             }
         ],
         "type": "list"
+    },
+    "gc_IC": {
+        "allowed": [
+            "I",
+            "C"
+        ],
+        "type": "gc_graph_row_letter"
     },
     "gc_srcs_ICA": {
         "items": [
             {
-                "allowed": [
-                    "I",
-                    "C",
-                    "A"
-                ],
-                "type": "gc_graph_row_letter"
+                "type": "gc_ICA"
             },
             {
+                "allowed": [
+                    0
+                ],
                 "type": "uint8"
             },
             {
@@ -1146,19 +1204,24 @@
             }
         ],
         "type": "list"
+    },
+    "gc_ICA": {
+        "allowed": [
+            "I",
+            "C",
+            "A"
+        ],
+        "type": "gc_graph_row_letter"
     },
     "gc_srcs_ICAB": {
         "items": [
             {
-                "allowed": [
-                    "I",
-                    "C",
-                    "A",
-                    "B"
-                ],
-                "type": "gc_graph_row_letter"
+                "type": "gc_ICAB"
             },
             {
+                "allowed": [
+                    0
+                ],
                 "type": "uint8"
             },
             {
@@ -1167,17 +1230,24 @@
         ],
         "type": "list"
     },
+    "gc_ICAB": {
+        "allowed": [
+            "I",
+            "C",
+            "A",
+            "B"
+        ],
+        "type": "gc_graph_row_letter"
+    },
     "gc_srcs_ICB": {
         "items": [
             {
-                "allowed": [
-                    "I",
-                    "C",
-                    "B"
-                ],
-                "type": "gc_graph_row_letter"
+                "type": "gc_ICB"
             },
             {
+                "allowed": [
+                    0
+                ],
                 "type": "uint8"
             },
             {
@@ -1185,5 +1255,13 @@
             }
         ],
         "type": "list"
+    },
+    "gc_ICB": {
+        "allowed": [
+            "I",
+            "C",
+            "B"
+        ],
+        "type": "gc_graph_row_letter"
     }
 }

@@ -1,0 +1,23 @@
+{
+    "None": {
+        "type": "object"
+    },
+    "bool": {
+        "type": "object"
+    },
+    "int": {
+        "type": "object"
+    },
+    "float": {
+        "type": "object"
+    },
+    "complex": {
+        "type": "object"
+    },
+    "str": {
+        "type": "object"
+    },
+    "object": {
+        "type": "basic"
+    }
+}

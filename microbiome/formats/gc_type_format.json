@@ -1,34 +1,156 @@
 {
-    "RESERVED": {
+    "type": {
         "required": true,
-        "type": "integer",
-        "allowed": [0]
+        "oneof": [
+            {
+                "type": "list",
+                "minlength": 2,
+                "schema": {
+                    "type": "string",
+                    "maxlength": 64,
+                    "minlength": 1
+                }
+            },
+            {
+                "type": "string",
+                "maxlength": 64,
+                "minlength": 1
+            }
+        ]
     },
-    "base_type": {
-        "required": true,
-        "type": "dict",
-        "check_with": "valid_base_type",
+    "read-only": {
+        "type": "boolean",
+        "default": false
+    },
+    "validate": {
+        "type": "string",
+        "minlength": 1,
+        "maxlength": 256
+    },
+    "regex": {
+        "type": "string",
+        "minlength": 1,
+        "maxlength": 256
+    },
+    "cast_to": {
+        "type": "list",
+        "minlength": 1,
         "schema": {
-            "object": {
-                "required": true,
-                "type": "integer",
-                "allowed": [0, 1]
+            "type": "string",
+            "maxlength": 64,
+            "minlength": 1
+        }
+    },
+    "maxlength": {
+        "type": "integer",
+        "min" : 0,
+        "max": 32768
+    },
+    "minlength": {
+        "type": "integer",
+        "min" : 0,
+        "max": 32768
+    },
+    "schema": {
+        "oneof": [
+            {
+                "type": "dict",
+                "keysrules": {
+                    "type": "string",
+                    "minlength": 1,
+                    "maxlength": 64                      
+                },
+                "valuesrules": {
+                    "type": "dict",
+                    "schema": {
+                        "type": {
+                            "type": "string",
+                            "maxlength": 64,
+                            "minlength": 1,
+                            "required": true    
+                        },
+                        "read-only": {
+                            "type": "boolean",
+                            "default": false
+                        },
+                        "default": {
+                        }
+                    }
+                }
             },
-            "integer": {
-                "required": true,
-                "type": "integer",
-                "allowed": [0, 1]
+            {
+                "type": "dict",
+                "schema": {
+                    "type": {
+                        "type": "string",
+                        "maxlength": 64,
+                        "minlength": 1,
+                        "required": true    
+                    }
+                }
+            }
+        ]
+    },
+    "items": {
+        "type": "list"
+    },
+    "sub-groups": {
+        "type": "list",
+        "schema": {
+            "type": "string",
+            "maxlength": 64,
+            "minlength": 1
+        }
+    },
+    "types": {
+        "type": "list",
+        "schema": {
+            "type": "string",
+            "maxlength": 64,
+            "minlength": 1
+        }
+    },
+    "group": {
+        "type": "string",
+        "minlength": 1,
+        "maxlength": 64
+    },
+    "map": {
+        "type": "dict",
+        "keysrules": {
+            "type": "string",
+            "minlength": 1,
+            "maxlength": 64                      
+        },
+        "valuesrules": {
+            "type": "dict",
+            "keysrules": {
+                "type": "string",
+                "minlength": 1,
+                "maxlength": 64                      
             },
-            "float": {
-                "required": true,
-                "type": "integer",
-                "allowed": [0, 1]
+            "valuesrules": {
+                "type": "string",
+                "minlength": 1,
+                "maxlength": 64
             }
         }
     },
-    "parameters": {
-        "required": true,
-        "type": "dict",
-        "check_with": "valid_parameters"
+    "allowed": {
+        "type": "list",
+        "schema": {
+            "type": "string",
+            "maxlength": 64,
+            "minlength": 1
+        }
+    },
+    "max": {
+        "type": ["integer", "float"]
+    },
+    "min": {
+        "type": ["integer", "float"]
+    },
+    "default": {
+        "type": ["integer", "float"]
     }
 }

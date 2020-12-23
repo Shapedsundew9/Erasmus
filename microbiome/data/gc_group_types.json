@@ -1,5 +1,6 @@
 {
     "any": {
+        "type": "group",
         "sub-groups": [
             "any"
         ],
@@ -17,6 +18,7 @@
             "numeric6",
             "numeric7"
         ],
+        "type": "group",
         "types": [
             "bool",
             "complex",
@@ -43,6 +45,7 @@
             "numeric6",
             "numeric7"
         ],
+        "type": "group",
         "types": [
             "complex",
             "complex128",
@@ -66,6 +69,7 @@
             "numeric4",
             "numeric6"
         ],
+        "type": "group",
         "types": [
             "complex128",
             "complex64",
@@ -89,6 +93,7 @@
             "numeric5",
             "numeric6"
         ],
+        "type": "group",
         "types": [
             "bool",
             "float",
@@ -109,6 +114,7 @@
         "sub-groups": [
             "numeric6"
         ],
+        "type": "group",
         "types": [
             "float",
             "float32",
@@ -128,6 +134,7 @@
         "sub-groups": [
             "numeric6"
         ],
+        "type": "group",
         "types": [
             "bool",
             "int",
@@ -143,6 +150,7 @@
     },
     "numeric6": {
         "sub-groups": [],
+        "type": "group",
         "types": [
             "int",
             "int16",
@@ -157,6 +165,7 @@
     },
     "numeric7": {
         "sub-groups": [],
+        "type": "group",
         "types": [
             "complex",
             "complex128",

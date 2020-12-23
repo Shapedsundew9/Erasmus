@@ -1,0 +1,100 @@
+{
+    "np_bool": {
+        "type": "bool",
+        "min": 0,
+        "max": 1,
+        "default": false
+    },
+    "int8": {
+        "type": "int16",
+        "min": -128,
+        "max": 127,
+        "default": 0
+    },
+    "int16": {
+        "type": "int32",
+        "min": -32768,
+        "max": 32767,
+        "default": 0
+    },
+    "int32": {
+        "type": "int64",
+        "min": -2147483648,
+        "max": 2147483647,
+        "default": 0
+    },
+    "int64": {
+        "type": "signedinteger",
+        "min": -9223372036854775808,
+        "max": 9223372036854775807,
+        "default": 0
+    },
+    "uint8": {
+        "type": ["int16", "uint16"],
+        "min": 0,
+        "max": 255,
+        "default": 0
+    },
+    "uint16": {
+        "type": ["int32", "uint32"],
+        "min": 0,
+        "max": 65535,
+        "default": 0
+    },
+    "uint32": {
+        "type": ["int64", "uint64"],
+        "min": 0,
+        "max": 4294967295,
+        "default": 0
+    },
+    "uint64": {
+        "type": "unsignedinteger",
+        "min": 0,
+        "max": 18446744073709551615,
+        "default": 0
+    },
+    "float32": {
+        "type": "float64",
+        "min": -3.4028235e+38,
+        "max": 3.4028235e+38,
+        "default": 0
+    },
+    "float64": {
+        "type": "floating",
+        "min": -1.7976931348623157e+308,
+        "max": 1.7976931348623157e+308,
+        "default": 0
+    },
+    "complex64": {
+        "type": "complex128"
+    },
+    "complex128": {
+        "type": "np_complex"
+    },
+    "signedinteger": {
+        "type": "integer",
+        "cast_to": ["int"]
+    },
+    "unsignedinteger": {
+        "type": "integer",
+        "cast_to": ["int"]
+    },
+    "integer": {
+        "type": "number",
+        "cast_to": ["int"]
+    },
+    "floating": {
+        "type": "number",
+        "cast_to": ["float"]
+    },
+    "np_complex": {
+        "type": "number",
+        "cast_to": ["complex"]
+    },
+    "number": {
+        "type": "np_generic"
+    },
+    "np_generic":{
+        "type": "object"
+    }
+}

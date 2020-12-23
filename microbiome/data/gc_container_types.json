@@ -1,0 +1,18 @@
+{
+    "set": {
+        "type": "object"
+    },
+    "tuple": {
+        "type": "object",
+        "read-only": true
+    },
+    "list": {
+        "type": "object"
+    },
+    "dict": {
+        "type": "object"
+    },
+    "ndarray": {
+        "type": "object"
+    }
+}

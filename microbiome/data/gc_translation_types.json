@@ -290,7 +290,8 @@
                 "uint64": "uint64",
                 "uint8": "uint8"
             }
-        }
+        },
+        "type": "translation"
     },
     "translation1": {
         "group": "numeric1",
@@ -583,7 +584,8 @@
                 "uint64": "uint64",
                 "uint8": "uint8"
             }
-        }
+        },
+        "type": "translation"
     },
     "translation10": {
         "group": "numeric6",
@@ -698,7 +700,8 @@
                 "uint64": "uint64",
                 "uint8": "uint8"
             }
-        }
+        },
+        "type": "translation"
     },
     "translation11": {
         "group": "numeric6",
@@ -813,7 +816,8 @@
                 "uint64": "uint64",
                 "uint8": "uint8"
             }
-        }
+        },
+        "type": "translation"
     },
     "translation2": {
         "group": "numeric1",
@@ -1106,7 +1110,8 @@
                 "uint64": "uint64",
                 "uint8": "uint8"
             }
-        }
+        },
+        "type": "translation"
     },
     "translation3": {
         "group": "numeric7",
@@ -1399,7 +1404,8 @@
                 "uint64": "float64",
                 "uint8": "float32"
             }
-        }
+        },
+        "type": "translation"
     },
     "translation4": {
         "group": "numeric2",
@@ -1674,7 +1680,8 @@
                 "uint64": "uint64",
                 "uint8": "uint8"
             }
-        }
+        },
+        "type": "translation"
     },
     "translation5": {
         "group": "numeric4",
@@ -1874,7 +1881,8 @@
                 "uint64": "uint64",
                 "uint8": "uint8"
             }
-        }
+        },
+        "type": "translation"
     },
     "translation6": {
         "group": "numeric1",
@@ -2167,7 +2175,8 @@
                 "uint64": "uint64",
                 "uint8": "uint8"
             }
-        }
+        },
+        "type": "translation"
     },
     "translation7": {
         "group": "numeric5",
@@ -2282,7 +2291,8 @@
                 "uint64": "uint64",
                 "uint8": "uint8"
             }
-        }
+        },
+        "type": "translation"
     },
     "translation8": {
         "group": "numeric5",
@@ -2397,7 +2407,8 @@
                 "uint64": "uint64",
                 "uint8": "uint8"
             }
-        }
+        },
+        "type": "translation"
     },
     "translation9": {
         "group": "numeric5",
@@ -2512,6 +2523,7 @@
                 "uint64": "uint64",
                 "uint8": "uint8"
             }
-        }
+        },
+        "type": "translation"
     }
 }

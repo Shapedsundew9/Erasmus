@@ -1,10 +1,11 @@
 {
-    "gc": {
+    "gc_A_only": {
         "type": "dict",
         "schema": {
             "graph": {
-                "type": "gc_graph",
-                "read-only": false
+                "type": "gc_graph_A_only",
+                "read-only": false,
+                "required": true
             },
             "signature": {
                 "type": "gc_signature",
@@ -12,11 +13,12 @@
             },
             "gca": {
                 "type": "gc_signature",
-                "read-only": false
+                "read-only": false,
+                "required": true
             },
             "gcb": {
                 "type": "gc_signature",
-                "read-only": false
+                "read-only": true
             },
             "reference_count": {
                 "type": "gc_reference_count",
@@ -108,11 +110,163 @@
             },
             "alpha_class": {
                 "type": "gc_class",
-                "read-only": false
+                "read-only": false,
+                "required": true
             },
             "beta_class": {
                 "type": "gc_class",
-                "read-only": false
+                "read-only": false,
+                "required": true
+            },
+            "properties": {
+                "type": "gc_properties",
+                "read-only": true
+            },
+            "fitness": {
+                "type": "gc_fitness",
+                "read-only": true
+            },
+            "evolvability": {
+                "type": "gc_evolvability",
+                "read-only": true
+            },
+            "creator": {
+                "type": "gc_creator",
+                "read-only": true
+            },
+            "updated": {
+                "type": "gc_updated",
+                "read-only": true
+            },
+            "created": {
+                "type": "gc_created",
+                "read-only": true
+            },
+            "meta_data": {
+                "type": "gc_meta_data",
+                "read-only": true
+            }
+        }
+    },
+    "gc_A_and_B": {
+        "type": "dict",
+        "schema": {
+            "graph": {
+                "type": "gc_graph_A_and_B",
+                "read-only": false,
+                "required": true
+            },
+            "signature": {
+                "type": "gc_signature",
+                "read-only": true
+            },
+            "gca": {
+                "type": "gc_signature",
+                "read-only": false,
+                "required": true
+            },
+            "gcb": {
+                "type": "gc_signature",
+                "read-only": false,
+                "required": true
+            },
+            "reference_count": {
+                "type": "gc_reference_count",
+                "read-only": true
+            },
+            "generation": {
+                "type": "gc_generation",
+                "read-only": true
+            },
+            "code_depth": {
+                "type": "gc_code_depth",
+                "read-only": true
+            },
+            "codon_depth": {
+                "type": "gc_codon_depth",
+                "read-only": true
+            },
+            "num_codes": {
+                "type": "gc_num_codes",
+                "read-only": true
+            },
+            "num_unique_codes": {
+                "type": "gc_num_unique_codes",
+                "read-only": true
+            },
+            "raw_num_codons": {
+                "type": "gc_num_codons",
+                "read-only": true
+            },
+            "opt_num_codons": {
+                "type": "gc_opt_num_codons",
+                "read-only": true
+            },
+            "num_inputs": {
+                "type": "gc_num_inputs",
+                "read-only": true
+            },
+            "input0_type": {
+                "type": "gc_type",
+                "read-only": true
+            },
+            "input1_type": {
+                "type": "gc_type",
+                "read-only": true
+            },
+            "input2_type": {
+                "type": "gc_type",
+                "read-only": true
+            },
+            "input3_type": {
+                "type": "gc_type",
+                "read-only": true
+            },
+            "input4_type": {
+                "type": "gc_type",
+                "read-only": true
+            },
+            "input5_type": {
+                "type": "gc_type",
+                "read-only": true
+            },
+            "input6_type": {
+                "type": "gc_type",
+                "read-only": true
+            },
+            "input7_type": {
+                "type": "gc_type",
+                "read-only": true
+            },
+            "num_outputs": {
+                "type": "gc_num_outputs",
+                "read-only": true
+            },
+            "output0_type": {
+                "type": "gc_type",
+                "read-only": true
+            },
+            "output1_type": {
+                "type": "gc_type",
+                "read-only": true
+            },
+            "output2_type": {
+                "type": "gc_type",
+                "read-only": true
+            },
+            "output3_type": {
+                "type": "gc_type",
+                "read-only": true
+            },
+            "alpha_class": {
+                "type": "gc_class",
+                "read-only": false,
+                "required": true
+            },
+            "beta_class": {
+                "type": "gc_class",
+                "read-only": false,
+                "required": true
             },
             "properties": {
                 "type": "gc_properties",
@@ -153,12 +307,12 @@
         "cast_to": ["gc_type_str"]
     },
     "gc_type_str": {
-        "type": "string",
+        "type": "str",
         "validate": "x in gc_type_lookup['name']",
         "cast_to": ["gc_type_int"]
     },
     "gc_value_str": {
-        "type": "string",
+        "type": "str",
         "maxlength": 1024,
         "minlength": 1,
         "validate": "exec(x)"
@@ -225,6 +379,9 @@
             "name": {"type": "gc_name"}
         }
     },
+    "gc_class": {
+        "type": "int64"
+    },
     "gc_extended_schema": {
         "type": "dict",
         "schema": {
@@ -248,20 +405,73 @@
             "type": "sha256_lowercase"
         }
     },
-    "string":  {
-        "base_type": "string"
+    "letter_uppercase": {
+        "type": "str",
+        "regex": "[A-Z]",
+        "minlength": 1,
+        "maxlength": 1
     },
     "timestamp_str":  {
-        "type": "string",
+        "type": "str",
         "regex": "20[2-9][0-9]-(1[0-2]|0[1-9])-([0-2][0-9]|3[01])T[0-2][0-9](:[0-5][0-9]){2}\\.[0-9]{6}Z",
         "validate": "datetime.strptime(x, '%Y-%m-%dT%H:%M:%S.%fZ')"
     },
-    "decstr":  {
-        "type": "hexstr",
-        "regex": "[\\d]*"
+    "gc_evolvability": {
+        "type": "float"
+    },
+    "gc_fitness": {
+        "type": "float"
+    },
+    "gc_updated": {
+        "type": "timestamp_str"
+    },
+    "gc_created": {
+        "type": "timestamp_str"
     },
     "sha256_lowercase": {
-        "type": "string",
+        "type": "str",
         "regex": "[0-9a-f]{64}"
+    },
+    "gc_num_inputs": {
+        "type": "int16",
+        "min": 0,
+        "max": 256
+    },
+    "gc_num_outputs": {
+        "type": "int16",
+        "min": 0,
+        "max": 256
+    },
+    "gc_reference_count": {
+        "type": "int64",
+        "min": 0
+    },
+    "gc_generation": {
+        "type": "int64",
+        "min": 0
+    },
+    "gc_code_depth": {
+        "type": "int32",
+        "min": 0
+    },
+    "gc_codon_depth": {
+        "type": "int32",
+        "min": 0
+    },
+    "gc_num_codes": {
+        "type": "int32",
+        "min": 0
+    },
+    "gc_num_unique_codes": {
+        "type": "int32",
+        "min": 0
+    },
+    "gc_opt_num_codons": {
+        "type": "int32",
+        "min": 0
+    },
+    "gc_raw_num_codons": {
+        "type": "int32",
+        "min": 0
     }
 }

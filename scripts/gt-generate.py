@@ -53,18 +53,19 @@ class k_type_idx(IntEnum):
 class np_scalar_type_idx(IntEnum):
     """Genetic Code Type e_type values for numpy scalar types."""
 
-    INT8 = 0x10
-    INT16 = 0x11
-    INT32 = 0x12
-    INT64 = 0x13
-    UINT8 = 0x14
-    UINT16 = 0x15
-    UINT32 = 0x16
-    UINT64 = 0x17
-    FLOAT32 = 0x18
-    FLOAT64 = 0x19
-    COMPLEX64 = 0x1A
-    COMPLEX128 = 0x1B
+    BOOL = 0x10
+    INT8 = 0x11
+    INT16 = 0x12
+    INT32 = 0x13
+    INT64 = 0x14
+    UINT8 = 0x15
+    UINT16 = 0x16
+    UINT32 = 0x17
+    UINT64 = 0x18
+    FLOAT32 = 0x19
+    FLOAT64 = 0x1A
+    COMPLEX64 = 0x1B
+    COMPLEX128 = 0x1C
 
 @unique
 class np_array_type_idx(IntEnum):
@@ -293,8 +294,8 @@ for ck, cv in filter(lambda x: x[1] < 32, _CATEGORY.items()):
                 gc_type_name_lookup['_'.join((ck, kk, vk))] = (cv << 26) + (kv[0] << 22) + vv[0]
         elif cv == category_idx.LIST or cv == category_idx.TUPLE:
             gc_type_name_lookup['_'.join((ck, vk))] = (cv << 26) + vv[0]
-            for d in range(2, 4): # TODO: Can do up to 16
-                gc_type_name_lookup['_'.join((ck + str(d), vk))] = (cv << 26) + ((d-1) << 22) + vv[0]
+            #for d in range(2, 4): # TODO: Can do up to 16
+                #gc_type_name_lookup['_'.join((ck + str(d), vk))] = (cv << 26) + ((d-1) << 22) + vv[0]
         elif cv == category_idx.BASIC:
             gc_type_name_lookup[vk] = (cv << 26) + vv[0]
         else:
@@ -339,8 +340,8 @@ for k1, v1 in type_groups.items():
         if v1[0] < v2[0]:
             v2[1].add(k1)
 type_groups = {k: tuple(v) for k, v in type_groups.items()}
-type_groups_json = {k: {'types': sorted(list(v[0])), 'sub-groups': sorted(list(v[1]))} for k, v in type_groups.items()}
-type_groups_json['any'] = {'types': ['any'], 'sub-groups': ['any']}
+type_groups_json = {k: {'type': 'group', 'types': sorted(list(v[0])), 'sub-groups': sorted(list(v[1]))} for k, v in type_groups.items()}
+type_groups_json['any'] = {'type': 'group', 'types': ['any'], 'sub-groups': ['any']}
 for i, k in enumerate(type_groups.keys()):
     gc_type_name_lookup[k] = (0x78 << 24) + i - 0x80000000
     gc_type_value_lookup[(0x78 << 24) + i - 0x80000000] = k
@@ -352,7 +353,11 @@ translation_function = {}
 i = 0
 for k, i0 in type_translation.items():
     if i0 and i0 not in translation_function.values():
-        translation_function['translation' + str(i & 0x3FFFF)] = {'map': i0, 'group': find_group(set([o0 for i1 in i0.values() for o0 in i1.values()]))}
+        translation_function['translation' + str(i & 0x3FFFF)] = {
+            'type': 'translation',
+            'map': i0,
+            'group': find_group(set([o0 for i1 in i0.values() for o0 in i1.values()]))
+        }
         i += 1
 with open('gc_translation_types.json', 'w') as file_ptr:
     dump(translation_function, file_ptr, indent=4, sort_keys=True)
@@ -392,3 +397,4 @@ for gt in gc_type_name_lookup:
 gc_type_lookup = {'name': gc_type_name_lookup, 'value': gc_type_value_lookup, 'group': gc_type_group_lookup}
 with open('gc_types.json', 'w') as file_ptr:
     dump(gc_type_lookup, file_ptr, indent=4, sort_keys=True)
+

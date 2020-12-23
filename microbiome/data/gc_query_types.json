@@ -73,9 +73,9 @@
     },
     "gc_list": {
         "schema": {
-            "minlength": 1,
-            "value_types": "gc"
+            "type": "gc"
         },
+        "minlength": 1,
         "type": "list"
     },
     "gc_num_codes_list": {
@@ -396,7 +396,7 @@
             "random"
         ],
         "read-only": false,
-        "type": "string"
+        "type": "str"
     },
     "gc_query_order_by_list": {
         "maxlength": 256,
