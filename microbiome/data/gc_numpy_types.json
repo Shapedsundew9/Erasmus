@@ -6,19 +6,19 @@
         "default": false
     },
     "int8": {
-        "type": "int16",
+        "type": "signedinteger",
         "min": -128,
         "max": 127,
         "default": 0
     },
     "int16": {
-        "type": "int32",
+        "type": "signedinteger",
         "min": -32768,
         "max": 32767,
         "default": 0
     },
     "int32": {
-        "type": "int64",
+        "type": "signedinteger",
         "min": -2147483648,
         "max": 2147483647,
         "default": 0
@@ -30,19 +30,19 @@
         "default": 0
     },
     "uint8": {
-        "type": ["int16", "uint16"],
+        "type": "unsignedinteger",
         "min": 0,
         "max": 255,
         "default": 0
     },
     "uint16": {
-        "type": ["int32", "uint32"],
+        "type": "unsignedinteger",
         "min": 0,
         "max": 65535,
         "default": 0
     },
     "uint32": {
-        "type": ["int64", "uint64"],
+        "type": "unsignedinteger",
         "min": 0,
         "max": 4294967295,
         "default": 0

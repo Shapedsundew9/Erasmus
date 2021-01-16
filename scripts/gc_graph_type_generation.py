@@ -47,28 +47,36 @@ gc_types = {}
 
 def add_new_type(new_type, srcs):
     gc_types[new_type] = {
-        "type": "list",
+        "type": "gc_row",
         "minlength": 1,
         "maxlength": 256,    
         "schema": {
             "type": "gc_srcs_" + ''.join(srcs),
         }
     }
-    gc_types["gc_srcs_" + ''.join(srcs)] = {
-        "type": "list",
-        "items": [
-            {
-                "type": "gc_graph_row_letter",
-                "allowed": list(srcs)
-            },
-            {
-                "type": "uint8"
-            },
-            {
-                "type": "gc_type"       
-            }
-        ]
+
+
+# Add the src hierarchy
+# All destination endpoints are decendents of gc_srcs_ICAB
+# Ancestors include all srcs
+for v in valid_combinations:
+    src_str = ''.join(v)
+    gc_types["gc_srcs_" + src_str] = {
+        "type": "object",
+        "ancestors": ["gc_srcs_" + ''.join(src) for src in valid_combinations]
     }
+
+
+# The general row definition type.
+# Every row in the graph meets this definition.
+gc_types["gc_row"] = {
+    "type": "list",
+    "minlength": 1,
+    "maxlength": 256,    
+    "schema": {
+        "type": "gc_srcs_ICAB",
+    }
+}
 
 
 # Basic Combinations
@@ -76,6 +84,7 @@ for c in valid_combinations:
     schema = {}
     ca = list(c)
     if 'B' in c and not 'A' in c: ca.append('A') # Implicit A
+    if 'C' in c: schema['C'] = {"type": "gc_constant_row", "read-only": False}
     for r in c:
         srcs = [s for s in src_rows[r] if s in ca]
         if srcs:
@@ -86,7 +95,7 @@ for c in valid_combinations:
     schema['O'] = {"type": new_type, "read-only": False}
     add_new_type(new_type, c)
     gc_types['gc_graph_O' + ''.join(c)] = {
-        "type": "dict",
+        "type": "gc_graph",
         "schema": schema
     }
 
@@ -97,7 +106,7 @@ for k, v in list(gc_types.items()):
         schema = deepcopy(v['schema'])
         schema['U'] = {"type": schema['O']['type'], "read-only": False}
         gc_types[k + 'U'] = {
-            "type": "dict",
+            "type": "gc_graph",
             "schema": schema
         }
 
@@ -111,7 +120,7 @@ for k, v in list(gc_types.items()):
         schema['F'] = {"type": "gc_row_I", "read-only": False}
         schema['P'] = deepcopy(schema['O'])
         gc_types[k + 'FP'] = {
-            "type": "dict",
+            "type": "gc_graph",
             "schema": schema
         }
 
@@ -123,9 +132,45 @@ gc_types["gc_graph_row_letter"] = {
 }
 
 
+# Row C definition
+gc_types["gc_constant_row"] = {
+    "type": "list",
+    "minlength": 1,
+    "maxlength": 256,    
+    "schema": {
+        "type": "gc_constant"
+    }
+}
+
+
+# Constant definition
+gc_types["gc_constant"] = {
+    "type": "list",
+    "minlength": 2,
+    "maxlength": 2,    
+    "items": [
+        {
+            "type": "gc_type_int"
+        },
+        {
+            "type": "str"
+        }
+    ]
+}
+
+
 # A Graph is any one of the graph types we have generated.
 gc_types["gc_graph"] = {
-    "type": [k for k in gc_types if "graph_O" in k]
+    "type": "dict",
+    "schema": {
+        "C": {"type": "gc_constant_row", "read-only": False},
+        "A": {"type": "gc_row_IC", "read-only": False},
+        "B": {"type": "gc_row_ICA", "read-only": False},
+        "O": {"type": "gc_row_ICAB", "read-only": False},
+        "U": {"type": "gc_row_ICAB", "read-only": False},
+        "F": {"type": "gc_row_I", "read-only": False},
+        "P": {"type": "gc_row_ICAB", "read-only": False}
+    }
 }
 
 

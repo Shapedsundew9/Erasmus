@@ -22,7 +22,7 @@ class population():
     Populations consist of genetic code individuals identified by thier signatures.
     A population manages itself but may influence others when gathered in work.
     i.e. each population has its own population limit, cull policy and other evolution
-    parameters. The individuals in the population may be used, mated and/or mutated
+    parameters. The individuals in the population may be used, mated with and/or mutated
     by other populations. The offspring of such interactions remain part of the population.
     """
 

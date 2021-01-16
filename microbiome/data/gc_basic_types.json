@@ -18,6 +18,7 @@
         "type": "object"
     },
     "object": {
-        "type": "basic"
+        "type": "basic",
+        "ancestors": []
     }
 }

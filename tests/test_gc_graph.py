@@ -7,7 +7,7 @@ from json import load
 from random import choice, randint, random
 from numpy.random import choice
 from microbiome.genetics.gc_graph import gc_graph, conn_idx, const_idx, DST_EP, SRC_EP, DESTINATION_ROWS, SOURCE_ROWS
-from microbiome.genetics.gc_type import asint
+from microbiome.genetics.gc_type import asint, validate
 from logging import getLogger, basicConfig, DEBUG, INFO
 
 
@@ -42,8 +42,14 @@ _VALID_STRUCTURES = (
     )
 
 
+# Types are in string format for readability in the results file.
 with open(join(dirname(__file__), _TEST_RESULTS_JSON), "r") as results_file:
     results = load(results_file)
+    for g in results:
+        for r, row in g['graph'].items():
+            for conn in row:
+                idx = const_idx.TYPE if r == 'C' else conn_idx.TYPE
+                conn[idx] = asint(conn[idx])
 
 
 basicConfig(
@@ -73,8 +79,8 @@ def random_type(p=0.0):
     -------
     (str) The selected type string.
     """
-    if random() < p: return choice(('gc', 'numeric0', 'numeric6', 'numeric7', 'numeric3'))
-    return 'int'
+    if random() < p: return asint(choice(('gc', 'int', 'str', 'gc_graph', 'gc_srcs_ICAB')))
+    return asint('int')
 
 
 def random_graph(p=0.0, must_be_valid=False):
@@ -125,7 +131,7 @@ def random_graph(p=0.0, must_be_valid=False):
                         ep = [SRC_EP, row, i, source_types.pop(), []]
                         if row == 'C': 
                             ep.append('int(' + str(randint(-1000, 1000)) + ')')
-                            ep[3] = 'int'
+                            ep[3] = asint('int')
                         graph._add_ep(ep)
 
         for _ in range(len(list(filter(graph.dst_filter(), graph.graph.values())))): graph.random_add_connection()
@@ -153,7 +159,7 @@ def test_graph_conversion(i, case):
     if case['valid']:
         for k, v in case['graph'].items():
             idx = const_idx.TYPE if k == 'C' else conn_idx.TYPE
-            for r in v: r[idx] = asint(r[idx])   
+            for r in v: r[idx] = r[idx]   
         assert case['graph'] == gcg.application_graph()
 
 

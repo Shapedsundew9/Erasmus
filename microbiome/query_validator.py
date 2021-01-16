@@ -25,9 +25,65 @@ class query_validator():
             'type': 'integer',
             'min': 1
         },
-        'random': {
-            'type': 'boolean',
-            'default': False
+        'contains': {
+            'type': 'dict',
+            'schema': {
+                'lhs': {
+                    'type': 'list',
+                    'schema': {
+                        'type': 'string',
+                        'allowed': []
+                    }
+                },
+                'rhs': {
+                    'type': 'list'
+                }
+            }
+        },
+        'overlaps': {
+            'type': 'dict',
+            'schema': {
+                'lhs': {
+                    'type': 'list',
+                    'schema': {
+                        'type': 'string',
+                        'allowed': []
+                    }
+                },
+                'rhs': {
+                    'type': 'list'
+                }
+            }
+        },
+        'does not overlap': {
+            'type': 'dict',
+            'schema': {
+                'lhs': {
+                    'type': 'list',
+                    'schema': {
+                        'type': 'string',
+                        'allowed': []
+                    }
+                },
+                'rhs': {
+                    'type': 'list'
+                }
+            }
+        },
+        'contained by': {
+            'type': 'dict',
+            'schema': {
+                'lhs': {
+                    'type': 'list',
+                    'schema': {
+                        'type': 'string',
+                        'allowed': []
+                    }
+                },
+                'rhs': {
+                    'type': 'list'
+                }
+            }
         }
     }
 
@@ -37,7 +93,13 @@ class query_validator():
         queriable_fields = filter(lambda kv: not 'compressed' in kv[1]['meta'] or not kv[1]['meta']['compressed'], table_schema.items())
         validation_schema = {k: self._query_params(v) for k, v in queriable_fields}
         validation_schema.update(query_validator._QUERY_BASE_SCHEMA)
-        validation_schema['order by']['allowed'] = [k for k, v in filter(lambda kv: kv[1]['meta']['database']['type'] != 'BYTEA', table_schema.items())]
+        searchable_fields = [k for k, v in filter(lambda kv: kv[1]['meta']['database']['type'] != 'BYTEA', table_schema.items())]
+        validation_schema['contains']['schema']['lhs']['allowed'] = searchable_fields
+        validation_schema['overlaps']['schema']['lhs']['allowed'] = searchable_fields
+        validation_schema['contained_by']['schema']['rhs']['allowed'] = searchable_fields
+        validation_schema['does not overlap']['schema']['lhs']['allowed'] = searchable_fields
+        validation_schema['order by']['allowed'] = searchable_fields
+        validation_schema['order by']['allowed'].append("RANDOM()")
         self._validator = Validator(validation_schema)
         self.errors = None
 

@@ -1,5 +1,8 @@
 {
     "gc_class_list": {
+        "ancestors": [
+            "gc_class"
+        ],
         "maxlength": 256,
         "minlength": 1,
         "read-only": false,
@@ -9,6 +12,9 @@
         "type": "list"
     },
     "gc_code_depth_list": {
+        "ancestors": [
+            "gc_code_depth"
+        ],
         "maxlength": 256,
         "minlength": 1,
         "read-only": false,
@@ -18,6 +24,9 @@
         "type": "list"
     },
     "gc_codon_depth_list": {
+        "ancestors": [
+            "gc_codon_depth"
+        ],
         "maxlength": 256,
         "minlength": 1,
         "read-only": false,
@@ -27,6 +36,9 @@
         "type": "list"
     },
     "gc_created_list": {
+        "ancestors": [
+            "gc_created"
+        ],
         "maxlength": 256,
         "minlength": 1,
         "read-only": false,
@@ -36,6 +48,9 @@
         "type": "list"
     },
     "gc_creator_list": {
+        "ancestors": [
+            "gc_creator"
+        ],
         "maxlength": 256,
         "minlength": 1,
         "read-only": false,
@@ -45,6 +60,9 @@
         "type": "list"
     },
     "gc_evolvability_list": {
+        "ancestors": [
+            "gc_evolvability"
+        ],
         "maxlength": 256,
         "minlength": 1,
         "read-only": false,
@@ -54,6 +72,9 @@
         "type": "list"
     },
     "gc_fitness_list": {
+        "ancestors": [
+            "gc_fitness"
+        ],
         "maxlength": 256,
         "minlength": 1,
         "read-only": false,
@@ -63,6 +84,9 @@
         "type": "list"
     },
     "gc_generation_list": {
+        "ancestors": [
+            "gc_generation"
+        ],
         "maxlength": 256,
         "minlength": 1,
         "read-only": false,
@@ -72,13 +96,16 @@
         "type": "list"
     },
     "gc_list": {
+        "minlength": 1,
         "schema": {
             "type": "gc"
         },
-        "minlength": 1,
         "type": "list"
     },
     "gc_num_codes_list": {
+        "ancestors": [
+            "gc_num_codes"
+        ],
         "maxlength": 256,
         "minlength": 1,
         "read-only": false,
@@ -88,6 +115,9 @@
         "type": "list"
     },
     "gc_num_inputs_list": {
+        "ancestors": [
+            "gc_num_inputs"
+        ],
         "maxlength": 256,
         "minlength": 1,
         "read-only": false,
@@ -97,6 +127,9 @@
         "type": "list"
     },
     "gc_num_outputs_list": {
+        "ancestors": [
+            "gc_num_outputs"
+        ],
         "maxlength": 256,
         "minlength": 1,
         "read-only": false,
@@ -106,6 +139,9 @@
         "type": "list"
     },
     "gc_num_unique_codes_list": {
+        "ancestors": [
+            "gc_num_unique_codes"
+        ],
         "maxlength": 256,
         "minlength": 1,
         "read-only": false,
@@ -115,11 +151,26 @@
         "type": "list"
     },
     "gc_opt_num_codons_list": {
+        "ancestors": [
+            "gc_opt_num_codons"
+        ],
         "maxlength": 256,
         "minlength": 1,
         "read-only": false,
         "schema": {
             "type": "gc_opt_num_codons"
+        },
+        "type": "list"
+    },
+    "gc_properties_list": {
+        "ancestors": [
+            "gc_properties"
+        ],
+        "maxlength": 256,
+        "minlength": 1,
+        "read-only": false,
+        "schema": {
+            "type": "gc_properties"
         },
         "type": "list"
     },
@@ -172,35 +223,35 @@
             },
             "input0_type": {
                 "read-only": false,
-                "type": "gc_query_type"
+                "type": "gc_query_type_int"
             },
             "input1_type": {
                 "read-only": false,
-                "type": "gc_query_type"
+                "type": "gc_query_type_int"
             },
             "input2_type": {
                 "read-only": false,
-                "type": "gc_query_type"
+                "type": "gc_query_type_int"
             },
             "input3_type": {
                 "read-only": false,
-                "type": "gc_query_type"
+                "type": "gc_query_type_int"
             },
             "input4_type": {
                 "read-only": false,
-                "type": "gc_query_type"
+                "type": "gc_query_type_int"
             },
             "input5_type": {
                 "read-only": false,
-                "type": "gc_query_type"
+                "type": "gc_query_type_int"
             },
             "input6_type": {
                 "read-only": false,
-                "type": "gc_query_type"
+                "type": "gc_query_type_int"
             },
             "input7_type": {
                 "read-only": false,
-                "type": "gc_query_type"
+                "type": "gc_query_type_int"
             },
             "num_codes": {
                 "read-only": false,
@@ -228,19 +279,19 @@
             },
             "output0_type": {
                 "read-only": false,
-                "type": "gc_query_type"
+                "type": "gc_query_type_int"
             },
             "output1_type": {
                 "read-only": false,
-                "type": "gc_query_type"
+                "type": "gc_query_type_int"
             },
             "output2_type": {
                 "read-only": false,
-                "type": "gc_query_type"
+                "type": "gc_query_type_int"
             },
             "output3_type": {
                 "read-only": false,
-                "type": "gc_query_type"
+                "type": "gc_query_type_int"
             },
             "properties": {
                 "read-only": false,
@@ -267,94 +318,55 @@
     },
     "gc_query_class": {
         "read-only": false,
-        "type": [
-            "gc_class",
-            "gc_class_list"
-        ]
+        "type": "object"
     },
     "gc_query_code_depth": {
         "read-only": false,
-        "type": [
-            "gc_code_depth",
-            "gc_code_depth_list"
-        ]
+        "type": "object"
     },
     "gc_query_codon_depth": {
         "read-only": false,
-        "type": [
-            "gc_codon_depth",
-            "gc_codon_depth_list"
-        ]
+        "type": "object"
     },
     "gc_query_created": {
         "read-only": false,
-        "type": [
-            "gc_created",
-            "gc_created_list"
-        ]
+        "type": "object"
     },
     "gc_query_creator": {
         "read-only": false,
-        "type": [
-            "gc_creator",
-            "gc_creator_list"
-        ]
+        "type": "object"
     },
     "gc_query_evolvability": {
         "read-only": false,
-        "type": [
-            "gc_evolvability",
-            "gc_evolvability_list"
-        ]
+        "type": "object"
     },
     "gc_query_fitness": {
         "read-only": false,
-        "type": [
-            "gc_fitness",
-            "gc_fitness_list"
-        ]
+        "type": "object"
     },
     "gc_query_generation": {
         "read-only": false,
-        "type": [
-            "gc_generation",
-            "gc_generation_list"
-        ]
+        "type": "object"
     },
     "gc_query_num_codes": {
         "read-only": false,
-        "type": [
-            "gc_num_codes",
-            "gc_num_codes_list"
-        ]
+        "type": "object"
     },
     "gc_query_num_inputs": {
         "read-only": false,
-        "type": [
-            "gc_num_inputs",
-            "gc_num_inputs_list"
-        ]
+        "type": "object"
     },
     "gc_query_num_outputs": {
         "read-only": false,
-        "type": [
-            "gc_num_outputs",
-            "gc_num_outputs_list"
-        ]
+        "type": "object"
     },
     "gc_query_num_unique_codes": {
         "read-only": false,
-        "type": [
-            "gc_num_unique_codes",
-            "gc_num_unique_codes_list"
-        ]
+        "type": "object"
     },
     "gc_query_opt_num_codons": {
         "read-only": false,
-        "type": [
-            "gc_opt_num_codons",
-            "gc_opt_num_codons_list"
-        ]
+        "type": "object"
     },
     "gc_query_order_by": {
         "allowed": [
@@ -399,6 +411,9 @@
         "type": "str"
     },
     "gc_query_order_by_list": {
+        "ancestors": [
+            "gc_query_order_by"
+        ],
         "maxlength": 256,
         "minlength": 1,
         "read-only": false,
@@ -409,54 +424,36 @@
     },
     "gc_query_properties": {
         "read-only": false,
-        "type": [
-            "gc_properties",
-            "int64"
-        ]
+        "type": "object"
     },
     "gc_query_query_order_by": {
         "read-only": false,
-        "type": [
-            "gc_query_order_by",
-            "gc_query_order_by_list"
-        ]
+        "type": "object"
     },
     "gc_query_raw_num_codons": {
         "read-only": false,
-        "type": [
-            "gc_raw_num_codons",
-            "gc_raw_num_codons_list"
-        ]
+        "type": "object"
     },
     "gc_query_reference_count": {
         "read-only": false,
-        "type": [
-            "gc_reference_count",
-            "gc_reference_count_list"
-        ]
+        "type": "object"
     },
     "gc_query_signature": {
         "read-only": false,
-        "type": [
-            "gc_signature",
-            "gc_signature_list"
-        ]
+        "type": "object"
     },
-    "gc_query_type": {
+    "gc_query_type_int": {
         "read-only": false,
-        "type": [
-            "gc_type",
-            "gc_type_list"
-        ]
+        "type": "object"
     },
     "gc_query_updated": {
         "read-only": false,
-        "type": [
-            "gc_updated",
-            "gc_updated_list"
-        ]
+        "type": "object"
     },
     "gc_raw_num_codons_list": {
+        "ancestors": [
+            "gc_raw_num_codons"
+        ],
         "maxlength": 256,
         "minlength": 1,
         "read-only": false,
@@ -466,6 +463,9 @@
         "type": "list"
     },
     "gc_reference_count_list": {
+        "ancestors": [
+            "gc_reference_count"
+        ],
         "maxlength": 256,
         "minlength": 1,
         "read-only": false,
@@ -475,6 +475,9 @@
         "type": "list"
     },
     "gc_signature_list": {
+        "ancestors": [
+            "gc_signature"
+        ],
         "maxlength": 256,
         "minlength": 1,
         "read-only": false,
@@ -483,16 +486,22 @@
         },
         "type": "list"
     },
-    "gc_type_list": {
+    "gc_type_int_list": {
+        "ancestors": [
+            "gc_type_int"
+        ],
         "maxlength": 256,
         "minlength": 1,
         "read-only": false,
         "schema": {
-            "type": "gc_type"
+            "type": "gc_type_int"
         },
         "type": "list"
     },
     "gc_updated_list": {
+        "ancestors": [
+            "gc_updated"
+        ],
         "maxlength": 256,
         "minlength": 1,
         "read-only": false,

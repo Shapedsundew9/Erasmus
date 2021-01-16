@@ -540,8 +540,7 @@
             "description": "The classification of the genetic code."
         },
         "type": "integer",
-        "default": -1,
-        "check_with": "valid_alpha_class"
+        "default": -1
     },
     "beta_class": {
         "meta": {

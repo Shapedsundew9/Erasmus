@@ -1,48 +1,57 @@
 {
+    "gc_constant": {
+        "items": [
+            {
+                "type": "gc_type_int"
+            },
+            {
+                "type": "str"
+            }
+        ],
+        "maxlength": 2,
+        "minlength": 2,
+        "type": "list"
+    },
+    "gc_constant_row": {
+        "maxlength": 256,
+        "minlength": 1,
+        "schema": {
+            "type": "gc_constant"
+        },
+        "type": "list"
+    },
     "gc_graph": {
-        "type": [
-            "gc_graph_OC",
-            "gc_graph_OA",
-            "gc_graph_OB",
-            "gc_graph_OIC",
-            "gc_graph_OIA",
-            "gc_graph_OIB",
-            "gc_graph_OCA",
-            "gc_graph_OCB",
-            "gc_graph_OAB",
-            "gc_graph_OICA",
-            "gc_graph_OICB",
-            "gc_graph_OIAB",
-            "gc_graph_OCAB",
-            "gc_graph_OICAB",
-            "gc_graph_OAU",
-            "gc_graph_OBU",
-            "gc_graph_OICU",
-            "gc_graph_OIAU",
-            "gc_graph_OIBU",
-            "gc_graph_OCAU",
-            "gc_graph_OCBU",
-            "gc_graph_OABU",
-            "gc_graph_OICAU",
-            "gc_graph_OICBU",
-            "gc_graph_OIABU",
-            "gc_graph_OCABU",
-            "gc_graph_OICABU",
-            "gc_graph_OICFP",
-            "gc_graph_OIAFP",
-            "gc_graph_OIBFP",
-            "gc_graph_OICAFP",
-            "gc_graph_OICBFP",
-            "gc_graph_OIABFP",
-            "gc_graph_OICABFP",
-            "gc_graph_OICUFP",
-            "gc_graph_OIAUFP",
-            "gc_graph_OIBUFP",
-            "gc_graph_OICAUFP",
-            "gc_graph_OICBUFP",
-            "gc_graph_OIABUFP",
-            "gc_graph_OICABUFP"
-        ]
+        "schema": {
+            "A": {
+                "read-only": false,
+                "type": "gc_row_IC"
+            },
+            "B": {
+                "read-only": false,
+                "type": "gc_row_ICA"
+            },
+            "C": {
+                "read-only": false,
+                "type": "gc_constant_row"
+            },
+            "F": {
+                "read-only": false,
+                "type": "gc_row_I"
+            },
+            "O": {
+                "read-only": false,
+                "type": "gc_row_ICAB"
+            },
+            "P": {
+                "read-only": false,
+                "type": "gc_row_ICAB"
+            },
+            "U": {
+                "read-only": false,
+                "type": "gc_row_ICAB"
+            }
+        },
+        "type": "dict"
     },
     "gc_graph_OA": {
         "schema": {
@@ -51,7 +60,7 @@
                 "type": "gc_row_A"
             }
         },
-        "type": "dict"
+        "type": "gc_graph"
     },
     "gc_graph_OAB": {
         "schema": {
@@ -64,7 +73,7 @@
                 "type": "gc_row_AB"
             }
         },
-        "type": "dict"
+        "type": "gc_graph"
     },
     "gc_graph_OABU": {
         "schema": {
@@ -81,7 +90,7 @@
                 "type": "gc_row_AB"
             }
         },
-        "type": "dict"
+        "type": "gc_graph"
     },
     "gc_graph_OAU": {
         "schema": {
@@ -94,7 +103,7 @@
                 "type": "gc_row_A"
             }
         },
-        "type": "dict"
+        "type": "gc_graph"
     },
     "gc_graph_OB": {
         "schema": {
@@ -107,7 +116,7 @@
                 "type": "gc_row_BA"
             }
         },
-        "type": "dict"
+        "type": "gc_graph"
     },
     "gc_graph_OBU": {
         "schema": {
@@ -124,16 +133,20 @@
                 "type": "gc_row_BA"
             }
         },
-        "type": "dict"
+        "type": "gc_graph"
     },
     "gc_graph_OC": {
         "schema": {
+            "C": {
+                "read-only": false,
+                "type": "gc_constant_row"
+            },
             "O": {
                 "read-only": false,
                 "type": "gc_row_C"
             }
         },
-        "type": "dict"
+        "type": "gc_graph"
     },
     "gc_graph_OCA": {
         "schema": {
@@ -141,12 +154,16 @@
                 "read-only": false,
                 "type": "gc_row_C"
             },
+            "C": {
+                "read-only": false,
+                "type": "gc_constant_row"
+            },
             "O": {
                 "read-only": false,
                 "type": "gc_row_CA"
             }
         },
-        "type": "dict"
+        "type": "gc_graph"
     },
     "gc_graph_OCAB": {
         "schema": {
@@ -158,12 +175,16 @@
                 "read-only": false,
                 "type": "gc_row_CA"
             },
+            "C": {
+                "read-only": false,
+                "type": "gc_constant_row"
+            },
             "O": {
                 "read-only": false,
                 "type": "gc_row_CAB"
             }
         },
-        "type": "dict"
+        "type": "gc_graph"
     },
     "gc_graph_OCABU": {
         "schema": {
@@ -175,6 +196,10 @@
                 "read-only": false,
                 "type": "gc_row_CA"
             },
+            "C": {
+                "read-only": false,
+                "type": "gc_constant_row"
+            },
             "O": {
                 "read-only": false,
                 "type": "gc_row_CAB"
@@ -184,7 +209,7 @@
                 "type": "gc_row_CAB"
             }
         },
-        "type": "dict"
+        "type": "gc_graph"
     },
     "gc_graph_OCAU": {
         "schema": {
@@ -192,6 +217,10 @@
                 "read-only": false,
                 "type": "gc_row_C"
             },
+            "C": {
+                "read-only": false,
+                "type": "gc_constant_row"
+            },
             "O": {
                 "read-only": false,
                 "type": "gc_row_CA"
@@ -201,7 +230,7 @@
                 "type": "gc_row_CA"
             }
         },
-        "type": "dict"
+        "type": "gc_graph"
     },
     "gc_graph_OCB": {
         "schema": {
@@ -209,18 +238,26 @@
                 "read-only": false,
                 "type": "gc_row_CA"
             },
+            "C": {
+                "read-only": false,
+                "type": "gc_constant_row"
+            },
             "O": {
                 "read-only": false,
                 "type": "gc_row_CBA"
             }
         },
-        "type": "dict"
+        "type": "gc_graph"
     },
     "gc_graph_OCBU": {
         "schema": {
             "B": {
                 "read-only": false,
                 "type": "gc_row_CA"
+            },
+            "C": {
+                "read-only": false,
+                "type": "gc_constant_row"
             },
             "O": {
                 "read-only": false,
@@ -231,7 +268,7 @@
                 "type": "gc_row_CBA"
             }
         },
-        "type": "dict"
+        "type": "gc_graph"
     },
     "gc_graph_OIA": {
         "schema": {
@@ -244,7 +281,7 @@
                 "type": "gc_row_IA"
             }
         },
-        "type": "dict"
+        "type": "gc_graph"
     },
     "gc_graph_OIAB": {
         "schema": {
@@ -261,7 +298,7 @@
                 "type": "gc_row_IAB"
             }
         },
-        "type": "dict"
+        "type": "gc_graph"
     },
     "gc_graph_OIABFP": {
         "schema": {
@@ -286,7 +323,7 @@
                 "type": "gc_row_IAB"
             }
         },
-        "type": "dict"
+        "type": "gc_graph"
     },
     "gc_graph_OIABU": {
         "schema": {
@@ -307,7 +344,7 @@
                 "type": "gc_row_IAB"
             }
         },
-        "type": "dict"
+        "type": "gc_graph"
     },
     "gc_graph_OIABUFP": {
         "schema": {
@@ -336,7 +373,7 @@
                 "type": "gc_row_IAB"
             }
         },
-        "type": "dict"
+        "type": "gc_graph"
     },
     "gc_graph_OIAFP": {
         "schema": {
@@ -357,7 +394,7 @@
                 "type": "gc_row_IA"
             }
         },
-        "type": "dict"
+        "type": "gc_graph"
     },
     "gc_graph_OIAU": {
         "schema": {
@@ -374,7 +411,7 @@
                 "type": "gc_row_IA"
             }
         },
-        "type": "dict"
+        "type": "gc_graph"
     },
     "gc_graph_OIAUFP": {
         "schema": {
@@ -399,7 +436,7 @@
                 "type": "gc_row_IA"
             }
         },
-        "type": "dict"
+        "type": "gc_graph"
     },
     "gc_graph_OIB": {
         "schema": {
@@ -412,7 +449,7 @@
                 "type": "gc_row_IBA"
             }
         },
-        "type": "dict"
+        "type": "gc_graph"
     },
     "gc_graph_OIBFP": {
         "schema": {
@@ -433,7 +470,7 @@
                 "type": "gc_row_IBA"
             }
         },
-        "type": "dict"
+        "type": "gc_graph"
     },
     "gc_graph_OIBU": {
         "schema": {
@@ -450,7 +487,7 @@
                 "type": "gc_row_IBA"
             }
         },
-        "type": "dict"
+        "type": "gc_graph"
     },
     "gc_graph_OIBUFP": {
         "schema": {
@@ -475,16 +512,20 @@
                 "type": "gc_row_IBA"
             }
         },
-        "type": "dict"
+        "type": "gc_graph"
     },
     "gc_graph_OIC": {
         "schema": {
+            "C": {
+                "read-only": false,
+                "type": "gc_constant_row"
+            },
             "O": {
                 "read-only": false,
                 "type": "gc_row_IC"
             }
         },
-        "type": "dict"
+        "type": "gc_graph"
     },
     "gc_graph_OICA": {
         "schema": {
@@ -492,12 +533,16 @@
                 "read-only": false,
                 "type": "gc_row_IC"
             },
+            "C": {
+                "read-only": false,
+                "type": "gc_constant_row"
+            },
             "O": {
                 "read-only": false,
                 "type": "gc_row_ICA"
             }
         },
-        "type": "dict"
+        "type": "gc_graph"
     },
     "gc_graph_OICAB": {
         "schema": {
@@ -509,12 +554,16 @@
                 "read-only": false,
                 "type": "gc_row_ICA"
             },
+            "C": {
+                "read-only": false,
+                "type": "gc_constant_row"
+            },
             "O": {
                 "read-only": false,
                 "type": "gc_row_ICAB"
             }
         },
-        "type": "dict"
+        "type": "gc_graph"
     },
     "gc_graph_OICABFP": {
         "schema": {
@@ -526,6 +575,10 @@
                 "read-only": false,
                 "type": "gc_row_ICA"
             },
+            "C": {
+                "read-only": false,
+                "type": "gc_constant_row"
+            },
             "F": {
                 "read-only": false,
                 "type": "gc_row_I"
@@ -539,7 +592,7 @@
                 "type": "gc_row_ICAB"
             }
         },
-        "type": "dict"
+        "type": "gc_graph"
     },
     "gc_graph_OICABU": {
         "schema": {
@@ -551,6 +604,10 @@
                 "read-only": false,
                 "type": "gc_row_ICA"
             },
+            "C": {
+                "read-only": false,
+                "type": "gc_constant_row"
+            },
             "O": {
                 "read-only": false,
                 "type": "gc_row_ICAB"
@@ -560,7 +617,7 @@
                 "type": "gc_row_ICAB"
             }
         },
-        "type": "dict"
+        "type": "gc_graph"
     },
     "gc_graph_OICABUFP": {
         "schema": {
@@ -572,6 +629,10 @@
                 "read-only": false,
                 "type": "gc_row_ICA"
             },
+            "C": {
+                "read-only": false,
+                "type": "gc_constant_row"
+            },
             "F": {
                 "read-only": false,
                 "type": "gc_row_I"
@@ -589,7 +650,7 @@
                 "type": "gc_row_ICAB"
             }
         },
-        "type": "dict"
+        "type": "gc_graph"
     },
     "gc_graph_OICAFP": {
         "schema": {
@@ -597,6 +658,10 @@
                 "read-only": false,
                 "type": "gc_row_IC"
             },
+            "C": {
+                "read-only": false,
+                "type": "gc_constant_row"
+            },
             "F": {
                 "read-only": false,
                 "type": "gc_row_I"
@@ -610,7 +675,7 @@
                 "type": "gc_row_ICA"
             }
         },
-        "type": "dict"
+        "type": "gc_graph"
     },
     "gc_graph_OICAU": {
         "schema": {
@@ -618,6 +683,10 @@
                 "read-only": false,
                 "type": "gc_row_IC"
             },
+            "C": {
+                "read-only": false,
+                "type": "gc_constant_row"
+            },
             "O": {
                 "read-only": false,
                 "type": "gc_row_ICA"
@@ -627,7 +696,7 @@
                 "type": "gc_row_ICA"
             }
         },
-        "type": "dict"
+        "type": "gc_graph"
     },
     "gc_graph_OICAUFP": {
         "schema": {
@@ -635,6 +704,10 @@
                 "read-only": false,
                 "type": "gc_row_IC"
             },
+            "C": {
+                "read-only": false,
+                "type": "gc_constant_row"
+            },
             "F": {
                 "read-only": false,
                 "type": "gc_row_I"
@@ -652,7 +725,7 @@
                 "type": "gc_row_ICA"
             }
         },
-        "type": "dict"
+        "type": "gc_graph"
     },
     "gc_graph_OICB": {
         "schema": {
@@ -660,12 +733,16 @@
                 "read-only": false,
                 "type": "gc_row_ICA"
             },
+            "C": {
+                "read-only": false,
+                "type": "gc_constant_row"
+            },
             "O": {
                 "read-only": false,
                 "type": "gc_row_ICBA"
             }
         },
-        "type": "dict"
+        "type": "gc_graph"
     },
     "gc_graph_OICBFP": {
         "schema": {
@@ -673,6 +750,10 @@
                 "read-only": false,
                 "type": "gc_row_ICA"
             },
+            "C": {
+                "read-only": false,
+                "type": "gc_constant_row"
+            },
             "F": {
                 "read-only": false,
                 "type": "gc_row_I"
@@ -686,7 +767,7 @@
                 "type": "gc_row_ICBA"
             }
         },
-        "type": "dict"
+        "type": "gc_graph"
     },
     "gc_graph_OICBU": {
         "schema": {
@@ -694,6 +775,10 @@
                 "read-only": false,
                 "type": "gc_row_ICA"
             },
+            "C": {
+                "read-only": false,
+                "type": "gc_constant_row"
+            },
             "O": {
                 "read-only": false,
                 "type": "gc_row_ICBA"
@@ -703,7 +788,7 @@
                 "type": "gc_row_ICBA"
             }
         },
-        "type": "dict"
+        "type": "gc_graph"
     },
     "gc_graph_OICBUFP": {
         "schema": {
@@ -711,6 +796,10 @@
                 "read-only": false,
                 "type": "gc_row_ICA"
             },
+            "C": {
+                "read-only": false,
+                "type": "gc_constant_row"
+            },
             "F": {
                 "read-only": false,
                 "type": "gc_row_I"
@@ -728,10 +817,14 @@
                 "type": "gc_row_ICBA"
             }
         },
-        "type": "dict"
+        "type": "gc_graph"
     },
     "gc_graph_OICFP": {
         "schema": {
+            "C": {
+                "read-only": false,
+                "type": "gc_constant_row"
+            },
             "F": {
                 "read-only": false,
                 "type": "gc_row_I"
@@ -745,10 +838,14 @@
                 "type": "gc_row_IC"
             }
         },
-        "type": "dict"
+        "type": "gc_graph"
     },
     "gc_graph_OICU": {
         "schema": {
+            "C": {
+                "read-only": false,
+                "type": "gc_constant_row"
+            },
             "O": {
                 "read-only": false,
                 "type": "gc_row_IC"
@@ -758,10 +855,14 @@
                 "type": "gc_row_IC"
             }
         },
-        "type": "dict"
+        "type": "gc_graph"
     },
     "gc_graph_OICUFP": {
         "schema": {
+            "C": {
+                "read-only": false,
+                "type": "gc_constant_row"
+            },
             "F": {
                 "read-only": false,
                 "type": "gc_row_I"
@@ -779,7 +880,7 @@
                 "type": "gc_row_IC"
             }
         },
-        "type": "dict"
+        "type": "gc_graph"
     },
     "gc_graph_row_letter": {
         "allowed": [
@@ -794,111 +895,7 @@
         ],
         "type": "letter_uppercase"
     },
-    "gc_row_A": {
-        "maxlength": 256,
-        "minlength": 1,
-        "schema": {
-            "type": "gc_srcs_A"
-        },
-        "type": "list"
-    },
-    "gc_row_AB": {
-        "maxlength": 256,
-        "minlength": 1,
-        "schema": {
-            "type": "gc_srcs_AB"
-        },
-        "type": "list"
-    },
-    "gc_row_BA": {
-        "maxlength": 256,
-        "minlength": 1,
-        "schema": {
-            "type": "gc_srcs_B"
-        },
-        "type": "list"
-    },
-    "gc_row_C": {
-        "maxlength": 256,
-        "minlength": 1,
-        "schema": {
-            "type": "gc_srcs_C"
-        },
-        "type": "list"
-    },
-    "gc_row_CA": {
-        "maxlength": 256,
-        "minlength": 1,
-        "schema": {
-            "type": "gc_srcs_CA"
-        },
-        "type": "list"
-    },
-    "gc_row_CAB": {
-        "maxlength": 256,
-        "minlength": 1,
-        "schema": {
-            "type": "gc_srcs_CAB"
-        },
-        "type": "list"
-    },
-    "gc_row_CBA": {
-        "maxlength": 256,
-        "minlength": 1,
-        "schema": {
-            "type": "gc_srcs_CB"
-        },
-        "type": "list"
-    },
-    "gc_row_I": {
-        "maxlength": 256,
-        "minlength": 1,
-        "schema": {
-            "type": "gc_srcs_I"
-        },
-        "type": "list"
-    },
-    "gc_row_IA": {
-        "maxlength": 256,
-        "minlength": 1,
-        "schema": {
-            "type": "gc_srcs_IA"
-        },
-        "type": "list"
-    },
-    "gc_row_IAB": {
-        "maxlength": 256,
-        "minlength": 1,
-        "schema": {
-            "type": "gc_srcs_IAB"
-        },
-        "type": "list"
-    },
-    "gc_row_IBA": {
-        "maxlength": 256,
-        "minlength": 1,
-        "schema": {
-            "type": "gc_srcs_IB"
-        },
-        "type": "list"
-    },
-    "gc_row_IC": {
-        "maxlength": 256,
-        "minlength": 1,
-        "schema": {
-            "type": "gc_srcs_IC"
-        },
-        "type": "list"
-    },
-    "gc_row_ICA": {
-        "maxlength": 256,
-        "minlength": 1,
-        "schema": {
-            "type": "gc_srcs_ICA"
-        },
-        "type": "list"
-    },
-    "gc_row_ICAB": {
+    "gc_row": {
         "maxlength": 256,
         "minlength": 1,
         "schema": {
@@ -906,362 +903,390 @@
         },
         "type": "list"
     },
+    "gc_row_A": {
+        "maxlength": 256,
+        "minlength": 1,
+        "schema": {
+            "type": "gc_srcs_A"
+        },
+        "type": "gc_row"
+    },
+    "gc_row_AB": {
+        "maxlength": 256,
+        "minlength": 1,
+        "schema": {
+            "type": "gc_srcs_AB"
+        },
+        "type": "gc_row"
+    },
+    "gc_row_BA": {
+        "maxlength": 256,
+        "minlength": 1,
+        "schema": {
+            "type": "gc_srcs_B"
+        },
+        "type": "gc_row"
+    },
+    "gc_row_C": {
+        "maxlength": 256,
+        "minlength": 1,
+        "schema": {
+            "type": "gc_srcs_C"
+        },
+        "type": "gc_row"
+    },
+    "gc_row_CA": {
+        "maxlength": 256,
+        "minlength": 1,
+        "schema": {
+            "type": "gc_srcs_CA"
+        },
+        "type": "gc_row"
+    },
+    "gc_row_CAB": {
+        "maxlength": 256,
+        "minlength": 1,
+        "schema": {
+            "type": "gc_srcs_CAB"
+        },
+        "type": "gc_row"
+    },
+    "gc_row_CBA": {
+        "maxlength": 256,
+        "minlength": 1,
+        "schema": {
+            "type": "gc_srcs_CB"
+        },
+        "type": "gc_row"
+    },
+    "gc_row_I": {
+        "maxlength": 256,
+        "minlength": 1,
+        "schema": {
+            "type": "gc_srcs_I"
+        },
+        "type": "gc_row"
+    },
+    "gc_row_IA": {
+        "maxlength": 256,
+        "minlength": 1,
+        "schema": {
+            "type": "gc_srcs_IA"
+        },
+        "type": "gc_row"
+    },
+    "gc_row_IAB": {
+        "maxlength": 256,
+        "minlength": 1,
+        "schema": {
+            "type": "gc_srcs_IAB"
+        },
+        "type": "gc_row"
+    },
+    "gc_row_IBA": {
+        "maxlength": 256,
+        "minlength": 1,
+        "schema": {
+            "type": "gc_srcs_IB"
+        },
+        "type": "gc_row"
+    },
+    "gc_row_IC": {
+        "maxlength": 256,
+        "minlength": 1,
+        "schema": {
+            "type": "gc_srcs_IC"
+        },
+        "type": "gc_row"
+    },
+    "gc_row_ICA": {
+        "maxlength": 256,
+        "minlength": 1,
+        "schema": {
+            "type": "gc_srcs_ICA"
+        },
+        "type": "gc_row"
+    },
+    "gc_row_ICAB": {
+        "maxlength": 256,
+        "minlength": 1,
+        "schema": {
+            "type": "gc_srcs_ICAB"
+        },
+        "type": "gc_row"
+    },
     "gc_row_ICBA": {
         "maxlength": 256,
         "minlength": 1,
         "schema": {
             "type": "gc_srcs_ICB"
         },
-        "type": "list"
+        "type": "gc_row"
     },
     "gc_srcs_A": {
-        "items": [
-            {
-                "allowed": [
-                    "A"
-                ],
-                "type": "gc_graph_row_letter"
-            },
-            {
-                "allowed": [
-                    0
-                ],
-                "type": "uint8"
-            },
-            {
-                "type": "gc_type"
-            }
+        "ancestors": [
+            "gc_srcs_C",
+            "gc_srcs_A",
+            "gc_srcs_B",
+            "gc_srcs_IC",
+            "gc_srcs_IA",
+            "gc_srcs_IB",
+            "gc_srcs_CA",
+            "gc_srcs_CB",
+            "gc_srcs_AB",
+            "gc_srcs_ICA",
+            "gc_srcs_ICB",
+            "gc_srcs_IAB",
+            "gc_srcs_CAB",
+            "gc_srcs_ICAB"
         ],
-        "type": "list"
+        "type": "object"
     },
     "gc_srcs_AB": {
-        "items": [
-            {
-                "type": "gc_AB"
-            },
-            {
-                "allowed": [
-                    0
-                ],
-                "type": "uint8"
-            },
-            {
-                "type": "gc_type"
-            }
+        "ancestors": [
+            "gc_srcs_C",
+            "gc_srcs_A",
+            "gc_srcs_B",
+            "gc_srcs_IC",
+            "gc_srcs_IA",
+            "gc_srcs_IB",
+            "gc_srcs_CA",
+            "gc_srcs_CB",
+            "gc_srcs_AB",
+            "gc_srcs_ICA",
+            "gc_srcs_ICB",
+            "gc_srcs_IAB",
+            "gc_srcs_CAB",
+            "gc_srcs_ICAB"
         ],
-        "type": "list"
-    },
-    "gc_AB": {
-        "allowed": [
-            "A",
-            "B"
-        ],
-        "type": "gc_graph_row_letter"
+        "type": "object"
     },
     "gc_srcs_B": {
-        "items": [
-            {
-                "allowed": [
-                    "B"
-                ],
-                "type": "gc_graph_row_letter"
-            },
-            {
-                "allowed": [
-                    0
-                ],
-                "type": "uint8"
-            },
-            {
-                "type": "gc_type"
-            }
+        "ancestors": [
+            "gc_srcs_C",
+            "gc_srcs_A",
+            "gc_srcs_B",
+            "gc_srcs_IC",
+            "gc_srcs_IA",
+            "gc_srcs_IB",
+            "gc_srcs_CA",
+            "gc_srcs_CB",
+            "gc_srcs_AB",
+            "gc_srcs_ICA",
+            "gc_srcs_ICB",
+            "gc_srcs_IAB",
+            "gc_srcs_CAB",
+            "gc_srcs_ICAB"
         ],
-        "type": "list"
+        "type": "object"
     },
     "gc_srcs_C": {
-        "items": [
-            {
-                "allowed": [
-                    "C"
-                ],
-                "type": "gc_graph_row_letter"
-            },
-            {
-                "allowed": [
-                    0
-                ],
-                "type": "uint8"
-            },
-            {
-                "type": "gc_type"
-            }
+        "ancestors": [
+            "gc_srcs_C",
+            "gc_srcs_A",
+            "gc_srcs_B",
+            "gc_srcs_IC",
+            "gc_srcs_IA",
+            "gc_srcs_IB",
+            "gc_srcs_CA",
+            "gc_srcs_CB",
+            "gc_srcs_AB",
+            "gc_srcs_ICA",
+            "gc_srcs_ICB",
+            "gc_srcs_IAB",
+            "gc_srcs_CAB",
+            "gc_srcs_ICAB"
         ],
-        "type": "list"
+        "type": "object"
     },
     "gc_srcs_CA": {
-        "items": [
-            {
-                "type": "gc_CA"
-            },
-            {
-                "allowed": [
-                    0
-                ],
-                "type": "uint8"
-            },
-            {
-                "type": "gc_type"
-            }
+        "ancestors": [
+            "gc_srcs_C",
+            "gc_srcs_A",
+            "gc_srcs_B",
+            "gc_srcs_IC",
+            "gc_srcs_IA",
+            "gc_srcs_IB",
+            "gc_srcs_CA",
+            "gc_srcs_CB",
+            "gc_srcs_AB",
+            "gc_srcs_ICA",
+            "gc_srcs_ICB",
+            "gc_srcs_IAB",
+            "gc_srcs_CAB",
+            "gc_srcs_ICAB"
         ],
-        "type": "list"
-    },
-    "gc_CA": {
-        "allowed": [
-            "C",
-            "A"
-        ],
-        "type": "gc_graph_row_letter"
+        "type": "object"
     },
     "gc_srcs_CAB": {
-        "items": [
-            {
-                "type": "gc_CAB"
-            },
-            {
-                "allowed": [
-                    0
-                ],
-                "type": "uint8"
-            },
-            {
-                "type": "gc_type"
-            }
+        "ancestors": [
+            "gc_srcs_C",
+            "gc_srcs_A",
+            "gc_srcs_B",
+            "gc_srcs_IC",
+            "gc_srcs_IA",
+            "gc_srcs_IB",
+            "gc_srcs_CA",
+            "gc_srcs_CB",
+            "gc_srcs_AB",
+            "gc_srcs_ICA",
+            "gc_srcs_ICB",
+            "gc_srcs_IAB",
+            "gc_srcs_CAB",
+            "gc_srcs_ICAB"
         ],
-        "type": "list"
-    },
-    "gc_CAB": {
-        "allowed": [
-            "C",
-            "A",
-            "B"
-        ],
-        "type": "gc_graph_row_letter"
+        "type": "object"
     },
     "gc_srcs_CB": {
-        "items": [
-            {
-                "type": "gc_CB"
-            },
-            {
-                "allowed": [
-                    0
-                ],
-                "type": "uint8"
-            },
-            {
-                "type": "gc_type"
-            }
+        "ancestors": [
+            "gc_srcs_C",
+            "gc_srcs_A",
+            "gc_srcs_B",
+            "gc_srcs_IC",
+            "gc_srcs_IA",
+            "gc_srcs_IB",
+            "gc_srcs_CA",
+            "gc_srcs_CB",
+            "gc_srcs_AB",
+            "gc_srcs_ICA",
+            "gc_srcs_ICB",
+            "gc_srcs_IAB",
+            "gc_srcs_CAB",
+            "gc_srcs_ICAB"
         ],
-        "type": "list"
-    },
-    "gc_IA": {
-        "allowed": [
-            "C",
-            "B"
-        ],
-        "type": "gc_graph_row_letter"
-    },
-    "gc_srcs_I": {
-        "items": [
-            {
-                "allowed": [
-                    "I"
-                ],
-                "type": "gc_graph_row_letter"
-            },
-            {
-                "allowed": [
-                    0
-                ],
-                "type": "uint8"
-            },
-            {
-                "type": "gc_type"
-            }
-        ],
-        "type": "list"
+        "type": "object"
     },
     "gc_srcs_IA": {
-        "items": [
-            {
-                "type": "gc_IA"
-            },
-            {
-                "allowed": [
-                    0
-                ],
-                "type": "uint8"
-            },
-            {
-                "type": "gc_type"
-            }
+        "ancestors": [
+            "gc_srcs_C",
+            "gc_srcs_A",
+            "gc_srcs_B",
+            "gc_srcs_IC",
+            "gc_srcs_IA",
+            "gc_srcs_IB",
+            "gc_srcs_CA",
+            "gc_srcs_CB",
+            "gc_srcs_AB",
+            "gc_srcs_ICA",
+            "gc_srcs_ICB",
+            "gc_srcs_IAB",
+            "gc_srcs_CAB",
+            "gc_srcs_ICAB"
         ],
-        "type": "list"
-    },
-    "gc_IA": {
-        "allowed": [
-            "I",
-            "A"
-        ],
-        "type": "gc_graph_row_letter"
+        "type": "object"
     },
     "gc_srcs_IAB": {
-        "items": [
-            {
-                "type": "gc_IAB"
-            },
-            {
-                "allowed": [
-                    0
-                ],
-                "type": "uint8"
-            },
-            {
-                "type": "gc_type"
-            }
+        "ancestors": [
+            "gc_srcs_C",
+            "gc_srcs_A",
+            "gc_srcs_B",
+            "gc_srcs_IC",
+            "gc_srcs_IA",
+            "gc_srcs_IB",
+            "gc_srcs_CA",
+            "gc_srcs_CB",
+            "gc_srcs_AB",
+            "gc_srcs_ICA",
+            "gc_srcs_ICB",
+            "gc_srcs_IAB",
+            "gc_srcs_CAB",
+            "gc_srcs_ICAB"
         ],
-        "type": "list"
-    },
-    "gc_IAB": {
-        "allowed": [
-            "I",
-            "A",
-            "B"
-        ],
-        "type": "gc_graph_row_letter"
+        "type": "object"
     },
     "gc_srcs_IB": {
-        "items": [
-            {
-                "type": "gc_IB"
-            },
-            {
-                "allowed": [
-                    0
-                ],
-                "type": "uint8"
-            },
-            {
-                "type": "gc_type"
-            }
+        "ancestors": [
+            "gc_srcs_C",
+            "gc_srcs_A",
+            "gc_srcs_B",
+            "gc_srcs_IC",
+            "gc_srcs_IA",
+            "gc_srcs_IB",
+            "gc_srcs_CA",
+            "gc_srcs_CB",
+            "gc_srcs_AB",
+            "gc_srcs_ICA",
+            "gc_srcs_ICB",
+            "gc_srcs_IAB",
+            "gc_srcs_CAB",
+            "gc_srcs_ICAB"
         ],
-        "type": "list"
-    },
-    "gc_IB": {
-        "allowed": [
-            "I",
-            "B"
-        ],
-        "type": "gc_graph_row_letter"
+        "type": "object"
     },
     "gc_srcs_IC": {
-        "items": [
-            {
-                "type": "gc_IC"
-            },
-            {
-                "allowed": [
-                    0
-                ],
-                "type": "uint8"
-            },
-            {
-                "type": "gc_type"
-            }
+        "ancestors": [
+            "gc_srcs_C",
+            "gc_srcs_A",
+            "gc_srcs_B",
+            "gc_srcs_IC",
+            "gc_srcs_IA",
+            "gc_srcs_IB",
+            "gc_srcs_CA",
+            "gc_srcs_CB",
+            "gc_srcs_AB",
+            "gc_srcs_ICA",
+            "gc_srcs_ICB",
+            "gc_srcs_IAB",
+            "gc_srcs_CAB",
+            "gc_srcs_ICAB"
         ],
-        "type": "list"
-    },
-    "gc_IC": {
-        "allowed": [
-            "I",
-            "C"
-        ],
-        "type": "gc_graph_row_letter"
+        "type": "object"
     },
     "gc_srcs_ICA": {
-        "items": [
-            {
-                "type": "gc_ICA"
-            },
-            {
-                "allowed": [
-                    0
-                ],
-                "type": "uint8"
-            },
-            {
-                "type": "gc_type"
-            }
+        "ancestors": [
+            "gc_srcs_C",
+            "gc_srcs_A",
+            "gc_srcs_B",
+            "gc_srcs_IC",
+            "gc_srcs_IA",
+            "gc_srcs_IB",
+            "gc_srcs_CA",
+            "gc_srcs_CB",
+            "gc_srcs_AB",
+            "gc_srcs_ICA",
+            "gc_srcs_ICB",
+            "gc_srcs_IAB",
+            "gc_srcs_CAB",
+            "gc_srcs_ICAB"
         ],
-        "type": "list"
-    },
-    "gc_ICA": {
-        "allowed": [
-            "I",
-            "C",
-            "A"
-        ],
-        "type": "gc_graph_row_letter"
+        "type": "object"
     },
     "gc_srcs_ICAB": {
-        "items": [
-            {
-                "type": "gc_ICAB"
-            },
-            {
-                "allowed": [
-                    0
-                ],
-                "type": "uint8"
-            },
-            {
-                "type": "gc_type"
-            }
+        "ancestors": [
+            "gc_srcs_C",
+            "gc_srcs_A",
+            "gc_srcs_B",
+            "gc_srcs_IC",
+            "gc_srcs_IA",
+            "gc_srcs_IB",
+            "gc_srcs_CA",
+            "gc_srcs_CB",
+            "gc_srcs_AB",
+            "gc_srcs_ICA",
+            "gc_srcs_ICB",
+            "gc_srcs_IAB",
+            "gc_srcs_CAB",
+            "gc_srcs_ICAB"
         ],
-        "type": "list"
-    },
-    "gc_ICAB": {
-        "allowed": [
-            "I",
-            "C",
-            "A",
-            "B"
-        ],
-        "type": "gc_graph_row_letter"
+        "type": "object"
     },
     "gc_srcs_ICB": {
-        "items": [
-            {
-                "type": "gc_ICB"
-            },
-            {
-                "allowed": [
-                    0
-                ],
-                "type": "uint8"
-            },
-            {
-                "type": "gc_type"
-            }
+        "ancestors": [
+            "gc_srcs_C",
+            "gc_srcs_A",
+            "gc_srcs_B",
+            "gc_srcs_IC",
+            "gc_srcs_IA",
+            "gc_srcs_IB",
+            "gc_srcs_CA",
+            "gc_srcs_CB",
+            "gc_srcs_AB",
+            "gc_srcs_ICA",
+            "gc_srcs_ICB",
+            "gc_srcs_IAB",
+            "gc_srcs_CAB",
+            "gc_srcs_ICAB"
         ],
-        "type": "list"
-    },
-    "gc_ICB": {
-        "allowed": [
-            "I",
-            "C",
-            "B"
-        ],
-        "type": "gc_graph_row_letter"
+        "type": "object"
     }
 }

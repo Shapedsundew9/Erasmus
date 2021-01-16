@@ -10,105 +10,73 @@ from os.path import join, dirname
 
 
 # Guranteed to be invalid
-INVALID_NAME = 'invalid'
+INVALID_NAME = {'name': 'invalid'}
+INVALID_ANCESTORS = {'ancestors': []}
 INVALID_VALUE = 262143
 
 
 # Load type data
+# TODO: Could convert numerical dict to a list if they are contiguous and start at 0.
 with open(join(dirname(__file__), "../data/gc_types.json"), "r") as file_ptr:
     gc_type_lookup = load(file_ptr)
-    gc_type_lookup['value'] = {int(v): n for v, n in gc_type_lookup['value'].items()}
-    gc_type_lookup['group'] = {k: set(v) for k, v in gc_type_lookup['group'].items()}
-with open(join(dirname(__file__), "../data/gc_group_types.json"), "r") as file_ptr:
-    temp = load(file_ptr)
-    gc_group_types = {group: {'types': set(value['types']), 'sub-groups': set(value['sub-groups'])} for group, value in temp.items()}
-with open(join(dirname(__file__), "../data/gc_translation_types.json"), "r") as file_ptr:
-    gc_translation_types = load(file_ptr)
+    gc_type_lookup['v2n'] = {int(k): v for k, v in gc_type_lookup['v2n'].items()}
+    gc_type_lookup['n2v'] = {k: int(v) for k, v in gc_type_lookup['n2v'].items()}
 
 
-def validate(gc_type):
-    """Validate a gc_type.
+def validate(gc_type_int):
+    """Validate a gc_type_int.
 
     Args
     ----
-    gc_type (str/int): The gc_type name or value to validate.
+    gc_type_int (int): The GC type value to validate.
 
     Returns
     -------
     (bool) True if the type is defined else false.
     """
-    return gc_type in gc_type_lookup['name'] or gc_type in gc_type_lookup['value']
+    return gc_type_int in gc_type_lookup['v2n']
 
 
-def asint(gc_type):
-    """Convert a gc_type to its value representation.
-
-    Args
-    ----
-    gc_type (str): The gc_type name to convert to a value.
-
-    Returns
-    -------
-    (int) gc_type value.
-    """
-    return gc_type_lookup['name'].get(gc_type, INVALID_VALUE)
-
-
-def asstr(gc_type):
-    """Convert a gc_type to its string representation (name).
+def asint(gc_type_str):
+    """Convert a gc_type_str to its value representation.
 
     Args
     ----
-    gc_type (int): The gc_type name to convert to a string.
+    gc_type_str (str): The GC type name to convert to a value.
 
     Returns
     -------
-    (str) gc_type name.
+    (int) GC type value.
     """
-    return gc_type_lookup['value'].get(gc_type, INVALID_NAME)
+    return gc_type_lookup['n2v'].get(gc_type_str, INVALID_VALUE)
+
+
+def asstr(gc_type_int):
+    """Convert a gc_type_int to its string representation (name).
+
+    Args
+    ----
+    gc_type_int (int): The GC type name to convert to a string.
+
+    Returns
+    -------
+    (str) GC type name.
+    """
+    return gc_type_lookup['v2n'].get(gc_type_int, INVALID_NAME)['name']
 
 
 def compatible(src_gc_type, dst_gc_type):
-    """Validate src_gc_type is a subset or the same set as dst_gc_type.
+    """Validate src_gc_type is a decendent as dst_gc_type.
 
     Args
     ----
-    src_gc_type (str): Name of the source gc_type.
-    dst_gc_type (str): Name of the destination gc_type.
+    src_gc_type (int): Value of the source gc_type.
+    dst_gc_type (int): Value of the destination gc_type.
 
     Returns
     -------
-    (bool) True if str_gc_type represents a subset or the same set as dst_gc_type.
+    (bool) True if src_gc_type is a decendent of dst_gc_type.
     """
-    if dst_gc_type == 'any': return True
-    if src_gc_type == 'any': return False
+    if src_gc_type == dst_gc_type: return True
+    return dst_gc_type in gc_type_lookup['v2n'].get(src_gc_type, INVALID_ANCESTORS)['ancestors']
 
-    if src_gc_type in gc_group_types:
-        src_type_set = gc_group_types[src_gc_type]['types']
-    elif src_gc_type in gc_translation_types:
-        src_type_set = gc_group_types[gc_translation_types[src_gc_type]['group']]['types']
-    else:
-        src_type_set = {src_gc_type}
-
-    if dst_gc_type in gc_group_types and src_gc_type != 'any':
-        dst_type_set = gc_group_types[dst_gc_type]['types']
-    elif dst_gc_type in gc_translation_types:
-        dst_type_set = gc_group_types[gc_translation_types[dst_gc_type]['group']]['types']
-    else:
-        dst_type_set = {dst_gc_type}
-
-    return set(src_type_set) <= set(dst_type_set)
-
-
-def member_of(gc_type):
-    """Return the set of gc_type groups gc_type is a member of.
-
-    Args
-    ----
-    gc_type (str): The gc_type name.
-
-    Returns
-    -------
-    (set(str)) The set of gc_type groups gc_type is a member of. 
-    """
-    return gc_type_lookup['group'].get(gc_type, set())

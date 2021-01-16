@@ -13,6 +13,16 @@ from .entry_column_meta_validator import entry_column_meta_validator
 from .config import get_config
 
 
+_QUERY_SPECIAL_TERMS = (
+    'order by',
+    'limit',
+    'contains',
+    'contained by',
+    'overlaps',
+    'does not overlap'
+)
+
+
 class database_table():
     """Connects to (or creates as needed) a postgres database & table.
 
@@ -235,15 +245,30 @@ class database_table():
         else:
             sql_list.append(sql.SQL(" = {}").format(sql.Literal(self._cast_term_to_store_type(*term))))
         return sql.Composed(sql_list)
-        
+
+
+    def _array_op_to_sql(self, params, op):
+        sql_obj = sql.SQL("ARRAY[")
+        sql_obj += sql.SQL(", ").join([sql.Identifier(column) for column in params['lhs']])
+        sql_obj += sql.SQL("] " + op + " ARRAY[")
+        sql_obj += sql.SQL(", ").join([sql.Literal(value) for value in params['rhs']])
+        sql_obj += sql.SQL("]")
+        return sql_obj
+
 
     def _query_to_sql(self, query):
-        sql_terms = [self._term_to_sql(term) for term in query.items() if not term[0] in ("limit", "random", "order by")] 
+        sql_terms = [self._term_to_sql(term) for term in query.items() if not term[0] in _QUERY_SPECIAL_TERMS] 
         if len(sql_terms) > 1: sql_obj = sql.SQL("WHERE ") + sql.SQL(" AND ").join(sql_terms)
         elif len(sql_terms) == 1: sql_obj = sql.SQL("WHERE ") + sql_terms[0]
         else: sql_obj = sql.SQL("")
+        if 'contains' in query: sql_obj += sql.SQL(" AND ") + self._array_op_to_sql(query['contains'], '@>')
+        if 'contained by' in query: sql_obj += sql.SQL(" AND ") + self._array_op_to_sql(query['contained by'], '<@')
+        if 'overlaps' in query: sql_obj += sql.SQL(" AND ") + self._array_op_to_sql(query['overlaps'], '&&')
+        if 'does not overlap' in query: sql_obj += sql.SQL(" AND NOT ") + self._array_op_to_sql(query['overlaps'], '&&')
         if 'limit' in query: sql_obj += sql.SQL(" LIMIT {}").format(sql.Literal(query['limit']))
-        if 'order by' in query: sql_obj += sql.SQL(" ORDER BY {}").format(sql.Identifier(query['order by']))
+        if 'order by' in query:
+            order_by = sql.Identifier(query['order by']) if query['order by'] != "RANDOM()" else query['order by'] 
+            sql_obj += sql.SQL(" ORDER BY ") + order_by 
         return sql_obj
 
 

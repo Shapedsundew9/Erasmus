@@ -7,8 +7,8 @@ from pprint import pformat
 from argparse import ArgumentParser, FileType
 from cerberus import Validator
 from copy import deepcopy
+from os.path import exists, join, dirname
 from numpy import int8, int16, int32, int64, uint8, uint16, uint32, uint64, float32, float64, complex64, complex128
-
 
 gc_type_dict = {}
 gc_constant_dict = {}
@@ -159,14 +159,22 @@ def create_constant(name, values):
 
 def create_codon(i_types, o_type, code, name, properties):
     codon = deepcopy(_GC_CODON_TEMPLATE)
-    for n, i in enumerate(i_types): codon['graph']['A'].append(['I', n, i])
+    for n, i in enumerate(i_types): codon['graph']['A'].append(['I', n, gc_type_dict[i]['uid']])
     codon['meta_data']['name'] = name
     codon['meta_data']['function']['python3']['0']['inline'] = code
-    codon['graph']['O'][0][2] = o_type
+    codon['graph']['O'][0][2] = gc_type_dict[o_type]['uid']
     codon['properties'] = properties
     gc_codon_list.append(codon)
 
 
+# When a type inherits properties from its parents certain rules apply:
+#   1. If the child has multiple types it inherits the superset of the most relaxed rules.
+#       e.g. A can be one of two types, P1 & P2, and has no 'min' key defined.
+#            P1 has 'min' = 7
+#            P2 has 'min' = 4
+#            then A inherits the broadest restriction i.e. 'min' = 4
+#       e.g. A can be one of two types P1 & P2.
+#            A's 'ancestors' are the superset of {P1, P2} + P1['ancestors'] + P2['ancestors']
 def restrict(v1, v2, k):
     if k == 'type': 
         return None
@@ -196,7 +204,12 @@ def restrict(v1, v2, k):
     if k == 'cast_to':
         return None 
     if k == 'basic':
-        return None 
+        return None
+    if k == 'items':
+        return None
+    if k == 'ancestors':
+        v1.extend(v2)
+        return list(set(v1))
     print("Unexpected key = {}".format(k))
     assert False
 
@@ -204,19 +217,18 @@ def restrict(v1, v2, k):
 def inherit(v):
     val = deepcopy(v)
     vv = {}
-    if isinstance(v['type'], list):
-        vals = [inherit(gc_type_dict[typ]) for typ in v['type']]
-        for vl in vals: val.update(vl)
+
+    # Types that have multiple parents do not inherit
+    # They have the parents as ancestors but not the parents
+    # ancestors as ancestors 
+    #print(v)
+    assert not isinstance(v['type'], list)
+    if v['type'] != 'object':
+        vl = inherit(gc_type_dict[v['type']])
         for key, value in val.items():
-            for vl in vals: 
-                if key in vl: vv[key] = restrict(value, vl[key], key)
+            if key in vl: vv[key] = restrict(value, vl[key], key)
     else:
-        if v['type'] != 'object':
-            vl = inherit(gc_type_dict[v['type']])
-            for key, value in val.items():
-                if key in vl: vv[key] = restrict(value, vl[key], key)
-            else:
-                vv = deepcopy(v)
+        vv = deepcopy(v)
 
     for key, value in vv.items():
         if not value is None:
@@ -231,6 +243,7 @@ args = parser.parse_args()
 
 
 # Collect all the type definitions into a single dictionary and do some rudamentory checks.
+# Make sure the types type is in the ancestor list
 validator = Validator(load(open("../microbiome/formats/gc_type_format.json", "r")))
 for f in args.filename:
     for k, v in load(f).items():
@@ -238,6 +251,10 @@ for f in args.filename:
             print(k, ': ', validator.errors)
             assert False
         gc_type_dict[k] = v
+        if 'ancestors' in v:
+            v['ancestors'].append(v['type'])
+        else:
+            v['ancestors'] = [v['type']]
 
 
 # Create dictionary key types
@@ -265,6 +282,11 @@ for typ, val in gc_type_dict.items():
     if typ != 'object': gc_type_dict[typ] = inherit(val)
 
 
+# Number types
+for i, val in enumerate(gc_type_dict.values(), 128):
+    val['uid'] = i
+
+
 # Create codons
 for typ, val in gc_type_dict.items():
 
@@ -275,6 +297,8 @@ for typ, val in gc_type_dict.items():
 
     # Lists with defined lengths & types
     if 'items' in val:
+
+        # Create the list in one go
         inputs = [v['type'] for v in val['items'] if not 'allowed' in v]
         values = []
         i = 0
@@ -290,6 +314,53 @@ for typ, val in gc_type_dict.items():
                 i += 1
         inline = "[" + ", ".join(values)  + "]" 
         create_codon(inputs, typ, inline, "Create {}.".format(typ), {})
+
+        # Get and set the list
+        for i, c in enumerate(val['items']):
+            if not 'allowed' in c:
+
+                # Set
+                inline = "{i0}[" + str(i) + "] = {i1}"
+                create_codon((typ, c['type']), typ, inline, "Set {}[{}].".format(typ, i), {})
+
+                # Get
+                inline = "{i0}[" + str(i) + "]"
+                create_codon((typ,), c['type'], inline, "Get {}[{}].".format(typ, i), {})
+
+    # Lists with variable lengths of a single type
+    if val['type'] == 'list' and 'schema' in val:
+
+        # Create
+        inline = "[{i0}]"
+        create_codon((val['schema']['type'],), typ, inline, "Create {}.".format(typ), {})
+
+        # Append
+        inline = "{i0}.append({i1})"
+        create_codon((typ, val['schema']['type']), typ, inline, "Append to {}.".format(typ), {})
+
+        # Set
+        inline = "{i0}[{i1}] = {i2}"
+        create_codon((typ, typ + "_idx", val['schema']['type']), typ, inline, "Set {}[int].".format(typ), {})
+
+        # Get element
+        inline = "{i0}[{i1}]"
+        create_codon((typ, typ + "_idx"), val['schema']['type'], inline, "Get {}[int].".format(typ), {})
+
+        # Get slice
+        inline = "{i0}[{i1}:{i2}]"
+        create_codon((typ, typ + "_idx", typ + "_idx"), typ, inline, "Get {}[int:int].".format(typ), {})
+
+        # Clear
+        inline = "{i0}.clear()"
+        create_codon((typ,), typ, inline, "Clear {}.".format(typ), {})
+
+        # Pop
+        inline = "{i0}.pop()"
+        create_codon((typ,), val['schema']['type'], inline, "Pop from back {}.".format(typ), {})
+        inline = "{i0}.pop(0)"
+        create_codon((typ,), val['schema']['type'], inline, "pop from front {}.".format(typ), {})
+        inline = "{i0}.pop({i1})"
+        create_codon((typ, "int"), val['schema']['type'], inline, "Pop from [int] {}.".format(typ), {})
 
     # Dictionaries
     if val['type'] == 'dict':
@@ -317,6 +388,41 @@ for typ, val in gc_type_dict.items():
 
 
 #print(pformat(gc_constant_dict))
-print(pformat(gc_codon_list))
+
+if exists("../microbiome/data/gc_types.json"):
+    from microbiome.genetics.genomic_library_entry_validator import genomic_library_entry_validator
+    nentries = []
+    while gc_codon_list:
+        codon = genomic_library_entry_validator.normalized(gc_codon_list.pop())
+        if not genomic_library_entry_validator.validate(codon):
+            print(genomic_library_entry_validator.errors)
+            barf()
+        nentries.append(codon)
+    try:
+        with open('gc_codons.json', 'w') as njsonfile:
+            dump(nentries, njsonfile, indent=4, sort_keys=True)
+    except Exception as e:
+        print("ERROR: Unable to write JSON output file {} with error {}.".format(njsonfile, str(e)))
 
 
+with open('gc_classes.py', 'w') as classfile:
+    for t_name, t_def in gc_type_dict.items():
+        if isinstance(t_def['type'], str):
+            classfile.write("class {}({}): pass\n".format(t_name, t_def['type']))
+
+
+# Convert all gc_type names to UIDs & preserve the name
+def format_type(name, details):
+    details['name'] = name
+    if details['type'] != 'basic':
+        details['type'] = gc_type_dict[details['type']]['uid']
+    details['ancestors'] = [gc_type_dict[n]['uid'] for n in details.get('ancestors', []) if n != 'basic']
+    return details
+
+
+gc_type_json = {
+    'v2n': {v['uid']: format_type(k, v) for k, v in gc_type_dict.items()},
+    'n2v': {k:v['uid'] for k, v in gc_type_dict.items()}
+    }
+with open('gc_types.json', 'w') as njsonfile:
+    dump(gc_type_json, njsonfile, indent=4, sort_keys=True)

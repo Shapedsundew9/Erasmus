@@ -9,7 +9,7 @@ defines the rules of the connectivity (the "physics") i.e. what is possible to o
 
 from collections import Counter
 from enum import IntEnum
-from .gc_type import validate, asint, compatible, asstr, member_of
+from .gc_type import validate, asint, compatible, asstr
 from pprint import pformat
 from copy import deepcopy, copy
 from ..text_token import text_token, register_token_code
@@ -223,7 +223,7 @@ class gc_graph():
             for index, parameter in enumerate(parameters):
                 if row != 'C':
                     # TODO: Make 0:2 a slice() constant
-                    ep = [DST_EP, row, index, asint(parameter[conn_idx.TYPE]), [[*parameter[0:2]]]]
+                    ep = [DST_EP, row, index, parameter[conn_idx.TYPE], [[*parameter[0:2]]]]
                     self.rows[DST_EP][row] = self.rows[DST_EP].get(row, 0) + 1
                     retval[self.hash_ep(ep)] = ep
                     src = self.hash_ref(ep[ep_idx.REFERENCED_BY][0], True)
@@ -232,9 +232,9 @@ class gc_graph():
                     elif parameter[0] != 'C':
                         ref = [[row, index]] if row != 'U' else [] 
                         self.rows[SRC_EP][parameter[0]] = self.rows[SRC_EP].get(parameter[0], 0) + 1
-                        retval[src] = [SRC_EP, parameter[0], parameter[1], asint(parameter[conn_idx.TYPE]), ref]
+                        retval[src] = [SRC_EP, parameter[0], parameter[1], parameter[conn_idx.TYPE], ref]
                 else:
-                    ep = [SRC_EP, row, index, asint(parameter[const_idx.TYPE]), [], parameter[const_idx.VALUE]]
+                    ep = [SRC_EP, row, index, parameter[const_idx.TYPE], [], parameter[const_idx.VALUE]]
                     self.rows[SRC_EP][row] = self.rows[SRC_EP].get(row, 0) + 1
                     retval[self.hash_ep(ep)] = ep
         return retval
@@ -475,8 +475,7 @@ class gc_graph():
         -------
             (func): A function for a filter() that will return endpoints with qualifying 'gc_types'.
         """
-        _types = gc_types if exact else set([x for y in gc_types for x in member_of(y)])
-        return lambda x: any(map(lambda p: p == x[ep_idx.TYPE], _types)) and filter_func(x)
+        return lambda x: any(map(lambda p: p == x[ep_idx.TYPE], gc_types)) and filter_func(x)
 
 
     def unreferenced_filter(self, filter_func=lambda x: True):
@@ -676,7 +675,7 @@ class gc_graph():
         return self._num_eps(row, SRC_EP)
 
 
-    def normalize(self):
+    def normalize(self, create_inputs=False):
         """Make the graph consistent.
 
         The make the graph consistent the following operations are performed:
@@ -685,29 +684,32 @@ class gc_graph():
             3. Purge any unconnected constants & inputs.
             4. Reference all unconnected sources in row 'U'
             5. self.app_graph is regenerated
+            6. Check a valid steady state has been achieved
         """
 
         #1
         self.connect_all()
         
         #2
-        num_inputs = self.num_inputs()
-        for ep in list(filter(self.dst_filter(self.unreferenced_filter()), self.graph.values())):
-            new_input_ep = [SRC_EP, 'I', num_inputs, ep[ep_idx.TYPE], [[ep[ep_idx.ROW], ep[ep_idx.INDEX]]]]
-            self._add_ep(new_input_ep)
-            ep[ep_idx.REFERENCED_BY].append(['I', num_inputs])
-            num_inputs += 1
+        if modify_inputs:
+            num_inputs = self.num_inputs()
+            for ep in list(filter(self.dst_filter(self.unreferenced_filter()), self.graph.values())):
+                new_input_ep = [SRC_EP, 'I', num_inputs, ep[ep_idx.TYPE], [[ep[ep_idx.ROW], ep[ep_idx.INDEX]]]]
+                self._add_ep(new_input_ep)
+                ep[ep_idx.REFERENCED_BY].append(['I', num_inputs])
+                num_inputs += 1
 
         #3
         removed = False
-        for ep in list(filter(self.rows_filter(('I', 'C'), self.unreferenced_filter()), self.graph.values())):
+        target_rows = ('C','I') if modify_inputs else ('C',)
+        for ep in list(filter(self.rows_filter(target_rows, self.unreferenced_filter()), self.graph.values())):
             removed = True
             self._remove_ep(ep)
 
         # If an I or C was removed then we have to ensure the indices of the remaining
         # endpoints are contiguous and start at 0. 
         if removed:
-            # Make a list of all the indioces in I and C
+            # Make a list of all the indices in I and C
             c_set = [ep[ep_idx.INDEX] for ep in filter(self.row_filter('C'), self.graph.values())]
             i_set = [ep[ep_idx.INDEX] for ep in filter(self.row_filter('I'), self.graph.values())]
             # Map the indices to a contiguous integer sequence starting at 0
@@ -736,10 +738,15 @@ class gc_graph():
         #5
         self.app_graph = self.application_graph()
 
+        #6
+        return not list(filter(self.unreferenced_filter(self.dst_filter()), self.graph.values()))       
+
 
     def validate(self, codon=False):
         """Check if the graph is valid.
         
+        The graph should be in a steady state before calling.
+
         This function is not intended to be fast.
         Genetic code graphs MUST obey the following rules:
             1. Have at least 1 output in 'O'.
@@ -761,7 +768,7 @@ class gc_graph():
             14. If row 'F' is defined:
                 a. Row 'B' cannot reference row A.
                 b. Row 'B' cannot be referenced in row 'O'.
-                c. Row 'P' must have the same number of elements as row 'O'.
+                c. Row 'P' must have the same number & type of elements as row 'O'.
 
         Args
         ----
@@ -848,7 +855,7 @@ class gc_graph():
             for ref in row[ep_idx.REFERENCED_BY]:
                 try:
                     src = next(filter(self.src_filter(self.ref_filter(ref)), self.graph.values()))
-                    if not compatible(asstr(src[ep_idx.TYPE]), asstr(row[ep_idx.TYPE])):
+                    if not compatible(src[ep_idx.TYPE], row[ep_idx.TYPE]):
                         self.status.append(text_token({'E01009': {'ref1': [src[ep_idx.ROW], src[ep_idx.INDEX]], 'type1': asstr(src[ep_idx.TYPE]),
                             'ref2': [row[ep_idx.ROW], row[ep_idx.INDEX]], 'type2': asstr(row[ep_idx.TYPE])}}))
                 except StopIteration:

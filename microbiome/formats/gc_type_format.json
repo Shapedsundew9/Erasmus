@@ -152,5 +152,11 @@
     },
     "default": {
         "type": ["integer", "float"]
+    },
+    "ancestors": {
+        "type": "list",
+        "schema": {
+            "type": ["integer", "string"]
+        }
     }
 }

@@ -1,0 +1,4084 @@
+{
+    "n2v": {
+        "None": 280,
+        "bool": 281,
+        "complex": 284,
+        "complex128": 299,
+        "complex64": 298,
+        "dict": 310,
+        "float": 283,
+        "float32": 296,
+        "float64": 297,
+        "floating": 303,
+        "gc": 128,
+        "gc_class": 129,
+        "gc_class_list": 162,
+        "gc_class_list_idx": 323,
+        "gc_code_depth": 130,
+        "gc_code_depth_list": 163,
+        "gc_code_depth_list_idx": 324,
+        "gc_codon_depth": 131,
+        "gc_codon_depth_list": 164,
+        "gc_codon_depth_list_idx": 325,
+        "gc_constant": 205,
+        "gc_constant_idx": 344,
+        "gc_constant_row": 206,
+        "gc_constant_row_idx": 345,
+        "gc_created": 132,
+        "gc_created_list": 165,
+        "gc_created_list_idx": 326,
+        "gc_creator": 133,
+        "gc_creator_list": 166,
+        "gc_creator_list_idx": 327,
+        "gc_egc": 134,
+        "gc_egc_key": 313,
+        "gc_evolvability": 135,
+        "gc_evolvability_list": 167,
+        "gc_evolvability_list_idx": 328,
+        "gc_extended_class": 136,
+        "gc_extended_class_key": 314,
+        "gc_extended_schema": 137,
+        "gc_extended_schema_key": 315,
+        "gc_fgc": 138,
+        "gc_fgc_key": 316,
+        "gc_fitness": 139,
+        "gc_fitness_list": 168,
+        "gc_fitness_list_idx": 329,
+        "gc_generation": 140,
+        "gc_generation_list": 169,
+        "gc_generation_list_idx": 330,
+        "gc_graph": 207,
+        "gc_graph_OA": 208,
+        "gc_graph_OAB": 209,
+        "gc_graph_OABU": 210,
+        "gc_graph_OAU": 211,
+        "gc_graph_OB": 212,
+        "gc_graph_OBU": 213,
+        "gc_graph_OC": 214,
+        "gc_graph_OCA": 215,
+        "gc_graph_OCAB": 216,
+        "gc_graph_OCABU": 217,
+        "gc_graph_OCAU": 218,
+        "gc_graph_OCB": 219,
+        "gc_graph_OCBU": 220,
+        "gc_graph_OIA": 221,
+        "gc_graph_OIAB": 222,
+        "gc_graph_OIABFP": 223,
+        "gc_graph_OIABU": 224,
+        "gc_graph_OIABUFP": 225,
+        "gc_graph_OIAFP": 226,
+        "gc_graph_OIAU": 227,
+        "gc_graph_OIAUFP": 228,
+        "gc_graph_OIB": 229,
+        "gc_graph_OIBFP": 230,
+        "gc_graph_OIBU": 231,
+        "gc_graph_OIBUFP": 232,
+        "gc_graph_OIC": 233,
+        "gc_graph_OICA": 234,
+        "gc_graph_OICAB": 235,
+        "gc_graph_OICABFP": 236,
+        "gc_graph_OICABU": 237,
+        "gc_graph_OICABUFP": 238,
+        "gc_graph_OICAFP": 239,
+        "gc_graph_OICAU": 240,
+        "gc_graph_OICAUFP": 241,
+        "gc_graph_OICB": 242,
+        "gc_graph_OICBFP": 243,
+        "gc_graph_OICBU": 244,
+        "gc_graph_OICBUFP": 245,
+        "gc_graph_OICFP": 246,
+        "gc_graph_OICU": 247,
+        "gc_graph_OICUFP": 248,
+        "gc_graph_key": 320,
+        "gc_graph_row_letter": 249,
+        "gc_key": 312,
+        "gc_list": 170,
+        "gc_list_idx": 331,
+        "gc_meta_data": 141,
+        "gc_meta_data_key": 317,
+        "gc_num_codes": 142,
+        "gc_num_codes_list": 171,
+        "gc_num_codes_list_idx": 332,
+        "gc_num_inputs": 143,
+        "gc_num_inputs_list": 172,
+        "gc_num_inputs_list_idx": 333,
+        "gc_num_outputs": 144,
+        "gc_num_outputs_list": 173,
+        "gc_num_outputs_list_idx": 334,
+        "gc_num_unique_codes": 145,
+        "gc_num_unique_codes_list": 174,
+        "gc_num_unique_codes_list_idx": 335,
+        "gc_opt_num_codons": 146,
+        "gc_opt_num_codons_list": 175,
+        "gc_opt_num_codons_list_idx": 336,
+        "gc_parents": 147,
+        "gc_parents_idx": 321,
+        "gc_parents_list": 148,
+        "gc_parents_list_idx": 322,
+        "gc_properties": 149,
+        "gc_properties_dict": 150,
+        "gc_properties_dict_key": 318,
+        "gc_properties_int": 151,
+        "gc_properties_list": 176,
+        "gc_properties_list_idx": 337,
+        "gc_query": 177,
+        "gc_query_class": 178,
+        "gc_query_code_depth": 179,
+        "gc_query_codon_depth": 180,
+        "gc_query_created": 181,
+        "gc_query_creator": 182,
+        "gc_query_evolvability": 183,
+        "gc_query_fitness": 184,
+        "gc_query_generation": 185,
+        "gc_query_key": 319,
+        "gc_query_num_codes": 186,
+        "gc_query_num_inputs": 187,
+        "gc_query_num_outputs": 188,
+        "gc_query_num_unique_codes": 189,
+        "gc_query_opt_num_codons": 190,
+        "gc_query_order_by": 191,
+        "gc_query_order_by_list": 192,
+        "gc_query_order_by_list_idx": 338,
+        "gc_query_properties": 193,
+        "gc_query_query_order_by": 194,
+        "gc_query_raw_num_codons": 195,
+        "gc_query_reference_count": 196,
+        "gc_query_signature": 197,
+        "gc_query_type_int": 198,
+        "gc_query_updated": 199,
+        "gc_raw_num_codons": 152,
+        "gc_raw_num_codons_list": 200,
+        "gc_raw_num_codons_list_idx": 339,
+        "gc_reference_count": 153,
+        "gc_reference_count_list": 201,
+        "gc_reference_count_list_idx": 340,
+        "gc_row": 250,
+        "gc_row_A": 251,
+        "gc_row_AB": 252,
+        "gc_row_BA": 253,
+        "gc_row_C": 254,
+        "gc_row_CA": 255,
+        "gc_row_CAB": 256,
+        "gc_row_CBA": 257,
+        "gc_row_I": 258,
+        "gc_row_IA": 259,
+        "gc_row_IAB": 260,
+        "gc_row_IBA": 261,
+        "gc_row_IC": 262,
+        "gc_row_ICA": 263,
+        "gc_row_ICAB": 264,
+        "gc_row_ICBA": 265,
+        "gc_row_idx": 346,
+        "gc_signature": 154,
+        "gc_signature_list": 202,
+        "gc_signature_list_idx": 341,
+        "gc_srcs_A": 266,
+        "gc_srcs_AB": 267,
+        "gc_srcs_B": 268,
+        "gc_srcs_C": 269,
+        "gc_srcs_CA": 270,
+        "gc_srcs_CAB": 271,
+        "gc_srcs_CB": 272,
+        "gc_srcs_IA": 273,
+        "gc_srcs_IAB": 274,
+        "gc_srcs_IB": 275,
+        "gc_srcs_IC": 276,
+        "gc_srcs_ICA": 277,
+        "gc_srcs_ICAB": 278,
+        "gc_srcs_ICB": 279,
+        "gc_type_int": 155,
+        "gc_type_int_list": 203,
+        "gc_type_int_list_idx": 342,
+        "gc_type_str": 156,
+        "gc_updated": 157,
+        "gc_updated_list": 204,
+        "gc_updated_list_idx": 343,
+        "gc_value_str": 158,
+        "int": 282,
+        "int16": 289,
+        "int32": 290,
+        "int64": 291,
+        "int8": 288,
+        "integer": 302,
+        "letter_uppercase": 159,
+        "list": 309,
+        "ndarray": 311,
+        "np_bool": 287,
+        "np_complex": 304,
+        "np_generic": 306,
+        "number": 305,
+        "object": 286,
+        "set": 307,
+        "sha256_lowercase": 160,
+        "signedinteger": 300,
+        "str": 285,
+        "timestamp_str": 161,
+        "tuple": 308,
+        "uint16": 293,
+        "uint32": 294,
+        "uint64": 295,
+        "uint8": 292,
+        "unsignedinteger": 301
+    },
+    "v2n": {
+        "128": {
+            "ancestors": [
+                286,
+                310
+            ],
+            "name": "gc",
+            "schema": {
+                "alpha_class": {
+                    "read-only": false,
+                    "required": true,
+                    "type": "gc_class"
+                },
+                "beta_class": {
+                    "read-only": false,
+                    "required": true,
+                    "type": "gc_class"
+                },
+                "code_depth": {
+                    "read-only": true,
+                    "type": "gc_code_depth"
+                },
+                "codon_depth": {
+                    "read-only": true,
+                    "type": "gc_codon_depth"
+                },
+                "created": {
+                    "read-only": true,
+                    "type": "gc_created"
+                },
+                "creator": {
+                    "read-only": true,
+                    "type": "gc_creator"
+                },
+                "evolvability": {
+                    "read-only": true,
+                    "type": "gc_evolvability"
+                },
+                "fitness": {
+                    "read-only": true,
+                    "type": "gc_fitness"
+                },
+                "gca": {
+                    "read-only": false,
+                    "required": true,
+                    "type": "gc_signature"
+                },
+                "gcb": {
+                    "read-only": true,
+                    "type": "gc_signature"
+                },
+                "generation": {
+                    "read-only": true,
+                    "type": "gc_generation"
+                },
+                "graph": {
+                    "read-only": false,
+                    "required": true,
+                    "type": "gc_graph"
+                },
+                "input0_type": {
+                    "read-only": true,
+                    "type": "gc_type_int"
+                },
+                "input1_type": {
+                    "read-only": true,
+                    "type": "gc_type_int"
+                },
+                "input2_type": {
+                    "read-only": true,
+                    "type": "gc_type_int"
+                },
+                "input3_type": {
+                    "read-only": true,
+                    "type": "gc_type_int"
+                },
+                "input4_type": {
+                    "read-only": true,
+                    "type": "gc_type_int"
+                },
+                "input5_type": {
+                    "read-only": true,
+                    "type": "gc_type_int"
+                },
+                "input6_type": {
+                    "read-only": true,
+                    "type": "gc_type_int"
+                },
+                "input7_type": {
+                    "read-only": true,
+                    "type": "gc_type_int"
+                },
+                "meta_data": {
+                    "read-only": true,
+                    "type": "gc_meta_data"
+                },
+                "num_codes": {
+                    "read-only": true,
+                    "type": "gc_num_codes"
+                },
+                "num_inputs": {
+                    "read-only": true,
+                    "type": "gc_num_inputs"
+                },
+                "num_outputs": {
+                    "read-only": true,
+                    "type": "gc_num_outputs"
+                },
+                "num_unique_codes": {
+                    "read-only": true,
+                    "type": "gc_num_unique_codes"
+                },
+                "opt_num_codons": {
+                    "read-only": true,
+                    "type": "gc_opt_num_codons"
+                },
+                "output0_type": {
+                    "read-only": true,
+                    "type": "gc_type_int"
+                },
+                "output1_type": {
+                    "read-only": true,
+                    "type": "gc_type_int"
+                },
+                "output2_type": {
+                    "read-only": true,
+                    "type": "gc_type_int"
+                },
+                "output3_type": {
+                    "read-only": true,
+                    "type": "gc_type_int"
+                },
+                "properties": {
+                    "read-only": true,
+                    "type": "gc_properties"
+                },
+                "raw_num_codons": {
+                    "read-only": true,
+                    "type": "gc_raw_num_codons"
+                },
+                "reference_count": {
+                    "read-only": true,
+                    "type": "gc_reference_count"
+                },
+                "signature": {
+                    "read-only": true,
+                    "type": "gc_signature"
+                },
+                "updated": {
+                    "read-only": true,
+                    "type": "gc_updated"
+                }
+            },
+            "type": 310,
+            "uid": 128
+        },
+        "129": {
+            "ancestors": [
+                302,
+                305,
+                178,
+                291,
+                306,
+                286,
+                300
+            ],
+            "name": "gc_class",
+            "type": 291,
+            "uid": 129
+        },
+        "130": {
+            "ancestors": [
+                302,
+                179,
+                305,
+                290,
+                306,
+                286,
+                300
+            ],
+            "min": -2147483648,
+            "name": "gc_code_depth",
+            "type": 290,
+            "uid": 130
+        },
+        "131": {
+            "ancestors": [
+                302,
+                305,
+                290,
+                306,
+                180,
+                286,
+                300
+            ],
+            "min": -2147483648,
+            "name": "gc_codon_depth",
+            "type": 290,
+            "uid": 131
+        },
+        "132": {
+            "ancestors": [
+                286,
+                181,
+                161,
+                285
+            ],
+            "name": "gc_created",
+            "type": 161,
+            "uid": 132
+        },
+        "133": {
+            "ancestors": [
+                182,
+                286,
+                285,
+                160
+            ],
+            "name": "gc_creator",
+            "type": 160,
+            "uid": 133,
+            "validate": "x in creators"
+        },
+        "134": {
+            "ancestors": [
+                286,
+                310
+            ],
+            "name": "gc_egc",
+            "schema": {
+                "gca": {
+                    "read-only": false,
+                    "required": true,
+                    "type": "gc_signature"
+                },
+                "gcb": {
+                    "default": "0000000000000000000000000000000000000000000000000000000000000000",
+                    "read-only": false,
+                    "type": "gc_signature"
+                }
+            },
+            "type": 310,
+            "uid": 134
+        },
+        "135": {
+            "ancestors": [
+                286,
+                283,
+                183
+            ],
+            "default": 0.0,
+            "max": 1.0,
+            "min": 0.0,
+            "name": "gc_evolvability",
+            "type": 283,
+            "uid": 135
+        },
+        "136": {
+            "ancestors": [
+                286,
+                310
+            ],
+            "name": "gc_extended_class",
+            "schema": {},
+            "type": 310,
+            "uid": 136
+        },
+        "137": {
+            "ancestors": [
+                286,
+                310
+            ],
+            "name": "gc_extended_schema",
+            "schema": {},
+            "type": 310,
+            "uid": 137
+        },
+        "138": {
+            "ancestors": [
+                286,
+                310
+            ],
+            "name": "gc_fgc",
+            "schema": {
+                "gca": {
+                    "read-only": false,
+                    "required": true,
+                    "type": "gc_signature"
+                },
+                "gcb": {
+                    "read-only": false,
+                    "required": true,
+                    "type": "gc_signature"
+                },
+                "graph": {
+                    "type": "gc_graph"
+                },
+                "signature": {
+                    "read-only": true,
+                    "type": "gc_signature"
+                }
+            },
+            "type": 310,
+            "uid": 138
+        },
+        "139": {
+            "ancestors": [
+                286,
+                283,
+                184
+            ],
+            "default": 0.0,
+            "max": 1.0,
+            "min": 0.0,
+            "name": "gc_fitness",
+            "type": 283,
+            "uid": 139
+        },
+        "140": {
+            "ancestors": [
+                302,
+                286,
+                305,
+                291,
+                306,
+                185,
+                300
+            ],
+            "min": -9223372036854775808,
+            "name": "gc_generation",
+            "type": 291,
+            "uid": 140
+        },
+        "141": {
+            "ancestors": [
+                286,
+                310
+            ],
+            "name": "gc_meta_data",
+            "schema": {
+                "extended_class": {
+                    "type": "gc_extended_class"
+                },
+                "extended_schema": {
+                    "type": "gc_extended_schema"
+                },
+                "name": {
+                    "type": "str"
+                },
+                "parents": {
+                    "type": "gc_parents"
+                }
+            },
+            "type": 310,
+            "uid": 141
+        },
+        "142": {
+            "ancestors": [
+                302,
+                305,
+                290,
+                306,
+                186,
+                286,
+                300
+            ],
+            "min": -2147483648,
+            "name": "gc_num_codes",
+            "type": 290,
+            "uid": 142
+        },
+        "143": {
+            "ancestors": [
+                302,
+                187,
+                305,
+                289,
+                306,
+                286,
+                300
+            ],
+            "max": 32767,
+            "min": -32768,
+            "name": "gc_num_inputs",
+            "type": 289,
+            "uid": 143
+        },
+        "144": {
+            "ancestors": [
+                302,
+                305,
+                289,
+                188,
+                306,
+                286,
+                300
+            ],
+            "max": 32767,
+            "min": -32768,
+            "name": "gc_num_outputs",
+            "type": 289,
+            "uid": 144
+        },
+        "145": {
+            "ancestors": [
+                302,
+                189,
+                305,
+                290,
+                306,
+                286,
+                300
+            ],
+            "min": -2147483648,
+            "name": "gc_num_unique_codes",
+            "type": 290,
+            "uid": 145
+        },
+        "146": {
+            "ancestors": [
+                302,
+                305,
+                290,
+                190,
+                306,
+                286,
+                300
+            ],
+            "min": -2147483648,
+            "name": "gc_opt_num_codons",
+            "type": 290,
+            "uid": 146
+        },
+        "147": {
+            "ancestors": [
+                286,
+                309
+            ],
+            "minlength": 1,
+            "name": "gc_parents",
+            "schema": {
+                "type": "sha256_lowercase"
+            },
+            "type": 309,
+            "uid": 147
+        },
+        "148": {
+            "ancestors": [
+                286,
+                309
+            ],
+            "name": "gc_parents_list",
+            "schema": {
+                "type": "gc_parents"
+            },
+            "type": 309,
+            "uid": 148
+        },
+        "149": {
+            "ancestors": [
+                193,
+                286
+            ],
+            "name": "gc_properties",
+            "type": 286,
+            "uid": 149
+        },
+        "150": {
+            "ancestors": [
+                286,
+                149,
+                310
+            ],
+            "name": "gc_properties_dict",
+            "schema": {
+                "arithmetic": {
+                    "default": false,
+                    "type": "bool"
+                },
+                "bitwise": {
+                    "default": false,
+                    "type": "bool"
+                },
+                "conditional": {
+                    "default": false,
+                    "type": "bool"
+                },
+                "constant": {
+                    "default": false,
+                    "type": "bool"
+                },
+                "deterministic": {
+                    "default": false,
+                    "type": "bool"
+                },
+                "extended": {
+                    "default": false,
+                    "type": "bool"
+                },
+                "logical": {
+                    "default": false,
+                    "type": "bool"
+                },
+                "memory_modify": {
+                    "default": false,
+                    "type": "bool"
+                },
+                "object_modify": {
+                    "default": false,
+                    "type": "bool"
+                },
+                "physical": {
+                    "default": false,
+                    "type": "bool"
+                }
+            },
+            "type": 310,
+            "uid": 150
+        },
+        "151": {
+            "ancestors": [
+                302,
+                305,
+                291,
+                306,
+                286,
+                149,
+                300
+            ],
+            "name": "gc_properties_int",
+            "type": 291,
+            "uid": 151
+        },
+        "152": {
+            "ancestors": [
+                302,
+                305,
+                290,
+                306,
+                195,
+                286,
+                300
+            ],
+            "min": -2147483648,
+            "name": "gc_raw_num_codons",
+            "type": 290,
+            "uid": 152
+        },
+        "153": {
+            "ancestors": [
+                302,
+                305,
+                196,
+                291,
+                306,
+                286,
+                300
+            ],
+            "min": -9223372036854775808,
+            "name": "gc_reference_count",
+            "type": 291,
+            "uid": 153
+        },
+        "154": {
+            "ancestors": [
+                286,
+                197,
+                285,
+                160
+            ],
+            "name": "gc_signature",
+            "type": 160,
+            "uid": 154,
+            "validate": "x in genomic_library"
+        },
+        "155": {
+            "ancestors": [
+                302,
+                305,
+                290,
+                198,
+                306,
+                286,
+                300
+            ],
+            "cast_to": [
+                "gc_type_str"
+            ],
+            "name": "gc_type_int",
+            "type": 290,
+            "uid": 155,
+            "validate": "x in gc_type_lookup['value']"
+        },
+        "156": {
+            "ancestors": [
+                286,
+                285
+            ],
+            "cast_to": [
+                "gc_type_int"
+            ],
+            "name": "gc_type_str",
+            "type": 285,
+            "uid": 156,
+            "validate": "x in gc_type_lookup['name']"
+        },
+        "157": {
+            "ancestors": [
+                161,
+                286,
+                199,
+                285
+            ],
+            "name": "gc_updated",
+            "type": 161,
+            "uid": 157
+        },
+        "158": {
+            "ancestors": [
+                286,
+                285
+            ],
+            "maxlength": 1024,
+            "minlength": 1,
+            "name": "gc_value_str",
+            "type": 285,
+            "uid": 158,
+            "validate": "exec(x)"
+        },
+        "159": {
+            "ancestors": [
+                286,
+                285
+            ],
+            "maxlength": 1,
+            "minlength": 1,
+            "name": "letter_uppercase",
+            "regex": "[A-Z]",
+            "type": 285,
+            "uid": 159
+        },
+        "160": {
+            "ancestors": [
+                286,
+                285
+            ],
+            "name": "sha256_lowercase",
+            "regex": "[0-9a-f]{64}",
+            "type": 285,
+            "uid": 160
+        },
+        "161": {
+            "ancestors": [
+                286,
+                285
+            ],
+            "name": "timestamp_str",
+            "regex": "20[2-9][0-9]-(1[0-2]|0[1-9])-([0-2][0-9]|3[01])T[0-2][0-9](:[0-5][0-9]){2}\\.[0-9]{6}Z",
+            "type": 285,
+            "uid": 161,
+            "validate": "datetime.strptime(x, '%Y-%m-%dT%H:%M:%S.%fZ')"
+        },
+        "162": {
+            "ancestors": [
+                286,
+                309,
+                129
+            ],
+            "maxlength": 256,
+            "minlength": 1,
+            "name": "gc_class_list",
+            "read-only": false,
+            "schema": {
+                "type": "gc_class"
+            },
+            "type": 309,
+            "uid": 162
+        },
+        "163": {
+            "ancestors": [
+                130,
+                286,
+                309
+            ],
+            "maxlength": 256,
+            "minlength": 1,
+            "name": "gc_code_depth_list",
+            "read-only": false,
+            "schema": {
+                "type": "gc_code_depth"
+            },
+            "type": 309,
+            "uid": 163
+        },
+        "164": {
+            "ancestors": [
+                286,
+                309,
+                131
+            ],
+            "maxlength": 256,
+            "minlength": 1,
+            "name": "gc_codon_depth_list",
+            "read-only": false,
+            "schema": {
+                "type": "gc_codon_depth"
+            },
+            "type": 309,
+            "uid": 164
+        },
+        "165": {
+            "ancestors": [
+                132,
+                309,
+                286
+            ],
+            "maxlength": 256,
+            "minlength": 1,
+            "name": "gc_created_list",
+            "read-only": false,
+            "schema": {
+                "type": "gc_created"
+            },
+            "type": 309,
+            "uid": 165
+        },
+        "166": {
+            "ancestors": [
+                286,
+                309,
+                133
+            ],
+            "maxlength": 256,
+            "minlength": 1,
+            "name": "gc_creator_list",
+            "read-only": false,
+            "schema": {
+                "type": "gc_creator"
+            },
+            "type": 309,
+            "uid": 166
+        },
+        "167": {
+            "ancestors": [
+                286,
+                135,
+                309
+            ],
+            "maxlength": 256,
+            "minlength": 1,
+            "name": "gc_evolvability_list",
+            "read-only": false,
+            "schema": {
+                "type": "gc_evolvability"
+            },
+            "type": 309,
+            "uid": 167
+        },
+        "168": {
+            "ancestors": [
+                286,
+                309,
+                139
+            ],
+            "maxlength": 256,
+            "minlength": 1,
+            "name": "gc_fitness_list",
+            "read-only": false,
+            "schema": {
+                "type": "gc_fitness"
+            },
+            "type": 309,
+            "uid": 168
+        },
+        "169": {
+            "ancestors": [
+                286,
+                309,
+                140
+            ],
+            "maxlength": 256,
+            "minlength": 1,
+            "name": "gc_generation_list",
+            "read-only": false,
+            "schema": {
+                "type": "gc_generation"
+            },
+            "type": 309,
+            "uid": 169
+        },
+        "170": {
+            "ancestors": [
+                286,
+                309
+            ],
+            "minlength": 1,
+            "name": "gc_list",
+            "schema": {
+                "type": "gc"
+            },
+            "type": 309,
+            "uid": 170
+        },
+        "171": {
+            "ancestors": [
+                286,
+                309,
+                142
+            ],
+            "maxlength": 256,
+            "minlength": 1,
+            "name": "gc_num_codes_list",
+            "read-only": false,
+            "schema": {
+                "type": "gc_num_codes"
+            },
+            "type": 309,
+            "uid": 171
+        },
+        "172": {
+            "ancestors": [
+                286,
+                309,
+                143
+            ],
+            "maxlength": 256,
+            "minlength": 1,
+            "name": "gc_num_inputs_list",
+            "read-only": false,
+            "schema": {
+                "type": "gc_num_inputs"
+            },
+            "type": 309,
+            "uid": 172
+        },
+        "173": {
+            "ancestors": [
+                286,
+                309,
+                144
+            ],
+            "maxlength": 256,
+            "minlength": 1,
+            "name": "gc_num_outputs_list",
+            "read-only": false,
+            "schema": {
+                "type": "gc_num_outputs"
+            },
+            "type": 309,
+            "uid": 173
+        },
+        "174": {
+            "ancestors": [
+                286,
+                309,
+                145
+            ],
+            "maxlength": 256,
+            "minlength": 1,
+            "name": "gc_num_unique_codes_list",
+            "read-only": false,
+            "schema": {
+                "type": "gc_num_unique_codes"
+            },
+            "type": 309,
+            "uid": 174
+        },
+        "175": {
+            "ancestors": [
+                286,
+                309,
+                146
+            ],
+            "maxlength": 256,
+            "minlength": 1,
+            "name": "gc_opt_num_codons_list",
+            "read-only": false,
+            "schema": {
+                "type": "gc_opt_num_codons"
+            },
+            "type": 309,
+            "uid": 175
+        },
+        "176": {
+            "ancestors": [
+                286,
+                309,
+                149
+            ],
+            "maxlength": 256,
+            "minlength": 1,
+            "name": "gc_properties_list",
+            "read-only": false,
+            "schema": {
+                "type": "gc_properties"
+            },
+            "type": 309,
+            "uid": 176
+        },
+        "177": {
+            "ancestors": [
+                286,
+                310
+            ],
+            "name": "gc_query",
+            "read-only": false,
+            "schema": {
+                "alpha_class": {
+                    "read-only": false,
+                    "type": "gc_query_class"
+                },
+                "beta_class": {
+                    "read-only": false,
+                    "type": "gc_query_class"
+                },
+                "code_depth": {
+                    "read-only": false,
+                    "type": "gc_query_code_depth"
+                },
+                "codon_depth": {
+                    "read-only": false,
+                    "type": "gc_query_codon_depth"
+                },
+                "created": {
+                    "read-only": false,
+                    "type": "gc_query_created"
+                },
+                "creator": {
+                    "read-only": false,
+                    "type": "gc_query_creator"
+                },
+                "evolvability": {
+                    "read-only": false,
+                    "type": "gc_query_evolvability"
+                },
+                "fitness": {
+                    "read-only": false,
+                    "type": "gc_query_fitness"
+                },
+                "gca": {
+                    "read-only": false,
+                    "type": "gc_query_signature"
+                },
+                "gcb": {
+                    "read-only": false,
+                    "type": "gc_query_signature"
+                },
+                "generation": {
+                    "read-only": false,
+                    "type": "gc_query_generation"
+                },
+                "input0_type": {
+                    "read-only": false,
+                    "type": "gc_query_type_int"
+                },
+                "input1_type": {
+                    "read-only": false,
+                    "type": "gc_query_type_int"
+                },
+                "input2_type": {
+                    "read-only": false,
+                    "type": "gc_query_type_int"
+                },
+                "input3_type": {
+                    "read-only": false,
+                    "type": "gc_query_type_int"
+                },
+                "input4_type": {
+                    "read-only": false,
+                    "type": "gc_query_type_int"
+                },
+                "input5_type": {
+                    "read-only": false,
+                    "type": "gc_query_type_int"
+                },
+                "input6_type": {
+                    "read-only": false,
+                    "type": "gc_query_type_int"
+                },
+                "input7_type": {
+                    "read-only": false,
+                    "type": "gc_query_type_int"
+                },
+                "num_codes": {
+                    "read-only": false,
+                    "type": "gc_query_num_codes"
+                },
+                "num_inputs": {
+                    "read-only": false,
+                    "type": "gc_query_num_inputs"
+                },
+                "num_outputs": {
+                    "read-only": false,
+                    "type": "gc_query_num_outputs"
+                },
+                "num_unique_codes": {
+                    "read-only": false,
+                    "type": "gc_query_num_unique_codes"
+                },
+                "opt_num_codons": {
+                    "read-only": false,
+                    "type": "gc_query_opt_num_codons"
+                },
+                "order_by": {
+                    "read-only": false,
+                    "type": "gc_query_query_order_by"
+                },
+                "output0_type": {
+                    "read-only": false,
+                    "type": "gc_query_type_int"
+                },
+                "output1_type": {
+                    "read-only": false,
+                    "type": "gc_query_type_int"
+                },
+                "output2_type": {
+                    "read-only": false,
+                    "type": "gc_query_type_int"
+                },
+                "output3_type": {
+                    "read-only": false,
+                    "type": "gc_query_type_int"
+                },
+                "properties": {
+                    "read-only": false,
+                    "type": "gc_query_properties"
+                },
+                "raw_num_codons": {
+                    "read-only": false,
+                    "type": "gc_query_raw_num_codons"
+                },
+                "reference_count": {
+                    "read-only": false,
+                    "type": "gc_query_reference_count"
+                },
+                "signature": {
+                    "read-only": false,
+                    "type": "gc_query_signature"
+                },
+                "updated": {
+                    "read-only": false,
+                    "type": "gc_query_updated"
+                }
+            },
+            "type": 310,
+            "uid": 177
+        },
+        "178": {
+            "ancestors": [
+                286
+            ],
+            "name": "gc_query_class",
+            "read-only": false,
+            "type": 286,
+            "uid": 178
+        },
+        "179": {
+            "ancestors": [
+                286
+            ],
+            "name": "gc_query_code_depth",
+            "read-only": false,
+            "type": 286,
+            "uid": 179
+        },
+        "180": {
+            "ancestors": [
+                286
+            ],
+            "name": "gc_query_codon_depth",
+            "read-only": false,
+            "type": 286,
+            "uid": 180
+        },
+        "181": {
+            "ancestors": [
+                286
+            ],
+            "name": "gc_query_created",
+            "read-only": false,
+            "type": 286,
+            "uid": 181
+        },
+        "182": {
+            "ancestors": [
+                286
+            ],
+            "name": "gc_query_creator",
+            "read-only": false,
+            "type": 286,
+            "uid": 182
+        },
+        "183": {
+            "ancestors": [
+                286
+            ],
+            "name": "gc_query_evolvability",
+            "read-only": false,
+            "type": 286,
+            "uid": 183
+        },
+        "184": {
+            "ancestors": [
+                286
+            ],
+            "name": "gc_query_fitness",
+            "read-only": false,
+            "type": 286,
+            "uid": 184
+        },
+        "185": {
+            "ancestors": [
+                286
+            ],
+            "name": "gc_query_generation",
+            "read-only": false,
+            "type": 286,
+            "uid": 185
+        },
+        "186": {
+            "ancestors": [
+                286
+            ],
+            "name": "gc_query_num_codes",
+            "read-only": false,
+            "type": 286,
+            "uid": 186
+        },
+        "187": {
+            "ancestors": [
+                286
+            ],
+            "name": "gc_query_num_inputs",
+            "read-only": false,
+            "type": 286,
+            "uid": 187
+        },
+        "188": {
+            "ancestors": [
+                286
+            ],
+            "name": "gc_query_num_outputs",
+            "read-only": false,
+            "type": 286,
+            "uid": 188
+        },
+        "189": {
+            "ancestors": [
+                286
+            ],
+            "name": "gc_query_num_unique_codes",
+            "read-only": false,
+            "type": 286,
+            "uid": 189
+        },
+        "190": {
+            "ancestors": [
+                286
+            ],
+            "name": "gc_query_opt_num_codons",
+            "read-only": false,
+            "type": 286,
+            "uid": 190
+        },
+        "191": {
+            "allowed": [
+                "signature",
+                "gca",
+                "gcb",
+                "reference_count",
+                "generation",
+                "code_depth",
+                "codon_depth",
+                "num_codes",
+                "num_unique_codes",
+                "raw_num_codons",
+                "opt_num_codons",
+                "num_inputs",
+                "input0_type",
+                "input1_type",
+                "input2_type",
+                "input3_type",
+                "input4_type",
+                "input5_type",
+                "input6_type",
+                "input7_type",
+                "num_outputs",
+                "output0_type",
+                "output1_type",
+                "output2_type",
+                "output3_type",
+                "alpha_class",
+                "beta_class",
+                "properties",
+                "fitness",
+                "evolvability",
+                "creator",
+                "updated",
+                "created",
+                "order_by",
+                "limit",
+                "random"
+            ],
+            "ancestors": [
+                286,
+                285
+            ],
+            "name": "gc_query_order_by",
+            "read-only": false,
+            "type": 285,
+            "uid": 191
+        },
+        "192": {
+            "ancestors": [
+                286,
+                309,
+                191
+            ],
+            "maxlength": 256,
+            "minlength": 1,
+            "name": "gc_query_order_by_list",
+            "read-only": false,
+            "schema": {
+                "type": "gc_query_order_by"
+            },
+            "type": 309,
+            "uid": 192
+        },
+        "193": {
+            "ancestors": [
+                286
+            ],
+            "name": "gc_query_properties",
+            "read-only": false,
+            "type": 286,
+            "uid": 193
+        },
+        "194": {
+            "ancestors": [
+                286
+            ],
+            "name": "gc_query_query_order_by",
+            "read-only": false,
+            "type": 286,
+            "uid": 194
+        },
+        "195": {
+            "ancestors": [
+                286
+            ],
+            "name": "gc_query_raw_num_codons",
+            "read-only": false,
+            "type": 286,
+            "uid": 195
+        },
+        "196": {
+            "ancestors": [
+                286
+            ],
+            "name": "gc_query_reference_count",
+            "read-only": false,
+            "type": 286,
+            "uid": 196
+        },
+        "197": {
+            "ancestors": [
+                286
+            ],
+            "name": "gc_query_signature",
+            "read-only": false,
+            "type": 286,
+            "uid": 197
+        },
+        "198": {
+            "ancestors": [
+                286
+            ],
+            "name": "gc_query_type_int",
+            "read-only": false,
+            "type": 286,
+            "uid": 198
+        },
+        "199": {
+            "ancestors": [
+                286
+            ],
+            "name": "gc_query_updated",
+            "read-only": false,
+            "type": 286,
+            "uid": 199
+        },
+        "200": {
+            "ancestors": [
+                286,
+                309,
+                152
+            ],
+            "maxlength": 256,
+            "minlength": 1,
+            "name": "gc_raw_num_codons_list",
+            "read-only": false,
+            "schema": {
+                "type": "gc_raw_num_codons"
+            },
+            "type": 309,
+            "uid": 200
+        },
+        "201": {
+            "ancestors": [
+                286,
+                309,
+                153
+            ],
+            "maxlength": 256,
+            "minlength": 1,
+            "name": "gc_reference_count_list",
+            "read-only": false,
+            "schema": {
+                "type": "gc_reference_count"
+            },
+            "type": 309,
+            "uid": 201
+        },
+        "202": {
+            "ancestors": [
+                286,
+                309,
+                154
+            ],
+            "maxlength": 256,
+            "minlength": 1,
+            "name": "gc_signature_list",
+            "read-only": false,
+            "schema": {
+                "type": "gc_signature"
+            },
+            "type": 309,
+            "uid": 202
+        },
+        "203": {
+            "ancestors": [
+                286,
+                309,
+                155
+            ],
+            "maxlength": 256,
+            "minlength": 1,
+            "name": "gc_type_int_list",
+            "read-only": false,
+            "schema": {
+                "type": "gc_type_int"
+            },
+            "type": 309,
+            "uid": 203
+        },
+        "204": {
+            "ancestors": [
+                286,
+                309,
+                157
+            ],
+            "maxlength": 256,
+            "minlength": 1,
+            "name": "gc_updated_list",
+            "read-only": false,
+            "schema": {
+                "type": "gc_updated"
+            },
+            "type": 309,
+            "uid": 204
+        },
+        "205": {
+            "ancestors": [
+                286,
+                309
+            ],
+            "items": [
+                {
+                    "type": "gc_type_int"
+                },
+                {
+                    "type": "str"
+                }
+            ],
+            "maxlength": 2,
+            "minlength": 2,
+            "name": "gc_constant",
+            "type": 309,
+            "uid": 205
+        },
+        "206": {
+            "ancestors": [
+                286,
+                309
+            ],
+            "maxlength": 256,
+            "minlength": 1,
+            "name": "gc_constant_row",
+            "schema": {
+                "type": "gc_constant"
+            },
+            "type": 309,
+            "uid": 206
+        },
+        "207": {
+            "ancestors": [
+                286,
+                310
+            ],
+            "name": "gc_graph",
+            "schema": {
+                "A": {
+                    "read-only": false,
+                    "type": "gc_row_IC"
+                },
+                "B": {
+                    "read-only": false,
+                    "type": "gc_row_ICA"
+                },
+                "C": {
+                    "read-only": false,
+                    "type": "gc_constant_row"
+                },
+                "F": {
+                    "read-only": false,
+                    "type": "gc_row_I"
+                },
+                "O": {
+                    "read-only": false,
+                    "type": "gc_row_ICAB"
+                },
+                "P": {
+                    "read-only": false,
+                    "type": "gc_row_ICAB"
+                },
+                "U": {
+                    "read-only": false,
+                    "type": "gc_row_ICAB"
+                }
+            },
+            "type": 310,
+            "uid": 207
+        },
+        "208": {
+            "ancestors": [
+                207,
+                286,
+                310
+            ],
+            "name": "gc_graph_OA",
+            "schema": {
+                "O": {
+                    "read-only": false,
+                    "type": "gc_row_A"
+                }
+            },
+            "type": 207,
+            "uid": 208
+        },
+        "209": {
+            "ancestors": [
+                207,
+                286,
+                310
+            ],
+            "name": "gc_graph_OAB",
+            "schema": {
+                "B": {
+                    "read-only": false,
+                    "type": "gc_row_A"
+                },
+                "O": {
+                    "read-only": false,
+                    "type": "gc_row_AB"
+                }
+            },
+            "type": 207,
+            "uid": 209
+        },
+        "210": {
+            "ancestors": [
+                207,
+                286,
+                310
+            ],
+            "name": "gc_graph_OABU",
+            "schema": {
+                "B": {
+                    "read-only": false,
+                    "type": "gc_row_A"
+                },
+                "O": {
+                    "read-only": false,
+                    "type": "gc_row_AB"
+                },
+                "U": {
+                    "read-only": false,
+                    "type": "gc_row_AB"
+                }
+            },
+            "type": 207,
+            "uid": 210
+        },
+        "211": {
+            "ancestors": [
+                207,
+                286,
+                310
+            ],
+            "name": "gc_graph_OAU",
+            "schema": {
+                "O": {
+                    "read-only": false,
+                    "type": "gc_row_A"
+                },
+                "U": {
+                    "read-only": false,
+                    "type": "gc_row_A"
+                }
+            },
+            "type": 207,
+            "uid": 211
+        },
+        "212": {
+            "ancestors": [
+                207,
+                286,
+                310
+            ],
+            "name": "gc_graph_OB",
+            "schema": {
+                "B": {
+                    "read-only": false,
+                    "type": "gc_row_A"
+                },
+                "O": {
+                    "read-only": false,
+                    "type": "gc_row_BA"
+                }
+            },
+            "type": 207,
+            "uid": 212
+        },
+        "213": {
+            "ancestors": [
+                207,
+                286,
+                310
+            ],
+            "name": "gc_graph_OBU",
+            "schema": {
+                "B": {
+                    "read-only": false,
+                    "type": "gc_row_A"
+                },
+                "O": {
+                    "read-only": false,
+                    "type": "gc_row_BA"
+                },
+                "U": {
+                    "read-only": false,
+                    "type": "gc_row_BA"
+                }
+            },
+            "type": 207,
+            "uid": 213
+        },
+        "214": {
+            "ancestors": [
+                207,
+                286,
+                310
+            ],
+            "name": "gc_graph_OC",
+            "schema": {
+                "C": {
+                    "read-only": false,
+                    "type": "gc_constant_row"
+                },
+                "O": {
+                    "read-only": false,
+                    "type": "gc_row_C"
+                }
+            },
+            "type": 207,
+            "uid": 214
+        },
+        "215": {
+            "ancestors": [
+                207,
+                286,
+                310
+            ],
+            "name": "gc_graph_OCA",
+            "schema": {
+                "A": {
+                    "read-only": false,
+                    "type": "gc_row_C"
+                },
+                "C": {
+                    "read-only": false,
+                    "type": "gc_constant_row"
+                },
+                "O": {
+                    "read-only": false,
+                    "type": "gc_row_CA"
+                }
+            },
+            "type": 207,
+            "uid": 215
+        },
+        "216": {
+            "ancestors": [
+                207,
+                286,
+                310
+            ],
+            "name": "gc_graph_OCAB",
+            "schema": {
+                "A": {
+                    "read-only": false,
+                    "type": "gc_row_C"
+                },
+                "B": {
+                    "read-only": false,
+                    "type": "gc_row_CA"
+                },
+                "C": {
+                    "read-only": false,
+                    "type": "gc_constant_row"
+                },
+                "O": {
+                    "read-only": false,
+                    "type": "gc_row_CAB"
+                }
+            },
+            "type": 207,
+            "uid": 216
+        },
+        "217": {
+            "ancestors": [
+                207,
+                286,
+                310
+            ],
+            "name": "gc_graph_OCABU",
+            "schema": {
+                "A": {
+                    "read-only": false,
+                    "type": "gc_row_C"
+                },
+                "B": {
+                    "read-only": false,
+                    "type": "gc_row_CA"
+                },
+                "C": {
+                    "read-only": false,
+                    "type": "gc_constant_row"
+                },
+                "O": {
+                    "read-only": false,
+                    "type": "gc_row_CAB"
+                },
+                "U": {
+                    "read-only": false,
+                    "type": "gc_row_CAB"
+                }
+            },
+            "type": 207,
+            "uid": 217
+        },
+        "218": {
+            "ancestors": [
+                207,
+                286,
+                310
+            ],
+            "name": "gc_graph_OCAU",
+            "schema": {
+                "A": {
+                    "read-only": false,
+                    "type": "gc_row_C"
+                },
+                "C": {
+                    "read-only": false,
+                    "type": "gc_constant_row"
+                },
+                "O": {
+                    "read-only": false,
+                    "type": "gc_row_CA"
+                },
+                "U": {
+                    "read-only": false,
+                    "type": "gc_row_CA"
+                }
+            },
+            "type": 207,
+            "uid": 218
+        },
+        "219": {
+            "ancestors": [
+                207,
+                286,
+                310
+            ],
+            "name": "gc_graph_OCB",
+            "schema": {
+                "B": {
+                    "read-only": false,
+                    "type": "gc_row_CA"
+                },
+                "C": {
+                    "read-only": false,
+                    "type": "gc_constant_row"
+                },
+                "O": {
+                    "read-only": false,
+                    "type": "gc_row_CBA"
+                }
+            },
+            "type": 207,
+            "uid": 219
+        },
+        "220": {
+            "ancestors": [
+                207,
+                286,
+                310
+            ],
+            "name": "gc_graph_OCBU",
+            "schema": {
+                "B": {
+                    "read-only": false,
+                    "type": "gc_row_CA"
+                },
+                "C": {
+                    "read-only": false,
+                    "type": "gc_constant_row"
+                },
+                "O": {
+                    "read-only": false,
+                    "type": "gc_row_CBA"
+                },
+                "U": {
+                    "read-only": false,
+                    "type": "gc_row_CBA"
+                }
+            },
+            "type": 207,
+            "uid": 220
+        },
+        "221": {
+            "ancestors": [
+                207,
+                286,
+                310
+            ],
+            "name": "gc_graph_OIA",
+            "schema": {
+                "A": {
+                    "read-only": false,
+                    "type": "gc_row_I"
+                },
+                "O": {
+                    "read-only": false,
+                    "type": "gc_row_IA"
+                }
+            },
+            "type": 207,
+            "uid": 221
+        },
+        "222": {
+            "ancestors": [
+                207,
+                286,
+                310
+            ],
+            "name": "gc_graph_OIAB",
+            "schema": {
+                "A": {
+                    "read-only": false,
+                    "type": "gc_row_I"
+                },
+                "B": {
+                    "read-only": false,
+                    "type": "gc_row_IA"
+                },
+                "O": {
+                    "read-only": false,
+                    "type": "gc_row_IAB"
+                }
+            },
+            "type": 207,
+            "uid": 222
+        },
+        "223": {
+            "ancestors": [
+                207,
+                286,
+                310
+            ],
+            "name": "gc_graph_OIABFP",
+            "schema": {
+                "A": {
+                    "read-only": false,
+                    "type": "gc_row_I"
+                },
+                "B": {
+                    "read-only": false,
+                    "type": "gc_row_IA"
+                },
+                "F": {
+                    "read-only": false,
+                    "type": "gc_row_I"
+                },
+                "O": {
+                    "read-only": false,
+                    "type": "gc_row_IAB"
+                },
+                "P": {
+                    "read-only": false,
+                    "type": "gc_row_IAB"
+                }
+            },
+            "type": 207,
+            "uid": 223
+        },
+        "224": {
+            "ancestors": [
+                207,
+                286,
+                310
+            ],
+            "name": "gc_graph_OIABU",
+            "schema": {
+                "A": {
+                    "read-only": false,
+                    "type": "gc_row_I"
+                },
+                "B": {
+                    "read-only": false,
+                    "type": "gc_row_IA"
+                },
+                "O": {
+                    "read-only": false,
+                    "type": "gc_row_IAB"
+                },
+                "U": {
+                    "read-only": false,
+                    "type": "gc_row_IAB"
+                }
+            },
+            "type": 207,
+            "uid": 224
+        },
+        "225": {
+            "ancestors": [
+                207,
+                286,
+                310
+            ],
+            "name": "gc_graph_OIABUFP",
+            "schema": {
+                "A": {
+                    "read-only": false,
+                    "type": "gc_row_I"
+                },
+                "B": {
+                    "read-only": false,
+                    "type": "gc_row_IA"
+                },
+                "F": {
+                    "read-only": false,
+                    "type": "gc_row_I"
+                },
+                "O": {
+                    "read-only": false,
+                    "type": "gc_row_IAB"
+                },
+                "P": {
+                    "read-only": false,
+                    "type": "gc_row_IAB"
+                },
+                "U": {
+                    "read-only": false,
+                    "type": "gc_row_IAB"
+                }
+            },
+            "type": 207,
+            "uid": 225
+        },
+        "226": {
+            "ancestors": [
+                207,
+                286,
+                310
+            ],
+            "name": "gc_graph_OIAFP",
+            "schema": {
+                "A": {
+                    "read-only": false,
+                    "type": "gc_row_I"
+                },
+                "F": {
+                    "read-only": false,
+                    "type": "gc_row_I"
+                },
+                "O": {
+                    "read-only": false,
+                    "type": "gc_row_IA"
+                },
+                "P": {
+                    "read-only": false,
+                    "type": "gc_row_IA"
+                }
+            },
+            "type": 207,
+            "uid": 226
+        },
+        "227": {
+            "ancestors": [
+                207,
+                286,
+                310
+            ],
+            "name": "gc_graph_OIAU",
+            "schema": {
+                "A": {
+                    "read-only": false,
+                    "type": "gc_row_I"
+                },
+                "O": {
+                    "read-only": false,
+                    "type": "gc_row_IA"
+                },
+                "U": {
+                    "read-only": false,
+                    "type": "gc_row_IA"
+                }
+            },
+            "type": 207,
+            "uid": 227
+        },
+        "228": {
+            "ancestors": [
+                207,
+                286,
+                310
+            ],
+            "name": "gc_graph_OIAUFP",
+            "schema": {
+                "A": {
+                    "read-only": false,
+                    "type": "gc_row_I"
+                },
+                "F": {
+                    "read-only": false,
+                    "type": "gc_row_I"
+                },
+                "O": {
+                    "read-only": false,
+                    "type": "gc_row_IA"
+                },
+                "P": {
+                    "read-only": false,
+                    "type": "gc_row_IA"
+                },
+                "U": {
+                    "read-only": false,
+                    "type": "gc_row_IA"
+                }
+            },
+            "type": 207,
+            "uid": 228
+        },
+        "229": {
+            "ancestors": [
+                207,
+                286,
+                310
+            ],
+            "name": "gc_graph_OIB",
+            "schema": {
+                "B": {
+                    "read-only": false,
+                    "type": "gc_row_IA"
+                },
+                "O": {
+                    "read-only": false,
+                    "type": "gc_row_IBA"
+                }
+            },
+            "type": 207,
+            "uid": 229
+        },
+        "230": {
+            "ancestors": [
+                207,
+                286,
+                310
+            ],
+            "name": "gc_graph_OIBFP",
+            "schema": {
+                "B": {
+                    "read-only": false,
+                    "type": "gc_row_IA"
+                },
+                "F": {
+                    "read-only": false,
+                    "type": "gc_row_I"
+                },
+                "O": {
+                    "read-only": false,
+                    "type": "gc_row_IBA"
+                },
+                "P": {
+                    "read-only": false,
+                    "type": "gc_row_IBA"
+                }
+            },
+            "type": 207,
+            "uid": 230
+        },
+        "231": {
+            "ancestors": [
+                207,
+                286,
+                310
+            ],
+            "name": "gc_graph_OIBU",
+            "schema": {
+                "B": {
+                    "read-only": false,
+                    "type": "gc_row_IA"
+                },
+                "O": {
+                    "read-only": false,
+                    "type": "gc_row_IBA"
+                },
+                "U": {
+                    "read-only": false,
+                    "type": "gc_row_IBA"
+                }
+            },
+            "type": 207,
+            "uid": 231
+        },
+        "232": {
+            "ancestors": [
+                207,
+                286,
+                310
+            ],
+            "name": "gc_graph_OIBUFP",
+            "schema": {
+                "B": {
+                    "read-only": false,
+                    "type": "gc_row_IA"
+                },
+                "F": {
+                    "read-only": false,
+                    "type": "gc_row_I"
+                },
+                "O": {
+                    "read-only": false,
+                    "type": "gc_row_IBA"
+                },
+                "P": {
+                    "read-only": false,
+                    "type": "gc_row_IBA"
+                },
+                "U": {
+                    "read-only": false,
+                    "type": "gc_row_IBA"
+                }
+            },
+            "type": 207,
+            "uid": 232
+        },
+        "233": {
+            "ancestors": [
+                207,
+                286,
+                310
+            ],
+            "name": "gc_graph_OIC",
+            "schema": {
+                "C": {
+                    "read-only": false,
+                    "type": "gc_constant_row"
+                },
+                "O": {
+                    "read-only": false,
+                    "type": "gc_row_IC"
+                }
+            },
+            "type": 207,
+            "uid": 233
+        },
+        "234": {
+            "ancestors": [
+                207,
+                286,
+                310
+            ],
+            "name": "gc_graph_OICA",
+            "schema": {
+                "A": {
+                    "read-only": false,
+                    "type": "gc_row_IC"
+                },
+                "C": {
+                    "read-only": false,
+                    "type": "gc_constant_row"
+                },
+                "O": {
+                    "read-only": false,
+                    "type": "gc_row_ICA"
+                }
+            },
+            "type": 207,
+            "uid": 234
+        },
+        "235": {
+            "ancestors": [
+                207,
+                286,
+                310
+            ],
+            "name": "gc_graph_OICAB",
+            "schema": {
+                "A": {
+                    "read-only": false,
+                    "type": "gc_row_IC"
+                },
+                "B": {
+                    "read-only": false,
+                    "type": "gc_row_ICA"
+                },
+                "C": {
+                    "read-only": false,
+                    "type": "gc_constant_row"
+                },
+                "O": {
+                    "read-only": false,
+                    "type": "gc_row_ICAB"
+                }
+            },
+            "type": 207,
+            "uid": 235
+        },
+        "236": {
+            "ancestors": [
+                207,
+                286,
+                310
+            ],
+            "name": "gc_graph_OICABFP",
+            "schema": {
+                "A": {
+                    "read-only": false,
+                    "type": "gc_row_IC"
+                },
+                "B": {
+                    "read-only": false,
+                    "type": "gc_row_ICA"
+                },
+                "C": {
+                    "read-only": false,
+                    "type": "gc_constant_row"
+                },
+                "F": {
+                    "read-only": false,
+                    "type": "gc_row_I"
+                },
+                "O": {
+                    "read-only": false,
+                    "type": "gc_row_ICAB"
+                },
+                "P": {
+                    "read-only": false,
+                    "type": "gc_row_ICAB"
+                }
+            },
+            "type": 207,
+            "uid": 236
+        },
+        "237": {
+            "ancestors": [
+                207,
+                286,
+                310
+            ],
+            "name": "gc_graph_OICABU",
+            "schema": {
+                "A": {
+                    "read-only": false,
+                    "type": "gc_row_IC"
+                },
+                "B": {
+                    "read-only": false,
+                    "type": "gc_row_ICA"
+                },
+                "C": {
+                    "read-only": false,
+                    "type": "gc_constant_row"
+                },
+                "O": {
+                    "read-only": false,
+                    "type": "gc_row_ICAB"
+                },
+                "U": {
+                    "read-only": false,
+                    "type": "gc_row_ICAB"
+                }
+            },
+            "type": 207,
+            "uid": 237
+        },
+        "238": {
+            "ancestors": [
+                207,
+                286,
+                310
+            ],
+            "name": "gc_graph_OICABUFP",
+            "schema": {
+                "A": {
+                    "read-only": false,
+                    "type": "gc_row_IC"
+                },
+                "B": {
+                    "read-only": false,
+                    "type": "gc_row_ICA"
+                },
+                "C": {
+                    "read-only": false,
+                    "type": "gc_constant_row"
+                },
+                "F": {
+                    "read-only": false,
+                    "type": "gc_row_I"
+                },
+                "O": {
+                    "read-only": false,
+                    "type": "gc_row_ICAB"
+                },
+                "P": {
+                    "read-only": false,
+                    "type": "gc_row_ICAB"
+                },
+                "U": {
+                    "read-only": false,
+                    "type": "gc_row_ICAB"
+                }
+            },
+            "type": 207,
+            "uid": 238
+        },
+        "239": {
+            "ancestors": [
+                207,
+                286,
+                310
+            ],
+            "name": "gc_graph_OICAFP",
+            "schema": {
+                "A": {
+                    "read-only": false,
+                    "type": "gc_row_IC"
+                },
+                "C": {
+                    "read-only": false,
+                    "type": "gc_constant_row"
+                },
+                "F": {
+                    "read-only": false,
+                    "type": "gc_row_I"
+                },
+                "O": {
+                    "read-only": false,
+                    "type": "gc_row_ICA"
+                },
+                "P": {
+                    "read-only": false,
+                    "type": "gc_row_ICA"
+                }
+            },
+            "type": 207,
+            "uid": 239
+        },
+        "240": {
+            "ancestors": [
+                207,
+                286,
+                310
+            ],
+            "name": "gc_graph_OICAU",
+            "schema": {
+                "A": {
+                    "read-only": false,
+                    "type": "gc_row_IC"
+                },
+                "C": {
+                    "read-only": false,
+                    "type": "gc_constant_row"
+                },
+                "O": {
+                    "read-only": false,
+                    "type": "gc_row_ICA"
+                },
+                "U": {
+                    "read-only": false,
+                    "type": "gc_row_ICA"
+                }
+            },
+            "type": 207,
+            "uid": 240
+        },
+        "241": {
+            "ancestors": [
+                207,
+                286,
+                310
+            ],
+            "name": "gc_graph_OICAUFP",
+            "schema": {
+                "A": {
+                    "read-only": false,
+                    "type": "gc_row_IC"
+                },
+                "C": {
+                    "read-only": false,
+                    "type": "gc_constant_row"
+                },
+                "F": {
+                    "read-only": false,
+                    "type": "gc_row_I"
+                },
+                "O": {
+                    "read-only": false,
+                    "type": "gc_row_ICA"
+                },
+                "P": {
+                    "read-only": false,
+                    "type": "gc_row_ICA"
+                },
+                "U": {
+                    "read-only": false,
+                    "type": "gc_row_ICA"
+                }
+            },
+            "type": 207,
+            "uid": 241
+        },
+        "242": {
+            "ancestors": [
+                207,
+                286,
+                310
+            ],
+            "name": "gc_graph_OICB",
+            "schema": {
+                "B": {
+                    "read-only": false,
+                    "type": "gc_row_ICA"
+                },
+                "C": {
+                    "read-only": false,
+                    "type": "gc_constant_row"
+                },
+                "O": {
+                    "read-only": false,
+                    "type": "gc_row_ICBA"
+                }
+            },
+            "type": 207,
+            "uid": 242
+        },
+        "243": {
+            "ancestors": [
+                207,
+                286,
+                310
+            ],
+            "name": "gc_graph_OICBFP",
+            "schema": {
+                "B": {
+                    "read-only": false,
+                    "type": "gc_row_ICA"
+                },
+                "C": {
+                    "read-only": false,
+                    "type": "gc_constant_row"
+                },
+                "F": {
+                    "read-only": false,
+                    "type": "gc_row_I"
+                },
+                "O": {
+                    "read-only": false,
+                    "type": "gc_row_ICBA"
+                },
+                "P": {
+                    "read-only": false,
+                    "type": "gc_row_ICBA"
+                }
+            },
+            "type": 207,
+            "uid": 243
+        },
+        "244": {
+            "ancestors": [
+                207,
+                286,
+                310
+            ],
+            "name": "gc_graph_OICBU",
+            "schema": {
+                "B": {
+                    "read-only": false,
+                    "type": "gc_row_ICA"
+                },
+                "C": {
+                    "read-only": false,
+                    "type": "gc_constant_row"
+                },
+                "O": {
+                    "read-only": false,
+                    "type": "gc_row_ICBA"
+                },
+                "U": {
+                    "read-only": false,
+                    "type": "gc_row_ICBA"
+                }
+            },
+            "type": 207,
+            "uid": 244
+        },
+        "245": {
+            "ancestors": [
+                207,
+                286,
+                310
+            ],
+            "name": "gc_graph_OICBUFP",
+            "schema": {
+                "B": {
+                    "read-only": false,
+                    "type": "gc_row_ICA"
+                },
+                "C": {
+                    "read-only": false,
+                    "type": "gc_constant_row"
+                },
+                "F": {
+                    "read-only": false,
+                    "type": "gc_row_I"
+                },
+                "O": {
+                    "read-only": false,
+                    "type": "gc_row_ICBA"
+                },
+                "P": {
+                    "read-only": false,
+                    "type": "gc_row_ICBA"
+                },
+                "U": {
+                    "read-only": false,
+                    "type": "gc_row_ICBA"
+                }
+            },
+            "type": 207,
+            "uid": 245
+        },
+        "246": {
+            "ancestors": [
+                207,
+                286,
+                310
+            ],
+            "name": "gc_graph_OICFP",
+            "schema": {
+                "C": {
+                    "read-only": false,
+                    "type": "gc_constant_row"
+                },
+                "F": {
+                    "read-only": false,
+                    "type": "gc_row_I"
+                },
+                "O": {
+                    "read-only": false,
+                    "type": "gc_row_IC"
+                },
+                "P": {
+                    "read-only": false,
+                    "type": "gc_row_IC"
+                }
+            },
+            "type": 207,
+            "uid": 246
+        },
+        "247": {
+            "ancestors": [
+                207,
+                286,
+                310
+            ],
+            "name": "gc_graph_OICU",
+            "schema": {
+                "C": {
+                    "read-only": false,
+                    "type": "gc_constant_row"
+                },
+                "O": {
+                    "read-only": false,
+                    "type": "gc_row_IC"
+                },
+                "U": {
+                    "read-only": false,
+                    "type": "gc_row_IC"
+                }
+            },
+            "type": 207,
+            "uid": 247
+        },
+        "248": {
+            "ancestors": [
+                207,
+                286,
+                310
+            ],
+            "name": "gc_graph_OICUFP",
+            "schema": {
+                "C": {
+                    "read-only": false,
+                    "type": "gc_constant_row"
+                },
+                "F": {
+                    "read-only": false,
+                    "type": "gc_row_I"
+                },
+                "O": {
+                    "read-only": false,
+                    "type": "gc_row_IC"
+                },
+                "P": {
+                    "read-only": false,
+                    "type": "gc_row_IC"
+                },
+                "U": {
+                    "read-only": false,
+                    "type": "gc_row_IC"
+                }
+            },
+            "type": 207,
+            "uid": 248
+        },
+        "249": {
+            "allowed": [
+                "I",
+                "C",
+                "A",
+                "B",
+                "O",
+                "U",
+                "F",
+                "P"
+            ],
+            "ancestors": [
+                159,
+                286,
+                285
+            ],
+            "name": "gc_graph_row_letter",
+            "type": 159,
+            "uid": 249
+        },
+        "250": {
+            "ancestors": [
+                286,
+                309
+            ],
+            "maxlength": 256,
+            "minlength": 1,
+            "name": "gc_row",
+            "schema": {
+                "type": "gc_srcs_ICAB"
+            },
+            "type": 309,
+            "uid": 250
+        },
+        "251": {
+            "ancestors": [
+                250,
+                286,
+                309
+            ],
+            "maxlength": 256,
+            "minlength": 1,
+            "name": "gc_row_A",
+            "schema": {
+                "type": "gc_srcs_A"
+            },
+            "type": 250,
+            "uid": 251
+        },
+        "252": {
+            "ancestors": [
+                250,
+                286,
+                309
+            ],
+            "maxlength": 256,
+            "minlength": 1,
+            "name": "gc_row_AB",
+            "schema": {
+                "type": "gc_srcs_AB"
+            },
+            "type": 250,
+            "uid": 252
+        },
+        "253": {
+            "ancestors": [
+                250,
+                286,
+                309
+            ],
+            "maxlength": 256,
+            "minlength": 1,
+            "name": "gc_row_BA",
+            "schema": {
+                "type": "gc_srcs_B"
+            },
+            "type": 250,
+            "uid": 253
+        },
+        "254": {
+            "ancestors": [
+                250,
+                286,
+                309
+            ],
+            "maxlength": 256,
+            "minlength": 1,
+            "name": "gc_row_C",
+            "schema": {
+                "type": "gc_srcs_C"
+            },
+            "type": 250,
+            "uid": 254
+        },
+        "255": {
+            "ancestors": [
+                250,
+                286,
+                309
+            ],
+            "maxlength": 256,
+            "minlength": 1,
+            "name": "gc_row_CA",
+            "schema": {
+                "type": "gc_srcs_CA"
+            },
+            "type": 250,
+            "uid": 255
+        },
+        "256": {
+            "ancestors": [
+                250,
+                286,
+                309
+            ],
+            "maxlength": 256,
+            "minlength": 1,
+            "name": "gc_row_CAB",
+            "schema": {
+                "type": "gc_srcs_CAB"
+            },
+            "type": 250,
+            "uid": 256
+        },
+        "257": {
+            "ancestors": [
+                250,
+                286,
+                309
+            ],
+            "maxlength": 256,
+            "minlength": 1,
+            "name": "gc_row_CBA",
+            "schema": {
+                "type": "gc_srcs_CB"
+            },
+            "type": 250,
+            "uid": 257
+        },
+        "258": {
+            "ancestors": [
+                250,
+                286,
+                309
+            ],
+            "maxlength": 256,
+            "minlength": 1,
+            "name": "gc_row_I",
+            "schema": {
+                "type": "gc_srcs_I"
+            },
+            "type": 250,
+            "uid": 258
+        },
+        "259": {
+            "ancestors": [
+                250,
+                286,
+                309
+            ],
+            "maxlength": 256,
+            "minlength": 1,
+            "name": "gc_row_IA",
+            "schema": {
+                "type": "gc_srcs_IA"
+            },
+            "type": 250,
+            "uid": 259
+        },
+        "260": {
+            "ancestors": [
+                250,
+                286,
+                309
+            ],
+            "maxlength": 256,
+            "minlength": 1,
+            "name": "gc_row_IAB",
+            "schema": {
+                "type": "gc_srcs_IAB"
+            },
+            "type": 250,
+            "uid": 260
+        },
+        "261": {
+            "ancestors": [
+                250,
+                286,
+                309
+            ],
+            "maxlength": 256,
+            "minlength": 1,
+            "name": "gc_row_IBA",
+            "schema": {
+                "type": "gc_srcs_IB"
+            },
+            "type": 250,
+            "uid": 261
+        },
+        "262": {
+            "ancestors": [
+                250,
+                286,
+                309
+            ],
+            "maxlength": 256,
+            "minlength": 1,
+            "name": "gc_row_IC",
+            "schema": {
+                "type": "gc_srcs_IC"
+            },
+            "type": 250,
+            "uid": 262
+        },
+        "263": {
+            "ancestors": [
+                250,
+                286,
+                309
+            ],
+            "maxlength": 256,
+            "minlength": 1,
+            "name": "gc_row_ICA",
+            "schema": {
+                "type": "gc_srcs_ICA"
+            },
+            "type": 250,
+            "uid": 263
+        },
+        "264": {
+            "ancestors": [
+                250,
+                286,
+                309
+            ],
+            "maxlength": 256,
+            "minlength": 1,
+            "name": "gc_row_ICAB",
+            "schema": {
+                "type": "gc_srcs_ICAB"
+            },
+            "type": 250,
+            "uid": 264
+        },
+        "265": {
+            "ancestors": [
+                250,
+                286,
+                309
+            ],
+            "maxlength": 256,
+            "minlength": 1,
+            "name": "gc_row_ICBA",
+            "schema": {
+                "type": "gc_srcs_ICB"
+            },
+            "type": 250,
+            "uid": 265
+        },
+        "266": {
+            "ancestors": [
+                269,
+                266,
+                268,
+                276,
+                273,
+                275,
+                270,
+                272,
+                267,
+                277,
+                279,
+                274,
+                271,
+                278,
+                286
+            ],
+            "name": "gc_srcs_A",
+            "type": 286,
+            "uid": 266
+        },
+        "267": {
+            "ancestors": [
+                269,
+                266,
+                268,
+                276,
+                273,
+                275,
+                270,
+                272,
+                267,
+                277,
+                279,
+                274,
+                271,
+                278,
+                286
+            ],
+            "name": "gc_srcs_AB",
+            "type": 286,
+            "uid": 267
+        },
+        "268": {
+            "ancestors": [
+                269,
+                266,
+                268,
+                276,
+                273,
+                275,
+                270,
+                272,
+                267,
+                277,
+                279,
+                274,
+                271,
+                278,
+                286
+            ],
+            "name": "gc_srcs_B",
+            "type": 286,
+            "uid": 268
+        },
+        "269": {
+            "ancestors": [
+                269,
+                266,
+                268,
+                276,
+                273,
+                275,
+                270,
+                272,
+                267,
+                277,
+                279,
+                274,
+                271,
+                278,
+                286
+            ],
+            "name": "gc_srcs_C",
+            "type": 286,
+            "uid": 269
+        },
+        "270": {
+            "ancestors": [
+                269,
+                266,
+                268,
+                276,
+                273,
+                275,
+                270,
+                272,
+                267,
+                277,
+                279,
+                274,
+                271,
+                278,
+                286
+            ],
+            "name": "gc_srcs_CA",
+            "type": 286,
+            "uid": 270
+        },
+        "271": {
+            "ancestors": [
+                269,
+                266,
+                268,
+                276,
+                273,
+                275,
+                270,
+                272,
+                267,
+                277,
+                279,
+                274,
+                271,
+                278,
+                286
+            ],
+            "name": "gc_srcs_CAB",
+            "type": 286,
+            "uid": 271
+        },
+        "272": {
+            "ancestors": [
+                269,
+                266,
+                268,
+                276,
+                273,
+                275,
+                270,
+                272,
+                267,
+                277,
+                279,
+                274,
+                271,
+                278,
+                286
+            ],
+            "name": "gc_srcs_CB",
+            "type": 286,
+            "uid": 272
+        },
+        "273": {
+            "ancestors": [
+                269,
+                266,
+                268,
+                276,
+                273,
+                275,
+                270,
+                272,
+                267,
+                277,
+                279,
+                274,
+                271,
+                278,
+                286
+            ],
+            "name": "gc_srcs_IA",
+            "type": 286,
+            "uid": 273
+        },
+        "274": {
+            "ancestors": [
+                269,
+                266,
+                268,
+                276,
+                273,
+                275,
+                270,
+                272,
+                267,
+                277,
+                279,
+                274,
+                271,
+                278,
+                286
+            ],
+            "name": "gc_srcs_IAB",
+            "type": 286,
+            "uid": 274
+        },
+        "275": {
+            "ancestors": [
+                269,
+                266,
+                268,
+                276,
+                273,
+                275,
+                270,
+                272,
+                267,
+                277,
+                279,
+                274,
+                271,
+                278,
+                286
+            ],
+            "name": "gc_srcs_IB",
+            "type": 286,
+            "uid": 275
+        },
+        "276": {
+            "ancestors": [
+                269,
+                266,
+                268,
+                276,
+                273,
+                275,
+                270,
+                272,
+                267,
+                277,
+                279,
+                274,
+                271,
+                278,
+                286
+            ],
+            "name": "gc_srcs_IC",
+            "type": 286,
+            "uid": 276
+        },
+        "277": {
+            "ancestors": [
+                269,
+                266,
+                268,
+                276,
+                273,
+                275,
+                270,
+                272,
+                267,
+                277,
+                279,
+                274,
+                271,
+                278,
+                286
+            ],
+            "name": "gc_srcs_ICA",
+            "type": 286,
+            "uid": 277
+        },
+        "278": {
+            "ancestors": [
+                269,
+                266,
+                268,
+                276,
+                273,
+                275,
+                270,
+                272,
+                267,
+                277,
+                279,
+                274,
+                271,
+                278,
+                286
+            ],
+            "name": "gc_srcs_ICAB",
+            "type": 286,
+            "uid": 278
+        },
+        "279": {
+            "ancestors": [
+                269,
+                266,
+                268,
+                276,
+                273,
+                275,
+                270,
+                272,
+                267,
+                277,
+                279,
+                274,
+                271,
+                278,
+                286
+            ],
+            "name": "gc_srcs_ICB",
+            "type": 286,
+            "uid": 279
+        },
+        "280": {
+            "ancestors": [
+                286
+            ],
+            "name": "None",
+            "type": 286,
+            "uid": 280
+        },
+        "281": {
+            "ancestors": [
+                286
+            ],
+            "name": "bool",
+            "type": 286,
+            "uid": 281
+        },
+        "282": {
+            "ancestors": [
+                286
+            ],
+            "name": "int",
+            "type": 286,
+            "uid": 282
+        },
+        "283": {
+            "ancestors": [
+                286
+            ],
+            "name": "float",
+            "type": 286,
+            "uid": 283
+        },
+        "284": {
+            "ancestors": [
+                286
+            ],
+            "name": "complex",
+            "type": 286,
+            "uid": 284
+        },
+        "285": {
+            "ancestors": [
+                286
+            ],
+            "name": "str",
+            "type": 286,
+            "uid": 285
+        },
+        "286": {
+            "ancestors": [],
+            "name": "object",
+            "type": "basic",
+            "uid": 286
+        },
+        "287": {
+            "ancestors": [
+                286,
+                281
+            ],
+            "default": false,
+            "max": 1,
+            "min": 0,
+            "name": "np_bool",
+            "type": 281,
+            "uid": 287
+        },
+        "288": {
+            "ancestors": [
+                302,
+                300,
+                306,
+                286,
+                305
+            ],
+            "default": 0,
+            "max": 127,
+            "min": -128,
+            "name": "int8",
+            "type": 300,
+            "uid": 288
+        },
+        "289": {
+            "ancestors": [
+                302,
+                300,
+                306,
+                286,
+                305
+            ],
+            "default": 0,
+            "max": 32767,
+            "min": -32768,
+            "name": "int16",
+            "type": 300,
+            "uid": 289
+        },
+        "290": {
+            "ancestors": [
+                302,
+                300,
+                306,
+                286,
+                305
+            ],
+            "default": 0,
+            "max": 2147483647,
+            "min": -2147483648,
+            "name": "int32",
+            "type": 300,
+            "uid": 290
+        },
+        "291": {
+            "ancestors": [
+                302,
+                300,
+                306,
+                286,
+                305
+            ],
+            "default": 0,
+            "max": 9223372036854775807,
+            "min": -9223372036854775808,
+            "name": "int64",
+            "type": 300,
+            "uid": 291
+        },
+        "292": {
+            "ancestors": [
+                302,
+                301,
+                306,
+                286,
+                305
+            ],
+            "default": 0,
+            "max": 255,
+            "min": 0,
+            "name": "uint8",
+            "type": 301,
+            "uid": 292
+        },
+        "293": {
+            "ancestors": [
+                302,
+                301,
+                306,
+                286,
+                305
+            ],
+            "default": 0,
+            "max": 65535,
+            "min": 0,
+            "name": "uint16",
+            "type": 301,
+            "uid": 293
+        },
+        "294": {
+            "ancestors": [
+                302,
+                301,
+                306,
+                286,
+                305
+            ],
+            "default": 0,
+            "max": 4294967295,
+            "min": 0,
+            "name": "uint32",
+            "type": 301,
+            "uid": 294
+        },
+        "295": {
+            "ancestors": [
+                302,
+                301,
+                306,
+                286,
+                305
+            ],
+            "default": 0,
+            "max": 18446744073709551615,
+            "min": 0,
+            "name": "uint64",
+            "type": 301,
+            "uid": 295
+        },
+        "296": {
+            "ancestors": [
+                303,
+                306,
+                286,
+                297,
+                305
+            ],
+            "default": 0,
+            "max": 1.7976931348623157e+308,
+            "min": -1.7976931348623157e+308,
+            "name": "float32",
+            "type": 297,
+            "uid": 296
+        },
+        "297": {
+            "ancestors": [
+                286,
+                305,
+                306,
+                303
+            ],
+            "default": 0,
+            "max": 1.7976931348623157e+308,
+            "min": -1.7976931348623157e+308,
+            "name": "float64",
+            "type": 303,
+            "uid": 297
+        },
+        "298": {
+            "ancestors": [
+                299,
+                304,
+                306,
+                286,
+                305
+            ],
+            "name": "complex64",
+            "type": 299,
+            "uid": 298
+        },
+        "299": {
+            "ancestors": [
+                286,
+                305,
+                306,
+                304
+            ],
+            "name": "complex128",
+            "type": 304,
+            "uid": 299
+        },
+        "300": {
+            "ancestors": [
+                302,
+                286,
+                305,
+                306
+            ],
+            "cast_to": [
+                "int"
+            ],
+            "name": "signedinteger",
+            "type": 302,
+            "uid": 300
+        },
+        "301": {
+            "ancestors": [
+                302,
+                286,
+                305,
+                306
+            ],
+            "cast_to": [
+                "int"
+            ],
+            "name": "unsignedinteger",
+            "type": 302,
+            "uid": 301
+        },
+        "302": {
+            "ancestors": [
+                286,
+                306,
+                305
+            ],
+            "cast_to": [
+                "int"
+            ],
+            "name": "integer",
+            "type": 305,
+            "uid": 302
+        },
+        "303": {
+            "ancestors": [
+                286,
+                306,
+                305
+            ],
+            "cast_to": [
+                "float"
+            ],
+            "name": "floating",
+            "type": 305,
+            "uid": 303
+        },
+        "304": {
+            "ancestors": [
+                286,
+                306,
+                305
+            ],
+            "cast_to": [
+                "complex"
+            ],
+            "name": "np_complex",
+            "type": 305,
+            "uid": 304
+        },
+        "305": {
+            "ancestors": [
+                286,
+                306
+            ],
+            "name": "number",
+            "type": 306,
+            "uid": 305
+        },
+        "306": {
+            "ancestors": [
+                286
+            ],
+            "name": "np_generic",
+            "type": 286,
+            "uid": 306
+        },
+        "307": {
+            "ancestors": [
+                286
+            ],
+            "name": "set",
+            "type": 286,
+            "uid": 307
+        },
+        "308": {
+            "ancestors": [
+                286
+            ],
+            "name": "tuple",
+            "read-only": true,
+            "type": 286,
+            "uid": 308
+        },
+        "309": {
+            "ancestors": [
+                286
+            ],
+            "name": "list",
+            "type": 286,
+            "uid": 309
+        },
+        "310": {
+            "ancestors": [
+                286
+            ],
+            "name": "dict",
+            "type": 286,
+            "uid": 310
+        },
+        "311": {
+            "ancestors": [
+                286
+            ],
+            "name": "ndarray",
+            "type": 286,
+            "uid": 311
+        },
+        "312": {
+            "allowed": [
+                "alpha_class",
+                "beta_class",
+                "code_depth",
+                "codon_depth",
+                "created",
+                "creator",
+                "evolvability",
+                "fitness",
+                "gca",
+                "gcb",
+                "generation",
+                "graph",
+                "input0_type",
+                "input1_type",
+                "input2_type",
+                "input3_type",
+                "input4_type",
+                "input5_type",
+                "input6_type",
+                "input7_type",
+                "meta_data",
+                "num_codes",
+                "num_inputs",
+                "num_outputs",
+                "num_unique_codes",
+                "opt_num_codons",
+                "output0_type",
+                "output1_type",
+                "output2_type",
+                "output3_type",
+                "properties",
+                "raw_num_codons",
+                "reference_count",
+                "signature",
+                "updated"
+            ],
+            "ancestors": [],
+            "name": "gc_key",
+            "type": 285,
+            "uid": 312
+        },
+        "313": {
+            "allowed": [
+                "gca",
+                "gcb"
+            ],
+            "ancestors": [],
+            "name": "gc_egc_key",
+            "type": 285,
+            "uid": 313
+        },
+        "314": {
+            "allowed": [],
+            "ancestors": [],
+            "name": "gc_extended_class_key",
+            "type": 285,
+            "uid": 314
+        },
+        "315": {
+            "allowed": [],
+            "ancestors": [],
+            "name": "gc_extended_schema_key",
+            "type": 285,
+            "uid": 315
+        },
+        "316": {
+            "allowed": [
+                "gca",
+                "gcb",
+                "graph",
+                "signature"
+            ],
+            "ancestors": [],
+            "name": "gc_fgc_key",
+            "type": 285,
+            "uid": 316
+        },
+        "317": {
+            "allowed": [
+                "extended_class",
+                "extended_schema",
+                "name",
+                "parents"
+            ],
+            "ancestors": [],
+            "name": "gc_meta_data_key",
+            "type": 285,
+            "uid": 317
+        },
+        "318": {
+            "allowed": [
+                "arithmetic",
+                "bitwise",
+                "conditional",
+                "constant",
+                "deterministic",
+                "extended",
+                "logical",
+                "memory_modify",
+                "object_modify",
+                "physical"
+            ],
+            "ancestors": [],
+            "name": "gc_properties_dict_key",
+            "type": 285,
+            "uid": 318
+        },
+        "319": {
+            "allowed": [
+                "alpha_class",
+                "beta_class",
+                "code_depth",
+                "codon_depth",
+                "created",
+                "creator",
+                "evolvability",
+                "fitness",
+                "gca",
+                "gcb",
+                "generation",
+                "input0_type",
+                "input1_type",
+                "input2_type",
+                "input3_type",
+                "input4_type",
+                "input5_type",
+                "input6_type",
+                "input7_type",
+                "num_codes",
+                "num_inputs",
+                "num_outputs",
+                "num_unique_codes",
+                "opt_num_codons",
+                "order_by",
+                "output0_type",
+                "output1_type",
+                "output2_type",
+                "output3_type",
+                "properties",
+                "raw_num_codons",
+                "reference_count",
+                "signature",
+                "updated"
+            ],
+            "ancestors": [],
+            "name": "gc_query_key",
+            "type": 285,
+            "uid": 319
+        },
+        "320": {
+            "allowed": [
+                "A",
+                "B",
+                "C",
+                "F",
+                "O",
+                "P",
+                "U"
+            ],
+            "ancestors": [],
+            "name": "gc_graph_key",
+            "type": 285,
+            "uid": 320
+        },
+        "321": {
+            "ancestors": [],
+            "min": 0,
+            "name": "gc_parents_idx",
+            "type": 282,
+            "uid": 321
+        },
+        "322": {
+            "ancestors": [],
+            "min": 0,
+            "name": "gc_parents_list_idx",
+            "type": 282,
+            "uid": 322
+        },
+        "323": {
+            "ancestors": [],
+            "max": 255,
+            "min": 0,
+            "name": "gc_class_list_idx",
+            "type": 282,
+            "uid": 323
+        },
+        "324": {
+            "ancestors": [],
+            "max": 255,
+            "min": 0,
+            "name": "gc_code_depth_list_idx",
+            "type": 282,
+            "uid": 324
+        },
+        "325": {
+            "ancestors": [],
+            "max": 255,
+            "min": 0,
+            "name": "gc_codon_depth_list_idx",
+            "type": 282,
+            "uid": 325
+        },
+        "326": {
+            "ancestors": [],
+            "max": 255,
+            "min": 0,
+            "name": "gc_created_list_idx",
+            "type": 282,
+            "uid": 326
+        },
+        "327": {
+            "ancestors": [],
+            "max": 255,
+            "min": 0,
+            "name": "gc_creator_list_idx",
+            "type": 282,
+            "uid": 327
+        },
+        "328": {
+            "ancestors": [],
+            "max": 255,
+            "min": 0,
+            "name": "gc_evolvability_list_idx",
+            "type": 282,
+            "uid": 328
+        },
+        "329": {
+            "ancestors": [],
+            "max": 255,
+            "min": 0,
+            "name": "gc_fitness_list_idx",
+            "type": 282,
+            "uid": 329
+        },
+        "330": {
+            "ancestors": [],
+            "max": 255,
+            "min": 0,
+            "name": "gc_generation_list_idx",
+            "type": 282,
+            "uid": 330
+        },
+        "331": {
+            "ancestors": [],
+            "min": 0,
+            "name": "gc_list_idx",
+            "type": 282,
+            "uid": 331
+        },
+        "332": {
+            "ancestors": [],
+            "max": 255,
+            "min": 0,
+            "name": "gc_num_codes_list_idx",
+            "type": 282,
+            "uid": 332
+        },
+        "333": {
+            "ancestors": [],
+            "max": 255,
+            "min": 0,
+            "name": "gc_num_inputs_list_idx",
+            "type": 282,
+            "uid": 333
+        },
+        "334": {
+            "ancestors": [],
+            "max": 255,
+            "min": 0,
+            "name": "gc_num_outputs_list_idx",
+            "type": 282,
+            "uid": 334
+        },
+        "335": {
+            "ancestors": [],
+            "max": 255,
+            "min": 0,
+            "name": "gc_num_unique_codes_list_idx",
+            "type": 282,
+            "uid": 335
+        },
+        "336": {
+            "ancestors": [],
+            "max": 255,
+            "min": 0,
+            "name": "gc_opt_num_codons_list_idx",
+            "type": 282,
+            "uid": 336
+        },
+        "337": {
+            "ancestors": [],
+            "max": 255,
+            "min": 0,
+            "name": "gc_properties_list_idx",
+            "type": 282,
+            "uid": 337
+        },
+        "338": {
+            "ancestors": [],
+            "max": 255,
+            "min": 0,
+            "name": "gc_query_order_by_list_idx",
+            "type": 282,
+            "uid": 338
+        },
+        "339": {
+            "ancestors": [],
+            "max": 255,
+            "min": 0,
+            "name": "gc_raw_num_codons_list_idx",
+            "type": 282,
+            "uid": 339
+        },
+        "340": {
+            "ancestors": [],
+            "max": 255,
+            "min": 0,
+            "name": "gc_reference_count_list_idx",
+            "type": 282,
+            "uid": 340
+        },
+        "341": {
+            "ancestors": [],
+            "max": 255,
+            "min": 0,
+            "name": "gc_signature_list_idx",
+            "type": 282,
+            "uid": 341
+        },
+        "342": {
+            "ancestors": [],
+            "max": 255,
+            "min": 0,
+            "name": "gc_type_int_list_idx",
+            "type": 282,
+            "uid": 342
+        },
+        "343": {
+            "ancestors": [],
+            "max": 255,
+            "min": 0,
+            "name": "gc_updated_list_idx",
+            "type": 282,
+            "uid": 343
+        },
+        "344": {
+            "ancestors": [],
+            "max": 1,
+            "min": 0,
+            "name": "gc_constant_idx",
+            "type": 282,
+            "uid": 344
+        },
+        "345": {
+            "ancestors": [],
+            "max": 255,
+            "min": 0,
+            "name": "gc_constant_row_idx",
+            "type": 282,
+            "uid": 345
+        },
+        "346": {
+            "ancestors": [],
+            "max": 255,
+            "min": 0,
+            "name": "gc_row_idx",
+            "type": 282,
+            "uid": 346
+        }
+    }
+}
