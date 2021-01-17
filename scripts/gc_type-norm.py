@@ -407,6 +407,9 @@ if exists("../microbiome/data/gc_types.json"):
         if not genomic_library_entry_validator.validate(codon):
             print(genomic_library_entry_validator.errors)
             barf()
+        if codon['signature'] in [n['signature'] for n in nentries]:
+            print(codon)
+            barf()
         nentries.append(codon)
     try:
         with open('gc_codons.json', 'w') as njsonfile:

@@ -34,10 +34,6 @@ class query_validator():
         validation_schema = {k: self._query_params(v) for k, v in queriable_fields}
         validation_schema.update(query_validator._QUERY_BASE_SCHEMA)
         searchable_fields = [k for k, v in filter(lambda kv: kv[1]['meta']['database']['type'] != 'BYTEA', table_schema.items())]
-        validation_schema['contains']['schema']['lhs']['allowed'] = searchable_fields
-        validation_schema['overlaps']['schema']['lhs']['allowed'] = searchable_fields
-        validation_schema['contained by']['schema']['rhs']['allowed'] = searchable_fields
-        validation_schema['does not overlap']['schema']['lhs']['allowed'] = searchable_fields
         validation_schema['order by']['allowed'] = searchable_fields
         validation_schema['order by']['allowed'].append("RANDOM()")
         self._validator = Validator(validation_schema)
@@ -119,25 +115,32 @@ class query_validator():
             }
         if entry_schema['meta']['database']['array']:
             param_schema = {
-                "type": "dict",
-                "schema": {
-                    "operator": {
-                        "type": "string",
-                        "allowed": [
-                            "contains",
-                            "contained by",
-                            "overlaps",
-                            "does not overlap",
-                            "equals"
-                        ]
+                'oneof': [
+                    {
+                        'type': 'list',
+                        'schema': {
+                            'type': entry_schema['type']
+                        }
                     },
-                    "array": {
-                        "type": "list",
+                    {
+                        "type": "dict",
                         "schema": {
-                            "type": entry_schema['type']
+                            "operator": {
+                                "type": "string",
+                                "allowed": [
+                                    "contains",
+                                    "contained by",
+                                    "overlaps",
+                                    "does not overlap",
+                                    "equals"
+                                ]
+                            },
+                            "array": {
+                                "type": entry_schema['type']
+                            }
                         }
                     }
-                }
+                ]
             }
 
         return param_schema

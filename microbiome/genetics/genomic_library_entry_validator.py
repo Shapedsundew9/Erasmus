@@ -116,20 +116,15 @@ class _genomic_library_entry_validator(Validator):
         pass
 
     def _normalize_default_setter_set_signature(self, document):
-
         # The signature for a codon GC is slightly different
-        string = str(self.document["graph"]["A"]) + \
-            str(self.document["graph"]["O"])
-        string += self.document["gca"] + self.document["gcb"]
-        if "B" in self.document["graph"]:
-            string += str(self.document["graph"]["B"])
-        if "C" in self.document["graph"]:
-            string += str(self.document["graph"]["C"])
+        string = str(gc_graph(document['graph']))
 
         # If it is a codon glue on the mandatory definition
         if "generation" in self.document and self.document["generation"] == 0:
             if "meta_data" in self.document and "function" in self.document["meta_data"]:
                 string += self.document["meta_data"]["function"]["python3"]["0"]["inline"]
+                if 'code' in self.document["meta_data"]["function"]["python3"]["0"]:
+                    string += self.document["meta_data"]["function"]["python3"]["0"]["code"]
 
         # Remove spaces etc. to give some degrees of freedom in formatting and
         # not breaking the signature

@@ -43,52 +43,6 @@
             }
         ]
     },
-    "contained by": {
-        "schema": {
-            "lhs": {
-                "schema": {
-                    "allowed": [],
-                    "type": "string"
-                },
-                "type": "list"
-            },
-            "rhs": {
-                "allowed": [
-                    "name",
-                    "age",
-                    "idx",
-                    "properties",
-                    "created",
-                    "RANDOM()"
-                ],
-                "type": "list"
-            }
-        },
-        "type": "dict"
-    },
-    "contains": {
-        "schema": {
-            "lhs": {
-                "allowed": [
-                    "name",
-                    "age",
-                    "idx",
-                    "properties",
-                    "created",
-                    "RANDOM()"
-                ],
-                "schema": {
-                    "allowed": [],
-                    "type": "string"
-                },
-                "type": "list"
-            },
-            "rhs": {
-                "type": "list"
-            }
-        },
-        "type": "dict"
-    },
     "created": {
         "oneof": [
             {
@@ -132,29 +86,6 @@
                 "type": "dict"
             }
         ]
-    },
-    "does not overlap": {
-        "schema": {
-            "lhs": {
-                "allowed": [
-                    "name",
-                    "age",
-                    "idx",
-                    "properties",
-                    "created",
-                    "RANDOM()"
-                ],
-                "schema": {
-                    "allowed": [],
-                    "type": "string"
-                },
-                "type": "list"
-            },
-            "rhs": {
-                "type": "list"
-            }
-        },
-        "type": "dict"
     },
     "id": {
         "oneof": [
@@ -237,32 +168,10 @@
             "idx",
             "properties",
             "created",
+            "scores",
             "RANDOM()"
         ],
         "type": "string"
-    },
-    "overlaps": {
-        "schema": {
-            "lhs": {
-                "allowed": [
-                    "name",
-                    "age",
-                    "idx",
-                    "properties",
-                    "created",
-                    "RANDOM()"
-                ],
-                "schema": {
-                    "allowed": [],
-                    "type": "string"
-                },
-                "type": "list"
-            },
-            "rhs": {
-                "type": "list"
-            }
-        },
-        "type": "dict"
     },
     "properties": {
         "oneof": [
@@ -271,6 +180,34 @@
             },
             {
                 "type": "integer"
+            }
+        ]
+    },
+    "scores": {
+        "oneof": [
+            {
+                "schema": {
+                    "type": "list"
+                },
+                "type": "list"
+            },
+            {
+                "schema": {
+                    "array": {
+                        "type": "list"
+                    },
+                    "operator": {
+                        "allowed": [
+                            "contains",
+                            "contained by",
+                            "overlaps",
+                            "does not overlap",
+                            "equals"
+                        ],
+                        "type": "string"
+                    }
+                },
+                "type": "dict"
             }
         ]
     }

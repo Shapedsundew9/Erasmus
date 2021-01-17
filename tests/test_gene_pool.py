@@ -39,7 +39,6 @@ def gene_pool():
     yield (gp := _gene_pool())
 
 
-@pytest.mark.good
 def test_initialise(gene_pool):
     """Test construction & initialisation."""
     assert len(gene_pool) > 0
