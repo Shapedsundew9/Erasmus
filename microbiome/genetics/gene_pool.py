@@ -99,7 +99,7 @@ class _gene_pool():
             if 'function' in gc['meta_data']:
                 python = gc['meta_data']['function']['python3']['0']
                 if 'imports' in python:
-                    for imports in python['imports']:
+                    for impt in python['imports']:
                         if not impt in import_list:
                             import_list.append(impt)
                             impt['name'] = impt['module'].replace('.', '_') + '_' + impt['object'].replace('.', '_')

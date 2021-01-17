@@ -6,10 +6,6 @@ from copy import deepcopy, copy
 
 
 NULL_GC_TYPE = 0
-INPUT_LHS = ["input0_type", "input1_type", "input2_type", "input3_type", "input4_type", "input5_type", "input6_type", "input7_type"]
-OUTPUT_LHS = ["output0_type", "output1_type", "output2_type", "output3_type"]
-INPUT_DICT = {"lhs": INPUT_LHS, "rhs": None}
-OUTPUT_DICT = {"lhs": OUTPUT_LHS, "rhs": None}
 
 
 def gc_insert(target_gc, insert_gc, above_row):
@@ -116,7 +112,7 @@ def gc_insert(target_gc, insert_gc, above_row):
         else:
             fgc_list.insert(0, tgc)
 
-        return fgc_list
+    return fgc_list
 
 
 def steady_state_exception(fgc)
@@ -172,58 +168,73 @@ def steady_state_exception(fgc)
     for ep in dst_list:
         if ep[ep_idx.ROW] < above_row: above_row = ep[ep_idx.ROW]
         output_types.add(ep[ep_idx.TYPE])
-    OUTPUT_DICT['rhs'] = list(output_types)
+    output_types = list(output_types)
 
     # Find viable source types above the highest row.
     src_list = list(filter(fgc_graph.rows_filter(fgc_graph.src_rows[above_row], fgc_graph.src_filter()), fgc_graph.graph.values()))
     input_types = list(set([ep[ep_idx.TYPE] for ep in src_list]))
-    input_types_plus = copy(input_types)
-    input_types_plus.append(NULL_GC_TYPE)
-    INPUT_DICT['rhs'] = input_types
 
     # Create microbiome query & return if we find a match
     query = {
-        "contained by": {
-            "lhs": INPUT_LHS,
-            "rhs": input_types_plus
+        "input_types": {
+            "operator": "contained by",
+            "array": input_types
         },
-        "contains": OUTPUT_DICT,
-        "order by": "RANDOM()",
-        "limit": 1
-    }
-    results = gl.load(query, ('signature', 'gca', 'gcb', 'graph'))
-    if results: return (fgc, results[0], above_row)
-
-    # No viable candidates - look to reduce the delta
-    # Create microbiome query & return if we find a match
-    query = {
-        "contained by": INPUT_DICT,
-        "overlaps": OUTPUT_DICT,
-        "order by": "RANDOM()",
-        "limit": 1
-    }
-    results = gl.load(query, ('signature', 'gca', 'gcb', 'graph'))
-    if results: return (fgc, results[0], above_row)
-
-    # No viable candidates - look to reduce the delta
-    # Create microbiome query & return if we find a match
-    query = {
-        "overlaps": INPUT_DICT,
-        "overlaps": OUTPUT_DICT,
-        "order by": "RANDOM()",
-        "limit": 1
-    }
-    results = gl.load(query, ('signature', 'gca', 'gcb', 'graph'))
-    if results: return (fgc, results[0], above_row)
-
-    # No viable candidates - look to reduce the delta
-    # Create microbiome query & return if we find a match
-    query = {
-        "does not overlap": {
-            "lhs": INPUT_LHS,
-            "rhs": OUTPUT_DICT['rhs']
+        "output_types": {
+            "operator": "contains",
+            "array": output_types
         },
-        "overlaps": OUTPUT_DICT,
+        "order by": "RANDOM()",
+        "limit": 1
+    }
+    results = gl.load(query, ('signature', 'gca', 'gcb', 'graph'))
+    if results: return (fgc, results[0], above_row)
+
+    # No viable candidates - look to reduce the delta
+    # Create microbiome query & return if we find a match
+    query = {
+        "input_types": {
+            "operator": "contained by",
+            "array": input_types
+        },
+        "output_types": {
+            "operator": "overlaps",
+            "array": output_types
+        },
+        "order by": "RANDOM()",
+        "limit": 1
+    }
+    results = gl.load(query, ('signature', 'gca', 'gcb', 'graph'))
+    if results: return (fgc, results[0], above_row)
+
+    # No viable candidates - look to reduce the delta
+    # Create microbiome query & return if we find a match
+    query = {
+        "input_types": {
+            "operator": "overlaps",
+            "array": input_types
+        },
+        "output_types": {
+            "operator": "overlaps",
+            "array": output_types
+        },
+        "order by": "RANDOM()",
+        "limit": 1
+    }
+    results = gl.load(query, ('signature', 'gca', 'gcb', 'graph'))
+    if results: return (fgc, results[0], above_row)
+
+    # No viable candidates - look to reduce the delta
+    # Create microbiome query & return if we find a match
+    query = {
+        "input_types": {
+            "operator": "does not overlap",
+            "array": input_types
+        },
+        "output_types": {
+            "operator": "overlaps",
+            "array": output_types
+        },
         "order by": "RANDOM()",
         "limit": 1
     }
