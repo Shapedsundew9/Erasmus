@@ -16,7 +16,7 @@ from pprint import pformat
 
 from cerberus import Validator
 
-from .gc_graph import gc_graph
+from .gc_graph import gc_graph, ep_idx, conn_idx
 from .gc_type import validate, asint, INVALID_NAME, INVALID_VALUE
 
 NULL_GC = "0" * 64
@@ -136,42 +136,21 @@ class _genomic_library_entry_validator(Validator):
         return sha256("".join(string.split()).encode()).hexdigest()
 
 
-    def _get_in_gc_type(self, document, row, idx):
-        for pr in document["graph"].keys():
-            if pr != 'C':
-                for r, i, t in document["graph"][pr]:
-                    if r == row and i == idx: return asint(t)
-        return INVALID_VALUE
+    def _normalize_default_setter_set_input_types(self, document):
+        # Sort the input endpoints by index then return the types as a list
+        graph = gc_graph(document["graph"])
+        ep_list = sorted(list(filter(graph.row_filter('I'), graph.graph.values())), key=lambda x:x[ep_idx.INDEX])
+        return [ep[ep_idx.TYPE] for ep in ep_list]
 
 
-    def _get_out_gc_type(self, document, idx):
-        for r, i, t in document["graph"]["O"]:
-            if i == idx: return asint(t)
-        return INVALID_VALUE
+    def _normalize_default_setter_set_output_types(self, document):
+        return [ep[conn_idx.TYPE] for ep in document["graph"]["O"]]
 
-
-    def _normalize_default_setter_set_input0(self, document): return self._get_in_gc_type(document, 'I', 0)
-    def _normalize_default_setter_set_input1(self, document): return self._get_in_gc_type(document, 'I', 1)
-    def _normalize_default_setter_set_input2(self, document): return self._get_in_gc_type(document, 'I', 2)
-    def _normalize_default_setter_set_input3(self, document): return self._get_in_gc_type(document, 'I', 3)
-    def _normalize_default_setter_set_input4(self, document): return self._get_in_gc_type(document, 'I', 4)
-    def _normalize_default_setter_set_input5(self, document): return self._get_in_gc_type(document, 'I', 5)
-    def _normalize_default_setter_set_input6(self, document): return self._get_in_gc_type(document, 'I', 6)
-    def _normalize_default_setter_set_input7(self, document): return self._get_in_gc_type(document, 'I', 7)
-
-    def _normalize_default_setter_set_output0(self, document): return self._get_out_gc_type(document, 0)
-    def _normalize_default_setter_set_output1(self, document): return self._get_out_gc_type(document, 1)
-    def _normalize_default_setter_set_output2(self, document): return self._get_out_gc_type(document, 2)
-    def _normalize_default_setter_set_output3(self, document): return self._get_out_gc_type(document, 3)
 
     def _normalize_default_setter_set_num_inputs(self, document):
-        i_indices = set()
-        for pr in document["graph"].keys():
-            if pr != 'C':
-                for r, i, t in document["graph"][pr]:
-                    if r == "I":
-                        i_indices.add(i)
-        return len(i_indices)
+        graph = gc_graph(document["graph"])
+        ep_list = list(filter(graph.row_filter('I'), graph.graph.values()))
+        return len(ep_list)
 
 
     def _normalize_default_setter_set_num_outputs(self, document):

@@ -1,230 +1,232 @@
 {
     "n2v": {
-        "None": 280,
-        "bool": 281,
-        "complex": 284,
-        "complex128": 299,
-        "complex64": 298,
-        "dict": 310,
-        "float": 283,
-        "float32": 296,
-        "float64": 297,
-        "floating": 303,
+        "None": 281,
+        "bool": 282,
+        "complex": 285,
+        "complex128": 300,
+        "complex64": 299,
+        "dict": 311,
+        "float": 284,
+        "float32": 297,
+        "float64": 298,
+        "floating": 304,
         "gc": 128,
         "gc_class": 129,
-        "gc_class_list": 162,
-        "gc_class_list_idx": 323,
+        "gc_class_list": 163,
+        "gc_class_list_idx": 325,
         "gc_code_depth": 130,
-        "gc_code_depth_list": 163,
-        "gc_code_depth_list_idx": 324,
+        "gc_code_depth_list": 164,
+        "gc_code_depth_list_idx": 326,
         "gc_codon_depth": 131,
-        "gc_codon_depth_list": 164,
-        "gc_codon_depth_list_idx": 325,
-        "gc_constant": 205,
-        "gc_constant_idx": 344,
-        "gc_constant_row": 206,
-        "gc_constant_row_idx": 345,
+        "gc_codon_depth_list": 165,
+        "gc_codon_depth_list_idx": 327,
+        "gc_constant": 206,
+        "gc_constant_idx": 346,
+        "gc_constant_row": 207,
+        "gc_constant_row_idx": 347,
         "gc_created": 132,
-        "gc_created_list": 165,
-        "gc_created_list_idx": 326,
+        "gc_created_list": 166,
+        "gc_created_list_idx": 328,
         "gc_creator": 133,
-        "gc_creator_list": 166,
-        "gc_creator_list_idx": 327,
+        "gc_creator_list": 167,
+        "gc_creator_list_idx": 329,
         "gc_egc": 134,
-        "gc_egc_key": 313,
+        "gc_egc_key": 314,
         "gc_evolvability": 135,
-        "gc_evolvability_list": 167,
-        "gc_evolvability_list_idx": 328,
+        "gc_evolvability_list": 168,
+        "gc_evolvability_list_idx": 330,
         "gc_extended_class": 136,
-        "gc_extended_class_key": 314,
+        "gc_extended_class_key": 315,
         "gc_extended_schema": 137,
-        "gc_extended_schema_key": 315,
+        "gc_extended_schema_key": 316,
         "gc_fgc": 138,
-        "gc_fgc_key": 316,
+        "gc_fgc_key": 317,
         "gc_fitness": 139,
-        "gc_fitness_list": 168,
-        "gc_fitness_list_idx": 329,
+        "gc_fitness_list": 169,
+        "gc_fitness_list_idx": 331,
         "gc_generation": 140,
-        "gc_generation_list": 169,
-        "gc_generation_list_idx": 330,
-        "gc_graph": 207,
-        "gc_graph_OA": 208,
-        "gc_graph_OAB": 209,
-        "gc_graph_OABU": 210,
-        "gc_graph_OAU": 211,
-        "gc_graph_OB": 212,
-        "gc_graph_OBU": 213,
-        "gc_graph_OC": 214,
-        "gc_graph_OCA": 215,
-        "gc_graph_OCAB": 216,
-        "gc_graph_OCABU": 217,
-        "gc_graph_OCAU": 218,
-        "gc_graph_OCB": 219,
-        "gc_graph_OCBU": 220,
-        "gc_graph_OIA": 221,
-        "gc_graph_OIAB": 222,
-        "gc_graph_OIABFP": 223,
-        "gc_graph_OIABU": 224,
-        "gc_graph_OIABUFP": 225,
-        "gc_graph_OIAFP": 226,
-        "gc_graph_OIAU": 227,
-        "gc_graph_OIAUFP": 228,
-        "gc_graph_OIB": 229,
-        "gc_graph_OIBFP": 230,
-        "gc_graph_OIBU": 231,
-        "gc_graph_OIBUFP": 232,
-        "gc_graph_OIC": 233,
-        "gc_graph_OICA": 234,
-        "gc_graph_OICAB": 235,
-        "gc_graph_OICABFP": 236,
-        "gc_graph_OICABU": 237,
-        "gc_graph_OICABUFP": 238,
-        "gc_graph_OICAFP": 239,
-        "gc_graph_OICAU": 240,
-        "gc_graph_OICAUFP": 241,
-        "gc_graph_OICB": 242,
-        "gc_graph_OICBFP": 243,
-        "gc_graph_OICBU": 244,
-        "gc_graph_OICBUFP": 245,
-        "gc_graph_OICFP": 246,
-        "gc_graph_OICU": 247,
-        "gc_graph_OICUFP": 248,
-        "gc_graph_key": 320,
-        "gc_graph_row_letter": 249,
-        "gc_key": 312,
-        "gc_list": 170,
-        "gc_list_idx": 331,
+        "gc_generation_list": 170,
+        "gc_generation_list_idx": 332,
+        "gc_graph": 208,
+        "gc_graph_OA": 209,
+        "gc_graph_OAB": 210,
+        "gc_graph_OABU": 211,
+        "gc_graph_OAU": 212,
+        "gc_graph_OB": 213,
+        "gc_graph_OBU": 214,
+        "gc_graph_OC": 215,
+        "gc_graph_OCA": 216,
+        "gc_graph_OCAB": 217,
+        "gc_graph_OCABU": 218,
+        "gc_graph_OCAU": 219,
+        "gc_graph_OCB": 220,
+        "gc_graph_OCBU": 221,
+        "gc_graph_OIA": 222,
+        "gc_graph_OIAB": 223,
+        "gc_graph_OIABFP": 224,
+        "gc_graph_OIABU": 225,
+        "gc_graph_OIABUFP": 226,
+        "gc_graph_OIAFP": 227,
+        "gc_graph_OIAU": 228,
+        "gc_graph_OIAUFP": 229,
+        "gc_graph_OIB": 230,
+        "gc_graph_OIBFP": 231,
+        "gc_graph_OIBU": 232,
+        "gc_graph_OIBUFP": 233,
+        "gc_graph_OIC": 234,
+        "gc_graph_OICA": 235,
+        "gc_graph_OICAB": 236,
+        "gc_graph_OICABFP": 237,
+        "gc_graph_OICABU": 238,
+        "gc_graph_OICABUFP": 239,
+        "gc_graph_OICAFP": 240,
+        "gc_graph_OICAU": 241,
+        "gc_graph_OICAUFP": 242,
+        "gc_graph_OICB": 243,
+        "gc_graph_OICBFP": 244,
+        "gc_graph_OICBU": 245,
+        "gc_graph_OICBUFP": 246,
+        "gc_graph_OICFP": 247,
+        "gc_graph_OICU": 248,
+        "gc_graph_OICUFP": 249,
+        "gc_graph_key": 321,
+        "gc_graph_row_letter": 250,
+        "gc_key": 313,
+        "gc_list": 171,
+        "gc_list_idx": 333,
         "gc_meta_data": 141,
-        "gc_meta_data_key": 317,
+        "gc_meta_data_key": 318,
         "gc_num_codes": 142,
-        "gc_num_codes_list": 171,
-        "gc_num_codes_list_idx": 332,
+        "gc_num_codes_list": 172,
+        "gc_num_codes_list_idx": 334,
         "gc_num_inputs": 143,
-        "gc_num_inputs_list": 172,
-        "gc_num_inputs_list_idx": 333,
+        "gc_num_inputs_list": 173,
+        "gc_num_inputs_list_idx": 335,
         "gc_num_outputs": 144,
-        "gc_num_outputs_list": 173,
-        "gc_num_outputs_list_idx": 334,
+        "gc_num_outputs_list": 174,
+        "gc_num_outputs_list_idx": 336,
         "gc_num_unique_codes": 145,
-        "gc_num_unique_codes_list": 174,
-        "gc_num_unique_codes_list_idx": 335,
+        "gc_num_unique_codes_list": 175,
+        "gc_num_unique_codes_list_idx": 337,
         "gc_opt_num_codons": 146,
-        "gc_opt_num_codons_list": 175,
-        "gc_opt_num_codons_list_idx": 336,
+        "gc_opt_num_codons_list": 176,
+        "gc_opt_num_codons_list_idx": 338,
         "gc_parents": 147,
-        "gc_parents_idx": 321,
+        "gc_parents_idx": 322,
         "gc_parents_list": 148,
-        "gc_parents_list_idx": 322,
+        "gc_parents_list_idx": 323,
         "gc_properties": 149,
         "gc_properties_dict": 150,
-        "gc_properties_dict_key": 318,
+        "gc_properties_dict_key": 319,
         "gc_properties_int": 151,
-        "gc_properties_list": 176,
-        "gc_properties_list_idx": 337,
-        "gc_query": 177,
-        "gc_query_class": 178,
-        "gc_query_code_depth": 179,
-        "gc_query_codon_depth": 180,
-        "gc_query_created": 181,
-        "gc_query_creator": 182,
-        "gc_query_evolvability": 183,
-        "gc_query_fitness": 184,
-        "gc_query_generation": 185,
-        "gc_query_key": 319,
-        "gc_query_num_codes": 186,
-        "gc_query_num_inputs": 187,
-        "gc_query_num_outputs": 188,
-        "gc_query_num_unique_codes": 189,
-        "gc_query_opt_num_codons": 190,
-        "gc_query_order_by": 191,
-        "gc_query_order_by_list": 192,
-        "gc_query_order_by_list_idx": 338,
-        "gc_query_properties": 193,
-        "gc_query_query_order_by": 194,
-        "gc_query_raw_num_codons": 195,
-        "gc_query_reference_count": 196,
-        "gc_query_signature": 197,
-        "gc_query_type_int": 198,
-        "gc_query_updated": 199,
+        "gc_properties_list": 177,
+        "gc_properties_list_idx": 339,
+        "gc_query": 178,
+        "gc_query_class": 179,
+        "gc_query_code_depth": 180,
+        "gc_query_codon_depth": 181,
+        "gc_query_created": 182,
+        "gc_query_creator": 183,
+        "gc_query_evolvability": 184,
+        "gc_query_fitness": 185,
+        "gc_query_generation": 186,
+        "gc_query_key": 320,
+        "gc_query_num_codes": 187,
+        "gc_query_num_inputs": 188,
+        "gc_query_num_outputs": 189,
+        "gc_query_num_unique_codes": 190,
+        "gc_query_opt_num_codons": 191,
+        "gc_query_order_by": 192,
+        "gc_query_order_by_list": 193,
+        "gc_query_order_by_list_idx": 340,
+        "gc_query_properties": 194,
+        "gc_query_query_order_by": 195,
+        "gc_query_raw_num_codons": 196,
+        "gc_query_reference_count": 197,
+        "gc_query_signature": 198,
+        "gc_query_type_list": 199,
+        "gc_query_updated": 200,
         "gc_raw_num_codons": 152,
-        "gc_raw_num_codons_list": 200,
-        "gc_raw_num_codons_list_idx": 339,
+        "gc_raw_num_codons_list": 201,
+        "gc_raw_num_codons_list_idx": 341,
         "gc_reference_count": 153,
-        "gc_reference_count_list": 201,
-        "gc_reference_count_list_idx": 340,
-        "gc_row": 250,
-        "gc_row_A": 251,
-        "gc_row_AB": 252,
-        "gc_row_BA": 253,
-        "gc_row_C": 254,
-        "gc_row_CA": 255,
-        "gc_row_CAB": 256,
-        "gc_row_CBA": 257,
-        "gc_row_I": 258,
-        "gc_row_IA": 259,
-        "gc_row_IAB": 260,
-        "gc_row_IBA": 261,
-        "gc_row_IC": 262,
-        "gc_row_ICA": 263,
-        "gc_row_ICAB": 264,
-        "gc_row_ICBA": 265,
-        "gc_row_idx": 346,
+        "gc_reference_count_list": 202,
+        "gc_reference_count_list_idx": 342,
+        "gc_row": 251,
+        "gc_row_A": 252,
+        "gc_row_AB": 253,
+        "gc_row_BA": 254,
+        "gc_row_C": 255,
+        "gc_row_CA": 256,
+        "gc_row_CAB": 257,
+        "gc_row_CBA": 258,
+        "gc_row_I": 259,
+        "gc_row_IA": 260,
+        "gc_row_IAB": 261,
+        "gc_row_IBA": 262,
+        "gc_row_IC": 263,
+        "gc_row_ICA": 264,
+        "gc_row_ICAB": 265,
+        "gc_row_ICBA": 266,
+        "gc_row_idx": 348,
         "gc_signature": 154,
-        "gc_signature_list": 202,
-        "gc_signature_list_idx": 341,
-        "gc_srcs_A": 266,
-        "gc_srcs_AB": 267,
-        "gc_srcs_B": 268,
-        "gc_srcs_C": 269,
-        "gc_srcs_CA": 270,
-        "gc_srcs_CAB": 271,
-        "gc_srcs_CB": 272,
-        "gc_srcs_IA": 273,
-        "gc_srcs_IAB": 274,
-        "gc_srcs_IB": 275,
-        "gc_srcs_IC": 276,
-        "gc_srcs_ICA": 277,
-        "gc_srcs_ICAB": 278,
-        "gc_srcs_ICB": 279,
+        "gc_signature_list": 203,
+        "gc_signature_list_idx": 343,
+        "gc_srcs_A": 267,
+        "gc_srcs_AB": 268,
+        "gc_srcs_B": 269,
+        "gc_srcs_C": 270,
+        "gc_srcs_CA": 271,
+        "gc_srcs_CAB": 272,
+        "gc_srcs_CB": 273,
+        "gc_srcs_IA": 274,
+        "gc_srcs_IAB": 275,
+        "gc_srcs_IB": 276,
+        "gc_srcs_IC": 277,
+        "gc_srcs_ICA": 278,
+        "gc_srcs_ICAB": 279,
+        "gc_srcs_ICB": 280,
         "gc_type_int": 155,
-        "gc_type_int_list": 203,
-        "gc_type_int_list_idx": 342,
-        "gc_type_str": 156,
-        "gc_updated": 157,
-        "gc_updated_list": 204,
-        "gc_updated_list_idx": 343,
-        "gc_value_str": 158,
-        "int": 282,
-        "int16": 289,
-        "int32": 290,
-        "int64": 291,
-        "int8": 288,
-        "integer": 302,
-        "letter_uppercase": 159,
-        "list": 309,
-        "ndarray": 311,
-        "np_bool": 287,
-        "np_complex": 304,
-        "np_generic": 306,
-        "number": 305,
-        "object": 286,
-        "set": 307,
-        "sha256_lowercase": 160,
-        "signedinteger": 300,
-        "str": 285,
-        "timestamp_str": 161,
-        "tuple": 308,
-        "uint16": 293,
-        "uint32": 294,
-        "uint64": 295,
-        "uint8": 292,
-        "unsignedinteger": 301
+        "gc_type_list": 156,
+        "gc_type_list_idx": 324,
+        "gc_type_list_list": 204,
+        "gc_type_list_list_idx": 344,
+        "gc_type_str": 157,
+        "gc_updated": 158,
+        "gc_updated_list": 205,
+        "gc_updated_list_idx": 345,
+        "gc_value_str": 159,
+        "int": 283,
+        "int16": 290,
+        "int32": 291,
+        "int64": 292,
+        "int8": 289,
+        "integer": 303,
+        "letter_uppercase": 160,
+        "list": 310,
+        "ndarray": 312,
+        "np_bool": 288,
+        "np_complex": 305,
+        "np_generic": 307,
+        "number": 306,
+        "object": 287,
+        "set": 308,
+        "sha256_lowercase": 161,
+        "signedinteger": 301,
+        "str": 286,
+        "timestamp_str": 162,
+        "tuple": 309,
+        "uint16": 294,
+        "uint32": 295,
+        "uint64": 296,
+        "uint8": 293,
+        "unsignedinteger": 302
     },
     "v2n": {
         "128": {
             "ancestors": [
-                286,
-                310
+                287,
+                311
             ],
             "name": "gc",
             "schema": {
@@ -280,37 +282,9 @@
                     "required": true,
                     "type": "gc_graph"
                 },
-                "input0_type": {
+                "input_types": {
                     "read-only": true,
-                    "type": "gc_type_int"
-                },
-                "input1_type": {
-                    "read-only": true,
-                    "type": "gc_type_int"
-                },
-                "input2_type": {
-                    "read-only": true,
-                    "type": "gc_type_int"
-                },
-                "input3_type": {
-                    "read-only": true,
-                    "type": "gc_type_int"
-                },
-                "input4_type": {
-                    "read-only": true,
-                    "type": "gc_type_int"
-                },
-                "input5_type": {
-                    "read-only": true,
-                    "type": "gc_type_int"
-                },
-                "input6_type": {
-                    "read-only": true,
-                    "type": "gc_type_int"
-                },
-                "input7_type": {
-                    "read-only": true,
-                    "type": "gc_type_int"
+                    "type": "gc_type_list"
                 },
                 "meta_data": {
                     "read-only": true,
@@ -336,21 +310,9 @@
                     "read-only": true,
                     "type": "gc_opt_num_codons"
                 },
-                "output0_type": {
+                "output_types": {
                     "read-only": true,
-                    "type": "gc_type_int"
-                },
-                "output1_type": {
-                    "read-only": true,
-                    "type": "gc_type_int"
-                },
-                "output2_type": {
-                    "read-only": true,
-                    "type": "gc_type_int"
-                },
-                "output3_type": {
-                    "read-only": true,
-                    "type": "gc_type_int"
+                    "type": "gc_type_list"
                 },
                 "properties": {
                     "read-only": true,
@@ -373,80 +335,80 @@
                     "type": "gc_updated"
                 }
             },
-            "type": 310,
+            "type": 311,
             "uid": 128
         },
         "129": {
             "ancestors": [
-                302,
-                286,
-                178,
+                301,
                 306,
-                305,
-                300,
-                291
+                287,
+                179,
+                303,
+                307,
+                292
             ],
             "name": "gc_class",
-            "type": 291,
+            "type": 292,
             "uid": 129
         },
         "130": {
             "ancestors": [
-                179,
-                302,
-                286,
-                306,
-                290,
-                305,
-                300
+                301,
+                287,
+                303,
+                180,
+                291,
+                307,
+                306
             ],
             "min": -2147483648,
             "name": "gc_code_depth",
-            "type": 290,
+            "type": 291,
             "uid": 130
         },
         "131": {
             "ancestors": [
-                180,
-                302,
-                286,
-                306,
-                290,
-                305,
-                300
+                301,
+                287,
+                181,
+                303,
+                291,
+                307,
+                306
             ],
             "min": -2147483648,
             "name": "gc_codon_depth",
-            "type": 290,
+            "type": 291,
             "uid": 131
         },
         "132": {
             "ancestors": [
                 286,
-                285,
-                161,
-                181
+                162,
+                182,
+                287
             ],
             "name": "gc_created",
-            "type": 161,
+            "type": 162,
             "uid": 132
         },
         "133": {
             "ancestors": [
+                183,
                 286,
-                285,
-                182,
-                160
+                161,
+                287
             ],
             "name": "gc_creator",
-            "type": 160,
+            "type": 161,
             "uid": 133,
             "validate": "x in creators"
         },
         "134": {
             "ancestors": [
-                286,
-                310
+                287,
+                311
             ],
             "name": "gc_egc",
             "schema": {
@@ -461,46 +423,46 @@
                     "type": "gc_signature"
                 }
             },
-            "type": 310,
+            "type": 311,
             "uid": 134
         },
         "135": {
             "ancestors": [
-                286,
-                283,
-                183
+                184,
+                284,
+                287
             ],
             "default": 0.0,
             "max": 1.0,
             "min": 0.0,
             "name": "gc_evolvability",
-            "type": 283,
+            "type": 284,
             "uid": 135
         },
         "136": {
             "ancestors": [
-                286,
-                310
+                287,
+                311
             ],
             "name": "gc_extended_class",
             "schema": {},
-            "type": 310,
+            "type": 311,
             "uid": 136
         },
         "137": {
             "ancestors": [
-                286,
-                310
+                287,
+                311
             ],
             "name": "gc_extended_schema",
             "schema": {},
-            "type": 310,
+            "type": 311,
             "uid": 137
         },
         "138": {
             "ancestors": [
-                286,
-                310
+                287,
+                311
             ],
             "name": "gc_fgc",
             "schema": {
@@ -522,41 +484,41 @@
                     "type": "gc_signature"
                 }
             },
-            "type": 310,
+            "type": 311,
             "uid": 138
         },
         "139": {
             "ancestors": [
-                286,
-                283,
-                184
+                287,
+                284,
+                185
             ],
             "default": 0.0,
             "max": 1.0,
             "min": 0.0,
             "name": "gc_fitness",
-            "type": 283,
+            "type": 284,
             "uid": 139
         },
         "140": {
             "ancestors": [
-                302,
-                286,
+                301,
                 306,
-                305,
-                185,
-                300,
-                291
+                287,
+                186,
+                303,
+                307,
+                292
             ],
             "min": -9223372036854775808,
             "name": "gc_generation",
-            "type": 291,
+            "type": 292,
             "uid": 140
         },
         "141": {
             "ancestors": [
-                286,
-                310
+                287,
+                311
             ],
             "name": "gc_meta_data",
             "schema": {
@@ -573,125 +535,125 @@
                     "type": "gc_parents"
                 }
             },
-            "type": 310,
+            "type": 311,
             "uid": 141
         },
         "142": {
             "ancestors": [
-                302,
-                286,
-                306,
-                290,
-                186,
-                305,
-                300
+                301,
+                287,
+                187,
+                303,
+                291,
+                307,
+                306
             ],
             "min": -2147483648,
             "name": "gc_num_codes",
-            "type": 290,
+            "type": 291,
             "uid": 142
         },
         "143": {
             "ancestors": [
-                289,
-                302,
-                286,
-                306,
-                187,
-                305,
-                300
+                301,
+                188,
+                287,
+                290,
+                303,
+                307,
+                306
             ],
             "max": 32767,
             "min": -32768,
             "name": "gc_num_inputs",
-            "type": 289,
+            "type": 290,
             "uid": 143
         },
         "144": {
             "ancestors": [
-                289,
-                302,
-                286,
+                301,
+                287,
+                290,
+                303,
+                307,
                 306,
-                188,
-                305,
-                300
+                189
             ],
             "max": 32767,
             "min": -32768,
             "name": "gc_num_outputs",
-            "type": 289,
+            "type": 290,
             "uid": 144
         },
         "145": {
             "ancestors": [
-                302,
-                286,
-                189,
-                306,
-                290,
-                305,
-                300
+                190,
+                301,
+                287,
+                303,
+                291,
+                307,
+                306
             ],
             "min": -2147483648,
             "name": "gc_num_unique_codes",
-            "type": 290,
+            "type": 291,
             "uid": 145
         },
         "146": {
             "ancestors": [
-                302,
-                286,
-                306,
-                190,
-                290,
-                305,
-                300
+                301,
+                287,
+                191,
+                303,
+                291,
+                307,
+                306
             ],
             "min": -2147483648,
             "name": "gc_opt_num_codons",
-            "type": 290,
+            "type": 291,
             "uid": 146
         },
         "147": {
             "ancestors": [
-                286,
-                309
+                287,
+                310
             ],
             "minlength": 1,
             "name": "gc_parents",
             "schema": {
                 "type": "sha256_lowercase"
             },
-            "type": 309,
+            "type": 310,
             "uid": 147
         },
         "148": {
             "ancestors": [
-                286,
-                309
+                287,
+                310
             ],
             "name": "gc_parents_list",
             "schema": {
                 "type": "gc_parents"
             },
-            "type": 309,
+            "type": 310,
             "uid": 148
         },
         "149": {
             "ancestors": [
-                193,
-                286
+                194,
+                287
             ],
             "name": "gc_properties",
-            "type": 286,
+            "type": 287,
             "uid": 149
         },
         "150": {
             "ancestors": [
-                286,
                 149,
-                310
+                287,
+                311
             ],
             "name": "gc_properties_dict",
             "schema": {
@@ -736,157 +698,170 @@
                     "type": "bool"
                 }
             },
-            "type": 310,
+            "type": 311,
             "uid": 150
         },
         "151": {
             "ancestors": [
-                302,
-                305,
-                286,
+                301,
                 306,
+                287,
                 149,
-                300,
-                291
+                303,
+                307,
+                292
             ],
             "name": "gc_properties_int",
-            "type": 291,
+            "type": 292,
             "uid": 151
         },
         "152": {
             "ancestors": [
-                302,
-                286,
-                195,
-                306,
-                290,
-                305,
-                300
+                301,
+                287,
+                303,
+                291,
+                307,
+                196,
+                306
             ],
             "min": -2147483648,
             "name": "gc_raw_num_codons",
-            "type": 290,
+            "type": 291,
             "uid": 152
         },
         "153": {
             "ancestors": [
-                302,
-                286,
+                301,
                 306,
-                196,
-                305,
-                300,
-                291
+                287,
+                303,
+                307,
+                197,
+                292
             ],
             "min": -9223372036854775808,
             "name": "gc_reference_count",
-            "type": 291,
+            "type": 292,
             "uid": 153
         },
         "154": {
             "ancestors": [
-                197,
+                161,
+                198,
                 286,
-                285,
-                160
+                287
             ],
             "name": "gc_signature",
-            "type": 160,
+            "type": 161,
             "uid": 154,
             "validate": "x in genomic_library"
         },
         "155": {
             "ancestors": [
-                198,
-                302,
-                286,
-                306,
-                290,
-                305,
-                300
+                301,
+                287,
+                303,
+                291,
+                307,
+                306
             ],
             "cast_to": [
                 "gc_type_str"
             ],
             "name": "gc_type_int",
-            "type": 290,
+            "type": 291,
             "uid": 155,
             "validate": "x in gc_type_lookup['value']"
         },
         "156": {
             "ancestors": [
+                287,
+                199,
+                310
+            ],
+            "maxlength": 256,
+            "name": "gc_type_list",
+            "schema": {
+                "type": "gc_type_int"
+            },
+            "type": 310,
+            "uid": 156
+        },
+        "157": {
+            "ancestors": [
                 286,
-                285
+                287
             ],
             "cast_to": [
                 "gc_type_int"
             ],
             "name": "gc_type_str",
-            "type": 285,
-            "uid": 156,
+            "type": 286,
+            "uid": 157,
             "validate": "x in gc_type_lookup['name']"
-        },
-        "157": {
-            "ancestors": [
-                199,
-                286,
-                285,
-                161
-            ],
-            "name": "gc_updated",
-            "type": 161,
-            "uid": 157
         },
         "158": {
             "ancestors": [
                 286,
-                285
+                162,
+                200,
+                287
             ],
-            "maxlength": 1024,
-            "minlength": 1,
-            "name": "gc_value_str",
-            "type": 285,
-            "uid": 158,
-            "validate": "exec(x)"
+            "name": "gc_updated",
+            "type": 162,
+            "uid": 158
         },
         "159": {
             "ancestors": [
                 286,
-                285
+                287
+            ],
+            "maxlength": 1024,
+            "minlength": 1,
+            "name": "gc_value_str",
+            "type": 286,
+            "uid": 159,
+            "validate": "exec(x)"
+        },
+        "160": {
+            "ancestors": [
+                286,
+                287
             ],
             "maxlength": 1,
             "minlength": 1,
             "name": "letter_uppercase",
             "regex": "[A-Z]",
-            "type": 285,
-            "uid": 159
-        },
-        "160": {
-            "ancestors": [
-                286,
-                285
-            ],
-            "name": "sha256_lowercase",
-            "regex": "[0-9a-f]{64}",
-            "type": 285,
+            "type": 286,
             "uid": 160
         },
         "161": {
             "ancestors": [
                 286,
-                285
+                287
             ],
-            "name": "timestamp_str",
-            "regex": "20[2-9][0-9]-(1[0-2]|0[1-9])-([0-2][0-9]|3[01])T[0-2][0-9](:[0-5][0-9]){2}\\.[0-9]{6}Z",
-            "type": 285,
-            "uid": 161,
-            "validate": "datetime.strptime(x, '%Y-%m-%dT%H:%M:%S.%fZ')"
+            "name": "sha256_lowercase",
+            "regex": "[0-9a-f]{64}",
+            "type": 286,
+            "uid": 161
         },
         "162": {
             "ancestors": [
                 286,
+                287
+            ],
+            "name": "timestamp_str",
+            "regex": "20[2-9][0-9]-(1[0-2]|0[1-9])-([0-2][0-9]|3[01])T[0-2][0-9](:[0-5][0-9]){2}\\.[0-9]{6}Z",
+            "type": 286,
+            "uid": 162,
+            "validate": "datetime.strptime(x, '%Y-%m-%dT%H:%M:%S.%fZ')"
+        },
+        "163": {
+            "ancestors": [
+                287,
                 129,
-                309
+                310
             ],
             "maxlength": 256,
             "minlength": 1,
@@ -895,14 +870,14 @@
             "schema": {
                 "type": "gc_class"
             },
-            "type": 309,
-            "uid": 162
+            "type": 310,
+            "uid": 163
         },
-        "163": {
+        "164": {
             "ancestors": [
-                286,
                 130,
-                309
+                287,
+                310
             ],
             "maxlength": 256,
             "minlength": 1,
@@ -911,14 +886,14 @@
             "schema": {
                 "type": "gc_code_depth"
             },
-            "type": 309,
-            "uid": 163
+            "type": 310,
+            "uid": 164
         },
-        "164": {
+        "165": {
             "ancestors": [
-                286,
                 131,
-                309
+                287,
+                310
             ],
             "maxlength": 256,
             "minlength": 1,
@@ -927,14 +902,14 @@
             "schema": {
                 "type": "gc_codon_depth"
             },
-            "type": 309,
-            "uid": 164
+            "type": 310,
+            "uid": 165
         },
-        "165": {
+        "166": {
             "ancestors": [
-                286,
+                287,
                 132,
-                309
+                310
             ],
             "maxlength": 256,
             "minlength": 1,
@@ -943,14 +918,14 @@
             "schema": {
                 "type": "gc_created"
             },
-            "type": 309,
-            "uid": 165
+            "type": 310,
+            "uid": 166
         },
-        "166": {
+        "167": {
             "ancestors": [
-                286,
-                309,
-                133
+                287,
+                133,
+                310
             ],
             "maxlength": 256,
             "minlength": 1,
@@ -959,14 +934,14 @@
             "schema": {
                 "type": "gc_creator"
             },
-            "type": 309,
-            "uid": 166
+            "type": 310,
+            "uid": 167
         },
-        "167": {
+        "168": {
             "ancestors": [
-                286,
+                287,
                 135,
-                309
+                310
             ],
             "maxlength": 256,
             "minlength": 1,
@@ -975,14 +950,14 @@
             "schema": {
                 "type": "gc_evolvability"
             },
-            "type": 309,
-            "uid": 167
+            "type": 310,
+            "uid": 168
         },
-        "168": {
+        "169": {
             "ancestors": [
-                286,
-                309,
-                139
+                139,
+                287,
+                310
             ],
             "maxlength": 256,
             "minlength": 1,
@@ -991,14 +966,14 @@
             "schema": {
                 "type": "gc_fitness"
             },
-            "type": 309,
-            "uid": 168
+            "type": 310,
+            "uid": 169
         },
-        "169": {
+        "170": {
             "ancestors": [
-                286,
+                287,
                 140,
-                309
+                310
             ],
             "maxlength": 256,
             "minlength": 1,
@@ -1007,27 +982,27 @@
             "schema": {
                 "type": "gc_generation"
             },
-            "type": 309,
-            "uid": 169
+            "type": 310,
+            "uid": 170
         },
-        "170": {
+        "171": {
             "ancestors": [
-                286,
-                309
+                287,
+                310
             ],
             "minlength": 1,
             "name": "gc_list",
             "schema": {
                 "type": "gc"
             },
-            "type": 309,
-            "uid": 170
+            "type": 310,
+            "uid": 171
         },
-        "171": {
+        "172": {
             "ancestors": [
-                286,
                 142,
-                309
+                287,
+                310
             ],
             "maxlength": 256,
             "minlength": 1,
@@ -1036,14 +1011,14 @@
             "schema": {
                 "type": "gc_num_codes"
             },
-            "type": 309,
-            "uid": 171
+            "type": 310,
+            "uid": 172
         },
-        "172": {
+        "173": {
             "ancestors": [
-                286,
                 143,
-                309
+                287,
+                310
             ],
             "maxlength": 256,
             "minlength": 1,
@@ -1052,14 +1027,14 @@
             "schema": {
                 "type": "gc_num_inputs"
             },
-            "type": 309,
-            "uid": 172
+            "type": 310,
+            "uid": 173
         },
-        "173": {
+        "174": {
             "ancestors": [
-                286,
+                287,
                 144,
-                309
+                310
             ],
             "maxlength": 256,
             "minlength": 1,
@@ -1068,14 +1043,14 @@
             "schema": {
                 "type": "gc_num_outputs"
             },
-            "type": 309,
-            "uid": 173
+            "type": 310,
+            "uid": 174
         },
-        "174": {
+        "175": {
             "ancestors": [
-                286,
+                287,
                 145,
-                309
+                310
             ],
             "maxlength": 256,
             "minlength": 1,
@@ -1084,14 +1059,14 @@
             "schema": {
                 "type": "gc_num_unique_codes"
             },
-            "type": 309,
-            "uid": 174
+            "type": 310,
+            "uid": 175
         },
-        "175": {
+        "176": {
             "ancestors": [
-                286,
+                287,
                 146,
-                309
+                310
             ],
             "maxlength": 256,
             "minlength": 1,
@@ -1100,14 +1075,14 @@
             "schema": {
                 "type": "gc_opt_num_codons"
             },
-            "type": 309,
-            "uid": 175
+            "type": 310,
+            "uid": 176
         },
-        "176": {
+        "177": {
             "ancestors": [
-                286,
                 149,
-                309
+                287,
+                310
             ],
             "maxlength": 256,
             "minlength": 1,
@@ -1116,13 +1091,13 @@
             "schema": {
                 "type": "gc_properties"
             },
-            "type": 309,
-            "uid": 176
+            "type": 310,
+            "uid": 177
         },
-        "177": {
+        "178": {
             "ancestors": [
-                286,
-                310
+                287,
+                311
             ],
             "name": "gc_query",
             "read-only": false,
@@ -1171,37 +1146,9 @@
                     "read-only": false,
                     "type": "gc_query_generation"
                 },
-                "input0_type": {
+                "input_types": {
                     "read-only": false,
-                    "type": "gc_query_type_int"
-                },
-                "input1_type": {
-                    "read-only": false,
-                    "type": "gc_query_type_int"
-                },
-                "input2_type": {
-                    "read-only": false,
-                    "type": "gc_query_type_int"
-                },
-                "input3_type": {
-                    "read-only": false,
-                    "type": "gc_query_type_int"
-                },
-                "input4_type": {
-                    "read-only": false,
-                    "type": "gc_query_type_int"
-                },
-                "input5_type": {
-                    "read-only": false,
-                    "type": "gc_query_type_int"
-                },
-                "input6_type": {
-                    "read-only": false,
-                    "type": "gc_query_type_int"
-                },
-                "input7_type": {
-                    "read-only": false,
-                    "type": "gc_query_type_int"
+                    "type": "gc_query_type_list"
                 },
                 "num_codes": {
                     "read-only": false,
@@ -1227,21 +1174,9 @@
                     "read-only": false,
                     "type": "gc_query_query_order_by"
                 },
-                "output0_type": {
+                "output_types": {
                     "read-only": false,
-                    "type": "gc_query_type_int"
-                },
-                "output1_type": {
-                    "read-only": false,
-                    "type": "gc_query_type_int"
-                },
-                "output2_type": {
-                    "read-only": false,
-                    "type": "gc_query_type_int"
-                },
-                "output3_type": {
-                    "read-only": false,
-                    "type": "gc_query_type_int"
+                    "type": "gc_query_type_list"
                 },
                 "properties": {
                     "read-only": false,
@@ -1264,127 +1199,127 @@
                     "type": "gc_query_updated"
                 }
             },
-            "type": 310,
-            "uid": 177
-        },
-        "178": {
-            "ancestors": [
-                286
-            ],
-            "name": "gc_query_class",
-            "read-only": false,
-            "type": 286,
+            "type": 311,
             "uid": 178
         },
         "179": {
             "ancestors": [
-                286
+                287
             ],
-            "name": "gc_query_code_depth",
+            "name": "gc_query_class",
             "read-only": false,
-            "type": 286,
+            "type": 287,
             "uid": 179
         },
         "180": {
             "ancestors": [
-                286
+                287
             ],
-            "name": "gc_query_codon_depth",
+            "name": "gc_query_code_depth",
             "read-only": false,
-            "type": 286,
+            "type": 287,
             "uid": 180
         },
         "181": {
             "ancestors": [
-                286
+                287
             ],
-            "name": "gc_query_created",
+            "name": "gc_query_codon_depth",
             "read-only": false,
-            "type": 286,
+            "type": 287,
             "uid": 181
         },
         "182": {
             "ancestors": [
-                286
+                287
             ],
-            "name": "gc_query_creator",
+            "name": "gc_query_created",
             "read-only": false,
-            "type": 286,
+            "type": 287,
             "uid": 182
         },
         "183": {
             "ancestors": [
-                286
+                287
             ],
-            "name": "gc_query_evolvability",
+            "name": "gc_query_creator",
             "read-only": false,
-            "type": 286,
+            "type": 287,
             "uid": 183
         },
         "184": {
             "ancestors": [
-                286
+                287
             ],
-            "name": "gc_query_fitness",
+            "name": "gc_query_evolvability",
             "read-only": false,
-            "type": 286,
+            "type": 287,
             "uid": 184
         },
         "185": {
             "ancestors": [
-                286
+                287
             ],
-            "name": "gc_query_generation",
+            "name": "gc_query_fitness",
             "read-only": false,
-            "type": 286,
+            "type": 287,
             "uid": 185
         },
         "186": {
             "ancestors": [
-                286
+                287
             ],
-            "name": "gc_query_num_codes",
+            "name": "gc_query_generation",
             "read-only": false,
-            "type": 286,
+            "type": 287,
             "uid": 186
         },
         "187": {
             "ancestors": [
-                286
+                287
             ],
-            "name": "gc_query_num_inputs",
+            "name": "gc_query_num_codes",
             "read-only": false,
-            "type": 286,
+            "type": 287,
             "uid": 187
         },
         "188": {
             "ancestors": [
-                286
+                287
             ],
-            "name": "gc_query_num_outputs",
+            "name": "gc_query_num_inputs",
             "read-only": false,
-            "type": 286,
+            "type": 287,
             "uid": 188
         },
         "189": {
             "ancestors": [
-                286
+                287
             ],
-            "name": "gc_query_num_unique_codes",
+            "name": "gc_query_num_outputs",
             "read-only": false,
-            "type": 286,
+            "type": 287,
             "uid": 189
         },
         "190": {
             "ancestors": [
-                286
+                287
             ],
-            "name": "gc_query_opt_num_codons",
+            "name": "gc_query_num_unique_codes",
             "read-only": false,
-            "type": 286,
+            "type": 287,
             "uid": 190
         },
         "191": {
+            "ancestors": [
+                287
+            ],
+            "name": "gc_query_opt_num_codons",
+            "read-only": false,
+            "type": 287,
+            "uid": 191
+        },
+        "192": {
             "allowed": [
                 "signature",
                 "gca",
@@ -1398,19 +1333,9 @@
                 "raw_num_codons",
                 "opt_num_codons",
                 "num_inputs",
-                "input0_type",
-                "input1_type",
-                "input2_type",
-                "input3_type",
-                "input4_type",
-                "input5_type",
-                "input6_type",
-                "input7_type",
+                "input_types",
                 "num_outputs",
-                "output0_type",
-                "output1_type",
-                "output2_type",
-                "output3_type",
+                "output_types",
                 "alpha_class",
                 "beta_class",
                 "properties",
@@ -1425,18 +1350,18 @@
             ],
             "ancestors": [
                 286,
-                285
+                287
             ],
             "name": "gc_query_order_by",
             "read-only": false,
-            "type": 285,
-            "uid": 191
+            "type": 286,
+            "uid": 192
         },
-        "192": {
+        "193": {
             "ancestors": [
-                286,
-                191,
-                309
+                287,
+                192,
+                310
             ],
             "maxlength": 256,
             "minlength": 1,
@@ -1445,77 +1370,77 @@
             "schema": {
                 "type": "gc_query_order_by"
             },
-            "type": 309,
-            "uid": 192
-        },
-        "193": {
-            "ancestors": [
-                286
-            ],
-            "name": "gc_query_properties",
-            "read-only": false,
-            "type": 286,
+            "type": 310,
             "uid": 193
         },
         "194": {
             "ancestors": [
-                286
+                287
             ],
-            "name": "gc_query_query_order_by",
+            "name": "gc_query_properties",
             "read-only": false,
-            "type": 286,
+            "type": 287,
             "uid": 194
         },
         "195": {
             "ancestors": [
-                286
+                287
             ],
-            "name": "gc_query_raw_num_codons",
+            "name": "gc_query_query_order_by",
             "read-only": false,
-            "type": 286,
+            "type": 287,
             "uid": 195
         },
         "196": {
             "ancestors": [
-                286
+                287
             ],
-            "name": "gc_query_reference_count",
+            "name": "gc_query_raw_num_codons",
             "read-only": false,
-            "type": 286,
+            "type": 287,
             "uid": 196
         },
         "197": {
             "ancestors": [
-                286
+                287
             ],
-            "name": "gc_query_signature",
+            "name": "gc_query_reference_count",
             "read-only": false,
-            "type": 286,
+            "type": 287,
             "uid": 197
         },
         "198": {
             "ancestors": [
-                286
+                287
             ],
-            "name": "gc_query_type_int",
+            "name": "gc_query_signature",
             "read-only": false,
-            "type": 286,
+            "type": 287,
             "uid": 198
         },
         "199": {
             "ancestors": [
-                286
+                287
             ],
-            "name": "gc_query_updated",
+            "name": "gc_query_type_list",
             "read-only": false,
-            "type": 286,
+            "type": 287,
             "uid": 199
         },
         "200": {
             "ancestors": [
-                152,
-                286,
-                309
+                287
+            ],
+            "name": "gc_query_updated",
+            "read-only": false,
+            "type": 287,
+            "uid": 200
+        },
+        "201": {
+            "ancestors": [
+                287,
+                310,
+                152
             ],
             "maxlength": 256,
             "minlength": 1,
@@ -1524,14 +1449,14 @@
             "schema": {
                 "type": "gc_raw_num_codons"
             },
-            "type": 309,
-            "uid": 200
+            "type": 310,
+            "uid": 201
         },
-        "201": {
+        "202": {
             "ancestors": [
                 153,
-                286,
-                309
+                287,
+                310
             ],
             "maxlength": 256,
             "minlength": 1,
@@ -1540,14 +1465,14 @@
             "schema": {
                 "type": "gc_reference_count"
             },
-            "type": 309,
-            "uid": 201
+            "type": 310,
+            "uid": 202
         },
-        "202": {
+        "203": {
             "ancestors": [
-                286,
-                309,
-                154
+                287,
+                154,
+                310
             ],
             "maxlength": 256,
             "minlength": 1,
@@ -1556,30 +1481,30 @@
             "schema": {
                 "type": "gc_signature"
             },
-            "type": 309,
-            "uid": 202
-        },
-        "203": {
-            "ancestors": [
-                155,
-                286,
-                309
-            ],
-            "maxlength": 256,
-            "minlength": 1,
-            "name": "gc_type_int_list",
-            "read-only": false,
-            "schema": {
-                "type": "gc_type_int"
-            },
-            "type": 309,
+            "type": 310,
             "uid": 203
         },
         "204": {
             "ancestors": [
-                286,
-                157,
-                309
+                287,
+                310,
+                156
+            ],
+            "maxlength": 256,
+            "minlength": 1,
+            "name": "gc_type_list_list",
+            "read-only": false,
+            "schema": {
+                "type": "gc_type_list"
+            },
+            "type": 310,
+            "uid": 204
+        },
+        "205": {
+            "ancestors": [
+                158,
+                287,
+                310
             ],
             "maxlength": 256,
             "minlength": 1,
@@ -1588,13 +1513,13 @@
             "schema": {
                 "type": "gc_updated"
             },
-            "type": 309,
-            "uid": 204
+            "type": 310,
+            "uid": 205
         },
-        "205": {
+        "206": {
             "ancestors": [
-                286,
-                309
+                287,
+                310
             ],
             "items": [
                 {
@@ -1607,13 +1532,13 @@
             "maxlength": 2,
             "minlength": 2,
             "name": "gc_constant",
-            "type": 309,
-            "uid": 205
+            "type": 310,
+            "uid": 206
         },
-        "206": {
+        "207": {
             "ancestors": [
-                286,
-                309
+                287,
+                310
             ],
             "maxlength": 256,
             "minlength": 1,
@@ -1621,13 +1546,13 @@
             "schema": {
                 "type": "gc_constant"
             },
-            "type": 309,
-            "uid": 206
+            "type": 310,
+            "uid": 207
         },
-        "207": {
+        "208": {
             "ancestors": [
-                286,
-                310
+                287,
+                311
             ],
             "name": "gc_graph",
             "schema": {
@@ -1660,14 +1585,14 @@
                     "type": "gc_row_ICAB"
                 }
             },
-            "type": 310,
-            "uid": 207
+            "type": 311,
+            "uid": 208
         },
-        "208": {
+        "209": {
             "ancestors": [
-                286,
-                310,
-                207
+                287,
+                208,
+                311
             ],
             "name": "gc_graph_OA",
             "schema": {
@@ -1676,14 +1601,14 @@
                     "type": "gc_row_A"
                 }
             },
-            "type": 207,
-            "uid": 208
+            "type": 208,
+            "uid": 209
         },
-        "209": {
+        "210": {
             "ancestors": [
-                286,
-                310,
-                207
+                287,
+                208,
+                311
             ],
             "name": "gc_graph_OAB",
             "schema": {
@@ -1696,14 +1621,14 @@
                     "type": "gc_row_AB"
                 }
             },
-            "type": 207,
-            "uid": 209
+            "type": 208,
+            "uid": 210
         },
-        "210": {
+        "211": {
             "ancestors": [
-                286,
-                310,
-                207
+                287,
+                208,
+                311
             ],
             "name": "gc_graph_OABU",
             "schema": {
@@ -1720,14 +1645,14 @@
                     "type": "gc_row_AB"
                 }
             },
-            "type": 207,
-            "uid": 210
+            "type": 208,
+            "uid": 211
         },
-        "211": {
+        "212": {
             "ancestors": [
-                286,
-                310,
-                207
+                287,
+                208,
+                311
             ],
             "name": "gc_graph_OAU",
             "schema": {
@@ -1740,14 +1665,14 @@
                     "type": "gc_row_A"
                 }
             },
-            "type": 207,
-            "uid": 211
+            "type": 208,
+            "uid": 212
         },
-        "212": {
+        "213": {
             "ancestors": [
-                286,
-                310,
-                207
+                287,
+                208,
+                311
             ],
             "name": "gc_graph_OB",
             "schema": {
@@ -1760,14 +1685,14 @@
                     "type": "gc_row_BA"
                 }
             },
-            "type": 207,
-            "uid": 212
+            "type": 208,
+            "uid": 213
         },
-        "213": {
+        "214": {
             "ancestors": [
-                286,
-                310,
-                207
+                287,
+                208,
+                311
             ],
             "name": "gc_graph_OBU",
             "schema": {
@@ -1784,14 +1709,14 @@
                     "type": "gc_row_BA"
                 }
             },
-            "type": 207,
-            "uid": 213
+            "type": 208,
+            "uid": 214
         },
-        "214": {
+        "215": {
             "ancestors": [
-                286,
-                310,
-                207
+                287,
+                208,
+                311
             ],
             "name": "gc_graph_OC",
             "schema": {
@@ -1804,14 +1729,14 @@
                     "type": "gc_row_C"
                 }
             },
-            "type": 207,
-            "uid": 214
+            "type": 208,
+            "uid": 215
         },
-        "215": {
+        "216": {
             "ancestors": [
-                286,
-                310,
-                207
+                287,
+                208,
+                311
             ],
             "name": "gc_graph_OCA",
             "schema": {
@@ -1828,14 +1753,14 @@
                     "type": "gc_row_CA"
                 }
             },
-            "type": 207,
-            "uid": 215
+            "type": 208,
+            "uid": 216
         },
-        "216": {
+        "217": {
             "ancestors": [
-                286,
-                310,
-                207
+                287,
+                208,
+                311
             ],
             "name": "gc_graph_OCAB",
             "schema": {
@@ -1856,14 +1781,14 @@
                     "type": "gc_row_CAB"
                 }
             },
-            "type": 207,
-            "uid": 216
+            "type": 208,
+            "uid": 217
         },
-        "217": {
+        "218": {
             "ancestors": [
-                286,
-                310,
-                207
+                287,
+                208,
+                311
             ],
             "name": "gc_graph_OCABU",
             "schema": {
@@ -1888,14 +1813,14 @@
                     "type": "gc_row_CAB"
                 }
             },
-            "type": 207,
-            "uid": 217
+            "type": 208,
+            "uid": 218
         },
-        "218": {
+        "219": {
             "ancestors": [
-                286,
-                310,
-                207
+                287,
+                208,
+                311
             ],
             "name": "gc_graph_OCAU",
             "schema": {
@@ -1916,14 +1841,14 @@
                     "type": "gc_row_CA"
                 }
             },
-            "type": 207,
-            "uid": 218
+            "type": 208,
+            "uid": 219
         },
-        "219": {
+        "220": {
             "ancestors": [
-                286,
-                310,
-                207
+                287,
+                208,
+                311
             ],
             "name": "gc_graph_OCB",
             "schema": {
@@ -1940,14 +1865,14 @@
                     "type": "gc_row_CBA"
                 }
             },
-            "type": 207,
-            "uid": 219
+            "type": 208,
+            "uid": 220
         },
-        "220": {
+        "221": {
             "ancestors": [
-                286,
-                310,
-                207
+                287,
+                208,
+                311
             ],
             "name": "gc_graph_OCBU",
             "schema": {
@@ -1968,14 +1893,14 @@
                     "type": "gc_row_CBA"
                 }
             },
-            "type": 207,
-            "uid": 220
+            "type": 208,
+            "uid": 221
         },
-        "221": {
+        "222": {
             "ancestors": [
-                286,
-                310,
-                207
+                287,
+                208,
+                311
             ],
             "name": "gc_graph_OIA",
             "schema": {
@@ -1988,14 +1913,14 @@
                     "type": "gc_row_IA"
                 }
             },
-            "type": 207,
-            "uid": 221
+            "type": 208,
+            "uid": 222
         },
-        "222": {
+        "223": {
             "ancestors": [
-                286,
-                310,
-                207
+                287,
+                208,
+                311
             ],
             "name": "gc_graph_OIAB",
             "schema": {
@@ -2012,14 +1937,14 @@
                     "type": "gc_row_IAB"
                 }
             },
-            "type": 207,
-            "uid": 222
+            "type": 208,
+            "uid": 223
         },
-        "223": {
+        "224": {
             "ancestors": [
-                286,
-                310,
-                207
+                287,
+                208,
+                311
             ],
             "name": "gc_graph_OIABFP",
             "schema": {
@@ -2044,14 +1969,14 @@
                     "type": "gc_row_IAB"
                 }
             },
-            "type": 207,
-            "uid": 223
+            "type": 208,
+            "uid": 224
         },
-        "224": {
+        "225": {
             "ancestors": [
-                286,
-                310,
-                207
+                287,
+                208,
+                311
             ],
             "name": "gc_graph_OIABU",
             "schema": {
@@ -2072,14 +1997,14 @@
                     "type": "gc_row_IAB"
                 }
             },
-            "type": 207,
-            "uid": 224
+            "type": 208,
+            "uid": 225
         },
-        "225": {
+        "226": {
             "ancestors": [
-                286,
-                310,
-                207
+                287,
+                208,
+                311
             ],
             "name": "gc_graph_OIABUFP",
             "schema": {
@@ -2108,14 +2033,14 @@
                     "type": "gc_row_IAB"
                 }
             },
-            "type": 207,
-            "uid": 225
+            "type": 208,
+            "uid": 226
         },
-        "226": {
+        "227": {
             "ancestors": [
-                286,
-                310,
-                207
+                287,
+                208,
+                311
             ],
             "name": "gc_graph_OIAFP",
             "schema": {
@@ -2136,14 +2061,14 @@
                     "type": "gc_row_IA"
                 }
             },
-            "type": 207,
-            "uid": 226
+            "type": 208,
+            "uid": 227
         },
-        "227": {
+        "228": {
             "ancestors": [
-                286,
-                310,
-                207
+                287,
+                208,
+                311
             ],
             "name": "gc_graph_OIAU",
             "schema": {
@@ -2160,14 +2085,14 @@
                     "type": "gc_row_IA"
                 }
             },
-            "type": 207,
-            "uid": 227
+            "type": 208,
+            "uid": 228
         },
-        "228": {
+        "229": {
             "ancestors": [
-                286,
-                310,
-                207
+                287,
+                208,
+                311
             ],
             "name": "gc_graph_OIAUFP",
             "schema": {
@@ -2192,14 +2117,14 @@
                     "type": "gc_row_IA"
                 }
             },
-            "type": 207,
-            "uid": 228
+            "type": 208,
+            "uid": 229
         },
-        "229": {
+        "230": {
             "ancestors": [
-                286,
-                310,
-                207
+                287,
+                208,
+                311
             ],
             "name": "gc_graph_OIB",
             "schema": {
@@ -2212,14 +2137,14 @@
                     "type": "gc_row_IBA"
                 }
             },
-            "type": 207,
-            "uid": 229
+            "type": 208,
+            "uid": 230
         },
-        "230": {
+        "231": {
             "ancestors": [
-                286,
-                310,
-                207
+                287,
+                208,
+                311
             ],
             "name": "gc_graph_OIBFP",
             "schema": {
@@ -2240,14 +2165,14 @@
                     "type": "gc_row_IBA"
                 }
             },
-            "type": 207,
-            "uid": 230
+            "type": 208,
+            "uid": 231
         },
-        "231": {
+        "232": {
             "ancestors": [
-                286,
-                310,
-                207
+                287,
+                208,
+                311
             ],
             "name": "gc_graph_OIBU",
             "schema": {
@@ -2264,14 +2189,14 @@
                     "type": "gc_row_IBA"
                 }
             },
-            "type": 207,
-            "uid": 231
+            "type": 208,
+            "uid": 232
         },
-        "232": {
+        "233": {
             "ancestors": [
-                286,
-                310,
-                207
+                287,
+                208,
+                311
             ],
             "name": "gc_graph_OIBUFP",
             "schema": {
@@ -2296,14 +2221,14 @@
                     "type": "gc_row_IBA"
                 }
             },
-            "type": 207,
-            "uid": 232
+            "type": 208,
+            "uid": 233
         },
-        "233": {
+        "234": {
             "ancestors": [
-                286,
-                310,
-                207
+                287,
+                208,
+                311
             ],
             "name": "gc_graph_OIC",
             "schema": {
@@ -2316,14 +2241,14 @@
                     "type": "gc_row_IC"
                 }
             },
-            "type": 207,
-            "uid": 233
+            "type": 208,
+            "uid": 234
         },
-        "234": {
+        "235": {
             "ancestors": [
-                286,
-                310,
-                207
+                287,
+                208,
+                311
             ],
             "name": "gc_graph_OICA",
             "schema": {
@@ -2340,14 +2265,14 @@
                     "type": "gc_row_ICA"
                 }
             },
-            "type": 207,
-            "uid": 234
+            "type": 208,
+            "uid": 235
         },
-        "235": {
+        "236": {
             "ancestors": [
-                286,
-                310,
-                207
+                287,
+                208,
+                311
             ],
             "name": "gc_graph_OICAB",
             "schema": {
@@ -2368,14 +2293,14 @@
                     "type": "gc_row_ICAB"
                 }
             },
-            "type": 207,
-            "uid": 235
+            "type": 208,
+            "uid": 236
         },
-        "236": {
+        "237": {
             "ancestors": [
-                286,
-                310,
-                207
+                287,
+                208,
+                311
             ],
             "name": "gc_graph_OICABFP",
             "schema": {
@@ -2404,14 +2329,14 @@
                     "type": "gc_row_ICAB"
                 }
             },
-            "type": 207,
-            "uid": 236
+            "type": 208,
+            "uid": 237
         },
-        "237": {
+        "238": {
             "ancestors": [
-                286,
-                310,
-                207
+                287,
+                208,
+                311
             ],
             "name": "gc_graph_OICABU",
             "schema": {
@@ -2436,14 +2361,14 @@
                     "type": "gc_row_ICAB"
                 }
             },
-            "type": 207,
-            "uid": 237
+            "type": 208,
+            "uid": 238
         },
-        "238": {
+        "239": {
             "ancestors": [
-                286,
-                310,
-                207
+                287,
+                208,
+                311
             ],
             "name": "gc_graph_OICABUFP",
             "schema": {
@@ -2476,14 +2401,14 @@
                     "type": "gc_row_ICAB"
                 }
             },
-            "type": 207,
-            "uid": 238
+            "type": 208,
+            "uid": 239
         },
-        "239": {
+        "240": {
             "ancestors": [
-                286,
-                310,
-                207
+                287,
+                208,
+                311
             ],
             "name": "gc_graph_OICAFP",
             "schema": {
@@ -2508,14 +2433,14 @@
                     "type": "gc_row_ICA"
                 }
             },
-            "type": 207,
-            "uid": 239
+            "type": 208,
+            "uid": 240
         },
-        "240": {
+        "241": {
             "ancestors": [
-                286,
-                310,
-                207
+                287,
+                208,
+                311
             ],
             "name": "gc_graph_OICAU",
             "schema": {
@@ -2536,14 +2461,14 @@
                     "type": "gc_row_ICA"
                 }
             },
-            "type": 207,
-            "uid": 240
+            "type": 208,
+            "uid": 241
         },
-        "241": {
+        "242": {
             "ancestors": [
-                286,
-                310,
-                207
+                287,
+                208,
+                311
             ],
             "name": "gc_graph_OICAUFP",
             "schema": {
@@ -2572,14 +2497,14 @@
                     "type": "gc_row_ICA"
                 }
             },
-            "type": 207,
-            "uid": 241
+            "type": 208,
+            "uid": 242
         },
-        "242": {
+        "243": {
             "ancestors": [
-                286,
-                310,
-                207
+                287,
+                208,
+                311
             ],
             "name": "gc_graph_OICB",
             "schema": {
@@ -2596,14 +2521,14 @@
                     "type": "gc_row_ICBA"
                 }
             },
-            "type": 207,
-            "uid": 242
+            "type": 208,
+            "uid": 243
         },
-        "243": {
+        "244": {
             "ancestors": [
-                286,
-                310,
-                207
+                287,
+                208,
+                311
             ],
             "name": "gc_graph_OICBFP",
             "schema": {
@@ -2628,14 +2553,14 @@
                     "type": "gc_row_ICBA"
                 }
             },
-            "type": 207,
-            "uid": 243
+            "type": 208,
+            "uid": 244
         },
-        "244": {
+        "245": {
             "ancestors": [
-                286,
-                310,
-                207
+                287,
+                208,
+                311
             ],
             "name": "gc_graph_OICBU",
             "schema": {
@@ -2656,14 +2581,14 @@
                     "type": "gc_row_ICBA"
                 }
             },
-            "type": 207,
-            "uid": 244
+            "type": 208,
+            "uid": 245
         },
-        "245": {
+        "246": {
             "ancestors": [
-                286,
-                310,
-                207
+                287,
+                208,
+                311
             ],
             "name": "gc_graph_OICBUFP",
             "schema": {
@@ -2692,14 +2617,14 @@
                     "type": "gc_row_ICBA"
                 }
             },
-            "type": 207,
-            "uid": 245
+            "type": 208,
+            "uid": 246
         },
-        "246": {
+        "247": {
             "ancestors": [
-                286,
-                310,
-                207
+                287,
+                208,
+                311
             ],
             "name": "gc_graph_OICFP",
             "schema": {
@@ -2720,14 +2645,14 @@
                     "type": "gc_row_IC"
                 }
             },
-            "type": 207,
-            "uid": 246
+            "type": 208,
+            "uid": 247
         },
-        "247": {
+        "248": {
             "ancestors": [
-                286,
-                310,
-                207
+                287,
+                208,
+                311
             ],
             "name": "gc_graph_OICU",
             "schema": {
@@ -2744,14 +2669,14 @@
                     "type": "gc_row_IC"
                 }
             },
-            "type": 207,
-            "uid": 247
+            "type": 208,
+            "uid": 248
         },
-        "248": {
+        "249": {
             "ancestors": [
-                286,
-                310,
-                207
+                287,
+                208,
+                311
             ],
             "name": "gc_graph_OICUFP",
             "schema": {
@@ -2776,10 +2701,10 @@
                     "type": "gc_row_IC"
                 }
             },
-            "type": 207,
-            "uid": 248
+            "type": 208,
+            "uid": 249
         },
-        "249": {
+        "250": {
             "allowed": [
                 "I",
                 "C",
@@ -2791,18 +2716,18 @@
                 "P"
             ],
             "ancestors": [
+                160,
                 286,
-                285,
-                159
+                287
             ],
             "name": "gc_graph_row_letter",
-            "type": 159,
-            "uid": 249
+            "type": 160,
+            "uid": 250
         },
-        "250": {
+        "251": {
             "ancestors": [
-                286,
-                309
+                287,
+                310
             ],
             "maxlength": 256,
             "minlength": 1,
@@ -2810,14 +2735,14 @@
             "schema": {
                 "type": "gc_srcs_ICAB"
             },
-            "type": 309,
-            "uid": 250
+            "type": 310,
+            "uid": 251
         },
-        "251": {
+        "252": {
             "ancestors": [
-                286,
-                250,
-                309
+                287,
+                310,
+                251
             ],
             "maxlength": 256,
             "minlength": 1,
@@ -2825,14 +2750,14 @@
             "schema": {
                 "type": "gc_srcs_A"
             },
-            "type": 250,
-            "uid": 251
+            "type": 251,
+            "uid": 252
         },
-        "252": {
+        "253": {
             "ancestors": [
-                286,
-                250,
-                309
+                287,
+                310,
+                251
             ],
             "maxlength": 256,
             "minlength": 1,
@@ -2840,14 +2765,14 @@
             "schema": {
                 "type": "gc_srcs_AB"
             },
-            "type": 250,
-            "uid": 252
+            "type": 251,
+            "uid": 253
         },
-        "253": {
+        "254": {
             "ancestors": [
-                286,
-                250,
-                309
+                287,
+                310,
+                251
             ],
             "maxlength": 256,
             "minlength": 1,
@@ -2855,14 +2780,14 @@
             "schema": {
                 "type": "gc_srcs_B"
             },
-            "type": 250,
-            "uid": 253
+            "type": 251,
+            "uid": 254
         },
-        "254": {
+        "255": {
             "ancestors": [
-                286,
-                250,
-                309
+                287,
+                310,
+                251
             ],
             "maxlength": 256,
             "minlength": 1,
@@ -2870,14 +2795,14 @@
             "schema": {
                 "type": "gc_srcs_C"
             },
-            "type": 250,
-            "uid": 254
+            "type": 251,
+            "uid": 255
         },
-        "255": {
+        "256": {
             "ancestors": [
-                286,
-                250,
-                309
+                287,
+                310,
+                251
             ],
             "maxlength": 256,
             "minlength": 1,
@@ -2885,14 +2810,14 @@
             "schema": {
                 "type": "gc_srcs_CA"
             },
-            "type": 250,
-            "uid": 255
+            "type": 251,
+            "uid": 256
         },
-        "256": {
+        "257": {
             "ancestors": [
-                286,
-                250,
-                309
+                287,
+                310,
+                251
             ],
             "maxlength": 256,
             "minlength": 1,
@@ -2900,14 +2825,14 @@
             "schema": {
                 "type": "gc_srcs_CAB"
             },
-            "type": 250,
-            "uid": 256
+            "type": 251,
+            "uid": 257
         },
-        "257": {
+        "258": {
             "ancestors": [
-                286,
-                250,
-                309
+                287,
+                310,
+                251
             ],
             "maxlength": 256,
             "minlength": 1,
@@ -2915,14 +2840,14 @@
             "schema": {
                 "type": "gc_srcs_CB"
             },
-            "type": 250,
-            "uid": 257
+            "type": 251,
+            "uid": 258
         },
-        "258": {
+        "259": {
             "ancestors": [
-                286,
-                250,
-                309
+                287,
+                310,
+                251
             ],
             "maxlength": 256,
             "minlength": 1,
@@ -2930,14 +2855,14 @@
             "schema": {
                 "type": "gc_srcs_I"
             },
-            "type": 250,
-            "uid": 258
+            "type": 251,
+            "uid": 259
         },
-        "259": {
+        "260": {
             "ancestors": [
-                286,
-                250,
-                309
+                287,
+                310,
+                251
             ],
             "maxlength": 256,
             "minlength": 1,
@@ -2945,14 +2870,14 @@
             "schema": {
                 "type": "gc_srcs_IA"
             },
-            "type": 250,
-            "uid": 259
+            "type": 251,
+            "uid": 260
         },
-        "260": {
+        "261": {
             "ancestors": [
-                286,
-                250,
-                309
+                287,
+                310,
+                251
             ],
             "maxlength": 256,
             "minlength": 1,
@@ -2960,14 +2885,14 @@
             "schema": {
                 "type": "gc_srcs_IAB"
             },
-            "type": 250,
-            "uid": 260
+            "type": 251,
+            "uid": 261
         },
-        "261": {
+        "262": {
             "ancestors": [
-                286,
-                250,
-                309
+                287,
+                310,
+                251
             ],
             "maxlength": 256,
             "minlength": 1,
@@ -2975,14 +2900,14 @@
             "schema": {
                 "type": "gc_srcs_IB"
             },
-            "type": 250,
-            "uid": 261
+            "type": 251,
+            "uid": 262
         },
-        "262": {
+        "263": {
             "ancestors": [
-                286,
-                250,
-                309
+                287,
+                310,
+                251
             ],
             "maxlength": 256,
             "minlength": 1,
@@ -2990,14 +2915,14 @@
             "schema": {
                 "type": "gc_srcs_IC"
             },
-            "type": 250,
-            "uid": 262
+            "type": 251,
+            "uid": 263
         },
-        "263": {
+        "264": {
             "ancestors": [
-                286,
-                250,
-                309
+                287,
+                310,
+                251
             ],
             "maxlength": 256,
             "minlength": 1,
@@ -3005,14 +2930,14 @@
             "schema": {
                 "type": "gc_srcs_ICA"
             },
-            "type": 250,
-            "uid": 263
+            "type": 251,
+            "uid": 264
         },
-        "264": {
+        "265": {
             "ancestors": [
-                286,
-                250,
-                309
+                287,
+                310,
+                251
             ],
             "maxlength": 256,
             "minlength": 1,
@@ -3020,14 +2945,14 @@
             "schema": {
                 "type": "gc_srcs_ICAB"
             },
-            "type": 250,
-            "uid": 264
+            "type": 251,
+            "uid": 265
         },
-        "265": {
+        "266": {
             "ancestors": [
-                286,
-                250,
-                309
+                287,
+                310,
+                251
             ],
             "maxlength": 256,
             "minlength": 1,
@@ -3035,681 +2960,681 @@
             "schema": {
                 "type": "gc_srcs_ICB"
             },
-            "type": 250,
-            "uid": 265
-        },
-        "266": {
-            "ancestors": [
-                269,
-                266,
-                268,
-                276,
-                273,
-                275,
-                270,
-                272,
-                267,
-                277,
-                279,
-                274,
-                271,
-                278,
-                286
-            ],
-            "name": "gc_srcs_A",
-            "type": 286,
+            "type": 251,
             "uid": 266
         },
         "267": {
             "ancestors": [
-                269,
-                266,
-                268,
-                276,
-                273,
-                275,
                 270,
-                272,
                 267,
+                269,
                 277,
-                279,
                 274,
+                276,
                 271,
+                273,
+                268,
                 278,
-                286
+                280,
+                275,
+                272,
+                279,
+                287
             ],
-            "name": "gc_srcs_AB",
-            "type": 286,
+            "name": "gc_srcs_A",
+            "type": 287,
             "uid": 267
         },
         "268": {
             "ancestors": [
-                269,
-                266,
-                268,
-                276,
-                273,
-                275,
                 270,
-                272,
                 267,
+                269,
                 277,
-                279,
                 274,
+                276,
                 271,
+                273,
+                268,
                 278,
-                286
+                280,
+                275,
+                272,
+                279,
+                287
             ],
-            "name": "gc_srcs_B",
-            "type": 286,
+            "name": "gc_srcs_AB",
+            "type": 287,
             "uid": 268
         },
         "269": {
             "ancestors": [
-                269,
-                266,
-                268,
-                276,
-                273,
-                275,
                 270,
-                272,
                 267,
+                269,
                 277,
-                279,
                 274,
+                276,
                 271,
+                273,
+                268,
                 278,
-                286
+                280,
+                275,
+                272,
+                279,
+                287
             ],
-            "name": "gc_srcs_C",
-            "type": 286,
+            "name": "gc_srcs_B",
+            "type": 287,
             "uid": 269
         },
         "270": {
             "ancestors": [
-                269,
-                266,
-                268,
-                276,
-                273,
-                275,
                 270,
-                272,
                 267,
+                269,
                 277,
-                279,
                 274,
+                276,
                 271,
+                273,
+                268,
                 278,
-                286
+                280,
+                275,
+                272,
+                279,
+                287
             ],
-            "name": "gc_srcs_CA",
-            "type": 286,
+            "name": "gc_srcs_C",
+            "type": 287,
             "uid": 270
         },
         "271": {
             "ancestors": [
-                269,
-                266,
-                268,
-                276,
-                273,
-                275,
                 270,
-                272,
                 267,
+                269,
                 277,
-                279,
                 274,
+                276,
                 271,
+                273,
+                268,
                 278,
-                286
+                280,
+                275,
+                272,
+                279,
+                287
             ],
-            "name": "gc_srcs_CAB",
-            "type": 286,
+            "name": "gc_srcs_CA",
+            "type": 287,
             "uid": 271
         },
         "272": {
             "ancestors": [
-                269,
-                266,
-                268,
-                276,
-                273,
-                275,
                 270,
-                272,
                 267,
+                269,
                 277,
-                279,
                 274,
+                276,
                 271,
+                273,
+                268,
                 278,
-                286
+                280,
+                275,
+                272,
+                279,
+                287
             ],
-            "name": "gc_srcs_CB",
-            "type": 286,
+            "name": "gc_srcs_CAB",
+            "type": 287,
             "uid": 272
         },
         "273": {
             "ancestors": [
-                269,
-                266,
-                268,
-                276,
-                273,
-                275,
                 270,
-                272,
                 267,
+                269,
                 277,
-                279,
                 274,
+                276,
                 271,
+                273,
+                268,
                 278,
-                286
+                280,
+                275,
+                272,
+                279,
+                287
             ],
-            "name": "gc_srcs_IA",
-            "type": 286,
+            "name": "gc_srcs_CB",
+            "type": 287,
             "uid": 273
         },
         "274": {
             "ancestors": [
-                269,
-                266,
-                268,
-                276,
-                273,
-                275,
                 270,
-                272,
                 267,
+                269,
                 277,
-                279,
                 274,
+                276,
                 271,
+                273,
+                268,
                 278,
-                286
+                280,
+                275,
+                272,
+                279,
+                287
             ],
-            "name": "gc_srcs_IAB",
-            "type": 286,
+            "name": "gc_srcs_IA",
+            "type": 287,
             "uid": 274
         },
         "275": {
             "ancestors": [
-                269,
-                266,
-                268,
-                276,
-                273,
-                275,
                 270,
-                272,
                 267,
+                269,
                 277,
-                279,
                 274,
+                276,
                 271,
+                273,
+                268,
                 278,
-                286
+                280,
+                275,
+                272,
+                279,
+                287
             ],
-            "name": "gc_srcs_IB",
-            "type": 286,
+            "name": "gc_srcs_IAB",
+            "type": 287,
             "uid": 275
         },
         "276": {
             "ancestors": [
-                269,
-                266,
-                268,
-                276,
-                273,
-                275,
                 270,
-                272,
                 267,
+                269,
                 277,
-                279,
                 274,
+                276,
                 271,
+                273,
+                268,
                 278,
-                286
+                280,
+                275,
+                272,
+                279,
+                287
             ],
-            "name": "gc_srcs_IC",
-            "type": 286,
+            "name": "gc_srcs_IB",
+            "type": 287,
             "uid": 276
         },
         "277": {
             "ancestors": [
-                269,
-                266,
-                268,
-                276,
-                273,
-                275,
                 270,
-                272,
                 267,
+                269,
                 277,
-                279,
                 274,
+                276,
                 271,
+                273,
+                268,
                 278,
-                286
+                280,
+                275,
+                272,
+                279,
+                287
             ],
-            "name": "gc_srcs_ICA",
-            "type": 286,
+            "name": "gc_srcs_IC",
+            "type": 287,
             "uid": 277
         },
         "278": {
             "ancestors": [
-                269,
-                266,
-                268,
-                276,
-                273,
-                275,
                 270,
-                272,
                 267,
+                269,
                 277,
-                279,
                 274,
+                276,
                 271,
+                273,
+                268,
                 278,
-                286
+                280,
+                275,
+                272,
+                279,
+                287
             ],
-            "name": "gc_srcs_ICAB",
-            "type": 286,
+            "name": "gc_srcs_ICA",
+            "type": 287,
             "uid": 278
         },
         "279": {
             "ancestors": [
-                269,
-                266,
-                268,
-                276,
-                273,
-                275,
                 270,
-                272,
                 267,
+                269,
                 277,
-                279,
                 274,
+                276,
                 271,
+                273,
+                268,
                 278,
-                286
+                280,
+                275,
+                272,
+                279,
+                287
             ],
-            "name": "gc_srcs_ICB",
-            "type": 286,
+            "name": "gc_srcs_ICAB",
+            "type": 287,
             "uid": 279
         },
         "280": {
             "ancestors": [
-                286
+                270,
+                267,
+                269,
+                277,
+                274,
+                276,
+                271,
+                273,
+                268,
+                278,
+                280,
+                275,
+                272,
+                279,
+                287
             ],
-            "name": "None",
-            "type": 286,
+            "name": "gc_srcs_ICB",
+            "type": 287,
             "uid": 280
         },
         "281": {
             "ancestors": [
-                286
+                287
             ],
-            "name": "bool",
-            "type": 286,
+            "name": "None",
+            "type": 287,
             "uid": 281
         },
         "282": {
             "ancestors": [
-                286
+                287
             ],
-            "name": "int",
-            "type": 286,
+            "name": "bool",
+            "type": 287,
             "uid": 282
         },
         "283": {
             "ancestors": [
-                286
+                287
             ],
-            "name": "float",
-            "type": 286,
+            "name": "int",
+            "type": 287,
             "uid": 283
         },
         "284": {
             "ancestors": [
-                286
+                287
             ],
-            "name": "complex",
-            "type": 286,
+            "name": "float",
+            "type": 287,
             "uid": 284
         },
         "285": {
             "ancestors": [
-                286
+                287
             ],
-            "name": "str",
-            "type": 286,
+            "name": "complex",
+            "type": 287,
             "uid": 285
         },
         "286": {
-            "ancestors": [],
-            "name": "object",
-            "type": "basic",
+            "ancestors": [
+                287
+            ],
+            "name": "str",
+            "type": 287,
             "uid": 286
         },
         "287": {
+            "ancestors": [],
+            "name": "object",
+            "type": "basic",
+            "uid": 287
+        },
+        "288": {
             "ancestors": [
-                286,
-                281
+                282,
+                287
             ],
             "default": false,
             "max": 1,
             "min": 0,
             "name": "np_bool",
-            "type": 281,
-            "uid": 287
+            "type": 282,
+            "uid": 288
         },
-        "288": {
+        "289": {
             "ancestors": [
-                302,
-                286,
-                306,
-                305,
-                300
+                301,
+                287,
+                303,
+                307,
+                306
             ],
             "default": 0,
             "max": 127,
             "min": -128,
             "name": "int8",
-            "type": 300,
-            "uid": 288
+            "type": 301,
+            "uid": 289
         },
-        "289": {
+        "290": {
             "ancestors": [
-                302,
-                286,
-                306,
-                305,
-                300
+                301,
+                287,
+                303,
+                307,
+                306
             ],
             "default": 0,
             "max": 32767,
             "min": -32768,
             "name": "int16",
-            "type": 300,
-            "uid": 289
+            "type": 301,
+            "uid": 290
         },
-        "290": {
+        "291": {
             "ancestors": [
-                302,
-                286,
-                306,
-                305,
-                300
+                301,
+                287,
+                303,
+                307,
+                306
             ],
             "default": 0,
             "max": 2147483647,
             "min": -2147483648,
             "name": "int32",
-            "type": 300,
-            "uid": 290
+            "type": 301,
+            "uid": 291
         },
-        "291": {
+        "292": {
             "ancestors": [
-                302,
-                286,
-                306,
-                305,
-                300
+                301,
+                287,
+                303,
+                307,
+                306
             ],
             "default": 0,
             "max": 9223372036854775807,
             "min": -9223372036854775808,
             "name": "int64",
-            "type": 300,
-            "uid": 291
-        },
-        "292": {
-            "ancestors": [
-                302,
-                286,
-                301,
-                306,
-                305
-            ],
-            "default": 0,
-            "max": 255,
-            "min": 0,
-            "name": "uint8",
             "type": 301,
             "uid": 292
         },
         "293": {
             "ancestors": [
                 302,
-                286,
-                301,
-                306,
-                305
+                287,
+                303,
+                307,
+                306
             ],
             "default": 0,
-            "max": 65535,
+            "max": 255,
             "min": 0,
-            "name": "uint16",
-            "type": 301,
+            "name": "uint8",
+            "type": 302,
             "uid": 293
         },
         "294": {
             "ancestors": [
                 302,
-                286,
-                301,
-                306,
-                305
+                287,
+                303,
+                307,
+                306
             ],
             "default": 0,
-            "max": 4294967295,
+            "max": 65535,
             "min": 0,
-            "name": "uint32",
-            "type": 301,
+            "name": "uint16",
+            "type": 302,
             "uid": 294
         },
         "295": {
             "ancestors": [
                 302,
-                286,
-                301,
-                306,
-                305
+                287,
+                303,
+                307,
+                306
+            ],
+            "default": 0,
+            "max": 4294967295,
+            "min": 0,
+            "name": "uint32",
+            "type": 302,
+            "uid": 295
+        },
+        "296": {
+            "ancestors": [
+                302,
+                287,
+                303,
+                307,
+                306
             ],
             "default": 0,
             "max": 18446744073709551615,
             "min": 0,
             "name": "uint64",
-            "type": 301,
-            "uid": 295
+            "type": 302,
+            "uid": 296
         },
-        "296": {
+        "297": {
             "ancestors": [
-                305,
-                286,
-                306,
-                303,
-                297
+                304,
+                287,
+                298,
+                307,
+                306
             ],
             "default": 0,
             "max": 1.7976931348623157e+308,
             "min": -1.7976931348623157e+308,
             "name": "float32",
-            "type": 297,
-            "uid": 296
+            "type": 298,
+            "uid": 297
         },
-        "297": {
+        "298": {
             "ancestors": [
-                286,
-                305,
-                303,
-                306
+                307,
+                304,
+                306,
+                287
             ],
             "default": 0,
             "max": 1.7976931348623157e+308,
             "min": -1.7976931348623157e+308,
             "name": "float64",
-            "type": 303,
-            "uid": 297
-        },
-        "298": {
-            "ancestors": [
-                286,
-                306,
-                299,
-                305,
-                304
-            ],
-            "name": "complex64",
-            "type": 299,
+            "type": 304,
             "uid": 298
         },
         "299": {
             "ancestors": [
-                286,
                 305,
-                304,
+                287,
+                300,
+                307,
                 306
             ],
-            "name": "complex128",
-            "type": 304,
+            "name": "complex64",
+            "type": 300,
             "uid": 299
         },
         "300": {
             "ancestors": [
-                286,
+                307,
                 305,
-                302,
-                306
+                306,
+                287
+            ],
+            "name": "complex128",
+            "type": 305,
+            "uid": 300
+        },
+        "301": {
+            "ancestors": [
+                307,
+                303,
+                306,
+                287
             ],
             "cast_to": [
                 "int"
             ],
             "name": "signedinteger",
-            "type": 302,
-            "uid": 300
+            "type": 303,
+            "uid": 301
         },
-        "301": {
+        "302": {
             "ancestors": [
-                286,
-                305,
-                302,
-                306
+                307,
+                303,
+                306,
+                287
             ],
             "cast_to": [
                 "int"
             ],
             "name": "unsignedinteger",
-            "type": 302,
-            "uid": 301
+            "type": 303,
+            "uid": 302
         },
-        "302": {
+        "303": {
             "ancestors": [
-                286,
-                305,
-                306
+                307,
+                306,
+                287
             ],
             "cast_to": [
                 "int"
             ],
             "name": "integer",
-            "type": 305,
-            "uid": 302
+            "type": 306,
+            "uid": 303
         },
-        "303": {
+        "304": {
             "ancestors": [
-                286,
-                305,
-                306
+                307,
+                306,
+                287
             ],
             "cast_to": [
                 "float"
             ],
             "name": "floating",
-            "type": 305,
-            "uid": 303
+            "type": 306,
+            "uid": 304
         },
-        "304": {
+        "305": {
             "ancestors": [
-                286,
-                305,
-                306
+                307,
+                306,
+                287
             ],
             "cast_to": [
                 "complex"
             ],
             "name": "np_complex",
-            "type": 305,
-            "uid": 304
-        },
-        "305": {
-            "ancestors": [
-                286,
-                306
-            ],
-            "name": "number",
             "type": 306,
             "uid": 305
         },
         "306": {
             "ancestors": [
-                286
+                307,
+                287
             ],
-            "name": "np_generic",
-            "type": 286,
+            "name": "number",
+            "type": 307,
             "uid": 306
         },
         "307": {
             "ancestors": [
-                286
+                287
             ],
-            "name": "set",
-            "type": 286,
+            "name": "np_generic",
+            "type": 287,
             "uid": 307
         },
         "308": {
             "ancestors": [
-                286
+                287
             ],
-            "name": "tuple",
-            "read-only": true,
-            "type": 286,
+            "name": "set",
+            "type": 287,
             "uid": 308
         },
         "309": {
             "ancestors": [
-                286
+                287
             ],
-            "name": "list",
-            "type": 286,
+            "name": "tuple",
+            "read-only": true,
+            "type": 287,
             "uid": 309
         },
         "310": {
             "ancestors": [
-                286
+                287
             ],
-            "name": "dict",
-            "type": 286,
+            "name": "list",
+            "type": 287,
             "uid": 310
         },
         "311": {
             "ancestors": [
-                286
+                287
             ],
-            "name": "ndarray",
-            "type": 286,
+            "name": "dict",
+            "type": 287,
             "uid": 311
         },
         "312": {
+            "ancestors": [
+                287
+            ],
+            "name": "ndarray",
+            "type": 287,
+            "uid": 312
+        },
+        "313": {
             "allowed": [
                 "alpha_class",
                 "beta_class",
@@ -3723,24 +3648,14 @@
                 "gcb",
                 "generation",
                 "graph",
-                "input0_type",
-                "input1_type",
-                "input2_type",
-                "input3_type",
-                "input4_type",
-                "input5_type",
-                "input6_type",
-                "input7_type",
+                "input_types",
                 "meta_data",
                 "num_codes",
                 "num_inputs",
                 "num_outputs",
                 "num_unique_codes",
                 "opt_num_codons",
-                "output0_type",
-                "output1_type",
-                "output2_type",
-                "output3_type",
+                "output_types",
                 "properties",
                 "raw_num_codons",
                 "reference_count",
@@ -3749,34 +3664,34 @@
             ],
             "ancestors": [],
             "name": "gc_key",
-            "type": 285,
-            "uid": 312
+            "type": 286,
+            "uid": 313
         },
-        "313": {
+        "314": {
             "allowed": [
                 "gca",
                 "gcb"
             ],
             "ancestors": [],
             "name": "gc_egc_key",
-            "type": 285,
-            "uid": 313
-        },
-        "314": {
-            "allowed": [],
-            "ancestors": [],
-            "name": "gc_extended_class_key",
-            "type": 285,
+            "type": 286,
             "uid": 314
         },
         "315": {
             "allowed": [],
             "ancestors": [],
-            "name": "gc_extended_schema_key",
-            "type": 285,
+            "name": "gc_extended_class_key",
+            "type": 286,
             "uid": 315
         },
         "316": {
+            "allowed": [],
+            "ancestors": [],
+            "name": "gc_extended_schema_key",
+            "type": 286,
+            "uid": 316
+        },
+        "317": {
             "allowed": [
                 "gca",
                 "gcb",
@@ -3785,10 +3700,10 @@
             ],
             "ancestors": [],
             "name": "gc_fgc_key",
-            "type": 285,
-            "uid": 316
+            "type": 286,
+            "uid": 317
         },
-        "317": {
+        "318": {
             "allowed": [
                 "extended_class",
                 "extended_schema",
@@ -3797,10 +3712,10 @@
             ],
             "ancestors": [],
             "name": "gc_meta_data_key",
-            "type": 285,
-            "uid": 317
+            "type": 286,
+            "uid": 318
         },
-        "318": {
+        "319": {
             "allowed": [
                 "arithmetic",
                 "bitwise",
@@ -3815,10 +3730,10 @@
             ],
             "ancestors": [],
             "name": "gc_properties_dict_key",
-            "type": 285,
-            "uid": 318
+            "type": 286,
+            "uid": 319
         },
-        "319": {
+        "320": {
             "allowed": [
                 "alpha_class",
                 "beta_class",
@@ -3831,24 +3746,14 @@
                 "gca",
                 "gcb",
                 "generation",
-                "input0_type",
-                "input1_type",
-                "input2_type",
-                "input3_type",
-                "input4_type",
-                "input5_type",
-                "input6_type",
-                "input7_type",
+                "input_types",
                 "num_codes",
                 "num_inputs",
                 "num_outputs",
                 "num_unique_codes",
                 "opt_num_codons",
                 "order_by",
-                "output0_type",
-                "output1_type",
-                "output2_type",
-                "output3_type",
+                "output_types",
                 "properties",
                 "raw_num_codons",
                 "reference_count",
@@ -3857,10 +3762,10 @@
             ],
             "ancestors": [],
             "name": "gc_query_key",
-            "type": 285,
-            "uid": 319
+            "type": 286,
+            "uid": 320
         },
-        "320": {
+        "321": {
             "allowed": [
                 "A",
                 "B",
@@ -3872,213 +3777,221 @@
             ],
             "ancestors": [],
             "name": "gc_graph_key",
-            "type": 285,
-            "uid": 320
-        },
-        "321": {
-            "ancestors": [],
-            "min": 0,
-            "name": "gc_parents_idx",
-            "type": 282,
+            "type": 286,
             "uid": 321
         },
         "322": {
             "ancestors": [],
             "min": 0,
-            "name": "gc_parents_list_idx",
-            "type": 282,
+            "name": "gc_parents_idx",
+            "type": 283,
             "uid": 322
         },
         "323": {
             "ancestors": [],
-            "max": 255,
             "min": 0,
-            "name": "gc_class_list_idx",
-            "type": 282,
+            "name": "gc_parents_list_idx",
+            "type": 283,
             "uid": 323
         },
         "324": {
             "ancestors": [],
             "max": 255,
             "min": 0,
-            "name": "gc_code_depth_list_idx",
-            "type": 282,
+            "name": "gc_type_list_idx",
+            "type": 283,
             "uid": 324
         },
         "325": {
             "ancestors": [],
             "max": 255,
             "min": 0,
-            "name": "gc_codon_depth_list_idx",
-            "type": 282,
+            "name": "gc_class_list_idx",
+            "type": 283,
             "uid": 325
         },
         "326": {
             "ancestors": [],
             "max": 255,
             "min": 0,
-            "name": "gc_created_list_idx",
-            "type": 282,
+            "name": "gc_code_depth_list_idx",
+            "type": 283,
             "uid": 326
         },
         "327": {
             "ancestors": [],
             "max": 255,
             "min": 0,
-            "name": "gc_creator_list_idx",
-            "type": 282,
+            "name": "gc_codon_depth_list_idx",
+            "type": 283,
             "uid": 327
         },
         "328": {
             "ancestors": [],
             "max": 255,
             "min": 0,
-            "name": "gc_evolvability_list_idx",
-            "type": 282,
+            "name": "gc_created_list_idx",
+            "type": 283,
             "uid": 328
         },
         "329": {
             "ancestors": [],
             "max": 255,
             "min": 0,
-            "name": "gc_fitness_list_idx",
-            "type": 282,
+            "name": "gc_creator_list_idx",
+            "type": 283,
             "uid": 329
         },
         "330": {
             "ancestors": [],
             "max": 255,
             "min": 0,
-            "name": "gc_generation_list_idx",
-            "type": 282,
+            "name": "gc_evolvability_list_idx",
+            "type": 283,
             "uid": 330
         },
         "331": {
             "ancestors": [],
+            "max": 255,
             "min": 0,
-            "name": "gc_list_idx",
-            "type": 282,
+            "name": "gc_fitness_list_idx",
+            "type": 283,
             "uid": 331
         },
         "332": {
             "ancestors": [],
             "max": 255,
             "min": 0,
-            "name": "gc_num_codes_list_idx",
-            "type": 282,
+            "name": "gc_generation_list_idx",
+            "type": 283,
             "uid": 332
         },
         "333": {
             "ancestors": [],
-            "max": 255,
             "min": 0,
-            "name": "gc_num_inputs_list_idx",
-            "type": 282,
+            "name": "gc_list_idx",
+            "type": 283,
             "uid": 333
         },
         "334": {
             "ancestors": [],
             "max": 255,
             "min": 0,
-            "name": "gc_num_outputs_list_idx",
-            "type": 282,
+            "name": "gc_num_codes_list_idx",
+            "type": 283,
             "uid": 334
         },
         "335": {
             "ancestors": [],
             "max": 255,
             "min": 0,
-            "name": "gc_num_unique_codes_list_idx",
-            "type": 282,
+            "name": "gc_num_inputs_list_idx",
+            "type": 283,
             "uid": 335
         },
         "336": {
             "ancestors": [],
             "max": 255,
             "min": 0,
-            "name": "gc_opt_num_codons_list_idx",
-            "type": 282,
+            "name": "gc_num_outputs_list_idx",
+            "type": 283,
             "uid": 336
         },
         "337": {
             "ancestors": [],
             "max": 255,
             "min": 0,
-            "name": "gc_properties_list_idx",
-            "type": 282,
+            "name": "gc_num_unique_codes_list_idx",
+            "type": 283,
             "uid": 337
         },
         "338": {
             "ancestors": [],
             "max": 255,
             "min": 0,
-            "name": "gc_query_order_by_list_idx",
-            "type": 282,
+            "name": "gc_opt_num_codons_list_idx",
+            "type": 283,
             "uid": 338
         },
         "339": {
             "ancestors": [],
             "max": 255,
             "min": 0,
-            "name": "gc_raw_num_codons_list_idx",
-            "type": 282,
+            "name": "gc_properties_list_idx",
+            "type": 283,
             "uid": 339
         },
         "340": {
             "ancestors": [],
             "max": 255,
             "min": 0,
-            "name": "gc_reference_count_list_idx",
-            "type": 282,
+            "name": "gc_query_order_by_list_idx",
+            "type": 283,
             "uid": 340
         },
         "341": {
             "ancestors": [],
             "max": 255,
             "min": 0,
-            "name": "gc_signature_list_idx",
-            "type": 282,
+            "name": "gc_raw_num_codons_list_idx",
+            "type": 283,
             "uid": 341
         },
         "342": {
             "ancestors": [],
             "max": 255,
             "min": 0,
-            "name": "gc_type_int_list_idx",
-            "type": 282,
+            "name": "gc_reference_count_list_idx",
+            "type": 283,
             "uid": 342
         },
         "343": {
             "ancestors": [],
             "max": 255,
             "min": 0,
-            "name": "gc_updated_list_idx",
-            "type": 282,
+            "name": "gc_signature_list_idx",
+            "type": 283,
             "uid": 343
         },
         "344": {
             "ancestors": [],
-            "max": 1,
+            "max": 255,
             "min": 0,
-            "name": "gc_constant_idx",
-            "type": 282,
+            "name": "gc_type_list_list_idx",
+            "type": 283,
             "uid": 344
         },
         "345": {
             "ancestors": [],
             "max": 255,
             "min": 0,
-            "name": "gc_constant_row_idx",
-            "type": 282,
+            "name": "gc_updated_list_idx",
+            "type": 283,
             "uid": 345
         },
         "346": {
             "ancestors": [],
+            "max": 1,
+            "min": 0,
+            "name": "gc_constant_idx",
+            "type": 283,
+            "uid": 346
+        },
+        "347": {
+            "ancestors": [],
+            "max": 255,
+            "min": 0,
+            "name": "gc_constant_row_idx",
+            "type": 283,
+            "uid": 347
+        },
+        "348": {
+            "ancestors": [],
             "max": 255,
             "min": 0,
             "name": "gc_row_idx",
-            "type": 282,
-            "uid": 346
+            "type": 283,
+            "uid": 348
         }
     }
 }

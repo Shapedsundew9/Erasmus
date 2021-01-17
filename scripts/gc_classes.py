@@ -26,6 +26,7 @@ class gc_raw_num_codons(int32): pass
 class gc_reference_count(int64): pass
 class gc_signature(sha256_lowercase): pass
 class gc_type_int(int32): pass
+class gc_type_list(list): pass
 class gc_type_str(str): pass
 class gc_updated(timestamp_str): pass
 class gc_value_str(str): pass
@@ -68,12 +69,12 @@ class gc_query_query_order_by(object): pass
 class gc_query_raw_num_codons(object): pass
 class gc_query_reference_count(object): pass
 class gc_query_signature(object): pass
-class gc_query_type_int(object): pass
+class gc_query_type_list(object): pass
 class gc_query_updated(object): pass
 class gc_raw_num_codons_list(list): pass
 class gc_reference_count_list(list): pass
 class gc_signature_list(list): pass
-class gc_type_int_list(list): pass
+class gc_type_list_list(list): pass
 class gc_updated_list(list): pass
 class gc_constant(list): pass
 class gc_constant_row(list): pass
@@ -193,6 +194,7 @@ class gc_query_key(str): pass
 class gc_graph_key(str): pass
 class gc_parents_idx(int): pass
 class gc_parents_list_idx(int): pass
+class gc_type_list_idx(int): pass
 class gc_class_list_idx(int): pass
 class gc_code_depth_list_idx(int): pass
 class gc_codon_depth_list_idx(int): pass
@@ -212,7 +214,7 @@ class gc_query_order_by_list_idx(int): pass
 class gc_raw_num_codons_list_idx(int): pass
 class gc_reference_count_list_idx(int): pass
 class gc_signature_list_idx(int): pass
-class gc_type_int_list_idx(int): pass
+class gc_type_list_list_idx(int): pass
 class gc_updated_list_idx(int): pass
 class gc_constant_idx(int): pass
 class gc_constant_row_idx(int): pass

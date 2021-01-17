@@ -253,10 +253,11 @@
         "min": 0,
         "default_setter": "set_num_inputs"
     },
-    "input0_type": {
+    "input_types": {
         "meta": {
             "database": {
                 "null": true,
+                "array": true,
                 "type": "INTEGER"
             },
             "definition": {
@@ -266,160 +267,16 @@
             "gc_type": "int32",
             "settable": false,
             "compressed": false,
-            "description": "The Genetic Code Type Definition for input 0."
+            "description": "GC input type definitions."
         },
-        "type": "integer",
-        "min": -2147483648,
-        "max": 2147483647,
-        "check_with": "valid_gc_type",
-        "default_setter": "set_input0"
-    },
-    "input1_type": {
-        "meta": {
-            "database": {
-                "null": true,
-                "type": "INTEGER"
-            },
-            "definition": {
-                "location": ["WORKER"],
-                "immutable": true
-            },
-            "gc_type": "int32",
-            "settable": false,
-            "compressed": false,
-            "description": "The Genetic Code Type Definition for input 1."
+        "type": "list",
+        "schema": {
+            "type": "integer",
+            "min": -2147483648,
+            "max": 2147483647,
+            "check_with": "valid_gc_type"
         },
-        "type": "integer",
-        "min": -2147483648,
-        "max": 2147483647,
-        "check_with": "valid_gc_type",
-        "default_setter": "set_input1"
-    },
-    "input2_type": {
-        "meta": {
-            "database": {
-                "null": true,
-                "type": "INTEGER"
-            },
-            "definition": {
-                "location": ["WORKER"],
-                "immutable": true
-            },
-            "gc_type": "int32",
-            "settable": false,
-            "compressed": false,
-            "description": "The Genetic Code Type Definition for input 2."
-        },
-        "type": "integer",
-        "min": -2147483648,
-        "max": 2147483647,
-        "check_with": "valid_gc_type",
-        "default_setter": "set_input2"
-    },
-    "input3_type": {
-        "meta": {
-            "database": {
-                "null": true,
-                "type": "INTEGER"
-            },
-            "definition": {
-                "location": ["WORKER"],
-                "immutable": true
-            },
-            "gc_type": "int32",
-            "settable": false,
-            "compressed": false,
-            "description": "The Genetic Code Type Definition for input 3."
-        },
-        "type": "integer",
-        "min": -2147483648,
-        "max": 2147483647,
-        "check_with": "valid_gc_type",
-        "default_setter": "set_input3"
-    },
-    "input4_type": {
-        "meta": {
-            "database": {
-                "null": true,
-                "type": "INTEGER"
-            },
-            "definition": {
-                "location": ["WORKER"],
-                "immutable": true
-            },
-            "gc_type": "int32",
-            "settable": false,
-            "compressed": false,
-            "description": "The Genetic Code Type Definition for input 4."
-        },
-        "type": "integer",
-        "min": -2147483648,
-        "max": 2147483647,
-        "check_with": "valid_gc_type",
-        "default_setter": "set_input4"
-    },
-    "input5_type": {
-        "meta": {
-            "database": {
-                "null": true,
-                "type": "INTEGER"
-            },
-            "definition": {
-                "location": ["WORKER"],
-                "immutable": true
-            },
-            "gc_type": "int32",
-            "settable": false,
-            "compressed": false,
-            "description": "The Genetic Code Type Definition for input 5."
-        },
-        "type": "integer",
-        "min": -2147483648,
-        "max": 2147483647,
-        "check_with": "valid_gc_type",
-        "default_setter": "set_input5"
-    },
-    "input6_type": {
-        "meta": {
-            "database": {
-                "null": true,
-                "type": "INTEGER"
-            },
-            "definition": {
-                "location": ["WORKER"],
-                "immutable": true
-            },
-            "gc_type": "int32",
-            "settable": false,
-            "compressed": false,
-            "description": "The Genetic Code Type Definition for input 6."
-        },
-        "type": "integer",
-        "min": -2147483648,
-        "max": 2147483647,
-        "check_with": "valid_gc_type",
-        "default_setter": "set_input6"
-    },
-    "input7_type": {
-        "meta": {
-            "database": {
-                "null": true,
-                "type": "INTEGER"
-            },
-            "definition": {
-                "location": ["WORKER"],
-                "immutable": true
-            },
-            "gc_type": "int32",
-            "settable": false,
-            "compressed": false,
-            "description": "The Genetic Code Type Definition for input 7."
-        },
-        "type": "integer",
-        "min": -2147483648,
-        "max": 2147483647,
-        "check_with": "valid_gc_type",
-        "default_setter": "set_input7"
+        "default_setter": "set_input_types"
     },
     "num_outputs": {
         "meta": {
@@ -440,10 +297,11 @@
         "min": 1,
         "default_setter": "set_num_outputs"
     },
-    "output0_type": {
+    "output_types": {
         "meta": {
             "database": {
                 "null": true,
+                "array": true,
                 "type": "INTEGER"
             },
             "definition": {
@@ -453,76 +311,16 @@
             "gc_type": "int32",
             "settable": false,
             "compressed": false,
-            "description": "The Genetic Code Type Definition for output 0."
+            "description": "GC output type definitions."
         },
-        "type": "integer",
-        "min": -2147483648,
-        "max": 2147483647,
-        "check_with": "valid_gc_type",
-        "default_setter": "set_output0"
-    },
-    "output1_type": {
-        "meta": {
-            "database": {
-                "null": true,
-                "type": "INTEGER"
-            },
-            "definition": {
-                "location": ["WORKER"],
-                "immutable": true
-            },
-            "gc_type": "int32",
-            "settable": false,
-            "compressed": false,
-            "description": "The Genetic Code Type Definition for output 1."
+        "type": "list",
+        "schema": {
+            "type": "integer",
+            "min": -2147483648,
+            "max": 2147483647,
+            "check_with": "valid_gc_type"
         },
-        "type": "integer",
-        "min": -2147483648,
-        "max": 2147483647,
-        "check_with": "valid_gc_type",
-        "default_setter": "set_output1"
-    },
-    "output2_type": {
-        "meta": {
-            "database": {
-                "null": true,
-                "type": "INTEGER"
-            },
-            "definition": {
-                "location": ["WORKER"],
-                "immutable": true
-            },
-            "gc_type": "int32",
-            "settable": false,
-            "compressed": false,
-            "description": "The Genetic Code Type Definition for output 2."
-        },
-        "type": "integer",
-        "min": -2147483648,
-        "max": 2147483647,
-        "check_with": "valid_gc_type",
-        "default_setter": "set_output2"
-    },
-    "output3_type": {
-        "meta": {
-            "database": {
-                "null": true,
-                "type": "INTEGER"
-            },
-            "definition": {
-                "location": ["WORKER"],
-                "immutable": true
-            },
-            "gc_type": "int32",
-            "settable": false,
-            "compressed": false,
-            "description": "The Genetic Code Type Definition for output 3."
-        },
-        "type": "integer",
-        "min": -2147483648,
-        "max": 2147483647,
-        "check_with": "valid_gc_type",
-        "default_setter": "set_output3"
+        "default_setter": "set_output_types"
     },
     "alpha_class": {
         "meta": {

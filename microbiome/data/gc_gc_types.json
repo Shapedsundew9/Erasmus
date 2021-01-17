@@ -53,37 +53,9 @@
                 "required": true,
                 "type": "gc_graph"
             },
-            "input0_type": {
+            "input_types": {
                 "read-only": true,
-                "type": "gc_type_int"
-            },
-            "input1_type": {
-                "read-only": true,
-                "type": "gc_type_int"
-            },
-            "input2_type": {
-                "read-only": true,
-                "type": "gc_type_int"
-            },
-            "input3_type": {
-                "read-only": true,
-                "type": "gc_type_int"
-            },
-            "input4_type": {
-                "read-only": true,
-                "type": "gc_type_int"
-            },
-            "input5_type": {
-                "read-only": true,
-                "type": "gc_type_int"
-            },
-            "input6_type": {
-                "read-only": true,
-                "type": "gc_type_int"
-            },
-            "input7_type": {
-                "read-only": true,
-                "type": "gc_type_int"
+                "type": "gc_type_list"
             },
             "meta_data": {
                 "read-only": true,
@@ -109,21 +81,9 @@
                 "read-only": true,
                 "type": "gc_opt_num_codons"
             },
-            "output0_type": {
+            "output_types": {
                 "read-only": true,
-                "type": "gc_type_int"
-            },
-            "output1_type": {
-                "read-only": true,
-                "type": "gc_type_int"
-            },
-            "output2_type": {
-                "read-only": true,
-                "type": "gc_type_int"
-            },
-            "output3_type": {
-                "read-only": true,
-                "type": "gc_type_int"
+                "type": "gc_type_list"
             },
             "properties": {
                 "read-only": true,
@@ -400,14 +360,21 @@
         "validate": "x in genomic_library"
     },
     "gc_type_int": {
-        "ancestors": [
-            "gc_query_type_int"
-        ],
         "cast_to": [
             "gc_type_str"
         ],
         "type": "int32",
         "validate": "x in gc_type_lookup['value']"
+    },
+    "gc_type_list": {
+        "ancestors": [
+            "gc_query_type_list"
+        ],
+        "maxlength": 256,
+        "schema": {
+            "type": "gc_type_int"
+        },
+        "type": "list"
     },
     "gc_type_str": {
         "cast_to": [
