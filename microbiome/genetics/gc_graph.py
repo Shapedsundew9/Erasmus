@@ -675,7 +675,7 @@ class gc_graph():
         return self._num_eps(row, SRC_EP)
 
 
-    def normalize(self, create_inputs=False):
+    def normalize(self, modify_inputs=False):
         """Make the graph consistent.
 
         The make the graph consistent the following operations are performed:

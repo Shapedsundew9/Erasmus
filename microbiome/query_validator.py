@@ -96,7 +96,7 @@ class query_validator():
         searchable_fields = [k for k, v in filter(lambda kv: kv[1]['meta']['database']['type'] != 'BYTEA', table_schema.items())]
         validation_schema['contains']['schema']['lhs']['allowed'] = searchable_fields
         validation_schema['overlaps']['schema']['lhs']['allowed'] = searchable_fields
-        validation_schema['contained_by']['schema']['rhs']['allowed'] = searchable_fields
+        validation_schema['contained by']['schema']['rhs']['allowed'] = searchable_fields
         validation_schema['does not overlap']['schema']['lhs']['allowed'] = searchable_fields
         validation_schema['order by']['allowed'] = searchable_fields
         validation_schema['order by']['allowed'].append("RANDOM()")

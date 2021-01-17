@@ -1,0 +1,277 @@
+{
+    "age": {
+        "oneof": [
+            {
+                "schema": {
+                    "type": "integer"
+                },
+                "type": "list"
+            },
+            {
+                "type": "integer"
+            },
+            {
+                "schema": {
+                    "max": {
+                        "required": true,
+                        "type": "integer"
+                    },
+                    "min": {
+                        "required": true,
+                        "type": "integer"
+                    }
+                },
+                "type": "dict"
+            },
+            {
+                "schema": {
+                    "min": {
+                        "required": true,
+                        "type": "integer"
+                    }
+                },
+                "type": "dict"
+            },
+            {
+                "schema": {
+                    "max": {
+                        "required": true,
+                        "type": "integer"
+                    }
+                },
+                "type": "dict"
+            }
+        ]
+    },
+    "contained by": {
+        "schema": {
+            "lhs": {
+                "schema": {
+                    "allowed": [],
+                    "type": "string"
+                },
+                "type": "list"
+            },
+            "rhs": {
+                "allowed": [
+                    "name",
+                    "age",
+                    "idx",
+                    "properties",
+                    "created",
+                    "RANDOM()"
+                ],
+                "type": "list"
+            }
+        },
+        "type": "dict"
+    },
+    "contains": {
+        "schema": {
+            "lhs": {
+                "allowed": [
+                    "name",
+                    "age",
+                    "idx",
+                    "properties",
+                    "created",
+                    "RANDOM()"
+                ],
+                "schema": {
+                    "allowed": [],
+                    "type": "string"
+                },
+                "type": "list"
+            },
+            "rhs": {
+                "type": "list"
+            }
+        },
+        "type": "dict"
+    },
+    "created": {
+        "oneof": [
+            {
+                "schema": {
+                    "type": "string"
+                },
+                "type": "list"
+            },
+            {
+                "type": "string"
+            },
+            {
+                "schema": {
+                    "max": {
+                        "required": true,
+                        "type": "string"
+                    },
+                    "min": {
+                        "required": true,
+                        "type": "string"
+                    }
+                },
+                "type": "dict"
+            },
+            {
+                "schema": {
+                    "min": {
+                        "required": true,
+                        "type": "string"
+                    }
+                },
+                "type": "dict"
+            },
+            {
+                "schema": {
+                    "max": {
+                        "required": true,
+                        "type": "string"
+                    }
+                },
+                "type": "dict"
+            }
+        ]
+    },
+    "does not overlap": {
+        "schema": {
+            "lhs": {
+                "allowed": [
+                    "name",
+                    "age",
+                    "idx",
+                    "properties",
+                    "created",
+                    "RANDOM()"
+                ],
+                "schema": {
+                    "allowed": [],
+                    "type": "string"
+                },
+                "type": "list"
+            },
+            "rhs": {
+                "type": "list"
+            }
+        },
+        "type": "dict"
+    },
+    "id": {
+        "oneof": [
+            {
+                "schema": {
+                    "type": "string"
+                },
+                "type": "list"
+            },
+            {
+                "type": "string"
+            }
+        ]
+    },
+    "idx": {
+        "oneof": [
+            {
+                "schema": {
+                    "type": "integer"
+                },
+                "type": "list"
+            },
+            {
+                "type": "integer"
+            },
+            {
+                "schema": {
+                    "max": {
+                        "required": true,
+                        "type": "integer"
+                    },
+                    "min": {
+                        "required": true,
+                        "type": "integer"
+                    }
+                },
+                "type": "dict"
+            },
+            {
+                "schema": {
+                    "min": {
+                        "required": true,
+                        "type": "integer"
+                    }
+                },
+                "type": "dict"
+            },
+            {
+                "schema": {
+                    "max": {
+                        "required": true,
+                        "type": "integer"
+                    }
+                },
+                "type": "dict"
+            }
+        ]
+    },
+    "limit": {
+        "min": 1,
+        "type": "integer"
+    },
+    "name": {
+        "oneof": [
+            {
+                "schema": {
+                    "type": "string"
+                },
+                "type": "list"
+            },
+            {
+                "type": "string"
+            }
+        ]
+    },
+    "order by": {
+        "allowed": [
+            "name",
+            "age",
+            "idx",
+            "properties",
+            "created",
+            "RANDOM()"
+        ],
+        "type": "string"
+    },
+    "overlaps": {
+        "schema": {
+            "lhs": {
+                "allowed": [
+                    "name",
+                    "age",
+                    "idx",
+                    "properties",
+                    "created",
+                    "RANDOM()"
+                ],
+                "schema": {
+                    "allowed": [],
+                    "type": "string"
+                },
+                "type": "list"
+            },
+            "rhs": {
+                "type": "list"
+            }
+        },
+        "type": "dict"
+    },
+    "properties": {
+        "oneof": [
+            {
+                "type": "dict"
+            },
+            {
+                "type": "integer"
+            }
+        ]
+    }
+}

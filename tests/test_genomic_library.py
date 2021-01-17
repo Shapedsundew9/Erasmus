@@ -22,8 +22,8 @@ with open(join(dirname(__file__), "data/test_glib_config.json"), "r") as file_pt
 
 NON_EXISTANT_SHA256 = "abcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcd"
 ANOTHER_NON_EXISTANT_SHA256 = "0123456789012345678901234567890123456789012345678901234567890123"
-KNOWN_GOOD_SIGNATURE = "d6b77650ce17799265490e4897d550d3f856cc73f7b7e321a948e368a5d2ea7f"
-KNOWN_GOOD_SIGNATURE_NAME = "right shift"
+KNOWN_GOOD_SIGNATURE = "05fc73ef0115c380f1fa95648be1fe1bd7b23e8867bfb67c745ee6120ae2d499"
+KNOWN_GOOD_SIGNATURE_NAME = "Random gc_graph_key choice."
 
 
 basicConfig(
