@@ -1,67 +1,87 @@
 [
     [
-        { "name": "Maurice I", "age": 42, "occupation": "Space cowboy", "id": "1111111111111111111111111111111111111111111111111111111111111111", "created": "2020-04-25T17:11:34.000000Z", "idx": 1, "age_cumsum": 42, "properties": {"extended": true, "mutation": true}}
+        { "name": "Maurice I", "age": 42, "occupation": "Space cowboy", "id": "1111111111111111111111111111111111111111111111111111111111111111", "created": "2020-04-25T17:11:34.000000Z", "idx": 1, "age_cumsum": 42, "properties": {"extended": true, "mutation": true}, "scores": [5, 6, 7]}
     ],
     [
-        { "name": "Maurice I", "age": 42, "occupation": "Space cowboy", "id": "1111111111111111111111111111111111111111111111111111111111111111", "created": "2020-04-25T17:11:34.000000Z", "idx": 1, "age_cumsum": 42, "properties": {"extended": true, "mutation": true}},
-        { "name": "Maurice X", "age": 51, "occupation": "Space cowboy", "id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "created": "2020-04-25T17:11:34.000009Z", "idx": 10, "age_cumsum": 465, "properties": {"extended": true, "mutation": true}}
+        { "name": "Maurice I", "age": 42, "occupation": "Space cowboy", "id": "1111111111111111111111111111111111111111111111111111111111111111", "created": "2020-04-25T17:11:34.000000Z", "idx": 1, "age_cumsum": 42, "properties": {"extended": true, "mutation": true}, "scores": [5, 6, 7]},
+        { "name": "Maurice X", "age": 51, "occupation": "Space cowboy", "id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "created": "2020-04-25T17:11:34.000009Z", "idx": 10, "age_cumsum": 465, "properties": {"extended": true, "mutation": true}, "scores": null}
     ],
     [
-        { "name": "Maurice II", "age": 43, "occupation": "Space cowboy", "id": "2222222222222222222222222222222222222222222222222222222222222222", "created": "2020-04-25T17:11:34.000001Z", "idx": 2, "age_cumsum": 85, "properties": {"extended": true, "mutation": false}}
+        { "name": "Maurice II", "age": 43, "occupation": "Space cowboy", "id": "2222222222222222222222222222222222222222222222222222222222222222", "created": "2020-04-25T17:11:34.000001Z", "idx": 2, "age_cumsum": 85, "properties": {"extended": true, "mutation": false}, "scores": [8, 9, 10]}
     ],
     [
-        { "name": "Maurice IV", "age": 45, "occupation": "Space cowboy", "id": "4444444444444444444444444444444444444444444444444444444444444444", "created": "2020-04-25T17:11:34.000003Z", "idx": 4, "age_cumsum": 174, "properties": {"extended": false, "mutation": false}},
-        { "name": "Maurice V", "age": 46, "occupation": "Space cowboy", "id": "5555555555555555555555555555555555555555555555555555555555555555", "created": "2020-04-25T17:11:34.000004Z", "idx": 5, "age_cumsum": 220, "properties": {"extended": true, "mutation": false}},
-        { "name": "Maurice VI", "age": 47, "occupation": "Space cowboy", "id": "6666666666666666666666666666666666666666666666666666666666666666", "created": "2020-04-25T17:11:34.000005Z", "idx": 6, "age_cumsum": 267, "properties": {"extended": false, "mutation": true}},
-        { "name": "Maurice VII", "age": 48, "occupation": "Space cowboy", "id": "7777777777777777777777777777777777777777777777777777777777777777", "created": "2020-04-25T17:11:34.000006Z", "idx": 7, "age_cumsum": 315, "properties": {"extended": false, "mutation": false}},
-        { "name": "Maurice VIII", "age": 49, "occupation": "Space cowboy", "id": "8888888888888888888888888888888888888888888888888888888888888888", "created": "2020-04-25T17:11:34.000007Z", "idx": 8, "age_cumsum": 364, "properties": {"extended": false, "mutation": false}},
-        { "name": "Maurice IX", "age": 50, "occupation": "Space cowboy", "id": "9999999999999999999999999999999999999999999999999999999999999999", "created": "2020-04-25T17:11:34.000008Z", "idx": 9, "age_cumsum": 414, "properties": {"extended": false, "mutation": false}},
-        { "name": "Maurice X", "age": 51, "occupation": "Space cowboy", "id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "created": "2020-04-25T17:11:34.000009Z", "idx": 10, "age_cumsum": 465, "properties": {"extended": true, "mutation": true}}
+        { "name": "Maurice IV", "age": 45, "occupation": "Space cowboy", "id": "4444444444444444444444444444444444444444444444444444444444444444", "created": "2020-04-25T17:11:34.000003Z", "idx": 4, "age_cumsum": 174, "properties": {"extended": false, "mutation": false}, "scores": [10]},
+        { "name": "Maurice V", "age": 46, "occupation": "Space cowboy", "id": "5555555555555555555555555555555555555555555555555555555555555555", "created": "2020-04-25T17:11:34.000004Z", "idx": 5, "age_cumsum": 220, "properties": {"extended": true, "mutation": false}, "scores": []},
+        { "name": "Maurice VI", "age": 47, "occupation": "Space cowboy", "id": "6666666666666666666666666666666666666666666666666666666666666666", "created": "2020-04-25T17:11:34.000005Z", "idx": 6, "age_cumsum": 267, "properties": {"extended": false, "mutation": true}, "scores": null},
+        { "name": "Maurice VII", "age": 48, "occupation": "Space cowboy", "id": "7777777777777777777777777777777777777777777777777777777777777777", "created": "2020-04-25T17:11:34.000006Z", "idx": 7, "age_cumsum": 315, "properties": {"extended": false, "mutation": false}, "scores": null},
+        { "name": "Maurice VIII", "age": 49, "occupation": "Space cowboy", "id": "8888888888888888888888888888888888888888888888888888888888888888", "created": "2020-04-25T17:11:34.000007Z", "idx": 8, "age_cumsum": 364, "properties": {"extended": false, "mutation": false}, "scores": null},
+        { "name": "Maurice IX", "age": 50, "occupation": "Space cowboy", "id": "9999999999999999999999999999999999999999999999999999999999999999", "created": "2020-04-25T17:11:34.000008Z", "idx": 9, "age_cumsum": 414, "properties": {"extended": false, "mutation": false}, "scores": null},
+        { "name": "Maurice X", "age": 51, "occupation": "Space cowboy", "id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "created": "2020-04-25T17:11:34.000009Z", "idx": 10, "age_cumsum": 465, "properties": {"extended": true, "mutation": true}, "scores": null}
     ],
     [
-        { "name": "Maurice X", "age": 51, "occupation": "Space cowboy", "id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "created": "2020-04-25T17:11:34.000009Z", "idx": 10, "age_cumsum": 465, "properties": {"extended": true, "mutation": true}}
+        { "name": "Maurice X", "age": 51, "occupation": "Space cowboy", "id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "created": "2020-04-25T17:11:34.000009Z", "idx": 10, "age_cumsum": 465, "properties": {"extended": true, "mutation": true}, "scores": null}
     ],
     [
-        { "name": "Maurice VII", "age": 48, "occupation": "Space cowboy", "id": "7777777777777777777777777777777777777777777777777777777777777777", "created": "2020-04-25T17:11:34.000006Z", "idx": 7, "age_cumsum": 315, "properties": {"extended": false, "mutation": false}},
-        { "name": "Maurice X", "age": 51, "occupation": "Space cowboy", "id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "created": "2020-04-25T17:11:34.000009Z", "idx": 10, "age_cumsum": 465, "properties": {"extended": true, "mutation": true}}
+        { "name": "Maurice VII", "age": 48, "occupation": "Space cowboy", "id": "7777777777777777777777777777777777777777777777777777777777777777", "created": "2020-04-25T17:11:34.000006Z", "idx": 7, "age_cumsum": 315, "properties": {"extended": false, "mutation": false}, "scores": null},
+        { "name": "Maurice X", "age": 51, "occupation": "Space cowboy", "id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "created": "2020-04-25T17:11:34.000009Z", "idx": 10, "age_cumsum": 465, "properties": {"extended": true, "mutation": true}, "scores": null}
     ],
     [
-        { "name": "Maurice IV", "age": 45, "occupation": "Space cowboy", "id": "4444444444444444444444444444444444444444444444444444444444444444", "created": "2020-04-25T17:11:34.000003Z", "idx": 4, "age_cumsum": 174, "properties": {"extended": false, "mutation": false}}
+        { "name": "Maurice IV", "age": 45, "occupation": "Space cowboy", "id": "4444444444444444444444444444444444444444444444444444444444444444", "created": "2020-04-25T17:11:34.000003Z", "idx": 4, "age_cumsum": 174, "properties": {"extended": false, "mutation": false}, "scores": [10]}
     ],
     [
-        { "name": "Maurice VI", "age": 47, "occupation": "Space cowboy", "id": "6666666666666666666666666666666666666666666666666666666666666666", "created": "2020-04-25T17:11:34.000005Z", "idx": 6, "age_cumsum": 267, "properties": {"extended": false, "mutation": true}},
-        { "name": "Maurice VII", "age": 48, "occupation": "Space cowboy", "id": "7777777777777777777777777777777777777777777777777777777777777777", "created": "2020-04-25T17:11:34.000006Z", "idx": 7, "age_cumsum": 315, "properties": {"extended": false, "mutation": false}},
-        { "name": "Maurice VIII", "age": 49, "occupation": "Space cowboy", "id": "8888888888888888888888888888888888888888888888888888888888888888", "created": "2020-04-25T17:11:34.000007Z", "idx": 8, "age_cumsum": 364, "properties": {"extended": false, "mutation": false}},
-        { "name": "Maurice IX", "age": 50, "occupation": "Space cowboy", "id": "9999999999999999999999999999999999999999999999999999999999999999", "created": "2020-04-25T17:11:34.000008Z", "idx": 9, "age_cumsum": 414, "properties": {"extended": false, "mutation": false}},
-        { "name": "Maurice X", "age": 51, "occupation": "Space cowboy", "id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "created": "2020-04-25T17:11:34.000009Z", "idx": 10, "age_cumsum": 465, "properties": {"extended": true, "mutation": true}},
-        { "name": "Maurice XI", "age": 52, "occupation": "Space cowboy", "id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", "created": "2020-04-25T17:11:34.000010Z", "idx": 11, "age_cumsum": 517, "properties": {"extended": true, "mutation": true}},
-        { "name": "Maurice XII", "age": 53, "occupation": "Space cowboy", "id": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc", "created": "2020-04-25T17:11:34.000011Z", "idx": 12, "age_cumsum": 570, "properties": {"extended": true, "mutation": true}},
-        { "name": "Maurice XIII", "age": 54, "occupation": "Space cowboy", "id": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd", "created": "2020-04-25T17:11:34.000012Z", "idx": 13, "age_cumsum": 624, "properties": {"extended": true, "mutation": true}}
+        { "name": "Maurice VI", "age": 47, "occupation": "Space cowboy", "id": "6666666666666666666666666666666666666666666666666666666666666666", "created": "2020-04-25T17:11:34.000005Z", "idx": 6, "age_cumsum": 267, "properties": {"extended": false, "mutation": true}, "scores": null},
+        { "name": "Maurice VII", "age": 48, "occupation": "Space cowboy", "id": "7777777777777777777777777777777777777777777777777777777777777777", "created": "2020-04-25T17:11:34.000006Z", "idx": 7, "age_cumsum": 315, "properties": {"extended": false, "mutation": false}, "scores": null},
+        { "name": "Maurice VIII", "age": 49, "occupation": "Space cowboy", "id": "8888888888888888888888888888888888888888888888888888888888888888", "created": "2020-04-25T17:11:34.000007Z", "idx": 8, "age_cumsum": 364, "properties": {"extended": false, "mutation": false}, "scores": null},
+        { "name": "Maurice IX", "age": 50, "occupation": "Space cowboy", "id": "9999999999999999999999999999999999999999999999999999999999999999", "created": "2020-04-25T17:11:34.000008Z", "idx": 9, "age_cumsum": 414, "properties": {"extended": false, "mutation": false}, "scores": null},
+        { "name": "Maurice X", "age": 51, "occupation": "Space cowboy", "id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "created": "2020-04-25T17:11:34.000009Z", "idx": 10, "age_cumsum": 465, "properties": {"extended": true, "mutation": true}, "scores": null},
+        { "name": "Maurice XI", "age": 52, "occupation": "Space cowboy", "id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", "created": "2020-04-25T17:11:34.000010Z", "idx": 11, "age_cumsum": 517, "properties": {"extended": true, "mutation": true}, "scores": null},
+        { "name": "Maurice XII", "age": 53, "occupation": "Space cowboy", "id": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc", "created": "2020-04-25T17:11:34.000011Z", "idx": 12, "age_cumsum": 570, "properties": {"extended": true, "mutation": true}, "scores": null},
+        { "name": "Maurice XIII", "age": 54, "occupation": "Space cowboy", "id": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd", "created": "2020-04-25T17:11:34.000012Z", "idx": 13, "age_cumsum": 624, "properties": {"extended": true, "mutation": true}, "scores": null}
     ],
     [
-        { "name": "Maurice VI", "age": 47, "occupation": "Space cowboy", "id": "6666666666666666666666666666666666666666666666666666666666666666", "created": "2020-04-25T17:11:34.000005Z", "idx": 6, "age_cumsum": 267, "properties": {"extended": false, "mutation": true}}
+        { "name": "Maurice VI", "age": 47, "occupation": "Space cowboy", "id": "6666666666666666666666666666666666666666666666666666666666666666", "created": "2020-04-25T17:11:34.000005Z", "idx": 6, "age_cumsum": 267, "properties": {"extended": false, "mutation": true}, "scores": null}
     ],
     [
-        { "name": "Maurice VI", "age": 47, "occupation": "Space cowboy", "id": "6666666666666666666666666666666666666666666666666666666666666666", "created": "2020-04-25T17:11:34.000005Z", "idx": 6, "age_cumsum": 267, "properties": {"extended": false, "mutation": true}},
-        { "name": "Maurice VII", "age": 48, "occupation": "Space cowboy", "id": "7777777777777777777777777777777777777777777777777777777777777777", "created": "2020-04-25T17:11:34.000006Z", "idx": 7, "age_cumsum": 315, "properties": {"extended": false, "mutation": false}}
+        { "name": "Maurice VI", "age": 47, "occupation": "Space cowboy", "id": "6666666666666666666666666666666666666666666666666666666666666666", "created": "2020-04-25T17:11:34.000005Z", "idx": 6, "age_cumsum": 267, "properties": {"extended": false, "mutation": true}, "scores": null},
+        { "name": "Maurice VII", "age": 48, "occupation": "Space cowboy", "id": "7777777777777777777777777777777777777777777777777777777777777777", "created": "2020-04-25T17:11:34.000006Z", "idx": 7, "age_cumsum": 315, "properties": {"extended": false, "mutation": false}, "scores": null}
     ],
     [
-        { "name": "Maurice I", "age": 42, "occupation": "Space cowboy", "id": "1111111111111111111111111111111111111111111111111111111111111111", "created": "2020-04-25T17:11:34.000000Z", "idx": 1, "age_cumsum": 42, "properties": {"extended": true, "mutation": true}},
-        { "name": "Maurice VI", "age": 47, "occupation": "Space cowboy", "id": "6666666666666666666666666666666666666666666666666666666666666666", "created": "2020-04-25T17:11:34.000005Z", "idx": 6, "age_cumsum": 267, "properties": {"extended": false, "mutation": true}},
-        { "name": "Maurice XII", "age": 53, "occupation": "Space cowboy", "id": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc", "created": "2020-04-25T17:11:34.000011Z", "idx": 12, "age_cumsum": 570, "properties": {"extended": true, "mutation": true}},
-        { "name": "Maurice IV", "age": 45, "occupation": "Space cowboy", "id": "4444444444444444444444444444444444444444444444444444444444444444", "created": "2020-04-25T17:11:34.000003Z", "idx": 4, "age_cumsum": 174, "properties": {"extended": false, "mutation": false}}
+        { "name": "Maurice I", "age": 42, "occupation": "Space cowboy", "id": "1111111111111111111111111111111111111111111111111111111111111111", "created": "2020-04-25T17:11:34.000000Z", "idx": 1, "age_cumsum": 42, "properties": {"extended": true, "mutation": true}, "scores": [5, 6, 7]},
+        { "name": "Maurice VI", "age": 47, "occupation": "Space cowboy", "id": "6666666666666666666666666666666666666666666666666666666666666666", "created": "2020-04-25T17:11:34.000005Z", "idx": 6, "age_cumsum": 267, "properties": {"extended": false, "mutation": true}, "scores": null},
+        { "name": "Maurice XII", "age": 53, "occupation": "Space cowboy", "id": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc", "created": "2020-04-25T17:11:34.000011Z", "idx": 12, "age_cumsum": 570, "properties": {"extended": true, "mutation": true}, "scores": null},
+        { "name": "Maurice IV", "age": 45, "occupation": "Space cowboy", "id": "4444444444444444444444444444444444444444444444444444444444444444", "created": "2020-04-25T17:11:34.000003Z", "idx": 4, "age_cumsum": 174, "properties": {"extended": false, "mutation": false}, "scores": [10]}
     ],
     [
-        { "name": "Maurice II", "age": 43, "occupation": "Space cowboy", "id": "2222222222222222222222222222222222222222222222222222222222222222", "created": "2020-04-25T17:11:34.000001Z", "idx": 2, "age_cumsum": 85, "properties": {"extended": true, "mutation": false}},
-        { "name": "Maurice V", "age": 46, "occupation": "Space cowboy", "id": "5555555555555555555555555555555555555555555555555555555555555555", "created": "2020-04-25T17:11:34.000004Z", "idx": 5, "age_cumsum": 220, "properties": {"extended": true, "mutation": false}}
+        { "name": "Maurice II", "age": 43, "occupation": "Space cowboy", "id": "2222222222222222222222222222222222222222222222222222222222222222", "created": "2020-04-25T17:11:34.000001Z", "idx": 2, "age_cumsum": 85, "properties": {"extended": true, "mutation": false}, "scores": [8, 9, 10]},
+        { "name": "Maurice V", "age": 46, "occupation": "Space cowboy", "id": "5555555555555555555555555555555555555555555555555555555555555555", "created": "2020-04-25T17:11:34.000004Z", "idx": 5, "age_cumsum": 220, "properties": {"extended": true, "mutation": false}, "scores": []}
     ],
     [
-        { "name": "Maurice I", "age": 42, "occupation": "Space cowboy", "id": "1111111111111111111111111111111111111111111111111111111111111111", "created": "2020-04-25T17:11:34.000000Z", "idx": 1, "age_cumsum": 42, "properties": {"extended": true, "mutation": true}},
-        { "name": "Maurice II", "age": 43, "occupation": "Space cowboy", "id": "2222222222222222222222222222222222222222222222222222222222222222", "created": "2020-04-25T17:11:34.000001Z", "idx": 2, "age_cumsum": 85, "properties": {"extended": true, "mutation": false}},
-        { "name": "Maurice V", "age": 46, "occupation": "Space cowboy", "id": "5555555555555555555555555555555555555555555555555555555555555555", "created": "2020-04-25T17:11:34.000004Z", "idx": 5, "age_cumsum": 220, "properties": {"extended": true, "mutation": false}},
-        { "name": "Maurice X", "age": 51, "occupation": "Space cowboy", "id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "created": "2020-04-25T17:11:34.000009Z", "idx": 10, "age_cumsum": 465, "properties": {"extended": true, "mutation": true}},
-        { "name": "Maurice XI", "age": 52, "occupation": "Space cowboy", "id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", "created": "2020-04-25T17:11:34.000010Z", "idx": 11, "age_cumsum": 517, "properties": {"extended": true, "mutation": true}},
-        { "name": "Maurice XII", "age": 53, "occupation": "Space cowboy", "id": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc", "created": "2020-04-25T17:11:34.000011Z", "idx": 12, "age_cumsum": 570, "properties": {"extended": true, "mutation": true}},
-        { "name": "Maurice XIII", "age": 54, "occupation": "Space cowboy", "id": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd", "created": "2020-04-25T17:11:34.000012Z", "idx": 13, "age_cumsum": 624, "properties": {"extended": true, "mutation": true}}
+        { "name": "Maurice I", "age": 42, "occupation": "Space cowboy", "id": "1111111111111111111111111111111111111111111111111111111111111111", "created": "2020-04-25T17:11:34.000000Z", "idx": 1, "age_cumsum": 42, "properties": {"extended": true, "mutation": true}, "scores": [5, 6, 7]},
+        { "name": "Maurice II", "age": 43, "occupation": "Space cowboy", "id": "2222222222222222222222222222222222222222222222222222222222222222", "created": "2020-04-25T17:11:34.000001Z", "idx": 2, "age_cumsum": 85, "properties": {"extended": true, "mutation": false}, "scores": [8, 9, 10]},
+        { "name": "Maurice V", "age": 46, "occupation": "Space cowboy", "id": "5555555555555555555555555555555555555555555555555555555555555555", "created": "2020-04-25T17:11:34.000004Z", "idx": 5, "age_cumsum": 220, "properties": {"extended": true, "mutation": false}, "scores": []},
+        { "name": "Maurice X", "age": 51, "occupation": "Space cowboy", "id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "created": "2020-04-25T17:11:34.000009Z", "idx": 10, "age_cumsum": 465, "properties": {"extended": true, "mutation": true}, "scores": null},
+        { "name": "Maurice XI", "age": 52, "occupation": "Space cowboy", "id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", "created": "2020-04-25T17:11:34.000010Z", "idx": 11, "age_cumsum": 517, "properties": {"extended": true, "mutation": true}, "scores": null},
+        { "name": "Maurice XII", "age": 53, "occupation": "Space cowboy", "id": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc", "created": "2020-04-25T17:11:34.000011Z", "idx": 12, "age_cumsum": 570, "properties": {"extended": true, "mutation": true}, "scores": null},
+        { "name": "Maurice XIII", "age": 54, "occupation": "Space cowboy", "id": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd", "created": "2020-04-25T17:11:34.000012Z", "idx": 13, "age_cumsum": 624, "properties": {"extended": true, "mutation": true}, "scores": null}
+   ],
+   [
+        { "name": "Maurice I", "age": 42, "occupation": "Space cowboy", "id": "1111111111111111111111111111111111111111111111111111111111111111", "created": "2020-04-25T17:11:34.000000Z", "idx": 1, "age_cumsum": 42, "properties": {"extended": true, "mutation": true}, "scores": [5, 6, 7]},
+        { "name": "Maurice III", "age": 44, "occupation": "Space cowboy", "id": "3333333333333333333333333333333333333333333333333333333333333333", "created": "2020-04-25T17:11:34.000002Z", "idx": 3, "age_cumsum": 129, "properties": {"extended": false, "mutation": true}, "scores": [10, 6, 12]}
+   ],
+   [
+        { "name": "Maurice I", "age": 42, "occupation": "Space cowboy", "id": "1111111111111111111111111111111111111111111111111111111111111111", "created": "2020-04-25T17:11:34.000000Z", "idx": 1, "age_cumsum": 42, "properties": {"extended": true, "mutation": true}, "scores": [5, 6, 7]},
+    	{ "name": "Maurice V", "age": 46, "occupation": "Space cowboy", "id": "5555555555555555555555555555555555555555555555555555555555555555", "created": "2020-04-25T17:11:34.000004Z", "idx": 5, "age_cumsum": 220, "properties": {"extended": true, "mutation": false}, "scores": []}
+   ],
+   [
+        { "name": "Maurice II", "age": 43, "occupation": "Space cowboy", "id": "2222222222222222222222222222222222222222222222222222222222222222", "created": "2020-04-25T17:11:34.000001Z", "idx": 2, "age_cumsum": 85, "properties": {"extended": true, "mutation": false}, "scores": [8, 9, 10]},
+        { "name": "Maurice III", "age": 44, "occupation": "Space cowboy", "id": "3333333333333333333333333333333333333333333333333333333333333333", "created": "2020-04-25T17:11:34.000002Z", "idx": 3, "age_cumsum": 129, "properties": {"extended": false, "mutation": true}, "scores": [10, 6, 12]},
+        { "name": "Maurice IV", "age": 45, "occupation": "Space cowboy", "id": "4444444444444444444444444444444444444444444444444444444444444444", "created": "2020-04-25T17:11:34.000003Z", "idx": 4, "age_cumsum": 174, "properties": {"extended": false, "mutation": false}, "scores": [10]}
+   ],
+   [
+        { "name": "Maurice IV", "age": 45, "occupation": "Space cowboy", "id": "4444444444444444444444444444444444444444444444444444444444444444", "created": "2020-04-25T17:11:34.000003Z", "idx": 4, "age_cumsum": 174, "properties": {"extended": false, "mutation": false}, "scores": [10]},
+    	{ "name": "Maurice V", "age": 46, "occupation": "Space cowboy", "id": "5555555555555555555555555555555555555555555555555555555555555555", "created": "2020-04-25T17:11:34.000004Z", "idx": 5, "age_cumsum": 220, "properties": {"extended": true, "mutation": false}, "scores": []}
+   ],
+   [
+    { "name": "Maurice I", "age": 42, "occupation": "Space cowboy", "id": "1111111111111111111111111111111111111111111111111111111111111111", "created": "2020-04-25T17:11:34.000000Z", "idx": 1, "age_cumsum": 42, "properties": {"extended": true, "mutation": true}, "scores": [5, 6, 7]}
    ]
 ]

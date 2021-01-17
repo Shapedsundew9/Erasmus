@@ -157,11 +157,15 @@ def create_constant(name, values):
     return constant_name
 
 
-def create_codon(i_types, o_type, code, name, properties):
+def create_codon(i_types, o_type, inline, name, properties, code=None, imports=None):
+    if o_type[0:2] == 'gc' or any([i[0:2] == 'gc' for i in i_types]):
+        properties.update({'physical': True})
     codon = deepcopy(_GC_CODON_TEMPLATE)
     for n, i in enumerate(i_types): codon['graph']['A'].append(['I', n, gc_type_dict[i]['uid']])
     codon['meta_data']['name'] = name
-    codon['meta_data']['function']['python3']['0']['inline'] = code
+    if not code is None: codon['meta_data']['function']['python3']['0']['code'] = code
+    if not imports is None: codon['meta_data']['function']['python3']['0']['imports'] = imports
+    codon['meta_data']['function']['python3']['0']['inline'] = inline
     codon['graph']['O'][0][2] = gc_type_dict[o_type]['uid']
     codon['properties'] = properties
     gc_codon_list.append(codon)
@@ -293,7 +297,8 @@ for typ, val in gc_type_dict.items():
     # Random constant selections (per type)
     if 'allowed' in val:
         constant = create_constant(typ, val['allowed'])
-        create_codon(tuple(), typ, "choice({})".format(constant), "Random {} choice.".format(typ), {'deterministic': False})
+        imports = [{'module': 'random', 'object': 'choice'}]
+        create_codon(tuple(), typ, "random_choice({})".format(constant), "Random {} choice.".format(typ), {'deterministic': False}, imports=imports)
 
     # Lists with defined lengths & types
     if 'items' in val:
@@ -320,8 +325,9 @@ for typ, val in gc_type_dict.items():
             if not 'allowed' in c:
 
                 # Set
-                inline = "{i0}[" + str(i) + "] = {i1}"
-                create_codon((typ, c['type']), typ, inline, "Set {}[{}].".format(typ, i), {})
+                code = "{i0}[" + str(i) + "] = {i1}"
+                inline = "{i0}"
+                create_codon((typ, c['type']), typ, inline, "Set {}[{}].".format(typ, i), {}, code)
 
                 # Get
                 inline = "{i0}[" + str(i) + "]"
@@ -335,12 +341,14 @@ for typ, val in gc_type_dict.items():
         create_codon((val['schema']['type'],), typ, inline, "Create {}.".format(typ), {})
 
         # Append
-        inline = "{i0}.append({i1})"
-        create_codon((typ, val['schema']['type']), typ, inline, "Append to {}.".format(typ), {})
+        code = "{i0}.append({i1})"
+        inline = "{i0}"
+        create_codon((typ, val['schema']['type']), typ, inline, "Append to {}.".format(typ), {}, code)
 
         # Set
-        inline = "{i0}[{i1}] = {i2}"
-        create_codon((typ, typ + "_idx", val['schema']['type']), typ, inline, "Set {}[int].".format(typ), {})
+        code = "{i0}[{i1}] = {i2}"
+        inline = "{i0}"
+        create_codon((typ, typ + "_idx", val['schema']['type']), typ, inline, "Set {}[int].".format(typ), {}, code)
 
         # Get element
         inline = "{i0}[{i1}]"
@@ -351,8 +359,9 @@ for typ, val in gc_type_dict.items():
         create_codon((typ, typ + "_idx", typ + "_idx"), typ, inline, "Get {}[int:int].".format(typ), {})
 
         # Clear
-        inline = "{i0}.clear()"
-        create_codon((typ,), typ, inline, "Clear {}.".format(typ), {})
+        code = "{i0}.clear()"
+        inline = "{i0}"
+        create_codon((typ,), typ, inline, "Clear {}.".format(typ), {}, code)
 
         # Pop
         inline = "{i0}.pop()"
@@ -372,14 +381,15 @@ for typ, val in gc_type_dict.items():
             if not v.get('read-only', False):
                 keys.append(k)
                 values.append(v['type'])
-        inline = "{" + ", ".join(['"' + ky + '": {i' + str(n) + '}' for n, ky in enumerate(keys)]) + '}'
+        inline = "{{" + ", ".join(['"' + ky + '": {i' + str(n) + '}' for n, ky in enumerate(keys)]) + '}}'
         create_codon(values, typ, inline, "Create {}".format(typ), {})
 
         # Set a key-value pair
         for k, v in val['schema'].items():
             if not v.get('read-only', False):
-                inline = '{i0}["' + k + '"] = {i1}'
-                create_codon((typ, v['type']), v['type'], inline, "Set {}['{}']".format(typ, k), {})
+                code = '{i0}["' + k + '"] = {i1}'
+                inline = '{i0}'
+                create_codon((typ, v['type']), v['type'], inline, "Set {}['{}']".format(typ, k), {}, code)
 
         # Get a value
         for k, v in val['schema'].items():

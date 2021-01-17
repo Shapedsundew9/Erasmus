@@ -15,9 +15,7 @@
         "test_genomic_library": {
             "database": "test_database",
             "data_files": [
-                "codons_elementary_arithmetic.json",
-                "codons_elementary_mutations.json",
-                "codons_numeric_constant_mutations.json"
+                "gc_codons.json"
             ],
             "format_file": "genomic_library_entry_format.json"
         }

@@ -24,66 +24,6 @@ class query_validator():
         'limit': {
             'type': 'integer',
             'min': 1
-        },
-        'contains': {
-            'type': 'dict',
-            'schema': {
-                'lhs': {
-                    'type': 'list',
-                    'schema': {
-                        'type': 'string',
-                        'allowed': []
-                    }
-                },
-                'rhs': {
-                    'type': 'list'
-                }
-            }
-        },
-        'overlaps': {
-            'type': 'dict',
-            'schema': {
-                'lhs': {
-                    'type': 'list',
-                    'schema': {
-                        'type': 'string',
-                        'allowed': []
-                    }
-                },
-                'rhs': {
-                    'type': 'list'
-                }
-            }
-        },
-        'does not overlap': {
-            'type': 'dict',
-            'schema': {
-                'lhs': {
-                    'type': 'list',
-                    'schema': {
-                        'type': 'string',
-                        'allowed': []
-                    }
-                },
-                'rhs': {
-                    'type': 'list'
-                }
-            }
-        },
-        'contained by': {
-            'type': 'dict',
-            'schema': {
-                'lhs': {
-                    'type': 'list',
-                    'schema': {
-                        'type': 'string',
-                        'allowed': []
-                    }
-                },
-                'rhs': {
-                    'type': 'list'
-                }
-            }
         }
     }
 
@@ -106,7 +46,8 @@ class query_validator():
 
     # TODO: Why does this not draw on the entry_schema for rules on validation of the search terms
     def _query_params(self, entry_schema):
-        if entry_schema['type'] == "integer" or entry_schema['type'] == "float" or entry_schema['meta']['database']['type'] == "TIMESTAMP":
+        if (entry_schema['type'] == "integer" or entry_schema['type'] == "float" or 
+                entry_schema['meta']['database']['type'] == "TIMESTAMP") and not entry_schema['meta']['database']['array']:
             param_schema = {
                 'oneof': [
                     {
@@ -176,6 +117,29 @@ class query_validator():
                     }
                 ]
             }
+        if entry_schema['meta']['database']['array']:
+            param_schema = {
+                "type": "dict",
+                "schema": {
+                    "operator": {
+                        "type": "string",
+                        "allowed": [
+                            "contains",
+                            "contained by",
+                            "overlaps",
+                            "does not overlap",
+                            "equals"
+                        ]
+                    },
+                    "array": {
+                        "type": "list",
+                        "schema": {
+                            "type": entry_schema['type']
+                        }
+                    }
+                }
+            }
+
         return param_schema
 
 

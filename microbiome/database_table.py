@@ -15,11 +15,7 @@ from .config import get_config
 
 _QUERY_SPECIAL_TERMS = (
     'order by',
-    'limit',
-    'contains',
-    'contained by',
-    'overlaps',
-    'does not overlap'
+    'limit'
 )
 
 
@@ -161,16 +157,20 @@ class database_table():
 
             # Create the column definitions
             columns = []
+            last_insert_columns = []
             has_cumsum = False
             for k ,c in self.schema.items():
                 sql_str = " " + c['database']['type']
-                if c['database']['null']: sql_str += " NOT NULL"
+                if c['database']['array']: sql_str += " []"
+                if not c['database']['null']: sql_str += " NOT NULL"
                 if not c['database']['properties'] is None: sql_str += " " + c['database']['properties']
                 columns.append(sql.Identifier(k) + sql.SQL(sql_str))
+                last_insert_columns.append(sql.Identifier(k) + sql.SQL(sql_str.replace(" NOT NULL", "")))
                 if c['database']['cumsum']:
                     sql_str = sql.Identifier(k + '_cumsum') + sql.SQL(" " + c['database']['type'])
                     sql_str += sql.SQL(" DEFAULT 0 NOT NULL")
                     columns.append(sql_str)
+                    last_insert_columns.append(sql_str)
                     has_cumsum = True
 
             # Create the table
@@ -180,7 +180,7 @@ class database_table():
             if has_cumsum:
                 sql_str = sql.SQL("DROP TABLE IF EXISTS {} CASCADE").format(sql.Identifier(self.table + "_last_insert"))
                 cur.execute(sql_str)
-                sql_str = sql.SQL("CREATE TABLE {} ({})").format(sql.Identifier(self.table + "_last_insert"), sql.SQL(", ").join(columns))
+                sql_str = sql.SQL("CREATE TABLE {} ({})").format(sql.Identifier(self.table + "_last_insert"), sql.SQL(", ").join(last_insert_columns))
                 self._logger.info(sql_str.as_string(database_table._conn[self.dbname]))
                 cur.execute(sql_str)
 
@@ -235,6 +235,25 @@ class database_table():
             elif len(term[1]) == 1 and 'max' in term[1]:
                 sql_list.append(sql.SQL(" <= "))
                 sql_list.append(sql.Literal(self._cast_term_to_store_type(term[0], term[1]['max'])))
+            elif 'operator' in term[1]:
+                array_op = term[1]['operator']
+                if 'contains' == array_op:
+                    sql_list.append(sql.SQL(" @> "))
+                    sql_list.append(sql.Literal(term[1]['array']))
+                elif 'c' == array_op[0]: # 'contained by'
+                    sql_list.append(sql.SQL(" <@ "))
+                    sql_list.append(sql.Literal(term[1]['array']))
+                elif 'o' == array_op[0]: # 'overlaps'
+                    sql_list.append(sql.SQL(" && "))
+                    sql_list.append(sql.Literal(term[1]['array']))
+                elif 'd' == array_op[0]: # 'does not overlap'
+                    sql_list.insert(-1, sql.SQL("NOT("))
+                    sql_list.append(sql.SQL(" && "))
+                    sql_list.append(sql.Literal(term[1]['array']))
+                    sql_list.append(sql.SQL(")"))
+                elif 'e' == array_op[0]: # 'equals'
+                    sql_list.append(sql.SQL(" = "))
+                    sql_list.append(sql.Literal(term[1]['array']))
             else:
                 # Assume this field has a codec
                 # term[0] & mask = term[1]
@@ -247,24 +266,11 @@ class database_table():
         return sql.Composed(sql_list)
 
 
-    def _array_op_to_sql(self, params, op):
-        sql_obj = sql.SQL("ARRAY[")
-        sql_obj += sql.SQL(", ").join([sql.Identifier(column) for column in params['lhs']])
-        sql_obj += sql.SQL("] " + op + " ARRAY[")
-        sql_obj += sql.SQL(", ").join([sql.Literal(value) for value in params['rhs']])
-        sql_obj += sql.SQL("]")
-        return sql_obj
-
-
     def _query_to_sql(self, query):
         sql_terms = [self._term_to_sql(term) for term in query.items() if not term[0] in _QUERY_SPECIAL_TERMS] 
         if len(sql_terms) > 1: sql_obj = sql.SQL("WHERE ") + sql.SQL(" AND ").join(sql_terms)
         elif len(sql_terms) == 1: sql_obj = sql.SQL("WHERE ") + sql_terms[0]
         else: sql_obj = sql.SQL("")
-        if 'contains' in query: sql_obj += sql.SQL(" AND ") + self._array_op_to_sql(query['contains'], '@>')
-        if 'contained by' in query: sql_obj += sql.SQL(" AND ") + self._array_op_to_sql(query['contained by'], '<@')
-        if 'overlaps' in query: sql_obj += sql.SQL(" AND ") + self._array_op_to_sql(query['overlaps'], '&&')
-        if 'does not overlap' in query: sql_obj += sql.SQL(" AND NOT ") + self._array_op_to_sql(query['overlaps'], '&&')
         if 'limit' in query: sql_obj += sql.SQL(" LIMIT {}").format(sql.Literal(query['limit']))
         if 'order by' in query:
             order_by = sql.Identifier(query['order by']) if query['order by'] != "RANDOM()" else query['order by'] 

@@ -1,5 +1,5 @@
 '''
-Filename: /home/shapedsundew9/Projects/Erasmus/microbiome/genetics/gene_pool.py
+Filename: /home/shapedsundew9/Projects/Erasmus/microbiome/genetics/_gene_pool.py
 Path: /home/shapedsundew9/Projects/Erasmus/microbiome/genetics
 Created Date: Monday, April 13th 2020, 10:36:07 am
 Author: Shapedsundew9
@@ -11,15 +11,11 @@ from logging import getLogger, DEBUG
 from .genomic_library import genomic_library
 from .genomic_library_entry_validator import NULL_GC, DEAD_GC_PREFIX
 from tempfile import NamedTemporaryFile
-from graph_tool import Graph
-from numpy import int64, float32, zeros, ndarray, array
-from copy import copy
-from ..draw_graph import draw_graph
 from sys import path
 from os.path import dirname, abspath, basename
 from importlib import import_module, reload
 from pprint import pformat
-from gc_graph import gc_graph
+from .gc_graph import gc_graph
 
 
 def _reference():
@@ -40,7 +36,6 @@ def _reference():
 #   6. Restarting from the last saved state
 # The gene pool does not persist state.
 # The gene pool is not the same as the population.
-
 # TODO: Can optimise how often code is regenerated & imported by making a hierarchy of volatility
 class _gene_pool():
 
@@ -52,12 +47,12 @@ class _gene_pool():
 
 
     def __init__(self, query=[{'gca': NULL_GC, 'gcb': NULL_GC}], callables_prefix=None, file_ptr=None):
-        if gene_pool._gl is None: gene_pool._gl = genomic_library()
+        if _gene_pool._gl is None: _gene_pool._gl = genomic_library()
         self._query = query
         self._file_ptr = NamedTemporaryFile(mode='w', suffix='.py', prefix=callables_prefix, delete=False) if file_ptr is None else open(file_ptr, 'w')
-        self._file_ptr.write(gene_pool._CALLABLE_FILE_HEADER)
+        self._file_ptr.write(_gene_pool._CALLABLE_FILE_HEADER)
         self._file_ptr.close()
-        gene_pool._logger.info("Initial gene pool query: %s", str(query))
+        _gene_pool._logger.info("Initial gene pool query: %s", str(query))
         self._gene_pool = {}
         path.insert(1, dirname(abspath(self._file_ptr.name)))
         self._module = import_module(basename(self._file_ptr.name)[:-3])
@@ -65,9 +60,13 @@ class _gene_pool():
         self._update()
  
 
+    def __len__(self):
+        return len(self._gene_pool)
+
+
     def __getitem__(self, signature):
         if signature not in self._gene_pool:
-            gcs = self.extended_genetic_code(gene_pool._gl[signature], stored=True)
+            gcs = self.extended_genetic_code(_gene_pool._gl[signature], stored=True)
             self.add(gcs)
         return self._gene_pool[signature]
 
@@ -78,12 +77,12 @@ class _gene_pool():
 
     # Any GCs pulled from the genomic library are by definition valid
     def _update(self):
-        gcs = [self.extended_genetic_code(gc, stored=True) for gc in gene_pool._gl.load(self._query)]
+        gcs = [self.extended_genetic_code(gc, stored=True) for gc in _gene_pool._gl.load(self._query)]
         self.add(gcs)
 
 
     def _function_not_found(self, name):
-        gene_pool._logger.error("The the GC function %s cannot be found.", name)
+        _gene_pool._logger.error("The the GC function %s cannot be found.", name)
 
 
     def _write_arg(self, iab, c):
@@ -92,11 +91,22 @@ class _gene_pool():
 
     def _create_callables(self, active_gcs):
         file_ptr = open(self._file_ptr.name, "w")
-        gene_pool._logger.debug("Gene pool file created: %s", file_ptr.name)
-        file_ptr.write(gene_pool._CALLABLE_FILE_HEADER)    
-        file_ptr.write("\n\nfrom microbiome.genetics.gc_mutation_functions import *\nfrom random import random, uniform\n\n\n")
+        _gene_pool._logger.debug("Gene pool file created: %s", file_ptr.name)
+        file_ptr.write(_gene_pool._CALLABLE_FILE_HEADER)
+        import_list = []
+        # TODO: There are more efficient places to do this
         for gc in active_gcs:
-            if gene_pool._logger.getEffectiveLevel() == DEBUG: file_ptr.write("'''\n{}\n'''\n".format(pformat({k: v for k, v in gc.items() if k[:2] != '_'})))    
+            if 'function' in gc['meta_data']:
+                python = gc['meta_data']['function']['python3']['0']
+                if 'imports' in python:
+                    for imports in python['imports']:
+                        if not impt in import_list:
+                            import_list.append(impt)
+                            impt['name'] = impt['module'].replace('.', '_') + '_' + impt['object'].replace('.', '_')
+                            string = "from {module} import {object} as {name}\n".format(**impt)
+                            file_ptr.write(string)
+        for gc in active_gcs:
+            if _gene_pool._logger.getEffectiveLevel() == DEBUG: file_ptr.write("'''\n{}\n'''\n".format(pformat({k: v for k, v in gc.items() if k[:2] != '_'})))    
             file_ptr.write("def " + self.function_name(gc['signature']) + "(i):\n")
             if not 'function' in gc['meta_data']:
                 c = gc['graph']['C'] if 'C' in gc['graph'] else [] 
@@ -106,13 +116,15 @@ class _gene_pool():
             else:
                 format_dict = {'c' + str(i): v for i, v in enumerate(gc['graph']['C'])} if 'C' in gc['graph'] else {}
                 format_dict.update({'i' + str(i): 'i[{}]'.format(i) for i in range(gc['num_inputs'])})
-                file_ptr.write("\treturn (" + gc['meta_data']['function']['python3']['0']['inline'].format(format_dict) + ",)\n\n\n")
+                code = gc['meta_data']['function']['python3']['0']
+                if 'code' in code: file_ptr.write("\t" + code['code'].format(**format_dict) + "\n")
+                file_ptr.write("\treturn (" + code['inline'].format(**format_dict) + ",)\n\n\n")
 
         # Add some function meta_data
         file_ptr.write("meta_data = {\n\t")
         lines = []
         for gc in active_gcs:
-            line = "'{}':{{".format(gc['signature']) + ','.join(["'{}': {}".format(k, gc[k]) for k in gene_pool._META_DATA_FIELDS])
+            line = "'{}':{{".format(gc['signature']) + ','.join(["'{}': {}".format(k, gc[k]) for k in _gene_pool._META_DATA_FIELDS])
             lines.append(line + ", 'callable': {} }}".format(self.function_name(gc['signature'])))
         file_ptr.write(',\n\t'.join(lines) + "\n}\n")
         file_ptr.close()
@@ -121,11 +133,11 @@ class _gene_pool():
 
     # Get from the genomic library
     def gl(self, queries):
-        return [self.extended_genetic_code(gc, stored=True) for gc in gene_pool._gl.load(queries, fields)]
+        return [self.extended_genetic_code(gc, stored=True) for gc in _gene_pool._gl.load(queries, fields)]
 
 
     def push(self):
-        if self._push_queue: gene_pool._gl.store(self._push_queue)
+        if self._push_queue: _gene_pool._gl.store(self._push_queue)
         self._push_queue.clear()
 
 
@@ -168,11 +180,11 @@ class _gene_pool():
                 self._gene_pool[signature] = xgc
                 self._push_queue.append(xgc)
                 for _ab, ab in (('_gca', 'gca'), ('_gcb', 'gcb')):
-                    if  xgc[ab] != NULL_GC:
+                    if xgc[ab] != NULL_GC:
                         if not xgc[ab] in self._gene_pool:
                             if not xgc[ab] in signature_queue:
-                                gene_pool._logger.debug("Loading GCAB %s from genomic library.", xgc[ab])
-                                addition_queue.append(self.extended_genetic_code(gene_pool._gl[xgc[ab]], stored=True))
+                                _gene_pool._logger.debug("Loading GCAB %s from genomic library.", xgc[ab])
+                                addition_queue.append(self.extended_genetic_code(_gene_pool._gl[xgc[ab]], stored=True))
                                 signature_queue.append(addition_queue[-1]['signature'])
                                 xgc[_ab] = addition_queue[-1]
                                 xgc[_ab]['_count'] = 1
@@ -234,4 +246,4 @@ class _gene_pool():
         return gc
 
 
-gene_pool = _gene_pool()
+#gene_pool = _gene_pool()

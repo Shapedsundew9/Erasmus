@@ -825,11 +825,41 @@
                         "schema": {
                             "inline": {
                                 "type": "string",
+                                "minlength": 1,
+                                "maxlength": 1024,
                                 "required": true,
                                 "check_with": "valid_inline"
                             },
+                            "imports": {
+                                "type": "list",
+                                "maxlength": 32,
+                                "schema": {
+                                    "type": "dict",
+                                    "schema": {
+                                        "module": {
+                                            "type": "string",
+                                            "minlength": 1,
+                                            "maxlength": 64,
+                                            "required": true
+                                        },
+                                        "object": {
+                                            "type": "string",
+                                            "minlength": 1,
+                                            "maxlength": 64,
+                                            "required": true
+                                        }
+                                    }
+                                }
+                            },
+                            "code": {
+                                "type": "string",
+                                "minlength": 1,
+                                "maxlength": 1024
+                            },
                             "callable": {
                                 "type": "string",
+                                "minlength": 1,
+                                "maxlength": 128,
                                 "check_with": "valid_callable"
                             }
                         }
