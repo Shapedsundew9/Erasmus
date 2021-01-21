@@ -3,73 +3,86 @@
         "type": "bool",
         "min": 0,
         "max": 1,
-        "default": false
+        "default": false,
+        "numeric": true
     },
     "int8": {
         "type": "signedinteger",
         "min": -128,
         "max": 127,
-        "default": 0
+        "default": 0,
+        "numeric": true
     },
     "int16": {
         "type": "signedinteger",
         "min": -32768,
         "max": 32767,
-        "default": 0
+        "default": 0,
+        "numeric": true
     },
     "int32": {
         "type": "signedinteger",
         "min": -2147483648,
         "max": 2147483647,
-        "default": 0
+        "default": 0,
+        "numeric": true
     },
     "int64": {
         "type": "signedinteger",
         "min": -9223372036854775808,
         "max": 9223372036854775807,
-        "default": 0
+        "default": 0,
+        "numeric": true
     },
     "uint8": {
         "type": "unsignedinteger",
         "min": 0,
         "max": 255,
-        "default": 0
+        "default": 0,
+        "numeric": true
     },
     "uint16": {
         "type": "unsignedinteger",
         "min": 0,
         "max": 65535,
-        "default": 0
+        "default": 0,
+        "numeric": true
     },
     "uint32": {
         "type": "unsignedinteger",
         "min": 0,
         "max": 4294967295,
-        "default": 0
+        "default": 0,
+        "numeric": true
     },
     "uint64": {
         "type": "unsignedinteger",
         "min": 0,
         "max": 18446744073709551615,
-        "default": 0
+        "default": 0,
+        "numeric": true
     },
     "float32": {
         "type": "float64",
         "min": -3.4028235e+38,
         "max": 3.4028235e+38,
-        "default": 0
+        "default": 0,
+        "numeric": true
     },
     "float64": {
         "type": "floating",
         "min": -1.7976931348623157e+308,
         "max": 1.7976931348623157e+308,
-        "default": 0
+        "default": 0,
+        "numeric": true
     },
     "complex64": {
-        "type": "complex128"
+        "type": "complex128",
+        "numeric": true
     },
     "complex128": {
-        "type": "np_complex"
+        "type": "np_complex",
+        "numeric": true
     },
     "signedinteger": {
         "type": "integer",
@@ -95,6 +108,7 @@
         "type": "np_generic"
     },
     "np_generic":{
-        "type": "object"
+        "type": "object",
+        "module": "numpy"
     }
 }

@@ -43,12 +43,13 @@ class genomic_library():
     _store = None
     _query_validator = None
     _logger = getLogger(__name__)
+    _verify_consistency = None
 
 
     def __init__(self):
         """Multiple instances point to the same class assets."""
         if genomic_library._store is None:
-            self._verify_consistency = get_config()['general']['verify_consistency']
+            genomic_library._verify_consistency = get_config()['general']['verify_consistency']
             table_name = get_config()['genomic_library_table']
             genomic_library._logger.debug("Genomic library table name: {}".format(table_name))
             genomic_library._store = database_table(genomic_library._logger, table_name)
@@ -186,7 +187,7 @@ class genomic_library():
                     genomic_library._logger.error(str(text_token({'E03001': {
                         'errors': pformat(genomic_library_entry_validator.errors, width=180),
                         'entry': pformat(entry, width=180)}})))
-        if self._verify_consistency:
+        if genomic_library._verify_consistency:
             for entry in normalized_entries:
                 references = [entry['gca'], entry['gcb']]
                 if 'parents' in entry['meta_data']:

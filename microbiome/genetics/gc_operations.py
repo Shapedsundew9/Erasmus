@@ -1,6 +1,6 @@
 """The operation that can be performed on a GC dictionary."""
 from .genomic_library_entry_validator import NULL_GC
-from gc_graph import gc_graph, ep_idx
+from .gc_graph import gc_graph, ep_idx
 from random import getrandbits
 from copy import deepcopy, copy
 
@@ -106,7 +106,7 @@ def gc_insert(target_gc, insert_gc, above_row):
                 tgc_graph.insert(insert_gc, above_row)
         tgc['signature'] = hex(getrandbits(256))[2:]
         steady = target_graph.normalise()
-            tgc['graph'] = target_graph.app_graph
+        tgc['graph'] = target_graph.app_graph
         if not steady:
             work_stack.insert(0, steady_state_exception(tgc))
         else:
@@ -115,7 +115,7 @@ def gc_insert(target_gc, insert_gc, above_row):
     return fgc_list
 
 
-def steady_state_exception(fgc)
+def steady_state_exception(fgc):
     """Define what GC must be inserted to complete or partially complete the fgc graph.
 
     fgc is analysed to determine what end point destinations are unconnected and the highest row

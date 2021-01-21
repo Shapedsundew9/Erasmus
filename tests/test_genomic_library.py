@@ -140,7 +140,7 @@ def test_load_bad_query(glib):
 
 @pytest.mark.good
 def test_store(glib):
-    """Store a set of tets codons."""
+    """Store a set of test codons."""
     with open(join(dirname(__file__), "data/test_codons.json"), "r") as file_ptr:
         test_codons = load(file_ptr)
     glib.store(test_codons)

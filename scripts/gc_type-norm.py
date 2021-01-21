@@ -3,12 +3,15 @@
 
 from json import load, dump
 from sys import exit
+from tqdm import tqdm
 from pprint import pformat
 from argparse import ArgumentParser, FileType
 from cerberus import Validator
 from copy import deepcopy
 from os.path import exists, join, dirname
 from numpy import int8, int16, int32, int64, uint8, uint16, uint32, uint64, float32, float64, complex64, complex128
+from numpy import bool as np_bool
+
 
 gc_type_dict = {}
 gc_constant_dict = {}
@@ -157,14 +160,14 @@ def create_constant(name, values):
     return constant_name
 
 
-def create_codon(i_types, o_type, inline, name, properties, code=None, imports=None):
+def create_codon(i_types, o_type, inline, name, properties, code=None, imports=[]):
     if o_type[0:2] == 'gc' or any([i[0:2] == 'gc' for i in i_types]):
         properties.update({'physical': True})
     codon = deepcopy(_GC_CODON_TEMPLATE)
     for n, i in enumerate(i_types): codon['graph']['A'].append(['I', n, gc_type_dict[i]['uid']])
     codon['meta_data']['name'] = name
     if not code is None: codon['meta_data']['function']['python3']['0']['code'] = code
-    if not imports is None: codon['meta_data']['function']['python3']['0']['imports'] = imports
+    if imports: codon['meta_data']['function']['python3']['0']['imports'] = imports
     codon['meta_data']['function']['python3']['0']['inline'] = inline
     codon['graph']['O'][0][2] = gc_type_dict[o_type]['uid']
     codon['properties'] = properties
@@ -210,6 +213,10 @@ def restrict(v1, v2, k):
     if k == 'basic':
         return None
     if k == 'items':
+        return None
+    if k == 'numeric':
+        return None
+    if k == 'module':
         return None
     if k == 'ancestors':
         v1.extend(v2)
@@ -397,25 +404,53 @@ for typ, val in gc_type_dict.items():
             create_codon((typ,), v['type'], inline, "Get {}['{}']".format(typ, k), {})
 
 
-#print(pformat(gc_constant_dict))
+# Find all the numeric types.
+numeric_types = {k: eval(k) for k, v in gc_type_dict.items() if 'numeric' in v and v['numeric']}
 
+
+# Write out all the numeric type mathmatical operator codons
+for op in tqdm(_OPERATORS.keys(), desc='Evaluate numeric codons'):
+    for k1, v1 in numeric_types.items():
+        for k2, v2 in numeric_types.items():
+            try:
+                o0 = eval('v1(2) {} v2(2)'.format(op))
+            except Exception as e:
+                pass
+            else:
+                imports = []
+                if 'module' in gc_type_dict[k1]: imports.append({'module': gc_type_dict[k1]['module'], 'object': k1})
+                if 'module' in gc_type_dict[k2]: imports.append({'module': gc_type_dict[k2]['module'], 'object': k2})
+                assert type(o0).__name__ in numeric_types.keys()
+                create_codon((k1, k2), type(o0).__name__, _OPERATORS[op]['inline'], _OPERATORS[op]['name'], _OPERATORS[op]['properties'], None, imports)
+
+
+# Write out all the type operation codons
+nentries = []
 if exists("../microbiome/data/gc_types.json"):
     from microbiome.genetics.genomic_library_entry_validator import genomic_library_entry_validator
-    nentries = []
+    pbar = tqdm(total=len(gc_codon_list), desc="Type codons")
     while gc_codon_list:
+        pbar.update()
         codon = genomic_library_entry_validator.normalized(gc_codon_list.pop())
         if not genomic_library_entry_validator.validate(codon):
+            print(codon)
             print(genomic_library_entry_validator.errors)
             barf()
         if codon['signature'] in [n['signature'] for n in nentries]:
             print(codon)
             barf()
         nentries.append(codon)
-    try:
-        with open('gc_codons.json', 'w') as njsonfile:
-            dump(nentries, njsonfile, indent=4, sort_keys=True)
-    except Exception as e:
-        print("ERROR: Unable to write JSON output file {} with error {}.".format(njsonfile, str(e)))
+
+
+# Remove duplicates
+nentries = list({n['signature']: n for n in nentries}.values())
+
+# Write out codon file
+try:
+    with open('gc_codons.json', 'w') as njsonfile:
+        dump(nentries, njsonfile, indent=4, sort_keys=True)
+except Exception as e:
+    print("ERROR: Unable to write JSON output file {} with error {}.".format(njsonfile, str(e)))
 
 
 with open('gc_classes.py', 'w') as classfile:

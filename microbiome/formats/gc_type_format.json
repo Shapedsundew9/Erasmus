@@ -158,5 +158,13 @@
         "schema": {
             "type": ["integer", "string"]
         }
+    },
+    "numeric": {
+        "type": "boolean",
+        "default": false
+    },
+    "module": {
+        "type": "string",
+        "maxlength": 64
     }
 }
