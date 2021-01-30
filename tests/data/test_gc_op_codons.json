@@ -1,0 +1,146 @@
+[
+    {
+        "alpha_class": 0,
+        "beta_class": 0,
+        "code_depth": 1,
+        "codon_depth": 1,
+        "created": "2021-01-21T22:12:20.910391Z",
+        "creator": "0000000000000000000000000000000000000000000000000000000000000000",
+        "evolvability": 0.0,
+        "fitness": 0.0,
+        "gca": "0000000000000000000000000000000000000000000000000000000000000000",
+        "gcb": "0000000000000000000000000000000000000000000000000000000000000000",
+        "generation": 0,
+        "graph": {
+            "A": [
+                [
+                    "I",
+                    0,
+                    283
+                ],
+                [
+                    "I",
+                    1,
+                    283
+                ]
+            ],
+            "O": [
+                [
+                    "A",
+                    0,
+                    283
+                ]
+            ]
+        },
+        "input_types": [
+            283,
+            283
+        ],
+        "meta_data": {
+            "function": {
+                "python3": {
+                    "0": {
+                        "inline": "{i0} - {i1}"
+                    }
+                }
+            },
+            "name": "subtract int from int"
+        },
+        "num_codes": 1,
+        "num_inputs": 2,
+        "num_outputs": 1,
+        "num_unique_codes": 1,
+        "opt_num_codons": 1,
+        "output_types": [
+            283
+        ],
+        "properties": {
+            "arithmetic": true,
+            "bitwise": false,
+            "conditional": false,
+            "constant": false,
+            "deterministic": true,
+            "extended": false,
+            "logical": false,
+            "memory_modify": false,
+            "object_modify": false,
+            "physical": false
+        },
+        "raw_num_codons": 1,
+        "reference_count": 0,
+        "signature": "b36d9bf9dfa7eac96dd70374ac949f64e6f72bce8bca30da7658ff0bdf2670b8",
+        "updated": "2021-01-21T22:12:20.910378Z"
+    },
+    {
+        "alpha_class": 0,
+        "beta_class": 0,
+        "code_depth": 1,
+        "codon_depth": 1,
+        "created": "2021-01-21T22:12:23.311804Z",
+        "creator": "0000000000000000000000000000000000000000000000000000000000000000",
+        "evolvability": 0.0,
+        "fitness": 0.0,
+        "gca": "0000000000000000000000000000000000000000000000000000000000000000",
+        "gcb": "0000000000000000000000000000000000000000000000000000000000000000",
+        "generation": 0,
+        "graph": {
+            "A": [
+                [
+                    "I",
+                    0,
+                    283
+                ],
+                [
+                    "I",
+                    1,
+                    283
+                ]
+            ],
+            "O": [
+                [
+                    "A",
+                    0,
+                    283
+                ]
+            ]
+        },
+        "input_types": [
+            283,
+            283
+        ],
+        "meta_data": {
+            "function": {
+                "python3": {
+                    "0": {
+                        "inline": "{i0} + {i1}"
+                    }
+                }
+            },
+            "name": "add int to int"
+        },
+        "num_codes": 1,
+        "num_inputs": 2,
+        "num_outputs": 1,
+        "num_unique_codes": 1,
+        "opt_num_codons": 1,
+        "output_types": [
+            283
+        ],
+        "properties": {
+            "arithmetic": true,
+            "bitwise": false,
+            "conditional": false,
+            "constant": false,
+            "deterministic": true,
+            "extended": false,
+            "logical": false,
+            "memory_modify": false,
+            "object_modify": false,
+            "physical": false
+        },
+        "raw_num_codons": 1,
+        "reference_count": 0,
+        "signature": "b7defebb20a51cfe22a012e880e2048e526daba406ae90c2a59a07d79c856d74",
+        "updated": "2021-01-21T22:12:23.311790Z"
+    }
+]

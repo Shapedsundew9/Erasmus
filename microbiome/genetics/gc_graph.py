@@ -98,6 +98,15 @@ class ep_idx(IntEnum):
     VALUE = 5
 
 
+def hash_ref(ref, ep_type):
+    return ref[0] + str(ref[1]) + 'ds'[ep_type]
+
+
+def hash_ep(ep, ept=None):
+    ept = 'ds'[ep[ep_idx.EP_TYPE]] if ept is None else ept 
+    return ep[ep_idx.ROW] + str(ep[ep_idx.INDEX]) + ept
+
+
 def validate_value(value_str, gc_type):
     """Validate the executable string is a valid gc_type value.
 
@@ -192,16 +201,6 @@ class gc_graph():
         return string
 
 
-    #TODO: This function needs cleaning up. Maybe take an ep as an argument?
-    def hash_ref(self, ref, ep_type):
-        return ref[0] + str(ref[1]) + 'ds'[ep_type]
-
-
-    def hash_ep(self, ep, ept=None):
-        ept = 'ds'[ep[ep_idx.EP_TYPE]] if ept is None else ept 
-        return ep[ep_idx.ROW] + str(ep[ep_idx.INDEX]) + ept
-
-
     def _convert_to_internal(self, graph):
         """Convert graph to internal format.
 
@@ -225,8 +224,8 @@ class gc_graph():
                     # TODO: Make 0:2 a slice() constant
                     ep = [DST_EP, row, index, parameter[conn_idx.TYPE], [[*parameter[0:2]]]]
                     self.rows[DST_EP][row] = self.rows[DST_EP].get(row, 0) + 1
-                    retval[self.hash_ep(ep)] = ep
-                    src = self.hash_ref(ep[ep_idx.REFERENCED_BY][0], True)
+                    retval[hash_ep(ep)] = ep
+                    src = hash_ref(ep[ep_idx.REFERENCED_BY][0], True)
                     if src in retval:
                         retval[src][ep_idx.REFERENCED_BY].append([row, index])
                     elif parameter[0] != 'C':
@@ -236,7 +235,7 @@ class gc_graph():
                 else:
                     ep = [SRC_EP, row, index, parameter[const_idx.TYPE], [], parameter[const_idx.VALUE]]
                     self.rows[SRC_EP][row] = self.rows[SRC_EP].get(row, 0) + 1
-                    retval[self.hash_ep(ep)] = ep
+                    retval[hash_ep(ep)] = ep
         return retval
 
 
@@ -250,7 +249,7 @@ class gc_graph():
         ep_type, ep_row = ep[ep_idx.EP_TYPE], ep[ep_idx.ROW]
         if not ep_row in self.rows[ep_type]: self.rows[ep_type][ep_row] = 0
         ep[ep_idx.INDEX] = self.rows[ep_type][ep_row]
-        self.graph[self.hash_ep(ep)] = ep
+        self.graph[hash_ep(ep)] = ep
         self.rows[ep_type][ep_row] += 1
 
 
@@ -265,7 +264,7 @@ class gc_graph():
         """
         if not check or not ep[ep_idx.REFERENCED_BY]:
             ep_type, ep_row = ep[ep_idx.EP_TYPE], ep[ep_idx.ROW]
-            del self.graph[self.hash_ep(ep)]
+            del self.graph[hash_ep(ep)]
             self.rows[ep_type][ep_row] -= 1
 
 
@@ -335,7 +334,7 @@ class gc_graph():
                 p['pos'][v] = [x, 2 * pos[ep[ep_idx.ROW]][1]]
                 p['font_size'][v] = 14
                 p['font_weight'][v] = FONT_WEIGHT_BOLD
-                if self.hash_ref(ep[1:3], ep[ep_idx.EP_TYPE]) in self.graph and self.hash_ref(ep[1:3], not ep[ep_idx.EP_TYPE]) in self.graph: 
+                if hash_ref(ep[1:3], ep[ep_idx.EP_TYPE]) in self.graph and hash_ref(ep[1:3], not ep[ep_idx.EP_TYPE]) in self.graph: 
                     p['shape'][v], p['rotation'][v], p['text_rotation'][v], p['size'][v] = 'square', pi / 4, -pi / 4, vd
                 elif ep[ep_idx.EP_TYPE] == SRC_EP:
                     p['shape'][v], p['rotation'][v], p['text_rotation'][v], p['size'][v] = 'triangle', pi, -pi, vd
@@ -687,10 +686,10 @@ class gc_graph():
             6. Check a valid steady state has been achieved
         """
 
-        #1
+        #1 Connect all destinations to existing sources if possible
         self.connect_all()
         
-        #2
+        #2 Create new inputs for any destinations that are still unconnected.
         if modify_inputs:
             num_inputs = self.num_inputs()
             for ep in list(filter(self.dst_filter(self.unreferenced_filter()), self.graph.values())):
@@ -699,7 +698,7 @@ class gc_graph():
                 ep[ep_idx.REFERENCED_BY].append(['I', num_inputs])
                 num_inputs += 1
 
-        #3
+        #3 Purge any unconnected constants & inputs.
         removed = False
         target_rows = ('C','I') if modify_inputs else ('C',)
         for ep in list(filter(self.rows_filter(target_rows, self.unreferenced_filter()), self.graph.values())):
@@ -716,29 +715,29 @@ class gc_graph():
             c_map = {idx: i for i, idx in enumerate(c_set)}
             i_map = {idx: i for i, idx in enumerate(i_set)}
             # For each row select all the endpoints and iterate through the references to them
-            # For each reference update: Finf the reverse reference and update it with the new index
+            # For each reference update: Find the reverse reference and update it with the new index
             # Finally update the index in the endpoint
             for row, r_map in {'I': i_map, 'C': c_map}.items():
                 for ep in filter(self.row_filter(row), list(self.graph.values())):
                     for refs in ep[ep_idx.REFERENCED_BY]:
-                        for refd in self.graph[self.hash_ref(refs, DST_EP)][ep_idx.REFERENCED_BY]:
+                        for refd in self.graph[hash_ref(refs, DST_EP)][ep_idx.REFERENCED_BY]:
                             if refd[ref_idx.ROW] == row and refd[ref_idx.INDEX] == ep[ep_idx.INDEX]:
                                 refd[ref_idx.INDEX] = r_map[ep[ep_idx.INDEX]]
-                    del self.graph[self.hash_ep(ep)]
+                    del self.graph[hash_ep(ep)]
                     ep[ep_idx.INDEX] = r_map[ep[ep_idx.INDEX]]
-                    self.graph[self.hash_ep(ep)] = ep
+                    self.graph[hash_ep(ep)] = ep
 
-        #4
+        #4 Reference all unconnected sources in row 'U'
         row_u_list = list(filter(self.row_filter('U'), self.graph.values()))
         for ep in row_u_list: self._remove_ep(ep, check=False)
         unreferenced = list(filter(self.src_filter(self.unreferenced_filter()), self.graph.values()))
         for i, ep in enumerate(unreferenced):
             self._add_ep([DST_EP, 'U', i, ep[ep_idx.TYPE], [[*ep[1:3]]]])
 
-        #5
+        #5 self.app_graph is regenerated
         self.app_graph = self.application_graph()
 
-        #6
+        #6 Check a valid steady state has been achieved
         return not list(filter(self.unreferenced_filter(self.dst_filter()), self.graph.values()))       
 
 
@@ -1038,7 +1037,7 @@ class gc_graph():
         """
         if src_ep_list:
             src_ep = src_ep_list[0]
-            dst_ep_list = [self.graph[self.hash_ref(ref, DST_EP)] for ref in src_ep[ep_idx.REFERENCED_BY]]
+            dst_ep_list = [self.graph[hash_ref(ref, DST_EP)] for ref in src_ep[ep_idx.REFERENCED_BY]]
             if dst_ep_list:
                 dst_ep_list = dst_ep_filter_func(dst_ep_list) 
                 if dst_ep_list:

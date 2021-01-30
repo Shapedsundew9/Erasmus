@@ -48,7 +48,7 @@ _GC_CODON_TEMPLATE = {
 # All python binary operators.
 _OPERATORS = {
     '+': {
-        'name': 'add',
+        'name': 'add {t1} to {t2}',
         'inline': '{i0} + {i1}',
         'properties': {
             'arithmetic': True,
@@ -56,7 +56,7 @@ _OPERATORS = {
         }
     },
     '-': {
-        'name': 'subtract',
+        'name': 'subtract {t2} from {t1}',
         'inline': '{i0} - {i1}',
         'properties': {
             'arithmetic': True,
@@ -64,7 +64,7 @@ _OPERATORS = {
         }
     },
     '*': {
-        'name': 'multiply',
+        'name': 'multiply {t1} and {t2}',
         'inline': '{i0} * {i1}',
         'properties': {
             'arithmetic': True,
@@ -72,7 +72,7 @@ _OPERATORS = {
         }
     },
     '/': {
-        'name': 'true divide',
+        'name': 'true divide  {t1} by {t2}',
         'inline': '{i0} / {i1}',
         'properties': {
             'arithmetic': True,
@@ -80,7 +80,7 @@ _OPERATORS = {
         }
     },
     '//': {
-        'name': 'floor divide',
+        'name': 'floor divide  {t1} by {t2}',
         'inline': '{i0} // {i1}',
         'properties': {
             'arithmetic': True,
@@ -88,7 +88,7 @@ _OPERATORS = {
         }
     },
     '%': {
-        'name': 'modulo',
+        'name': 'modulo  {t1} with {t2}',
         'inline': '{i0} % {i1}',
         'properties': {
             'arithmetic': True,
@@ -96,7 +96,7 @@ _OPERATORS = {
         }
     },
     '@': {
-        'name': 'matrix multiply',
+        'name': 'matrix multiply {t1} by {t2}',
         'inline': '{i0} @ {i1}',
         'properties': {
             'arithmetic': True,
@@ -104,7 +104,7 @@ _OPERATORS = {
         }
     },
     '**': {
-        'name': 'power',
+        'name': ' {t1} to the power of {t2}',
         'inline': '{i0} ** {i1}',
         'properties': {
             'arithmetic': True,
@@ -112,7 +112,7 @@ _OPERATORS = {
         }
     },
     '^': {
-        'name': 'bitwise XOR',
+        'name': 'bitwise XOR {t1} and {t2}',
         'inline': '{i0} ^ {i1}',
         'properties': {
             'bitwise': True,
@@ -120,7 +120,7 @@ _OPERATORS = {
         }
     },
     '&': {
-        'name': 'bitwise AND',
+        'name': 'bitwise AND {t1} and {t2}',
         'inline': '{i0} & {i1}',
         'properties': {
             'bitwise': True,
@@ -128,7 +128,7 @@ _OPERATORS = {
         }
     },
     '|': {
-        'name': 'bitwise OR',
+        'name': 'bitwise OR {t1} and {t2}',
         'inline': '{i0} | {i1}',
         'properties': {
             'bitwise': True,
@@ -136,7 +136,7 @@ _OPERATORS = {
         }
     },
     '<<': {
-        'name': 'left shift',
+        'name': 'left shift {t1} by {t2}',
         'inline': '{i0} << {i1}',
         'properties': {
             'bitwise': True,
@@ -144,7 +144,7 @@ _OPERATORS = {
         }
     },
     '>>': {
-        'name': 'right shift',
+        'name': 'right shift {t1} by {t2}',
         'inline': '{i0} >> {i1}',
         'properties': {
             'bitwise': True,
@@ -421,7 +421,8 @@ for op in tqdm(_OPERATORS.keys(), desc='Evaluate numeric codons'):
                 if 'module' in gc_type_dict[k1]: imports.append({'module': gc_type_dict[k1]['module'], 'object': k1})
                 if 'module' in gc_type_dict[k2]: imports.append({'module': gc_type_dict[k2]['module'], 'object': k2})
                 assert type(o0).__name__ in numeric_types.keys()
-                create_codon((k1, k2), type(o0).__name__, _OPERATORS[op]['inline'], _OPERATORS[op]['name'], _OPERATORS[op]['properties'], None, imports)
+                name = _OPERATORS[op]['name'].format(**{'t1': k1, 't2': k2})
+                create_codon((k1, k2), type(o0).__name__, _OPERATORS[op]['inline'], name, _OPERATORS[op]['properties'], None, imports)
 
 
 # Write out all the type operation codons

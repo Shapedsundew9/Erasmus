@@ -1,0 +1,18 @@
+{
+    "default_database": "test_database",
+    "databases": {
+        "test_database": {
+            "recreate": true,
+            "username": "erasmus",
+            "password": "erasmus"
+        }
+    },
+    "tables": {
+        "genomic_library": {
+            "database": "test_database",
+            "data_file_folder": "./data",
+            "data_files": ["test_gc_op_codons.json"],
+            "format_file": "genomic_library_entry_format.json"
+        }
+    }   
+}
