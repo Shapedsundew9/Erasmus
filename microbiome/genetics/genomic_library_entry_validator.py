@@ -25,6 +25,22 @@ with open(join(dirname(__file__), "../formats/genomic_library_entry_format.json"
     _GENOMIC_LIBRARY_ENTRY_SCHEMA = schema = load(file_ptr)
 
 
+def define_signature(gc):
+    # The signature for a codon GC is slightly different
+    string = str(gc_graph(gc['graph']))
+
+    # If it is a codon glue on the mandatory definition
+    if "generation" in gc and gc["generation"] == 0:
+        if "meta_data" in gc and "function" in gc["meta_data"]:
+            string += gc["meta_data"]["function"]["python3"]["0"]["inline"]
+            if 'code' in gc["meta_data"]["function"]["python3"]["0"]:
+                string += gc["meta_data"]["function"]["python3"]["0"]["code"]
+
+    # Remove spaces etc. to give some degrees of freedom in formatting and
+    # not breaking the signature
+    return sha256("".join(string.split()).encode()).hexdigest()
+
+
 class _genomic_library_entry_validator(Validator):
 
     # TODO: Make errors ValidationError types for full disclosure
@@ -111,24 +127,14 @@ class _genomic_library_entry_validator(Validator):
         # TODO: Check right number of return parameters and arguments
         pass
 
+
     def _check_with_valid_callable(self, field, value):
         # TODO: Check right number of return parameters and arguments. Check arguments all have default=None.
         pass
 
+
     def _normalize_default_setter_set_signature(self, document):
-        # The signature for a codon GC is slightly different
-        string = str(gc_graph(document['graph']))
-
-        # If it is a codon glue on the mandatory definition
-        if "generation" in self.document and self.document["generation"] == 0:
-            if "meta_data" in self.document and "function" in self.document["meta_data"]:
-                string += self.document["meta_data"]["function"]["python3"]["0"]["inline"]
-                if 'code' in self.document["meta_data"]["function"]["python3"]["0"]:
-                    string += self.document["meta_data"]["function"]["python3"]["0"]["code"]
-
-        # Remove spaces etc. to give some degrees of freedom in formatting and
-        # not breaking the signature
-        return sha256("".join(string.split()).encode()).hexdigest()
+        return define_signature(self.document)
 
 
     def _normalize_default_setter_set_input_types(self, document):
@@ -160,4 +166,4 @@ class _genomic_library_entry_validator(Validator):
         return datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%S.%fZ")
 
 
-genomic_library_entry_validator = _genomic_library_entry_validator(_GENOMIC_LIBRARY_ENTRY_SCHEMA)
+genomic_library_entry_validator = _genomic_library_entry_validator(_GENOMIC_LIBRARY_ENTRY_SCHEMA, purge_unknown=True)

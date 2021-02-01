@@ -96,7 +96,7 @@ class _gene_pool():
         import_list = []
         # TODO: There are more efficient places to do this
         for gc in active_gcs:
-            if 'function' in gc['meta_data']:
+            if 'meta_data' in gc and 'function' in gc['meta_data']:
                 python = gc['meta_data']['function']['python3']['0']
                 if 'imports' in python:
                     for impt in python['imports']:
@@ -108,7 +108,7 @@ class _gene_pool():
         for gc in active_gcs:
             if _gene_pool._logger.getEffectiveLevel() == DEBUG: file_ptr.write("'''\n{}\n'''\n".format(pformat({k: v for k, v in gc.items() if k[:2] != '_'})))    
             file_ptr.write("def " + self.function_name(gc['signature']) + "(i):\n")
-            if not 'function' in gc['meta_data']:
+            if not 'meta_data' in gc or not 'function' in gc['meta_data']:
                 c = gc['graph']['C'] if 'C' in gc['graph'] else [] 
                 if gc['gca'] != NULL_GC: file_ptr.write("\ta = " + self.function_name(gc['gca']) + "(" + self._write_arg(gc['graph']['A'], c) + ")\n")
                 if gc['gcb'] != NULL_GC: file_ptr.write("\tb = " + self.function_name(gc['gcb']) + "(" + self._write_arg(gc['graph']['B'], c) + ")\n")
@@ -121,23 +121,32 @@ class _gene_pool():
                 file_ptr.write("\treturn (" + code['inline'].format(**format_dict) + ",)\n\n\n")
 
         # Add some function meta_data
+        # TODO: Why?
+        """
         file_ptr.write("meta_data = {\n\t")
         lines = []
         for gc in active_gcs:
             line = "'{}':{{".format(gc['signature']) + ','.join(["'{}': {}".format(k, gc[k]) for k in _gene_pool._META_DATA_FIELDS])
             lines.append(line + ", 'callable': {} }}".format(self.function_name(gc['signature'])))
         file_ptr.write(',\n\t'.join(lines) + "\n}\n")
+        """
         file_ptr.close()
         if not self._module is None: reload(self._module)
+        for gc in active_gcs:
+            gc['_func'] = getattr(self._module, self.function_name(gc['signature']))
+            _gene_pool._logger.debug("Adding _func for {}: {}".format(gc['signature'], gc['_func']))
 
 
     # Get from the genomic library
     def gl(self, queries):
-        return [self.extended_genetic_code(gc, stored=True) for gc in _gene_pool._gl.load(queries, fields)]
+        return [self.extended_genetic_code(gc, stored=True) for gc in _gene_pool._gl.load(queries)]
 
 
     def push(self):
-        if self._push_queue: _gene_pool._gl.store(self._push_queue)
+        if self._push_queue:
+            if _gene_pool._logger.getEffectiveLevel() == DEBUG:
+                _gene_pool._logger.debug("Push queue: {}".format([gc['signature'] for gc in self._push_queue]))
+            _gene_pool._gl.store(self._push_queue)
         self._push_queue.clear()
 
 
@@ -233,14 +242,14 @@ class _gene_pool():
         gc['_count'] = count
         gc['_gca'] = None
         gc['_gcb'] = None
-        gc['_ref'] = _reference()
+        gc['_ref'] = next(_reference())
         gc['_target_fitness'] = 0.0
         gc['_previous_fitness'] = 0.0
         gc['_mutated_by'] = None
         gc['_parasites'] = []
         gc['_func'] = None
-        gc['_microbiome_fitness'] = gc['fitness']
-        gc['_microbiome_evolvability'] = gc['evolvability']
+        gc['_microbiome_fitness'] = gc['fitness'] if 'fitness' in gc else 0.0
+        gc['_microbiome_evolvability'] = gc['evolvability'] if 'evolvability' in gc else 0.0
         gc['_stored'] = stored
         gc['_graph'] = gc_graph(gc['graph'])
         return gc

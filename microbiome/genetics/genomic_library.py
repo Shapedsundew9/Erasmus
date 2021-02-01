@@ -4,6 +4,7 @@ from pprint import pformat
 from json import load
 from os.path import dirname, join
 from logging import getLogger, DEBUG
+from functools import lru_cache
 from .genomic_library_entry_validator import genomic_library_entry_validator, NULL_GC
 from ..query_validator import query_validator
 from ..text_token import text_token, register_token_code
@@ -69,6 +70,7 @@ class genomic_library():
 
 
     # Return an application formatted entry from the store
+    @lru_cache(maxsize=1024)
     def __getitem__(self, signature):
         """Fetch an entry using its unique signature.
         
@@ -178,16 +180,20 @@ class genomic_library():
 
     def _normalize(self, entries):
         normalized_entries = []
+        genomic_library._logger.debug("Normalizing entries.")
         for entry in entries:
             normalized_entries.append(genomic_library_entry_validator.normalized(entry))
             self._calculate_fields(normalized_entries[-1], normalized_entries)
         if genomic_library._logger.getEffectiveLevel() == DEBUG:
+            genomic_library._logger.debug("Validating normalised entries before storing.")
             for entry in normalized_entries:
-                if not genomic_library_entry_validator(entry):
+                if not genomic_library_entry_validator.validate(entry):
+                    print(genomic_library_entry_validator.document)
                     genomic_library._logger.error(str(text_token({'E03001': {
                         'errors': pformat(genomic_library_entry_validator.errors, width=180),
                         'entry': pformat(entry, width=180)}})))
         if genomic_library._verify_consistency:
+            genomic_library._logger.debug("Checking entry consistency before storing.")
             for entry in normalized_entries:
                 references = [entry['gca'], entry['gcb']]
                 if 'parents' in entry['meta_data']:

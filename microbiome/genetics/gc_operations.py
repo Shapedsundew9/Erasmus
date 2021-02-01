@@ -1,6 +1,6 @@
 """The operation that can be performed on a GC dictionary."""
-from .genomic_library_entry_validator import NULL_GC
-from .gc_graph import gc_graph, ep_idx, SRC_EP, DST_EP, hash_ref, hash_ep
+from .genomic_library_entry_validator import NULL_GC, define_signature
+from .gc_graph import gc_graph, ep_idx, ref_idx, SRC_EP, DST_EP, hash_ref, hash_ep
 from random import getrandbits
 from copy import deepcopy, copy
 from logging import getLogger, DEBUG, INFO
@@ -57,7 +57,7 @@ def _copy_clean_row(igc, rows, ep_type=None):
     return copied_row
 
 
-def _move_row(igc, src_row, src_ep_type, dst_row, dst_ep_type):
+def _move_row(igc, src_row, src_ep_type, dst_row, dst_ep_type, clean=False):
     """Move a row definition to a different row.
 
     The endpoints moved are filtered by src_row & ep_type.
@@ -71,6 +71,7 @@ def _move_row(igc, src_row, src_ep_type, dst_row, dst_ep_type):
     src_ep_type (bool or None): SRC_EP or DST_EP or None
     dst_row (str): A valid row letter
     dst_ep_type (bool or None): SRC_EP or DST_EP or None
+    clean (bool): Remove references in dst_row if True
 
     Returns
     -------
@@ -84,7 +85,7 @@ def _move_row(igc, src_row, src_ep_type, dst_row, dst_ep_type):
     _logger.debug("Moving {} to row {} ep_type {}".format(dst_eps, dst_row, dst_ep_type))
     for ep in dst_eps:
         ep[ep_idx.ROW] = dst_row
-        ep[ep_idx.REFERENCED_BY] = []
+        if clean: ep[ep_idx.REFERENCED_BY] = []
     if not dst_ep_type is None:
         for ep in dst_eps: ep[ep_idx.EP_TYPE] = dst_ep_type
     return {hash_ep(ep): ep for ep in dst_eps}
@@ -104,6 +105,10 @@ def _direct_connect(igc, src_row, dst_row):
     igc (dict): Internal gc_graph format dict to be updated.
     src_row (str): 'I', 'C', 'A', or 'B'
     dst_row (str): Valid destination for src_row.
+
+    Returns
+    -------
+    (dict): A gc_graph internal format containing the destination row endpoints.
     """
     connected_row = {}
     filter_func = lambda x: x[ep_idx.EP_TYPE] and x[ep_idx.ROW] == src_row
@@ -111,6 +116,62 @@ def _direct_connect(igc, src_row, dst_row):
         dst_ep = [DST_EP, dst_row, src_ep[ep_idx.INDEX], src_ep[ep_idx.TYPE], [[src_row, src_ep[ep_idx.INDEX]]]] 
         connected_row[hash_ep(dst_ep)] = dst_ep            
     return connected_row
+
+
+def _append_connect(igc, src_row, dst_row):
+    """Append endpoints to dst_row and directly connect them to src_row.
+
+    A direct connection means that dst_row has the same number, gc type and
+    order of destination end points as src_row has source endpoints.
+    src_row SRC_EPs should exist in fgc (else no-op).
+    dst_row DST_EPs should exist in fgc.
+    
+    Args
+    ----
+    igc (dict): Internal gc_graph format dict to be updated.
+    src_row (str): 'I', 'C', 'A', or 'B'
+    dst_row (str): Valid destination for src_row.
+
+    Returns
+    -------
+    (dict): A gc_graph internal format containing the destination row endpoints.
+    """
+    connected_row = {}
+
+    # Find the next endpoint index in the destination row
+    filter_func = lambda x: not x[ep_idx.EP_TYPE] and x[ep_idx.ROW] == dst_row
+    next_idx = max([dst_ep[ep_idx.INDEX] for dst_ep in filter(filter_func, igc.values())]) + 1
+
+    # Append a destination endpoint for every source endpoint
+    filter_func = lambda x: x[ep_idx.EP_TYPE] and x[ep_idx.ROW] == src_row
+    for src_ep in tuple(filter(filter_func, igc.values())):
+        dst_ep = [DST_EP, dst_row, next_idx, src_ep[ep_idx.TYPE], [[src_row, src_ep[ep_idx.INDEX]]]] 
+        connected_row[hash_ep(dst_ep)] = dst_ep
+        next_idx += 1
+    return connected_row
+
+
+def _redirect_refs(igc, row, ep_type, old_ref_row, new_ref_row):
+    """Redirects references on row from old_ref_row to new_ref_row.
+
+    Args
+    ----
+    igc (dict): Internal gc_graph format dict to be updated.
+    row (str): A valid row
+    ep_type (bool): The old_ref_row ep_type.
+    old_ref_row (str): A valid row
+    new_ref_row (str): A valid row
+
+    Returns
+    -------
+    (dict): Modified igc
+    """
+    filter_func = lambda x: x[ep_idx.EP_TYPE] == ep_type and x[ep_idx.ROW] == row
+    for ep in filter(filter_func, igc.values()):
+        for ref in ep[ep_idx.REFERENCED_BY]:
+            if ref[ref_idx.ROW] == old_ref_row:
+                ref[ref_idx.ROW] = new_ref_row
+    return igc
 
 
 def _insert_as(igc, row):
@@ -176,18 +237,18 @@ def _insert(igc_gcg, tgc_gcg, above_row):
     if not tgc_gcg.has_a():
         _logger.debug("Case 1")
         rgc.update(_insert_as(igc, 'A'))
-        rgc.update(_copy_clean_row(tgc, 'O'))
+        rgc.update(_copy_row(tgc, 'O'))
     elif not tgc_gcg.has_b():
         if above_row == 'A':
             _logger.debug("Case 2")
             rgc.update(_insert_as(igc, 'A'))
             rgc.update(_move_row(tgc, 'A', None, 'B', None)) 
-            rgc.update(_copy_row(tgc, 'O'))
+            rgc.update(_redirect_refs(_copy_row(tgc, 'O'), 'O', DST_EP, 'A', 'B'))
         else:
             _logger.debug("Case 3")
             rgc.update(_copy_row(tgc, 'A'))
             rgc.update(_insert_as(igc, 'B'))
-            rgc.update(_copy_clean_row(tgc, 'O'))
+            rgc.update(_copy_row(tgc, 'O'))
     else:
         if above_row == 'A':
             _logger.debug("Case 4")
@@ -195,28 +256,28 @@ def _insert(igc_gcg, tgc_gcg, above_row):
             fgc.update(_insert_as(igc, 'A'))
             fgc.update(_move_row(tgc, 'A', None, 'B', None))
             fgc.update(_direct_connect(fgc, 'B', 'O'))
+            fgc.update(_append_connect(fgc, 'A', 'O'))
             rgc.update(_direct_connect(rgc, 'I', 'A'))
-            rgc_update(_copy_clean_row(tgc, 'A', SRC_EP))
+            rgc.update(_move_row(fgc, 'O', None, 'A', SRC_EP, True))
             rgc.update(_copy_row(tgc, 'B'))
             rgc.update(_copy_row(tgc, 'O'))
         elif above_row == 'B':
             _logger.debug("Case 5")
-            fgc.update(_move_row(tgc, 'A', SRC_EP, 'I', None))
-            fgc.update(_insert_as(igc, 'A'))
-            fgc.update(_copy_clean_row(tgc, 'B'))
-            fgc.update(_direct_connect(fgc, 'B', 'O'))
-            rgc.update(_copy_row(tgc, 'A', DST_EP))
-            rgc.update(_copy_clean_row(tgc, 'A', SRC_EP))
-            rgc.update(_direct_connect(rgc, 'A', 'B'))
-            rgc.update(_copy_clean_row(tgc, 'B', SRC_EP))
-            rgc.update(_direct_connect(rgc, 'B', 'O'))
+            fgc.update(_copy_clean_row(tgc, 'IC'))
+            fgc.update(_copy_row(tgc, 'A'))
+            fgc.update(_insert_as(igc, 'B'))
+            fgc.update(_direct_connect(fgc, 'A', 'O'))
+            fgc.update(_append_connect(fgc, 'B', 'O'))
+            rgc.update(_direct_connect(rgc, 'I', 'A'))
+            rgc_update(_move_row(fgc, 'O', None, 'A', SRC_EP, True))
+            rgc.update(_copy_row(tgc, 'B'))
+            rgc.update(_copy_row(tgc, 'O'))
         else:
             _logger.debug("Case 6")
-            rgc.update(_copy_clean_row(tgc, 'I'))
             rgc.update(_direct_connect(rgc, 'I', 'A'))
-            rgc.update(_move_row(rgc, 'O', DST_EP, 'A', SRC_EP))
+            rgc.update(_move_row(tgc, 'O', DST_EP, 'A', SRC_EP, True))
             rgc.update(_insert_as(igc, 'B'))
-            rgc.update(_copy_row(tgc, 'O'))
+            rgc.update(_direct_connect(rgc, 'A', 'O'))
 
     _logger.debug("rgc: {}".format(pformat(rgc)))
     _complete_references(rgc)
@@ -271,8 +332,20 @@ def gc_insert(target_gc, insert_gc, above_row):
         target_gc, insert_gc, above_row = work_stack.pop(0)
         _logger.debug("Work: Target={}, Insert={}, Above Row={}".format(target_gc['signature'], insert_gc['signature'], above_row))
         # TODO: Get rid of NULL_GC (make it None)
+
+        # Insert into the graph
         tgc_graph = gc_graph(target_gc['graph'])
         igc_graph = gc_graph(insert_gc['graph'])
+        rgc_graph, fgc_graph = _insert(igc_graph, tgc_graph, above_row)
+        if fgc_graph:
+            fgc_steady = fgc_graph.normalize()
+            fgc['graph'] = fgc_graph.app_graph
+            fgc['signature'] = define_signature(fgc)
+        rgc_steady = rgc_graph.normalize()
+        rgc['graph'] = rgc_graph.app_graph
+        rgc['signature'] = define_signature(rgc)
+
+        #Insert into the GC
         if not tgc_graph.has_a(): # Case 1
             _logger.debug("Case 1")
             rgc['gca'] = insert_gc['signature']
@@ -283,10 +356,9 @@ def gc_insert(target_gc, insert_gc, above_row):
                 rgc['gcb'] = target_gc['gca'] if target_gc['gca'] != NULL_GC else target_gc['signature'] # Consider codon case
             else: # Case 3
                 _logger.debug("Case 3")
-                rgc['gca'] = target_gc['gca']
+                rgc['gca'] = target_gc['gca'] if target_gc['gca'] != NULL_GC else target_gc['signature'] # Consider codon case
                 rgc['gcb'] = insert_gc['signature']
         else: # Has row A & row B
-            fgc['signature'] = hex(getrandbits(256))[2:]
             if above_row == 'A': # Case 4
                 _logger.debug("Case 4")
                 fgc['gca'] = insert_gc['signature']
@@ -304,19 +376,14 @@ def gc_insert(target_gc, insert_gc, above_row):
                 rgc['gca'] = target_gc['signature']
                 rgc['gcb'] = insert_gc['signature']
 
-        rgc_graph, fgc_graph = _insert(igc_graph, tgc_graph, above_row)
-
+        # Check we have valid graphs
         if fgc_graph:
-            steady = fgc_graph.normalize()
-            fgc['graph'] = fgc_graph.app_graph
-            if not steady:
+            if not fgc_steady:
                 work_stack.insert(0, steady_state_exception(fgc))
             else:
                 fgc_list.append(fgc)
 
-        steady = rgc_graph.normalize()
-        rgc['graph'] = rgc_graph.app_graph
-        if not steady:
+        if not rgc_steady:
             work_stack.insert(0, steady_state_exception(rgc))
         else:
             fgc_list.insert(0, rgc)
